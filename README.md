@@ -49,4 +49,6 @@ conf-file=/etc/dnsmasq.d/fqad.conf
 
 据反馈，LEDE系列系统和Openwrt系列系统略有不同，请用LEDE专用脚本！
 
+如果只是翻墙,不用屏蔽广告功能,请使用fq.sh全自动脚本。
+
 特别感谢sy618、vokins提供的线上项目资源以及维护项目所做出的贡献！感谢lukme提供的脚本编译写法！感谢zshwq5提供的注入每日定时任务的代码！
