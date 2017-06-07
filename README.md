@@ -23,7 +23,7 @@ DNSmasq是一个小巧且方便地用于配置DNS和DHCP的工具，适用于小
 
 之前使用adbyby之类的插件严重影响网速，因此才想进一步优化通过dnsmasq和hosts优化屏蔽广告，通过各种努力的查找，终于找到一些更加完善的广告过滤dnsmasq和hosts规则，并进一步优化dnsmasq配置和计划任务的命令行和参数，加入著名的adbyby和ABP插件用的easylistchina规则，加入国外网站广告过滤malwaredomainlist规则，加入手机端著名广告过滤软件adaway用的规则。除了个别视频广告外（PC可以通过浏览器插件屏蔽），基本通过浏览器插件及adbyby等插件能屏蔽的广告应该都能屏蔽了。为了方便小白都能容易上手，已将所有代码编辑为全自动的sh脚本，运行一次，所有事情都搞定了。本人亲测，并已经通过测试。
 
-重要提示：兲朝上网请通过https加密连接访问！该脚本和方法只适用于Openwrt系列内核的固件，包括pandorabox，老毛子等固件不适用。如果不是相应的系统，小白就不用往下看了，以免浪费你宝贵的时间。如果是tomato、padavan等其它固件，可以参考http://www.right.com.cn/forum/forum.php?mod=viewthread&tid=184121帖子自行修改。
+重要提示：兲朝上网请通过https加密连接访问！该脚本和方法只适用于Openwrt系列内核的固件，包括pandorabox。经网友测试证实，ddwrt系统可用。老毛子等其它固件可能不适用。如果不是相应的系统，小白就不用往下看了，以免浪费你宝贵的时间。如果是tomato、padavan等其它固件，可以参考http://www.right.com.cn/forum/forum.php?mod=viewthread&tid=184121帖子自行修改。
 
 PS：如果以前运行过类似脚本或命令，最好恢复出厂设置。
 PS：因为有的固件携带的wget命令不支持https下载，需要重装wget。使用该脚本需要将dns设置为潘多拉lan网关（如192.168.1.1）
