@@ -105,12 +105,12 @@ rm -rf /tmp/noad
 
 # 删除无用的注释
 sed -i '/#/d' /etc/dnsmasq/noad.conf
+# 扶墙和广告屏蔽规则下载结束
 
 # 重启dnsmasq服务
 killall dnsmasq
 /etc/init.d/dnsmasq restart
 #/usr/sbin/dnsmasq
-# 扶墙和广告屏蔽规则下载结束
 
 # 创建规则更新脚本
 cat > /etc/dnsmasq/fqad_update.sh <<EOF
@@ -176,7 +176,7 @@ rm -rf /tmp/noad
 
 # 删除无用的注释
 sed -i '/#/d' /etc/dnsmasq/noad.conf
-# hosts更新结束
+# hosts规则更新结束
 
 # 重启dnsmasq服务
 killall dnsmasq
