@@ -41,6 +41,9 @@ EOF
 wget --no-check-certificate -qO - https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq > /etc/dnsmasq.d/sy168.conf
 # 下载racaljk规则
 wget --no-check-certificate -qO - https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf > /etc/dnsmasq.d/racaljk.conf
+# 删除racaljk规则中google相关规则
+sed -i '/google/d' /etc/dnsmasq.d/racaljk.conf
+sed -i '/youtube/d' /etc/dnsmasq.d/racaljk.conf
 # 合并dnsmasq缓存
 cd /etc/dnsmasq.d;cat racaljk.conf sy168.conf > fq
 # 删除dnsmasq缓存
@@ -71,6 +74,9 @@ cd /usr/bin/
 wget --no-check-certificate -qO - https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq > /etc/dnsmasq.d/sy168.conf
 # 下载racaljk规则
 wget --no-check-certificate -qO - https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf > /etc/dnsmasq.d/racaljk.conf
+# 删除racaljk规则中google相关规则
+sed -i '/google/d' /etc/dnsmasq.d/racaljk.conf
+sed -i '/youtube/d' /etc/dnsmasq.d/racaljk.conf
 # 合并dnsmasq缓存
 cd /etc/dnsmasq.d;cat racaljk.conf sy168.conf > fq
 # 删除dnsmasq缓存
