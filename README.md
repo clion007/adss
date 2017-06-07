@@ -25,7 +25,7 @@ DNSmasq是一个小巧且方便地用于配置DNS和DHCP的工具，适用于小
 
 重要提示：兲朝上网请通过https加密连接访问！该脚本和方法只适用于Openwrt系列内核的固件，包括pandorabox。经网友测试证实，ddwrt系统可用。老毛子等其它固件可能不适用。如果不是相应的系统，小白就不用往下看了，以免浪费你宝贵的时间。如果是tomato、padavan等其它固件，可以参考http://www.right.com.cn/forum/forum.php?mod=viewthread&tid=184121帖子自行修改。
 
-PS：如果以前运行过类似脚本或命令，最好恢复出厂设置。
+PS：如果以前运行过类似脚本或命令，不太清楚都改过什么地方，最好恢复出厂设置。
 PS：因为有的固件携带的wget命令不支持https下载，需要重装wget。使用该脚本需要将dns设置为潘多拉lan网关（如192.168.1.1）
 
 dnsmas_fqad.sh脚本运行方法：首次更改或路由器恢复出厂设置后，将下载得到的本脚本解压并通过winSCP上传到路由器/etc目录中，进入路由器的webshell或者电脑putty登录后运行命令：/bin/sh /etc/dnsmasq_fqad.sh。小白推荐用此方法，一键轻松搞定。
