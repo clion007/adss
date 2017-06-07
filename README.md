@@ -27,17 +27,11 @@ dnsmas_fqad.sh脚本运行方法：首次更改或路由器恢复出厂设置后
 
 手动还原设置的方法：
 打开/etc/dnsmasq.conf文件，删除如下内容：
-# 并发查询所有上游DNS
 all-servers
-# 添加监听地址（将192.168.1.1修改为你的lan网关ip）
 listen-address=192.168.1.1,127.0.0.1
-# 添加上游DNS服务器
 resolv-file=/etc/dnsmasq/resolv.conf
-# 添加额外hosts规则路径
 addn-hosts=/etc/dnsmasq/noad.conf
-# IP反查域名
 bogus-priv
-# 添加DNS解析文件
 conf-file=/etc/dnsmasq.d/fqad.conf
 删除/etc目录中dnsmasq以及dnsmasq.d文件夹
 删除路由器设置中系统-计划任务中的代码。
