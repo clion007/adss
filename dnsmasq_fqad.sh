@@ -53,6 +53,9 @@ wget --no-check-certificate -qO - https://raw.githubusercontent.com/racaljk/host
 wget --no-check-certificate -qO - https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf > /etc/dnsmasq.d/ad.conf
 # 下载easylistchina广告规则
 wget --no-check-certificate -qO - https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt > /etc/dnsmasq.d/easylistchina.conf
+# 删除racaljk规则中google相关规则
+sed -i '/google/d' /etc/dnsmasq.d/racaljk.conf
+sed -i '/youtube/d' /etc/dnsmasq.d/racaljk.conf
 # 合并dnsmasq缓存
 cd /etc/dnsmasq.d;cat racaljk.conf sy168.conf ad.conf easylistchina.conf > fqad
 # 删除dnsmasq缓存
@@ -107,6 +110,9 @@ wget --no-check-certificate -qO - https://raw.githubusercontent.com/racaljk/host
 wget --no-check-certificate -qO - https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf > /etc/dnsmasq.d/ad.conf
 # 下载easylistchina广告规则
 wget --no-check-certificate -qO - https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt > /etc/dnsmasq.d/easylistchina.conf
+# 删除racaljk规则中google相关规则
+sed -i '/google/d' /etc/dnsmasq.d/racaljk.conf
+sed -i '/youtube/d' /etc/dnsmasq.d/racaljk.conf
 # 合并dnsmasq缓存
 cd /etc/dnsmasq.d;cat racaljk.conf sy168.conf ad.conf easylistchina.conf > fqad
 # 删除dnsmasq缓存
