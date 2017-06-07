@@ -1,12 +1,9 @@
 #!/bin/sh
-###仅限潘多拉与openwrt类固件使甿##
-###仅限潘多拉与openwrt类固件使甿##
+###仅限LEDE固件使用###
 
 ###请将DNS设置为lan网关###
-###请将DNS设置为lan网关###
 
-###该脚本只需要运行一欿##
-###该脚本只需要运行一欿##
+###该脚本只需要运行一次###
 
 #安装wget
 #opkg update && opkg install wget 2>&1 &
@@ -49,9 +46,14 @@ nameserver 223.5.5.5
 nameserver 119.29.29.29
 EOF
 
-# 下载扶墙和广告规刿# 下载dnsmasq规则
+# 开始下载扶墙和广告规
+
+# 下载dnsmasq规则
 # 下载sy618扶墙规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/fq.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+
+# 下载racaljk规则
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 
 # 下载vokins广告规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
@@ -60,11 +62,12 @@ EOF
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
 
 # 合并dnsmasq缓存
-cat /tmp/fq.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 
 # 删除dnsmasq缓存
 rm -rf /tmp/ad.conf
-rm -rf /tmp/fq.conf
+rm -rf /tmp/sy618.conf
+rm -rf /tmp/racaljk.conf
 rm -rf /tmp/easylistchina.conf
 
 # 删除dnsmasq重复规则
@@ -72,6 +75,9 @@ sort /tmp/fqad | uniq > /etc/dnsmasq.d/fqad.conf
 
 # 删除dnsmasq合并缓存
 rm -rf /tmp/fqad
+
+# 删除无用的注释
+sed -i '/#/d' /etc/dnsmasq.d/fqad.conf
 
 # 下载hosts规则
 # 下载yhosts缓存
@@ -97,10 +103,14 @@ sort /tmp/noad | uniq > /etc/dnsmasq/noad.conf
 # 删除hosts合并缓存
 rm -rf /tmp/noad
 
+# 删除无用的注释
+sed -i '/#/d' /etc/dnsmasq/noad.conf
+
 # 重启dnsmasq服务
 killall dnsmasq
 /etc/init.d/dnsmasq restart
 #/usr/sbin/dnsmasq
+# 扶墙和广告屏蔽规则下载结束
 
 # 创建规则更新脚本
 cat > /etc/dnsmasq/fqad_update.sh <<EOF
@@ -108,9 +118,12 @@ cat > /etc/dnsmasq/fqad_update.sh <<EOF
 # 移动到用户命令文件夹
 cd /usr/bin/
 
-# 下载dnsmasq规则
+# 开始更新dnsmasq规则
 # 下载sy618扶墙规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/fq.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+
+# 下载racaljk规则
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 
 # 下载vokins广告规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
@@ -119,11 +132,12 @@ cd /usr/bin/
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
 
 # 合并dnsmasq缓存
-cat /tmp/fq.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 
 # 删除dnsmasq缓存
 rm -rf /tmp/ad.conf
-rm -rf /tmp/fq.conf
+rm -rf /tmp/sy618.conf
+rm -rf /tmp/racaljk.conf
 rm -rf /tmp/easylistchina.conf
 
 # 删除dnsmasq重复规则
@@ -132,7 +146,11 @@ sort /tmp/fqad | uniq > /etc/dnsmasq.d/fqad.conf
 # 删除dnsmasq合并缓存
 rm -rf /tmp/fqad
 
-# 下载hosts规则
+# 删除无用的注释
+sed -i '/#/d' /etc/dnsmasq.d/fqad.conf
+# dnsmasq规则更新结束
+
+# 开始更新hosts规则
 # 下载yhosts缓存
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
 
@@ -156,11 +174,9 @@ sort /tmp/noad | uniq > /etc/dnsmasq/noad.conf
 # 删除hosts合并缓存
 rm -rf /tmp/noad
 
-#/etc/init.d/ssr-redir.sh stop
-#echo "ssr stop"
-#sleep 1
-#/etc/init.d/adbyby stop
-#echo "adbyby stop"
+# 删除无用的注释
+sed -i '/#/d' /etc/dnsmasq/noad.conf
+# hosts更新结束
 
 # 重启dnsmasq服务
 killall dnsmasq
