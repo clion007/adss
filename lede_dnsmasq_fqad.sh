@@ -5,10 +5,10 @@
 
 ###该脚本只需要运行一次###
 
-###----------------------------------------script by Clion----------------------------------------###
+###-------------------------------------------Copyright (c) 2014-2017, clion007----------------------------------------###
 # https://github.com/clion007/dnsmasq
 
-#安装wget路由下载器
+#安装wget
 opkg update && opkg install wget 2>&1 &
 
 # 移动到用户命令文件夹
@@ -112,6 +112,8 @@ rm -rf /tmp/noad
 
 # 删除无用的注释
 sed -i '/#/d' /etc/dnsmasq/noad.conf
+sed -i '/@/d' /etc/dnsmasq/noad.conf
+
 # 扶墙和广告屏蔽规则下载结束
 
 # 重启dnsmasq服务
@@ -187,6 +189,7 @@ rm -rf /tmp/noad
 
 # 删除无用的注释
 sed -i '/#/d' /etc/dnsmasq/noad.conf
+sed -i '/@/d' /etc/dnsmasq/noad.conf
 # hosts规则更新结束
 
 # 重启dnsmasq服务
