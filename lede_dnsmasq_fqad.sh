@@ -61,6 +61,10 @@ EOF
 # 下载easylistchina广告规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
 
+# 删除racaljk规则中google相关规则
+sed -i '/google/d' /etc/dnsmasq.d/racaljk.conf
+sed -i '/youtube/d' /etc/dnsmasq.d/racaljk.conf
+
 # 合并dnsmasq缓存
 cat /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 
@@ -130,6 +134,10 @@ cd /usr/bin/
 
 # 下载easylistchina广告规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
+
+# 删除racaljk规则中google相关规则
+sed -i '/google/d' /etc/dnsmasq.d/racaljk.conf
+sed -i '/youtube/d' /etc/dnsmasq.d/racaljk.conf
 
 # 合并dnsmasq缓存
 cat /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
