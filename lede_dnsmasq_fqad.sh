@@ -8,7 +8,7 @@
 ###----------------------------------------script by Clion----------------------------------------###
 # https://github.com/clion007/dnsmasq
 
-#安装wget
+#安装wget路由下载器
 opkg update && opkg install wget 2>&1 &
 
 # 移动到用户命令文件夹
