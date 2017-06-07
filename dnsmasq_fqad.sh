@@ -86,11 +86,11 @@ sort /etc/dnsmasq/noad | uniq > /etc/dnsmasq/noad.conf
 rm -rf /etc/dnsmasq/noad
 # 删除无用的注释
 sed -i '/#/d' /etc/dnsmasq/noad.conf
+# 扶墙和广告屏蔽规则下载结束
 
 # 重启dnsmasq服务
 killall dnsmasq
 /usr/sbin/dnsmasq
-# 扶墙和广告屏蔽规则下载结束
 
 # 创建规则更新脚本
 cat > /etc/dnsmasq/fqad_update.sh <<EOF
@@ -120,7 +120,7 @@ sort /etc/dnsmasq.d/fqad | uniq > /etc/dnsmasq.d/fqad.conf
 rm -rf /etc/dnsmasq.d/fqad
 # 删除无用的注释
 sed -i '/#/d' /etc/dnsmasq.d/fqad.conf
-# dnsmasq更新规则结束
+# dnsmasq规则更新结束
 
 # 开始更新hosts规则
 # 下载yhosts缓存
@@ -141,7 +141,7 @@ sort /etc/dnsmasq/noad | uniq > /etc/dnsmasq/noad.conf
 rm -rf /etc/dnsmasq/noad
 # 删除无用的注释
 sed -i '/#/d' /etc/dnsmasq/noad.conf
-# hosts更新规则结束
+# hosts规则更新结束
 
 # 重启dnsmasq服务
 killall dnsmasq
