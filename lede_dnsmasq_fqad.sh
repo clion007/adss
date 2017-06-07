@@ -5,8 +5,11 @@
 
 ###该脚本只需要运行一次###
 
+###----------------------------------------script by Clion----------------------------------------###
+# https://github.com/clion007/dnsmasq
+
 #安装wget
-#opkg update && opkg install wget 2>&1 &
+opkg update && opkg install wget 2>&1 &
 
 # 移动到用户命令文件夹
 cd /usr/bin/
