@@ -3,7 +3,7 @@
 
 ###请将DNS设置为lan网关###
 
-###-------------------------------------------script by Clion----------------------------------------###
+###-------------------------------------------Copyright (c) 2014-2017, clion007----------------------------------------###
 # https://github.com/clion007/dnsmasq
 
 # 移动到用户命令文件夹
@@ -52,6 +52,7 @@ sort /etc/dnsmasq/noad | uniq > /etc/dnsmasq/noad.conf
 rm -rf /etc/dnsmasq/noad
 # 删除无用的注释
 sed -i '/#/d' /etc/dnsmasq/noad.conf
+sed -i '/@/d' /etc/dnsmasq/noad.conf
 # hosts规则更新结束
 
 # 重启dnsmasq服务
