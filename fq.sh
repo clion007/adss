@@ -15,11 +15,11 @@ mkdir -p /etc/dnsmasq.d
 
 # dnsmasq.conf 添加广告规则路径
 cat >> /etc/dnsmasq.conf <<EOF
-# 并发查询所有上游DNS
-all-servers
-
 # 添加监听地址（将192.168.1.1修改为你的lan网关ip）
 listen-address=192.168.1.1,127.0.0.1
+
+# 并发查询所有上游DNS
+all-servers
 
 # 添加上游DNS服务器
 resolv-file=/etc/dnsmasq.d/resolv.conf
@@ -34,9 +34,12 @@ EOF
 cat > /etc/dnsmasq.d/resolv.conf <<EOF
 # 上游DNS解析服务器
 nameserver 127.0.0.1
-nameserver 114.114.114.119
-nameserver 223.5.5.5
+nameserver 218.30.118.6
+nameserver 8.8.4.4
+nameserver 182.254.116.116
 nameserver 119.29.29.29
+nameserver 4.2.2.2
+nameserver 114.114.114.114
 EOF
 
 # 开始下载dnsmasq规则
