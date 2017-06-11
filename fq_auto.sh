@@ -225,14 +225,14 @@ sort /tmp/fq | uniq >> /tmp/fq.conf
 # 删除dnsmasq合并缓存
 rm -rf /tmp/fq
 
-if [ -s "/tmp/fq.conf" ];then
-	if ( ! cmp -s /tmp/fq.conf /etc/dnsmasq.d/fq.conf );then
+if [ -s "/tmp/fq.conf" ]; then
+	if ( ! cmp -s /tmp/fq.conf /etc/dnsmasq.d/fq.conf ); then
 		mv /tmp/fq.conf /etc/dnsmasq.d/fq.conf
-		echo "$(date "+%F %T"):检测到fq规则有更新......开始转换规则！"
+		echo "`date +'%Y-%m-%d %H:%M:%S'`:检测到fq规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart >/dev/null 2>&1
-		echo "$(date "+%F %T"): fq规则转换完成，应用新规则。"
+		echo "`date +'%Y-%m-%d %H:%M:%S'`: fq规则转换完成，应用新规则。"
 		else
-		echo "$(date "+%F %T"): fq本地规则和在线规则相同，无需更新!" && rm -f /tmp/fq.conf
+		echo "`date +'%Y-%m-%d %H:%M:%S'`: fq本地规则和在线规则相同，无需更新！" && rm -f /tmp/fq.conf
 	fi	
 fi
 # 规则更新结束
@@ -246,7 +246,8 @@ chmod 755 /etc/dnsmasq/fq_update.sh
 echo
 sed -i '/dnsmasq/d' $CRON_FILE
 echo
-echo "# 每天6点28分更新dnsmasq扶墙规则
+echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
+# 每天$timedata点28分更新dnsmasq扶墙规则
 28 6 * * * /bin/sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo
