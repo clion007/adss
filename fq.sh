@@ -47,14 +47,15 @@ if [ -f $wgetroute ]; then
 	else
 	echo -e "\e[1;31m没有发现wget-ssl开始安装\e[0m"
 	opkg install wget
+	echo
+	if [ -f $wgetroute ]; then
+		echo -e "\e[1;36mwget安装成功         \e[0m[\e[1;31mmwget has been installde successfully\e[0m]"
+		else
+		echo -e "\e[1;31mwget安装失败,请到路由器系统软件包手动安装后再试!\e[0m"
+		exit
+	fi	
 fi
 echo
-if [ -f $wgetroute ]; then
-	echo -e "\e[1;36mwget安装成功         \e[0m[\e[1;31mwget been installde successfully\e[0m]"
-	else
-	echo -e "\e[1;31mwget安装失败,请手动安装后再试!\e[0m"
-	exit
-fi
 sleep 3
 echo
 echo -e "\e[1;36m创建广告规则与更新脚本存放的文件夹\e[0m"
