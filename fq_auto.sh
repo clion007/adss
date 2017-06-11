@@ -125,7 +125,7 @@ echo -e "\e[1;36m下载sy618扶墙规则\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 echo
 echo -e "\e[1;36m下载racaljk规则\e[0m"
-wget --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 echo
 sleep 3
 #echo -e "\e[1;36m删除racaljk规则中google'youtube相关规则\e[0m"
@@ -133,7 +133,7 @@ sleep 3
 #sed -i '/youtube/d' /tmp/racaljk.conf
 echo
 echo -e -n "\e[1;36m合并dnsmasq缓存\e[0m" 
-cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy168.conf > /tmp/fq
+cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy618.conf > /tmp/fq
 #cat /etc/dnsmasq.d/userlist /tmp/sy618.conf > /tmp/fq
 echo
 echo -e -n "\e[1;36m删除dnsmasq临时文件\e[0m"
@@ -188,12 +188,12 @@ echo "#!/bin/sh
 # 下载sy618扶墙规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 # 下载racaljk规则
-wget --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 # 删除racaljk规则中google相关规则
 #sed -i '/google/d' /tmp/racaljk.conf
 #sed -i '/youtube/d' /tmp/racaljk.conf
 # 合并dnsmasq缓存
-cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy168.conf > /tmp/fq
+cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy618.conf > /tmp/fq
 #cat /etc/dnsmasq.d/userlist /tmp/sy618.conf > /tmp/fq
 # 删除dnsmasq缓存
 rm -rf /tmp/sy618.conf
@@ -203,7 +203,7 @@ sed -i '/#/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
 sed -i '/::1/d' /tmp/fq
 # 创建dnsmasq规则文件
-cat > /etc/tmp/fq.conf <<EOF
+cat > /tmp/fq.conf <<EOF
 ####################################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
 ## 感谢https://github.com/sy618/hosts                             ##
