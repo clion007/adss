@@ -147,8 +147,10 @@ sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
 echo
 echo -e "\e[1;36m创建dnsmasq规则文件\e[0m"
-echo "####################################################################
+echo "
+############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
+##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/racaljk/hosts                           ##
 ####################################################################
@@ -176,6 +178,7 @@ sleep 2
 echo
 echo -e "\e[1;36m创建规则更新脚本\e[0m"
 echo "#!/bin/sh
+echo
 # Copyright (c) 2014-2017,by clion007
 # 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）
 # 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。
@@ -185,6 +188,7 @@ echo "#!/bin/sh
 #if [ $LOGSIZE -ge 5000 ]; then
 #	sed -i -e 1,10d $LOGFILE
 #fi
+
 # 更新dnsmasq规则
 # 下载sy618扶墙规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
@@ -205,8 +209,10 @@ sed -i '/localhost/d' /tmp/fq
 sed -i '/::1/d' /tmp/fq
 # 创建dnsmasq规则文件
 cat > /tmp/fq.conf <<EOF
-####################################################################
+
+############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
+##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/racaljk/hosts                           ##
 ####################################################################
@@ -235,7 +241,9 @@ if [ -s "/tmp/fq.conf" ]; then
 		echo "`date +'%Y-%m-%d %H:%M:%S'`: fq本地规则和在线规则相同，无需更新！" && rm -f /tmp/fq.conf
 	fi	
 fi
-# 规则更新结束
+echo
+echo -e "\e[1;36m规则更新完成\e[0m"
+echo
 exit 0" > /etc/dnsmasq/fq_update.sh
 # 换成上面echo的方式注入
 echo
