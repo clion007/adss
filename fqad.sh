@@ -181,8 +181,10 @@ sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
 echo
 echo -e "\e[1;36m创建dnsmasq规则文件\e[0m"
-echo "####################################################################
+echo "
+############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
+##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/racaljk/hosts                           ##
 ####################################################################
@@ -198,8 +200,10 @@ address=/ip6-loopback/::1
 " > /etc/dnsmasq.d/fqad.conf # 换成echo的方式注入
 echo
 echo -e "\e[1;36m创建hosts规则文件\e[0m"
-echo "####################################################################
+echo "
+############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
+##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/vokins/hosts                            ##
 ## 感谢https://github.com/racaljk/hosts                           ##
@@ -230,6 +234,7 @@ sleep 2
 echo
 echo -e "\e[1;36m创建规则更新脚本\e[0m"
 echo "#!/bin/sh
+echo
 # Copyright (c) 2014-2017,by clion007
 # 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）
 # 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。
@@ -239,6 +244,7 @@ echo "#!/bin/sh
 #if [ $LOGSIZE -ge 5000 ]; then
 #	sed -i -e 1,10d $LOGFILE
 #fi
+
 # 更新dnsmasq规则
 # 下载sy618扶墙规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
@@ -268,8 +274,9 @@ sed -i '/localhost/d' /tmp/fqad
 sed -i '/::1/d' /tmp/fqad
 # 创建dnsmasq规则文件
 cat > /tmp/fqad.conf <<EOF
-####################################################################
+############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
+##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/racaljk/hosts                           ##
 ####################################################################
@@ -283,6 +290,7 @@ address=/ip6-loopback/::1
 
 #Modified hosts start
 EOF
+
 # 删除dnsmasq重复规则
 sort /tmp/fqad | uniq >> /tmp/fqad.conf
 # 删除dnsmasq合并缓存
@@ -310,8 +318,9 @@ sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
 cat > /tmp/noad.conf <<EOF
-####################################################################
+############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
+##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/vokins/hosts                            ##
 ## 感谢https://github.com/racaljk/hosts                           ##
@@ -326,6 +335,7 @@ cat > /tmp/noad.conf <<EOF
 
 #修饰hosts开始
 EOF
+
 # 删除hosts重复规则
 sort /tmp/noad | uniq >> /tmp/noad.conf
 # 删除hosts合并缓存
@@ -341,6 +351,7 @@ if [ -s "/tmp/fqad.conf" ]; then
 		echo "`date +'%Y-%m-%d %H:%M:%S'`: fqad本地规则和在线规则相同，无需更新！" && rm -f /tmp/fqad.conf
 	fi	
 fi
+echo
 if [ -s "/tmp/noad.conf" ]; then
 	if ( ! cmp -s /tmp/noad.conf /etc/dnsmasq/noad.conf ); then
 		mv /tmp/noad.conf /etc/dnsmasq/noad.conf
@@ -351,7 +362,9 @@ if [ -s "/tmp/noad.conf" ]; then
 		echo "`date +'%Y-%m-%d %H:%M:%S'`: noad本地规则和在线规则相同，无需更新！" && rm -f /tmp/noad.conf
 	fi	
 fi
-# 规则更新结束
+echo
+echo -e "\e[1;36m规则更新完成\e[0m"
+echo
 exit 0" > /etc/dnsmasq/fqad_update.sh
 # 换成上面echo的方式注入
 echo
