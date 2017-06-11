@@ -7,18 +7,19 @@ echo "# Copyright (c) 2014-2017,by clion007&zshwq5"
 echo "# 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
 echo "# 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。"
 echo "# openwrt类固件使用，包括但不限于pandorabox、LEDE、ddwrt等，Padavan系列固件慎用。"
-echo -e "# 安装前请\e[1;31m备份原配置\e[0m；安装过程中需要输入路由器相关配置信息，由此产生的一切后果自行承担！"
+echo -e "# 安装前请\e[1;31m备份原配置\e[0m；全自动无人值守安装，由此产生的一切后果自行承担！"
+echo -e "# 安装前请\e[1;31m检查确认路由器配置，lan IP必须是192.168.1.1\e[0m；全自动无人值守安装！"
 echo
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                        +"
-echo "+   Install Fq only for OpnWrt or LEDE or PandoraBox     +"
+echo "+   Install Fq noly for OpnWrt or LEDE or PandoraBox     +"
 echo "+                                                        +"
 echo "+                    Time 2017.06.10                     +"
 echo "+                                                        +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo "------------------------------------------------------------------"
-echo -e "\e[1;31m请先查询你的\e[1;36mlan网关ip\e[1;31m再选择,其中必须输入\e[1;36mlan网关ip\e[1;31m,默认：\e[1;36m'192.168.1.1'\e[0m"
+echo -e "\e[1;31m请先查询你的\e[1;36mlan网关ip\e[1;31m再选择,\e[1;36mlan网关ip\e[1;31m必须为：\e[1;36m'192.168.1.1'\e[0m"
 echo "------------------------------------------------------------------"
 echo
 echo -e "\e[1;36m >         1. 安装 \e[0m"
@@ -76,10 +77,8 @@ if [ -f /etc/dnsmasq.conf ]; then
 	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
 echo
-echo -e -n "\e[1;36m请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
-read lanip
-echo "# 添加监听地址（其中$lanip为你的lan网关ip）
-listen-address=$lanip,127.0.0.1
+echo "# 添加监听地址（其中192.168.1.1为你的lan网关ip）
+listen-address=192.168.1.1,127.0.0.1
 
 # 并发查询所有上游DNS服务器
 all-servers 
@@ -148,8 +147,10 @@ sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
 echo
 echo -e "\e[1;36m创建dnsmasq规则文件\e[0m"
-echo "####################################################################
+echo "
+############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
+##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/racaljk/hosts                           ##
 ####################################################################
@@ -177,6 +178,7 @@ sleep 2
 echo
 echo -e "\e[1;36m创建规则更新脚本\e[0m"
 echo "#!/bin/sh
+echo
 # Copyright (c) 2014-2017,by clion007
 # 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）
 # 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。
@@ -186,6 +188,7 @@ echo "#!/bin/sh
 #if [ $LOGSIZE -ge 5000 ]; then
 #	sed -i -e 1,10d $LOGFILE
 #fi
+
 # 更新dnsmasq规则
 # 下载sy618扶墙规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
@@ -206,8 +209,10 @@ sed -i '/localhost/d' /tmp/fq
 sed -i '/::1/d' /tmp/fq
 # 创建dnsmasq规则文件
 cat > /tmp/fq.conf <<EOF
-####################################################################
+
+############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
+##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/racaljk/hosts                           ##
 ####################################################################
@@ -236,7 +241,9 @@ if [ -s "/tmp/fq.conf" ]; then
 		echo "`date +'%Y-%m-%d %H:%M:%S'`: fq本地规则和在线规则相同，无需更新！" && rm -f /tmp/fq.conf
 	fi	
 fi
-# 规则更新结束
+echo
+echo -e "\e[1;36m规则更新完成\e[0m"
+echo
 exit 0" > /etc/dnsmasq/fq_update.sh
 # 换成上面echo的方式注入
 echo
@@ -246,14 +253,10 @@ echo -e "\e[1;31m添加计划任务\e[0m"
 chmod 755 /etc/dnsmasq/fq_update.sh
 echo
 sed -i '/dnsmasq/d' $CRON_FILE
-sed -i '/@/d' $CRON_FILE
-echo
-echo -e -n "\e[1;36m请输入更新时间(整点小时): \e[0m" 
-read timedata
 echo
 echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
 # 每天$timedata点28分更新dnsmasq扶墙规则
-28 $timedata * * * /bin/sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1" >> $CRON_FILE
+28 6 * * * /bin/sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo
 echo -e "\e[1;36m定时计划任务添加完成！\e[0m"
@@ -270,14 +273,7 @@ echo "+                                                        +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo 
-rm -f /tmp/fq.sh
-echo
-echo -e -n "\e[1;31m是否需要重启路由器？[y/n]：\e[0m" 
-read boot
-	if [ "$boot" = "y" ];then
-		echo
-		reboot
-	fi
+rm -f /tmp/fq_auto.sh
 fi
 echo
 if [ "$menu" == "2" ]; then
@@ -311,19 +307,13 @@ sleep 1
 echo
 echo -e "\e[1;31m重启dnsmasq\e[0m"
 	/etc/init.d/dnsmasq restart  >/dev/null 2>&1
-	rm -f /tmp/fq.sh
+	rm -f /tmp/fq_auto.sh
 echo
-echo -e -n "\e[1;31m是否需要重启路由器？[y/n]：\e[0m" 
-read boot
-	if [ "$boot" = "y" ];then
-		echo
-		reboot
-	fi
 fi
 echo
 if [ "$menu" == "3" ]; then
 echo
-rm -f /tmp/fq.sh
+rm -f /tmp/fq_auto.sh
 echo
 exit 0
 fi
