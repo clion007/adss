@@ -330,24 +330,24 @@ sort /tmp/noad | uniq >> /tmp/noad.conf
 # 删除hosts合并缓存
 rm -rf /tmp/noad
 
-if [ -s "/tmp/fqad.conf" ];then
-	if ( ! cmp -s /tmp/fqad.conf /etc/dnsmasq.d/fqad.conf );then
+if [ -s "/tmp/fqad.conf" ]; then
+	if ( ! cmp -s /tmp/fqad.conf /etc/dnsmasq.d/fqad.conf ); then
 		mv /tmp/fqad.conf /etc/dnsmasq.d/fqad.conf
-		echo "$(date "+%F %T"):检测到fqad规则有更新......开始转换规则！"
+		echo "`date +'%Y-%m-%d %H:%M:%S'`:检测到fqad规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart >/dev/null 2>&1
-		echo "$(date "+%F %T"): fqad规则转换完成，应用新规则。"
+		echo "`date +'%Y-%m-%d %H:%M:%S'`: fqad规则转换完成，应用新规则。"
 		else
-		echo "$(date "+%F %T"): fqad本地规则和在线规则相同，无需更新!" && rm -f /tmp/fqad.conf
+		echo "`date +'%Y-%m-%d %H:%M:%S'`: fqad本地规则和在线规则相同，无需更新！" && rm -f /tmp/fqad.conf
 	fi	
 fi
-if [ -s "/tmp/noad.conf" ];then
-	if ( ! cmp -s /tmp/noad.conf /etc/dnsmasq/noad.conf );then
+if [ -s "/tmp/noad.conf" ]; then
+	if ( ! cmp -s /tmp/noad.conf /etc/dnsmasq/noad.conf ); then
 		mv /tmp/noad.conf /etc/dnsmasq/noad.conf
-		echo "$(date "+%F %T"): 检测到noad规则有更新......开始转换规则！"
+		echo "`date +'%Y-%m-%d %H:%M:%S'`: 检测到noad规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart >/dev/null 2>&1
-		echo "$(date "+%F %T"): noad规则转换完成，应用新规则。"
+		echo "`date +'%Y-%m-%d %H:%M:%S'`: noad规则转换完成，应用新规则。"
 		else
-		echo "$(date "+%F %T"): noad本地规则和在线规则相同，无需更新!" && rm -f /tmp/noad.conf
+		echo "`date +'%Y-%m-%d %H:%M:%S'`: noad本地规则和在线规则相同，无需更新！" && rm -f /tmp/noad.conf
 	fi	
 fi
 # 规则更新结束
@@ -361,7 +361,8 @@ chmod 755 /etc/dnsmasq/fqad_update.sh
 echo
 sed -i '/dnsmasq/d' $CRON_FILE
 echo
-echo "# 每天6点28分更新dnsmasq和hosts规则
+echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
+# 每天$timedata点28分更新dnsmasq和hosts规则
 28 6 * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo
