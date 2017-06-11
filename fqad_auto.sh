@@ -128,7 +128,7 @@ echo -e "\e[1;36m下载sy618扶墙规则\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 echo
 echo -e "\e[1;36m下载racaljk规则\e[0m"
-wget --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 echo
 echo -e "\e[1;36m下载vokins广告规则\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
@@ -150,7 +150,7 @@ sleep 3
 #sed -i '/youtube/d' /tmp/racaljk.conf
 echo
 echo -e -n "\e[1;36m合并dnsmasq'hosts缓存\e[0m" 
-cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy168.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 #cat /etc/dnsmasq.d/userlist /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
 echo
@@ -241,7 +241,7 @@ echo "#!/bin/sh
 # 下载sy618扶墙规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 # 下载racaljk规则
-wget --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 # 下载vokins广告规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 # 下载easylistchina广告规则
@@ -250,7 +250,7 @@ wget --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubuserconten
 #sed -i '/google/d' /tmp/racaljk.conf
 #sed -i '/youtube/d' /tmp/racaljk.conf
 # 合并dnsmasq缓存
-cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy168.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 #cat /etc/dnsmasq.d/userlist /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 # 删除dnsmasq缓存
 rm -rf /tmp/ad.conf
@@ -265,7 +265,7 @@ sed -i '/#/d' /tmp/fqad
 sed -i '/localhost/d' /tmp/fqad
 sed -i '/::1/d' /tmp/fqad
 # 创建dnsmasq规则文件
-cat > /etc/tmp/fqad.conf <<EOF
+cat > /tmp/fqad.conf <<EOF
 ####################################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
 ## 感谢https://github.com/sy618/hosts                             ##
@@ -307,7 +307,7 @@ sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
-cat > /etc/tmp/noad.conf <<EOF
+cat > /tmp/noad.conf <<EOF
 ####################################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
 ## 感谢https://github.com/sy618/hosts                             ##
