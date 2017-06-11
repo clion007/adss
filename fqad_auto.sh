@@ -375,7 +375,7 @@ echo
 sed -i '/dnsmasq/d' $CRON_FILE
 echo
 echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
-# 每天$timedata点28分更新dnsmasq和hosts规则
+# 每天6点28分更新dnsmasq和hosts规则
 28 6 * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo
