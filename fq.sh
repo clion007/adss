@@ -226,14 +226,14 @@ sort /tmp/fq | uniq >> /tmp/fq.conf
 # 删除dnsmasq合并缓存
 rm -rf /tmp/fq
 
-if [ -s "/tmp/fq.conf" ];then
-	if ( ! cmp -s /tmp/fq.conf /etc/dnsmasq.d/fq.conf );then
+if [ -s "/tmp/fq.conf" ]; then
+	if ( ! cmp -s /tmp/fq.conf /etc/dnsmasq.d/fq.conf ); then
 		mv /tmp/fq.conf /etc/dnsmasq.d/fq.conf
-		echo "$(date "+%F %T"):检测到fq规则有更新......开始转换规则！"
+		echo "`date +'%Y-%m-%d %H:%M:%S'`:检测到fq规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart >/dev/null 2>&1
-		echo "$(date "+%F %T"): fq规则转换完成，应用新规则。"
+		echo "`date +'%Y-%m-%d %H:%M:%S'`: fq规则转换完成，应用新规则。"
 		else
-		echo "$(date "+%F %T"): fq本地规则和在线规则相同，无需更新!" && rm -f /tmp/fq.conf
+		echo "`date +'%Y-%m-%d %H:%M:%S'`: fq本地规则和在线规则相同，无需更新！" && rm -f /tmp/fq.conf
 	fi	
 fi
 # 规则更新结束
@@ -251,9 +251,7 @@ echo
 echo -e -n "\e[1;36m请输入更新时间(整点小时): \e[0m" 
 read timedata
 echo
-echo -e -n "\e[1;36m请输入路由器主机名称: \e[0m" 
-read hostname
-echo "[root@$hostname:/root]#cat /etc/crontabs/root
+echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
 # 每天$timedata点28分更新dnsmasq扶墙规则
 28 $timedata * * * /bin/sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
