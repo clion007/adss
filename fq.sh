@@ -1,7 +1,7 @@
 #!/bin/sh
 echo
 wgetroute="/usr/bin/wget-ssl"
-CRON_FILE=/etc/crontabs/root
+CRON_FILE=/etc/crontabs/$USER
 clear
 echo "# Copyright (c) 2014-2017,by clion007"
 echo "# 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
@@ -249,10 +249,8 @@ exit 0" > /etc/dnsmasq/fq_update.sh
 # 换成上面echo的方式注入
 echo
 sleep 1
-echo
 echo -e "\e[1;31m添加计划任务\e[0m"
 chmod 755 /etc/dnsmasq/fq_update.sh
-echo
 sed -i '/dnsmasq/d' $CRON_FILE
 sed -i '/@/d' $CRON_FILE
 echo
@@ -263,7 +261,6 @@ echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
 # 每天$timedata点28分更新dnsmasq扶墙规则
 28 $timedata * * * /bin/sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
-echo
 echo -e "\e[1;36m定时计划任务添加完成！\e[0m"
 sleep 1
 echo
