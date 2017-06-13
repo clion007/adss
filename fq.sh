@@ -40,6 +40,7 @@ opkg update
 sleep 2
 echo
 echo -e "\e[1;36m 开始检查并安装wget-支持https\e[0m"
+echo
 if [ -f $wgetroute ]; then
 	echo -e "\e[1;31m 系统已经安装wget-ssl软件\e[0m"
 	#opkg remove wget > /dev/null 2>&1
@@ -57,20 +58,17 @@ if [ -f $wgetroute ]; then
 fi
 echo
 sleep 3
-echo
 echo -e "\e[1;36m 创建广告规则与更新脚本存放的文件夹\e[0m"
 if [ -f /etc/dnsmasq ]; then
 	mv /etc/dnsmasq /etc/dnsmasq.bak
 fi
-echo
 if [ -f /etc/dnsmasq.d ]; then
 	mv /etc/dnsmasq.d /etc/dnsmasq.d.bak
 fi
-echo
 mkdir -p /etc/dnsmasq
 mkdir -p /etc/dnsmasq.d
-sleep 3
 echo
+sleep 3
 echo -e "\e[1;36m dnsmasq.conf 添加广告规则路径\e[0m"
 if [ -f /etc/dnsmasq.conf ]; then
 	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
@@ -99,7 +97,6 @@ echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
 cp /tmp/resolv.conf.auto /etc/dnsmasq/resolv.conf
-echo
 echo "# 上游DNS解析服务器
 nameserver 127.0.0.1
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
