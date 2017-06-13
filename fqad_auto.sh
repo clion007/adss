@@ -96,12 +96,12 @@ bogus-priv
 conf-file=/etc/dnsmasq.d/fqad.conf
 
 # 设定域名解析缓存池大小
-cache-size=5000" > /etc/dnsmasq.conf # 换成echo的方式注入
+cache-size=10000" > /etc/dnsmasq.conf # 换成echo的方式注入
 echo
 sleep 3
-echo
 echo -e "\e[1;36m创建上游DNS配置文件\e[0m"
 cp /tmp/resolv.conf.auto /etc/dnsmasq/resolv.conf
+echo
 echo "# 上游DNS解析服务器
 nameserver 127.0.0.1
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
@@ -116,9 +116,9 @@ nameserver 114.114.114.114
 #nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf # 换成echo的方式注入
 echo
 sleep 3
-echo
 echo -e -n "\e[1;36m创建自定义扶墙规则\e[0m"
-echo "# 规则格式,删除address前 # 生效，如有需要自己添加的规则，请打开userlist添加
+echo 
+echo "# 规则格式,删除address前 # 生效，如有需要自己添加的规则，请在下面添加
 # 后面的地址有两种情况,优选具体ip地址
 #address=/.001union.com/127.0.0.1
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
@@ -126,10 +126,10 @@ echo
 echo -e "\e[1;36m下载扶墙和广告规则\e[0m"
 echo
 echo -e "\e[1;36m下载sy618扶墙规则\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 echo
 echo -e "\e[1;36m下载racaljk规则\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 echo
 echo -e "\e[1;36m下载vokins广告规则\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
@@ -145,21 +145,41 @@ echo -e "\e[1;36m下载malwaredomainlist规则\e[0m"
 echo
 echo -e "\e[1;36m下载adaway规则缓存\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway.conf http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
+echo
 sleep 3
 #echo -e "\e[1;36m删除racaljk规则中google'youtube相关规则\e[0m"
-#sed -i '/google/d' /tmp/racaljk.conf
-#sed -i '/youtube/d' /tmp/racaljk.conf
+#sed -i '/google/d' /tmp/racaljk
+#sed -i '/youtube/d' /tmp/racaljk
+#echo
+echo -e "\e[1;36创建用户自定规则缓存\e[0m"
+cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
-echo -e -n "\e[1;36m合并dnsmasq'hosts缓存\e[0m" 
-cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-#cat /etc/dnsmasq.d/userlist /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+echo -e -n "\e[1;36m删除dnsmasq缓存注释\e[0m"
+sed -i '/#/d' /tmp/sy618
+sed -i '/#/d' /tmp/racaljk
+sed -i '/#/d' /tmp/ad.conf
+sed -i '/#/d' /tmp/easylistchina.conf
+sed -i '/#/d' /tmp/userlist
+echo
+echo -e -n "\e[1;36m扶墙网站指定到#443端口访问\e[0m"
+awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
+awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
+awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
+echo
+echo -e -n "\e[1;36m合并dnsmasq'hosts缓存\e[0m"
+cat /tmp/userlist.conf /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+#cat /tmp/userlist.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
 echo
 echo -e -n "\e[1;36m删除dnsmasq'hosts临时文件\e[0m"
+rm -rf /tmp/userlist
+rm -rf /tmp/userlist.conf
 rm -rf /tmp/ad.conf
 rm -rf /tmp/sy618.conf
+rm -rf /tmp/sy618
 rm -rf /tmp/easylistchina.conf
 rm -rf /tmp/racaljk.conf
+rm -rf /tmp/racaljk
 rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
 rm -rf /tmp/malwaredomainlist.conf
@@ -170,8 +190,7 @@ sed -i '/toutiao/d' /tmp/fqad
 sed -i '/360/d' /tmp/noad
 sed -i '/toutiao/d' /tmp/noad
 echo
-echo -e "\e[1;36m删除注释\e[0m"
-sed -i '/#/d' /tmp/fqad
+echo -e "\e[1;36m删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/fqad
 sed -i '/localhost/d' /tmp/fqad
 sed -i '/#/d' /tmp/noad
@@ -225,12 +244,11 @@ rm -rf /tmp/fqad
 rm -rf /tmp/noad
 echo
 sleep 3
-echo
 echo -e "\e[1;36m重启dnsmasq服务\e[0m"
 #killall dnsmasq
 	/etc/init.d/dnsmasq restart >/dev/null 2>&1
-sleep 2
 echo
+sleep 2
 echo -e "\e[1;36m创建规则更新脚本\e[0m"
 echo "#!/bin/sh
 echo
@@ -246,31 +264,55 @@ echo
 
 # 更新dnsmasq规则
 # 下载sy618扶墙规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618.conf https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 # 下载racaljk规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk.conf https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 # 下载vokins广告规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 # 下载easylistchina广告规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
+
 # 删除racaljk规则中google相关规则
-#sed -i '/google/d' /tmp/racaljk.conf
-#sed -i '/youtube/d' /tmp/racaljk.conf
+#sed -i '/google/d' /tmp/racaljk
+#sed -i '/youtube/d' /tmp/racaljk
+
+# 创建用户自定规则缓存
+cp /etc/dnsmasq.d/userlist /tmp/userlist
+
+# 删除注释
+sed -i '/#/d' /tmp/sy618
+sed -i '/#/d' /tmp/racaljk
+sed -i '/#/d' /tmp/ad.conf
+sed -i '/#/d' /tmp/easylistchina.conf
+sed -i '/#/d' /tmp/userlist
+
+# 扶墙网站指定到#443端口访问
+awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
+awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
+awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
+
 # 合并dnsmasq缓存
-cat /etc/dnsmasq.d/userlist /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-#cat /etc/dnsmasq.d/userlist /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /tmp/userlist.conf /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+#cat /tmp/userlist.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+
 # 删除dnsmasq缓存
+rm -rf /tmp/userlist
+rm -rf /tmp/userlist.conf
 rm -rf /tmp/ad.conf
+rm -rf /tmp/sy618
 rm -rf /tmp/sy618.conf
 rm -rf /tmp/easylistchina.conf
+rm -rf /tmp/racaljk
 rm -rf /tmp/racaljk.conf
+
 # 删除所有360和头条的规则
 sed -i '/360/d' /tmp/fqad
 sed -i '/toutiao/d' /tmp/fqad
-# 删除注释
-sed -i '/#/d' /tmp/fqad
+
+# 删除本地规则
 sed -i '/localhost/d' /tmp/fqad
 sed -i '/::1/d' /tmp/fqad
+
 # 创建dnsmasq规则文件
 cat > /tmp/fqad.conf <<EOF
 ############################################################
@@ -292,6 +334,7 @@ EOF
 
 # 删除dnsmasq重复规则
 sort /tmp/fqad | uniq >> /tmp/fqad.conf
+
 # 删除dnsmasq合并缓存
 rm -rf /tmp/fqad
 
@@ -302,20 +345,25 @@ rm -rf /tmp/fqad
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/malwaredomainlist.conf http://www.malwaredomainlist.com/hostslist/hosts.txt
 # 下载adaway规则缓存
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway.conf http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
+
 # 合并hosts缓存
 cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
+
 # 删除hosts缓存
 rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
 rm -rf /tmp/malwaredomainlist.conf
+
 # 删除所有360和头条的规则
 sed -i '/360/d' /tmp/noad
 sed -i '/toutiao/d' /tmp/noad
-# 删除注释
+
+# 删除注释及本地规则
 sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
+# 
 cat > /tmp/noad.conf <<EOF
 ############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
@@ -337,6 +385,7 @@ EOF
 
 # 删除hosts重复规则
 sort /tmp/noad | uniq >> /tmp/noad.conf
+
 # 删除hosts合并缓存
 rm -rf /tmp/noad
 
@@ -417,7 +466,6 @@ if [ -f /etc/dnsmasq.conf.bak ]; then
 fi
 echo
 sleep 1
-echo
 echo -e "\e[1;31m删除相关计划任务\e[0m"
 sed -i '/dnsmasq/d' $CRON_FILE
 /etc/init.d/cron reload
@@ -426,7 +474,6 @@ echo
 echo -e "\e[1;31m重启dnsmasq\e[0m"
 	/etc/init.d/dnsmasq restart  >/dev/null 2>&1
 	rm -f /tmp/fqad_auto.sh
-echo
 fi
 echo
 if [ "$menu" == "3" ]; then
