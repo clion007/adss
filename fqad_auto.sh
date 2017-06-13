@@ -60,10 +60,10 @@ fi
 echo
 sleep 3
 echo -e "\e[1;36m 创建广告规则与更新脚本存放的文件夹\e[0m"
-if [ -f /etc/dnsmasq/ ]; then
+if [ -f /etc/dnsmasq ]; then
 	mv /etc/dnsmasq/ /etc/dnsmasq.bak/
 fi
-if [ -f /etc/dnsmasq.d/ ]; then
+if [ -f /etc/dnsmasq.d ]; then
 	mv /etc/dnsmasq.d/ /etc/dnsmasq.d.bak/
 fi
 
@@ -287,11 +287,11 @@ echo
 echo -e "\e[1;31m 删除残留文件夹以及配置\e[0m"
 	rm -rf /etc/dnsmasq
 	rm -rf /etc/dnsmasq.d
-if [ -f /etc/dnsmasq.bak/ ]; then
+if [ -f /etc/dnsmasq.bak ]; then
 	mv /etc/dnsmasq.bak/ /etc/dnsmasq/
 fi
 echo
-if [ -f /etc/dnsmasq.d.bak/ ]; then
+if [ -f /etc/dnsmasq.d.bak ]; then
 	mv /etc/dnsmasq.d.bak/ /etc/dnsmasq.d/
 fi
 echo
