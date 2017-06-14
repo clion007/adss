@@ -59,7 +59,9 @@ if [ -f $wgetroute ]; then
 fi
 echo
 sleep 3
-echo -e "\e[1;36m 创建广告规则与更新脚本存放的文件夹\e[0m"
+echo -e "\e[1;36m 创建dnsmasq规则与更新脚本存放的文件夹\e[0m"
+echo
+echo -e "\e[1;36m 检测和备份当前dnsmasq配置信息\e[0m"
 if [ -d /etc/dnsmasq ]; then
 	mv /etc/dnsmasq /etc/dnsmasq.bak
 fi
@@ -76,7 +78,6 @@ echo -e "\e[1;36m dnsmasq.conf 添加广告规则路径\e[0m"
 if [ -f /etc/dnsmasq.conf ]; then
 	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
-echo
 echo "# 添加监听地址（其中192.168.1.1为你的lan网关ip）
 listen-address=192.168.1.1,127.0.0.1
 
