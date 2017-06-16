@@ -184,11 +184,15 @@ rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
 rm -rf /tmp/malwaredomainlist.conf
 echo
-echo -e "\e[1;36m 删除所有360和头条的规则\e[0m"
+echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
 sed -i '/360/d' /tmp/fqad
 sed -i '/toutiao/d' /tmp/fqad
+sed -i '/taobao/d' /tmp/fqad
+sed -i '/jd/d' /tmp/fqad
 sed -i '/360/d' /tmp/noad
 sed -i '/toutiao/d' /tmp/noad
+sed -i '/taobao/d' /tmp/noad
+sed -i '/jd/d' /tmp/noad
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/fqad
