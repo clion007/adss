@@ -52,6 +52,14 @@ rm -rf /tmp/racaljk
 sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
 
+# 删除被误杀的广告规则
+sed -i '/360/d' /tmp/fq
+sed -i '/toutiao/d' /tmp/fq
+sed -i '/taobao/d' /tmp/fq
+sed -i '/jd/d' /tmp/fq
+
+
+
 # 创建dnsmasq规则文件
 cat > /tmp/fq.conf <<EOF
 
