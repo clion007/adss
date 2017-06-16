@@ -157,9 +157,11 @@ rm -rf /tmp/sy618
 rm -rf /tmp/racaljk.conf
 rm -rf /tmp/racaljk
 echo
-echo -e "\e[1;36m 删除所有360和头条的规则\e[0m"
+echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
 sed -i '/360/d' /tmp/fq
 sed -i '/toutiao/d' /tmp/fq
+sed -i '/taobao/d' /tmp/fq
+sed -i '/jd/d' /tmp/fq
 echo
 echo -e "\e[1;36m 删除本地规则\e[0m"
 sed -i '/::1/d' /tmp/fq
