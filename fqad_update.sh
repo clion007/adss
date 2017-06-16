@@ -55,9 +55,11 @@ rm -rf /tmp/easylistchina.conf
 rm -rf /tmp/racaljk
 rm -rf /tmp/racaljk.conf
 
-# 删除所有360和头条的规则
+# 删除误杀的广告规则
 sed -i '/360/d' /tmp/fqad
 sed -i '/toutiao/d' /tmp/fqad
+sed -i '/taobao/d' /tmp/fqad
+sed -i '/jd/d' /tmp/fqad
 
 # 删除本地规则
 sed -i '/localhost/d' /tmp/fqad
@@ -104,8 +106,10 @@ rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
 rm -rf /tmp/malwaredomainlist.conf
 
-# 删除所有360和头条的规则
+# 删除被误杀的广告规则
 sed -i '/360/d' /tmp/noad
+sed -i '/toutiao/d' /tmp/noad
+sed -i '/jd/d' /tmp/noad
 sed -i '/toutiao/d' /tmp/noad
 
 # 删除注释及本地规则
