@@ -160,24 +160,24 @@ sed -i '/#/d' /tmp/ad.conf
 sed -i '/#/d' /tmp/easylistchina.conf
 sed -i '/#/d' /tmp/userlist
 echo
-echo -e -n "\e[1;36m 扶墙网站指定到#443端口访问\e[0m"
-awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
-awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
-awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
-echo
+#echo -e -n "\e[1;36m 扶墙网站指定到#443端口访问\e[0m"
+#awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
+#awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
+#awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
+#echo
 echo -e -n "\e[1;36m 合并dnsmasq'hosts缓存\e[0m"
-cat /tmp/userlist.conf /tmp/racaljk.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 #cat /tmp/userlist.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
 echo
 echo -e -n "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
 rm -rf /tmp/userlist
-rm -rf /tmp/userlist.conf
+#rm -rf /tmp/userlist.conf
 rm -rf /tmp/ad.conf
-rm -rf /tmp/sy618.conf
+#rm -rf /tmp/sy618.conf
 rm -rf /tmp/sy618
 rm -rf /tmp/easylistchina.conf
-rm -rf /tmp/racaljk.conf
+#rm -rf /tmp/racaljk.conf
 rm -rf /tmp/racaljk
 rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
