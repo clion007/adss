@@ -139,21 +139,21 @@ sed -i '/#/d' /tmp/sy618
 sed -i '/#/d' /tmp/racaljk
 sed -i '/#/d' /tmp/userlist
 echo
-echo -e -n "\e[1;36m 扶墙网站指定到#443端口访问\e[0m"
-awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
-awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
-awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
-echo
-echo -e -n "\e[1;36m 合并dnsmasq缓存\e[0m" 
-cat /tmp/userlist.conf /tmp/racaljk.conf /tmp/sy618.conf > /tmp/fq
+#echo -e -n "\e[1;36m 扶墙网站指定到#443端口访问\e[0m"
+#awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
+#awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
+#awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
+#echo
+echo -e -n "\e[1;36m 合并dnsmasq缓存\e[0m"
+cat /tmp/userlist /tmp/racaljk /tmp/sy618 > /tmp/fq
 #cat /tmp/userlist.conf /tmp/sy618.conf > /tmp/fq
 echo
 echo -e -n "\e[1;36m 删除dnsmasq临时文件\e[0m"
 rm -rf /tmp/userlist
-rm -rf /tmp/userlist.conf
-rm -rf /tmp/sy618.conf
+#rm -rf /tmp/userlist.conf
+#rm -rf /tmp/sy618.conf
 rm -rf /tmp/sy618
-rm -rf /tmp/racaljk.conf
+#rm -rf /tmp/racaljk.conf
 rm -rf /tmp/racaljk
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
