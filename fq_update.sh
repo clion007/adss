@@ -32,20 +32,20 @@ sed -i '/#/d' /tmp/racaljk
 sed -i '/#/d' /tmp/userlist
 
 # 扶墙网站指定到#443端口访问
-awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
-awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
-awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
+#awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
+#awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
+#awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
 
 # 合并dnsmasq缓存
-cat /tmp/userlist.conf /tmp/racaljk.conf /tmp/sy618.conf > /tmp/fq
+cat /tmp/userlist /tmp/racaljk /tmp/sy618 > /tmp/fq
 #cat /tmp/userlist.conf /tmp/sy618.conf > /tmp/fq
 
 # 删除dnsmasq临时文件
 rm -rf /tmp/userlist
-rm -rf /tmp/userlist.conf
-rm -rf /tmp/sy618.conf
+#rm -rf /tmp/userlist.conf
+#rm -rf /tmp/sy618.conf
 rm -rf /tmp/sy618
-rm -rf /tmp/racaljk.conf
+#rm -rf /tmp/racaljk.conf
 rm -rf /tmp/racaljk
 
 # 删除本地规则
