@@ -111,6 +111,7 @@ sed -i '/360/d' /tmp/noad
 sed -i '/toutiao/d' /tmp/noad
 sed -i '/taobao/d' /tmp/noad
 sed -i '/jd/d' /tmp/noad
+sed -i '/youku/d' /tmp/noad
 
 # 删除注释及本地规则
 sed -i '/#/d' /tmp/noad
