@@ -110,9 +110,9 @@ nameserver 8.8.4.4
 nameserver 119.29.29.29
 nameserver 4.2.2.2
 nameserver 114.114.114.114
-#nameserver 1.2.4.8
-#nameserver 223.5.5.5
-#nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf # 换成echo的方式注入
+nameserver 1.2.4.8
+nameserver 223.5.5.5
+nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf # 换成echo的方式注入
 echo
 sleep 3
 echo -e -n "\e[1;36m 创建自定义扶墙规则\e[0m"
@@ -127,9 +127,9 @@ echo
 echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 echo
-echo -e "\e[1;36m 下载racaljk规则\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
-echo
+#echo -e "\e[1;36m 下载racaljk规则\e[0m"
+#/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+#echo
 echo -e "\e[1;36m 下载vokins广告规则\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 echo
@@ -155,7 +155,7 @@ cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
 echo -e -n "\e[1;36m 删除dnsmasq缓存注释\e[0m"
 sed -i '/#/d' /tmp/sy618
-sed -i '/#/d' /tmp/racaljk
+#sed -i '/#/d' /tmp/racaljk
 sed -i '/#/d' /tmp/ad.conf
 sed -i '/#/d' /tmp/easylistchina.conf
 sed -i '/#/d' /tmp/userlist
@@ -166,19 +166,16 @@ echo
 #awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
 #echo
 echo -e -n "\e[1;36m 合并dnsmasq'hosts缓存\e[0m"
-cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-#cat /tmp/userlist.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+#cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
 echo
 echo -e -n "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
 rm -rf /tmp/userlist
-#rm -rf /tmp/userlist.conf
 rm -rf /tmp/ad.conf
-#rm -rf /tmp/sy618.conf
 rm -rf /tmp/sy618
 rm -rf /tmp/easylistchina.conf
-#rm -rf /tmp/racaljk.conf
-rm -rf /tmp/racaljk
+#rm -rf /tmp/racaljk
 rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
 rm -rf /tmp/malwaredomainlist.conf
