@@ -190,7 +190,7 @@ sed -i '/360/d' /tmp/noad
 sed -i '/toutiao/d' /tmp/noad
 sed -i '/taobao/d' /tmp/noad
 sed -i '/jd/d' /tmp/noad
-sed -i '/youku/d' /tmp/noad
+#sed -i '/youku/d' /tmp/noad
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/fqad
