@@ -16,7 +16,7 @@ echo " 开始更新dnsmasq规则"
 # 下载sy618扶墙规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 # 下载racaljk规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+#/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 # 下载vokins广告规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 # 下载easylistchina广告规则
@@ -31,7 +31,7 @@ cp /etc/dnsmasq.d/userlist /tmp/userlist
 
 # 删除注释
 sed -i '/#/d' /tmp/sy618
-sed -i '/#/d' /tmp/racaljk
+#sed -i '/#/d' /tmp/racaljk
 sed -i '/#/d' /tmp/ad.conf
 sed -i '/#/d' /tmp/easylistchina.conf
 sed -i '/#/d' /tmp/userlist
@@ -42,24 +42,22 @@ sed -i '/#/d' /tmp/userlist
 #awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
 
 # 合并dnsmasq缓存
-cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-#cat /tmp/userlist.conf /tmp/sy618.conf /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+#cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 
 # 删除dnsmasq缓存
 rm -rf /tmp/userlist
-#rm -rf /tmp/userlist.conf
 rm -rf /tmp/ad.conf
 rm -rf /tmp/sy618
-#rm -rf /tmp/sy618.conf
 rm -rf /tmp/easylistchina.conf
-rm -rf /tmp/racaljk
-#rm -rf /tmp/racaljk.conf
+#rm -rf /tmp/racaljk
 
 # 删除所有360和头条的规则
 sed -i '/360/d' /tmp/fqad
 sed -i '/toutiao/d' /tmp/fqad
 sed -i '/taobao/d' /tmp/fqad
 sed -i '/jd/d' /tmp/fqad
+sed -i '/tmall/d' /tmp/fqad
 
 # 删除本地规则
 sed -i '/localhost/d' /tmp/fqad
@@ -111,6 +109,7 @@ sed -i '/360/d' /tmp/noad
 sed -i '/toutiao/d' /tmp/noad
 sed -i '/taobao/d' /tmp/noad
 sed -i '/jd/d' /tmp/noad
+sed -i '/tmall/d' /tmp/noad
 sed -i '/youku/d' /tmp/noad
 
 # 删除注释及本地规则
