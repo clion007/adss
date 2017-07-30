@@ -144,7 +144,17 @@ echo -e "\e[1;36m 下载malwaredomainlist规则\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/malwaredomainlist.conf http://www.malwaredomainlist.com/hostslist/hosts.txt
 echo
 echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway.conf http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway5 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=o&mimetype=plaintext
+cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 /tmp/adaway5 > /tmp/adaway.conf
+rm -rf /tmp/adaway
+rm -rf /tmp/adaway2
+rm -rf /tmp/adaway3
+rm -rf /tmp/adaway4
+rm -rf /tmp/adaway5
 echo
 sleep 3
 #echo -e "\e[1;36m 删除racaljk规则中google'youtube相关规则\e[0m"
