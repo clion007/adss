@@ -17,7 +17,7 @@ echo " 开始更新dnsmasq规则"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 
 # 下载racaljk规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+#/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 
 # 删除racaljk规则中google'youtube相关规则
 #sed -i '/google/d' /tmp/racaljk
@@ -28,37 +28,26 @@ cp /etc/dnsmasq.d/userlist /tmp/userlist
 
 # 删除dnsmasq缓存注释
 sed -i '/#/d' /tmp/sy618
-sed -i '/#/d' /tmp/racaljk
+#sed -i '/#/d' /tmp/racaljk
 sed -i '/#/d' /tmp/userlist
 
 # 扶墙网站指定到#443端口访问
-#awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
-#awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
-#awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
+#awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618
+#awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk
+#awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist
 
 # 合并dnsmasq缓存
-cat /tmp/userlist /tmp/racaljk /tmp/sy618 > /tmp/fq
-#cat /tmp/userlist.conf /tmp/sy618.conf > /tmp/fq
+#cat /tmp/userlist /tmp/racaljk /tmp/sy618 > /tmp/fq
+cat /tmp/userlist /tmp/sy618 > /tmp/fq
 
 # 删除dnsmasq临时文件
 rm -rf /tmp/userlist
-#rm -rf /tmp/userlist.conf
-#rm -rf /tmp/sy618.conf
 rm -rf /tmp/sy618
-#rm -rf /tmp/racaljk.conf
-rm -rf /tmp/racaljk
+#rm -rf /tmp/racaljk
 
 # 删除本地规则
 sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
-
-# 删除被误杀的广告规则
-sed -i '/360/d' /tmp/fq
-sed -i '/toutiao/d' /tmp/fq
-sed -i '/taobao/d' /tmp/fq
-sed -i '/jd/d' /tmp/fq
-
-
 
 # 创建dnsmasq规则文件
 cat > /tmp/fq.conf <<EOF
