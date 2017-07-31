@@ -1,4 +1,4 @@
-# dnsmasq超强大的dnsmasq及hosts扶墙去广告全自动脚本
+# 超强大的dnsmasq及hosts扶墙去广告全自动脚本
 
 1、什么是Dnsmasq啊？（转自百度百科，不知道就百度）
 
