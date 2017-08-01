@@ -51,10 +51,9 @@ sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
 
 # 创建dnsmasq规则文件
-cat > /tmp/fq.conf <<EOF
-
+echo "
 ############################################################
-##【Copyright (c) 2014-2017, clion007】                           ##
+## 【Copyright (c) 2014-2017, clion007】                          ##
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/racaljk/hosts                           ##
@@ -67,11 +66,12 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-#Modified hosts start
-EOF
+# Modified hosts start
+" > /tmp/fq.conf
 
 # 删除dnsmasq重复规则
 sort /tmp/fq | uniq >> /tmp/fq.conf
+echo "# Modified DNS end" >> /tmp/fq.conf
 
 # 删除dnsmasq合并缓存
 rm -rf /tmp/fq
@@ -80,7 +80,7 @@ if [ -s "/tmp/fq.conf" ]; then
 	if ( ! cmp -s /tmp/fq.conf /etc/dnsmasq.d/fq.conf ); then
 		mv /tmp/fq.conf /etc/dnsmasq.d/fq.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到fq规则有更新......开始转换规则！"
-		/etc/init.d/dnsmasq restart >/dev/null 2>&1
+		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: fq规则转换完成，应用新规则。"
 		else
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: fq本地规则和在线规则相同，无需更新！" && rm -f /tmp/fq.conf
