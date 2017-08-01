@@ -174,17 +174,18 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-#Modified hosts start
+# Modified hosts start
 " > /etc/dnsmasq.d/fq.conf # 换成echo的方式注入
 echo
 echo -e "\e[1;36m 删除dnsmasq重复规则及相关临时文件\e[0m"
 sort /tmp/fq | uniq >> /etc/dnsmasq.d/fq.conf
+echo "# Modified DNS end" >> /etc/dnsmasq.d/fq.conf
 rm -rf /tmp/fq
 echo
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 #killall dnsmasq
-	/etc/init.d/dnsmasq restart >/dev/null 2>&1
+	/etc/init.d/dnsmasq restart > /dev/null 2>&1
 echo
 sleep 2
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
@@ -246,7 +247,7 @@ sed -i '/dnsmasq/d' $CRON_FILE
 sleep 1
 echo
 echo -e "\e[1;31m 重启dnsmasq\e[0m"
-	/etc/init.d/dnsmasq restart  >/dev/null 2>&1
+	/etc/init.d/dnsmasq restart > /dev/null 2>&1
 	rm -f /tmp/fq_auto.sh
 fi
 echo
