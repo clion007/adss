@@ -65,7 +65,7 @@ sed -i '/localhost/d' /tmp/fqad
 sed -i '/::1/d' /tmp/fqad
 
 # 创建dnsmasq规则文件
-cat > /tmp/fqad.conf <<EOF
+echo "
 ############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
 ##                                                                ##
@@ -80,11 +80,12 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-#Modified hosts start
-EOF
+# Modified DNS start
+" > /tmp/fqad.conf
 
 # 删除dnsmasq重复规则
 sort /tmp/fqad | uniq >> /tmp/fqad.conf
+echo "# Modified DNS end" >> /tmp/fqad.conf
 
 # 删除dnsmasq合并缓存
 rm -rf /tmp/fqad
@@ -98,7 +99,7 @@ echo " 开始更新hosts规则"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt;sed -i '/tv.sohu.com/d' /tmp/adaway4
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt ; sed -i '/tv.sohu.com/d' /tmp/adaway4
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway5 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=o&mimetype=plaintext'
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 /tmp/adaway5 > /tmp/adaway.conf
 rm -rf /tmp/adaway
@@ -128,8 +129,14 @@ sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
-# 
-cat > /tmp/noad.conf <<EOF
+
+# 转为Unix文件格式并统一规则格式
+sed -i "s/.$//g" /tmp/noad
+sed -i "s/  / /g" /tmp/noad
+sed -i "s/	/ /g" /tmp/noad
+
+# 创建hosts规则文件
+echo "
 ############################################################
 ##【Copyright (c) 2014-2017, clion007】                           ##
 ##                                                                ##
@@ -138,18 +145,19 @@ cat > /tmp/noad.conf <<EOF
 ## 感谢https://github.com/racaljk/hosts                           ##
 ####################################################################
 
-#默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
+# 默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
 127.0.0.1 localhost
 ::1	localhost
 ::1	ip6-localhost
 ::1	ip6-loopback
-#默认hosts结束
+# 默认hosts结束
 
-#修饰hosts开始
-EOF
+# 修饰hosts开始
+" > /tmp/noad.conf
 
 # 删除hosts重复规则
 sort /tmp/noad | uniq >> /tmp/noad.conf
+echo "# 修饰hosts结束" >> /tmp/noad.conf
 
 # 删除hosts合并缓存
 rm -rf /tmp/noad
@@ -158,7 +166,7 @@ if [ -s "/tmp/fqad.conf" ]; then
 	if ( ! cmp -s /tmp/fqad.conf /etc/dnsmasq.d/fqad.conf ); then
 		mv /tmp/fqad.conf /etc/dnsmasq.d/fqad.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到fqad规则有更新......开始转换规则！"
-		/etc/init.d/dnsmasq restart >/dev/null 2>&1
+		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: fqad规则转换完成，应用新规则。"
 		else
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: fqad本地规则和在线规则相同，无需更新！" && rm -f /tmp/fqad.conf
@@ -169,7 +177,7 @@ if [ -s "/tmp/noad.conf" ]; then
 	if ( ! cmp -s /tmp/noad.conf /etc/dnsmasq/noad.conf ); then
 		mv /tmp/noad.conf /etc/dnsmasq/noad.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到noad规则有更新......开始转换规则！"
-		/etc/init.d/dnsmasq restart >/dev/null 2>&1
+		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad规则转换完成，应用新规则。"
 		else
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad本地规则和在线规则相同，无需更新！" && rm -f /tmp/noad.conf
