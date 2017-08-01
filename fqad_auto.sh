@@ -8,7 +8,8 @@ echo
 echo "# 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
 echo "# 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。"
 echo "# openwrt类固件使用，包括但不限于pandorabox、LEDE、ddwrt、明月、石像鬼等，华硕、老毛子、梅林等Padavan系列固件慎用。"
-echo -e "# 安装前请\e[1;31m备份原配置\e[0m；安装过程中需要输入路由器相关配置信息，由此产生的一切后果自行承担！"
+echo -e "# 安装前请\e[1;31m备份原配置\e[0m；由此产生的一切后果自行承担！"
+echo -e "# 安装前请\e[1;31m检查确认路由器配置，lan IP必须是192.168.1.1\e[0m；全自动无人值守安装！"
 echo
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                          +"
@@ -19,7 +20,7 @@ echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo "------------------------------------------------------------------"
-echo -e "\e[1;31m 请先查询你的\e[1;36mlan网关ip\e[1;31m再选择,其中必须输入\e[1;36mlan网关ip\e[1;31m,默认：\e[1;36m'192.168.1.1'\e[0m"
+echo -e "\e[1;31m 请先查询你的\e[1;36mlan网关ip\e[1;31m再选择,\e[1;36mlan网关ip\e[1;31m必须为：\e[1;36m'192.168.1.1'\e[0m"
 echo "------------------------------------------------------------------"
 echo
 echo -e "\e[1;36m >         1. 安装 \e[0m"
@@ -68,18 +69,18 @@ fi
 if [ -d /etc/dnsmasq.d ]; then
 	mv /etc/dnsmasq.d /etc/dnsmasq.d.bak
 fi
+
 mkdir -p /etc/dnsmasq
 mkdir -p /etc/dnsmasq.d
+
 echo
 sleep 3
 echo -e "\e[1;36m dnsmasq.conf 添加广告规则路径\e[0m"
 if [ -f /etc/dnsmasq.conf ]; then
 	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
-echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
-read lanip
-echo "# 添加监听地址（其中$lanip为你的lan网关ip）
-listen-address=$lanip,127.0.0.1
+echo "# 添加监听地址（其中192.168.1.1为你的lan网关ip）
+listen-address=192.168.1.1,127.0.0.1
 
 # 并发查询所有上游DNS服务器
 all-servers 
@@ -105,7 +106,7 @@ cp /tmp/resolv.conf.auto /etc/dnsmasq/resolv.conf
 echo "# 上游DNS解析服务器
 nameserver 127.0.0.1
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
-# 选择最快的服务器，打开resolv文件依次按速度快慢顺序手动改写
+# 选择最快的服务器，打开文件依次按速度快慢顺序手动改写
 nameserver 218.30.118.6
 nameserver 8.8.4.4
 nameserver 119.29.29.29
@@ -117,7 +118,7 @@ nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf # 换成echo的方式注
 echo
 sleep 3
 echo -e -n "\e[1;36m 创建自定义扶墙规则\e[0m"
-echo
+echo 
 echo "# 规则格式,删除address前 # 生效，如有需要自己添加的规则，请在下面添加
 # 后面的地址有两种情况,优选具体ip地址
 #address=/.001union.com/127.0.0.1
@@ -147,7 +148,7 @@ echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt;sed -i '/tv.sohu.com/d' /tmp/adaway4
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt ; sed -i '/tv.sohu.com/d' /tmp/adaway4
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway5 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=o&mimetype=plaintext'
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 /tmp/adaway5 > /tmp/adaway.conf
 rm -rf /tmp/adaway
@@ -197,9 +198,9 @@ sed -i '/toutiao/d' /tmp/fqad
 sed -i '/taobao/d' /tmp/fqad
 sed -i '/jd/d' /tmp/fqad
 sed -i '/360/d' /tmp/noad
+sed -i '/toutiao/d' /tmp/noad
 sed -i '/taobao/d' /tmp/noad
 sed -i '/jd/d' /tmp/noad
-sed -i '/toutiao/d' /tmp/noad
 #sed -i '/youku/d' /tmp/noad
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
@@ -209,6 +210,12 @@ sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
+echo
+echo -e -n "\e[1;36m 转为Unix文件格式并统一规则格式\e[0m"
+sed -i "s/.$//g" /tmp/fqad
+sed -i "s/.$//g" /tmp/noad
+sed -i "s/  / /g" /tmp/noad
+sed -i "s/	/ /g" /tmp/noad
 echo
 echo -e "\e[1;36m 创建dnsmasq规则文件\e[0m"
 echo "
@@ -226,7 +233,7 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-#Modified hosts start
+# Modified DNS start
 " > /etc/dnsmasq.d/fqad.conf # 换成echo的方式注入
 echo
 echo -e "\e[1;36m 创建hosts规则文件\e[0m"
@@ -239,26 +246,28 @@ echo "
 ## 感谢https://github.com/racaljk/hosts                           ##
 ####################################################################
 
-#默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
+# 默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
 127.0.0.1 localhost
 ::1	localhost
 ::1	ip6-localhost
 ::1	ip6-loopback
-#默认hosts结束
+# 默认hosts结束
 
-#修饰hosts开始
+# 修饰hosts开始
 " > /etc/dnsmasq/noad.conf # 换成echo的方式注入
 echo
-echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及相关临时文件\e[0m"
+echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
 sort /tmp/fqad | uniq >> /etc/dnsmasq.d/fqad.conf
 sort /tmp/noad | uniq >> /etc/dnsmasq/noad.conf
 rm -rf /tmp/fqad
 rm -rf /tmp/noad
+echo "# Modified DNS end" >> /etc/dnsmasq.d/fqad.conf
+echo "# 修饰hosts结束" >> /etc/dnsmasq/noad.conf
 echo
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 #killall dnsmasq
-	/etc/init.d/dnsmasq restart >/dev/null 2>&1
+	/etc/init.d/dnsmasq restart > /dev/null 2>&1
 echo
 sleep 2
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
@@ -270,13 +279,9 @@ chmod 755 /etc/dnsmasq/fqad_update.sh
 sed -i '/dnsmasq/d' $CRON_FILE
 sed -i '/@/d' $CRON_FILE
 echo
-echo -e -n "\e[1;36m 请输入更新时间(整点小时): \e[0m" 
-read timedata
-echo
 echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
-# 每天$timedata点28分更新dnsmasq和hosts规则
-28 $timedata * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1
-#/tmp/fqad_update.log 2>&1" >> $CRON_FILE
+# 每天6点28分更新dnsmasq和hosts规则
+28 6 * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 sleep 1
@@ -292,21 +297,13 @@ echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo 
-rm -f /tmp/fqad.sh
-echo
-echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
-read boot
-	if [ "$boot" = "y" ];then
-		echo
-		reboot
-	fi
+rm -f /tmp/fqad_auto.sh
 fi
 echo
 if [ "$menu" == "2" ]; then
 echo
 echo -e "\e[1;31m 开始卸载dnsmasq扶墙及广告规则\e[0m"
 	rm -f /var/lock/opkg.lock
-	#opkg remove wget > /dev/null 2>&1
 sleep 1
 echo
 echo -e "\e[1;31m 删除残留文件夹以及配置\e[0m"
@@ -328,25 +325,17 @@ echo
 sleep 1
 echo -e "\e[1;31m 删除相关计划任务\e[0m"
 sed -i '/dnsmasq/d' $CRON_FILE
-# echo '' > $CRON_FILE
 /etc/init.d/cron reload
 sleep 1
 echo
 echo -e "\e[1;31m 重启dnsmasq\e[0m"
-	/etc/init.d/dnsmasq restart  >/dev/null 2>&1
-	rm -f /tmp/fqad.sh
-echo
-echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
-read boot
-	if [ "$boot" = "y" ];then
-		echo
-		reboot
-	fi
+	/etc/init.d/dnsmasq restart > /dev/null 2>&1
+	rm -f /tmp/fqad_auto.sh
 fi
 echo
 if [ "$menu" == "3" ]; then
 echo
-rm -f /tmp/fqad.sh
+rm -f /tmp/fqad_auto.sh
 echo
 exit 0
 fi
