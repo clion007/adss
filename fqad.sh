@@ -219,7 +219,7 @@ echo
 echo -e "\e[1;36m 创建dnsmasq规则文件\e[0m"
 echo "
 ############################################################
-##【Copyright (c) 2014-2017, clion007】                           ##
+## 【Copyright (c) 2014-2017, clion007】                           ##
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/racaljk/hosts                           ##
@@ -238,7 +238,7 @@ echo
 echo -e "\e[1;36m 创建hosts规则文件\e[0m"
 echo "
 ############################################################
-##【Copyright (c) 2014-2017, clion007】                           ##
+## 【Copyright (c) 2014-2017, clion007】                           ##
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/vokins/hosts                            ##
