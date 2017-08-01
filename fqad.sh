@@ -147,7 +147,7 @@ echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt;sed -i '/tv.sohu.com/d' /tmp/adaway4
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt ; sed -i '/tv.sohu.com/d' /tmp/adaway4
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway5 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=o&mimetype=plaintext'
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 /tmp/adaway5 > /tmp/adaway.conf
 rm -rf /tmp/adaway
@@ -210,6 +210,12 @@ sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
 echo
+echo -e -n "\e[1;36m 转为Unix文件格式并统一规则格式\e[0m"
+sed -i "s/.$//g" /tmp/fqad
+sed -i "s/.$//g" /tmp/noad
+sed -i "s/  / /g" /tmp/noad
+sed -i "s/	/ /g" /tmp/noad
+echo
 echo -e "\e[1;36m 创建dnsmasq规则文件\e[0m"
 echo "
 ############################################################
@@ -226,7 +232,7 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-#Modified hosts start
+# Modified DNS start
 " > /etc/dnsmasq.d/fqad.conf # 换成echo的方式注入
 echo
 echo -e "\e[1;36m 创建hosts规则文件\e[0m"
@@ -239,26 +245,28 @@ echo "
 ## 感谢https://github.com/racaljk/hosts                           ##
 ####################################################################
 
-#默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
+# 默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
 127.0.0.1 localhost
 ::1	localhost
 ::1	ip6-localhost
 ::1	ip6-loopback
-#默认hosts结束
+# 默认hosts结束
 
-#修饰hosts开始
+# 修饰hosts开始
 " > /etc/dnsmasq/noad.conf # 换成echo的方式注入
 echo
-echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及相关临时文件\e[0m"
+echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
 sort /tmp/fqad | uniq >> /etc/dnsmasq.d/fqad.conf
 sort /tmp/noad | uniq >> /etc/dnsmasq/noad.conf
 rm -rf /tmp/fqad
 rm -rf /tmp/noad
+echo "# Modified DNS end" >> /etc/dnsmasq.d/fqad.conf
+echo "# 修饰hosts结束" >> /etc/dnsmasq/noad.conf
 echo
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 #killall dnsmasq
-	/etc/init.d/dnsmasq restart >/dev/null 2>&1
+	/etc/init.d/dnsmasq restart > /dev/null 2>&1
 echo
 sleep 2
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
@@ -333,7 +341,7 @@ sed -i '/dnsmasq/d' $CRON_FILE
 sleep 1
 echo
 echo -e "\e[1;31m 重启dnsmasq\e[0m"
-	/etc/init.d/dnsmasq restart  >/dev/null 2>&1
+	/etc/init.d/dnsmasq restart > /dev/null 2>&1
 	rm -f /tmp/fqad.sh
 echo
 echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
