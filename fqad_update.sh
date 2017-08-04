@@ -23,24 +23,12 @@ echo " 开始更新dnsmasq规则"
 # 下载easylistchina广告规则
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
 
-# 删除racaljk规则中google相关规则
+# 删除racaljk规则中的冲突规则
 #sed -i '/google/d' /tmp/racaljk
 #sed -i '/youtube/d' /tmp/racaljk
 
 # 创建用户自定规则缓存
 cp /etc/dnsmasq.d/userlist /tmp/userlist
-
-# 删除注释
-sed -i '/#/d' /tmp/sy618
-#sed -i '/#/d' /tmp/racaljk
-sed -i '/#/d' /tmp/ad.conf
-sed -i '/#/d' /tmp/easylistchina.conf
-sed -i '/#/d' /tmp/userlist
-
-# 扶墙网站指定到#443端口访问
-#awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
-#awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
-#awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
 
 # 合并dnsmasq缓存
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
@@ -53,17 +41,21 @@ rm -rf /tmp/sy618
 rm -rf /tmp/easylistchina.conf
 #rm -rf /tmp/racaljk
 
-# 删除所有360和头条的规则
-sed -i '/360/d' /tmp/fqad
-sed -i '/toutiao/d' /tmp/fqad
-sed -i '/taobao/d' /tmp/fqad
-sed -i '/jd/d' /tmp/fqad
-sed -i '/tmall/d' /tmp/fqad
+# 删除误杀广告规则
+while read -r line
+do
+	sed -i "/$line/d" /tmp/fqad
+done < /etc/dnsmasq/whitelist
 
-# 删除本地规则
+# 删除注释和本地规则
+sed -i '/#/d' /tmp/fqad
 sed -i '/localhost/d' /tmp/fqad
 sed -i '/::1/d' /tmp/fqad
 
+echo -e -n " 统一广告规则格式"
+sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/fqad
+sed -i "s/  / /g" /tmp/fqad
+echo
 # 创建dnsmasq规则文件
 echo "
 ############################################################
@@ -94,12 +86,12 @@ echo " 开始更新hosts规则"
 # 下载yhosts缓存
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
 # 下载malwaredomainlist规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/malwaredomainlist.conf http://www.malwaredomainlist.com/hostslist/hosts.txt
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/malwaredomainlist.conf http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/malwaredomainlist.conf
 # 下载adaway规则缓存
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt ; sed -i '/tv.sohu.com/d' /tmp/adaway4
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway5 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=o&mimetype=plaintext'
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 /tmp/adaway5 > /tmp/adaway.conf
 rm -rf /tmp/adaway
@@ -107,22 +99,26 @@ rm -rf /tmp/adaway2
 rm -rf /tmp/adaway3
 rm -rf /tmp/adaway4
 rm -rf /tmp/adaway5
-
+echo
+echo -e " 创建自定义广告黑名单缓存"
+cp /etc/dnsmasq/blacklist /tmp/blacklist
+sed -i "/#/d" /tmp/blacklist
+sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
+echo
 # 合并hosts缓存
-cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
+cat cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
 
 # 删除hosts缓存
+rm -rf /tmp/blacklist
 rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
 rm -rf /tmp/malwaredomainlist.conf
 
-# 删除所有360和头条的规则
-sed -i '/360/d' /tmp/noad
-sed -i '/toutiao/d' /tmp/noad
-sed -i '/taobao/d' /tmp/noad
-sed -i '/jd/d' /tmp/noad
-sed -i '/tmall/d' /tmp/noad
-#sed -i '/youku/d' /tmp/noad
+# 删除误杀广告规则
+while read -r line
+do
+	sed -i "/$line/d" /tmp/noad
+done < /etc/dnsmasq/whitelist
 
 # 删除注释及本地规则
 sed -i '/#/d' /tmp/noad
@@ -130,11 +126,11 @@ sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
 
-# 转为Unix文件格式并统一规则格式
-sed -i "s/.$//g" /tmp/noad
+echo -e -n " 统一广告规则格式"
 sed -i "s/  / /g" /tmp/noad
 sed -i "s/	/ /g" /tmp/noad
-
+sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/noad
+echo
 # 创建hosts规则文件
 echo "
 ############################################################
