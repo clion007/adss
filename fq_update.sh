@@ -20,22 +20,12 @@ echo " 开始更新dnsmasq规则"
 # 下载racaljk规则
 #/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 
-# 删除racaljk规则中google'youtube相关规则
+# 删除racaljk规则中的冲突规则
 #sed -i '/google/d' /tmp/racaljk
 #sed -i '/youtube/d' /tmp/racaljk
 
 # 创建用户自定规则缓存
 cp /etc/dnsmasq.d/userlist /tmp/userlist
-
-# 删除dnsmasq缓存注释
-sed -i '/#/d' /tmp/sy618
-#sed -i '/#/d' /tmp/racaljk
-sed -i '/#/d' /tmp/userlist
-
-# 扶墙网站指定到#443端口访问
-#awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618
-#awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk
-#awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist
 
 # 合并dnsmasq缓存
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 > /tmp/fq
@@ -46,7 +36,8 @@ rm -rf /tmp/userlist
 rm -rf /tmp/sy618
 #rm -rf /tmp/racaljk
 
-# 删除本地规则
+# 删除注释与本地规则
+sed -i '/#/d' /tmp/fq
 sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
 
