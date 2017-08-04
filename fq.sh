@@ -72,10 +72,11 @@ mkdir -p /etc/dnsmasq
 mkdir -p /etc/dnsmasq.d
 echo
 sleep 3
-echo -e "\e[1;36m dnsmasq.conf 添加广告规则路径\e[0m"
+echo -e "\e[1;36m 配置dnsmasq\e[0m"
 if [ -f /etc/dnsmasq.conf ]; then
 	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
+echo
 echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
 read lanip
 echo "# 添加监听地址（其中$lanip为你的lan网关ip）
@@ -94,7 +95,7 @@ bogus-priv
 conf-file=/etc/dnsmasq.d/fq.conf
 
 # 设定域名解析缓存池大小
-cache-size=10000" > /etc/dnsmasq.conf # 换成echo的方式注入
+cache-size=10000" > /etc/dnsmasq.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
@@ -110,13 +111,13 @@ nameserver 4.2.2.2
 nameserver 114.114.114.114
 nameserver 1.2.4.8
 nameserver 223.5.5.5
-nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf # 换成echo的方式注入
+nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf
 echo
 sleep 3
 echo -e -n "\e[1;36m 创建自定义扶墙规则\e[0m"
 echo
-echo "# 规则格式,删除address前 # 生效，如有需要自己添加的规则，请在下面添加
-# 后面的地址有两种情况,优选具体ip地址
+echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
+# 正确ip地址表示DNS解析扶墙，127地址表示去广告
 #address=/.001union.com/127.0.0.1
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
 echo
@@ -129,23 +130,13 @@ echo
 #/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 #echo
 sleep 3
-#echo -e "\e[1;36m 删除racaljk规则中google'youtube相关规则\e[0m"
+#echo -e "\e[1;36m 删除racaljk规则中的冲突规则\e[0m"
 #sed -i '/google/d' /tmp/racaljk
 #sed -i '/youtube/d' /tmp/racaljk
 #echo
 echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
-echo -e -n "\e[1;36m 删除dnsmasq缓存注释\e[0m"
-sed -i '/#/d' /tmp/sy618
-#sed -i '/#/d' /tmp/racaljk
-sed -i '/#/d' /tmp/userlist
-echo
-#echo -e -n "\e[1;36m 扶墙网站指定到#443端口访问\e[0m"
-#awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618
-#awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk
-#awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist
-#echo
 echo -e -n "\e[1;36m 合并dnsmasq缓存\e[0m"
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 > /tmp/fq
 cat /tmp/userlist /tmp/sy618 > /tmp/fq
@@ -155,7 +146,8 @@ rm -rf /tmp/userlist
 rm -rf /tmp/sy618
 #rm -rf /tmp/racaljk
 echo
-echo -e "\e[1;36m 删除本地规则\e[0m"
+echo -e "\e[1;36m 删除注释和本地规则\e[0m"
+sed -i '/#/d' /tmp/fq
 sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
 echo
@@ -176,7 +168,7 @@ address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
 # Modified DNS start
-" > /etc/dnsmasq.d/fq.conf # 换成echo的方式注入
+" > /etc/dnsmasq.d/fq.conf
 echo
 echo -e "\e[1;36m 删除dnsmasq重复规则及相关临时文件\e[0m"
 sort /tmp/fq | uniq >> /etc/dnsmasq.d/fq.conf
