@@ -72,10 +72,11 @@ mkdir -p /etc/dnsmasq
 mkdir -p /etc/dnsmasq.d
 echo
 sleep 3
-echo -e "\e[1;36m dnsmasq.conf 添加广告规则路径\e[0m"
+echo -e "\e[1;36m 配置dnsmasq及hosts\e[0m"
 if [ -f /etc/dnsmasq.conf ]; then
 	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
+echo
 echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
 read lanip
 echo "# 添加监听地址（其中$lanip为你的lan网关ip）
@@ -97,7 +98,7 @@ bogus-priv
 conf-file=/etc/dnsmasq.d/fqad.conf
 
 # 设定域名解析缓存池大小
-cache-size=10000" > /etc/dnsmasq.conf # 换成echo的方式注入
+cache-size=10000" > /etc/dnsmasq.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
@@ -118,10 +119,40 @@ echo
 sleep 3
 echo -e -n "\e[1;36m 创建自定义扶墙规则\e[0m"
 echo
-echo "# 规则格式,删除address前 # 生效，如有需要自己添加的规则，请在下面添加
-# 后面的地址有两种情况,优选具体ip地址
+echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
+# 正确ip地址表示DNS解析扶墙，127地址表示去广告
 #address=/.001union.com/127.0.0.1
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
+echo
+echo -e -n "\e[1;36m 创建自定义广告黑名单\e[0m"
+echo
+echo "# 请在下面添加广告黑名单
+# 每行输入要屏蔽广告网址不含http://符号
+active.admore.com.cn
+g.163.com
+mtty-cdn.mtty.com
+static-alias-1.360buyimg.com
+image.yzmg.com" > /etc/dnsmasq/blacklist
+echo
+echo -e -n "\e[1;36m 创建自定义广告白名单\e[0m"
+echo
+echo "# ，请将误杀的网址添加到在下面白名单
+# 每行输入相应的网址或关键词即可，建议尽量输入准确的网址
+toutiao.com
+dl.360safe.com
+down.360safe.com
+fd.shouji.360.cn
+zhushou.360.cn
+shouji.360.cn
+hot.m.shouji.360tpcdn.com
+jd.com
+tejia.taobao.com
+temai.taobao.com
+ai.m.taobao.com
+ai.taobao.com
+re.taobao.com
+shi.taobao.com
+tv.sohu.com" > /etc/dnsmasq/whitelist
 echo
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
@@ -141,13 +172,13 @@ echo -e "\e[1;36m 下载yhosts缓存\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
 echo
 echo -e "\e[1;36m 下载malwaredomainlist规则\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/malwaredomainlist.conf http://www.malwaredomainlist.com/hostslist/hosts.txt
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/malwaredomainlist.conf http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/malwaredomainlist.conf
 echo
 echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt ; sed -i '/tv.sohu.com/d' /tmp/adaway4
+/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
 /usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway5 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=o&mimetype=plaintext'
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 /tmp/adaway5 > /tmp/adaway.conf
 rm -rf /tmp/adaway
@@ -157,29 +188,22 @@ rm -rf /tmp/adaway4
 rm -rf /tmp/adaway5
 echo
 sleep 3
-#echo -e "\e[1;36m 删除racaljk规则中google'youtube相关规则\e[0m"
+#echo -e "\e[1;36m 删除racaljk规则中的冲突规则\e[0m"
 #sed -i '/google/d' /tmp/racaljk
 #sed -i '/youtube/d' /tmp/racaljk
 #echo
 echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
-echo -e -n "\e[1;36m 删除dnsmasq缓存注释\e[0m"
-sed -i '/#/d' /tmp/sy618
-#sed -i '/#/d' /tmp/racaljk
-sed -i '/#/d' /tmp/ad.conf
-sed -i '/#/d' /tmp/easylistchina.conf
-sed -i '/#/d' /tmp/userlist
+echo -e "\e[1;36m 创建自定义广告黑名单缓存\e[0m"
+cp /etc/dnsmasq/blacklist /tmp/blacklist
+sed -i "/#/d" /tmp/blacklist
+sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
 echo
-#echo -e -n "\e[1;36m 扶墙网站指定到#443端口访问\e[0m"
-#awk '{print $0"#443"}' /tmp/sy618 > /tmp/sy618.conf
-#awk '{print $0"#443"}' /tmp/racaljk > /tmp/racaljk.conf
-#awk '{print $0"#443"}' /tmp/userlist > /tmp/userlist.conf
-#echo
 echo -e -n "\e[1;36m 合并dnsmasq'hosts缓存\e[0m"
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
+cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
 echo
 echo -e -n "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
 rm -rf /tmp/userlist
@@ -187,34 +211,33 @@ rm -rf /tmp/ad.conf
 rm -rf /tmp/sy618
 rm -rf /tmp/easylistchina.conf
 #rm -rf /tmp/racaljk
+rm -rf /tmp/blacklist
 rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
 rm -rf /tmp/malwaredomainlist.conf
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
-sed -i '/360/d' /tmp/fqad
-sed -i '/toutiao/d' /tmp/fqad
-sed -i '/taobao/d' /tmp/fqad
-sed -i '/jd/d' /tmp/fqad
-sed -i '/360/d' /tmp/noad
-sed -i '/taobao/d' /tmp/noad
-sed -i '/jd/d' /tmp/noad
-sed -i '/toutiao/d' /tmp/noad
-#sed -i '/youku/d' /tmp/noad
+while read -r line
+do
+	sed -i "/$line/d" /tmp/noad
+	sed -i "/$line/d" /tmp/fqad
+done < /etc/dnsmasq/whitelist
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/fqad
 sed -i '/localhost/d' /tmp/fqad
+sed -i '/#/d' /tmp/fqad
 sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
 echo
-echo -e -n "\e[1;36m 转为Unix文件格式并统一规则格式\e[0m"
-sed -i "s/.$//g" /tmp/fqad
-sed -i "s/.$//g" /tmp/noad
+echo -e -n "\e[1;36m 统一广告规则格式\e[0m"
+sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/fqad
+sed -i "s/  / /g" /tmp/fqad
 sed -i "s/  / /g" /tmp/noad
 sed -i "s/	/ /g" /tmp/noad
+sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/noad
 echo
 echo -e "\e[1;36m 创建dnsmasq规则文件\e[0m"
 echo "
@@ -283,8 +306,7 @@ read timedata
 echo
 echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
 # 每天$timedata点28分更新dnsmasq和hosts规则
-28 $timedata * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1
-#/tmp/fqad_update.log 2>&1" >> $CRON_FILE
+28 $timedata * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 sleep 1
@@ -323,11 +345,9 @@ echo -e "\e[1;31m 删除残留文件夹以及配置\e[0m"
 if [ -d /etc/dnsmasq.bak ]; then
 	mv /etc/dnsmasq.bak /etc/dnsmasq
 fi
-echo
 if [ -d /etc/dnsmasq.d.bak ]; then
 	mv /etc/dnsmasq.d.bak /etc/dnsmasq.d
 fi
-echo
 if [ -f /etc/dnsmasq.conf.bak ]; then
 	rm -rf /etc/dnsmasq.conf
 	mv /etc/dnsmasq.conf.bak /etc/dnsmasq.conf
