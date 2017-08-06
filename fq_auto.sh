@@ -180,7 +180,7 @@ echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 echo
 sleep 2
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fqad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_update.sh
+wget --no-check-certificate -q -O /etc/dnsmasq/fq_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_update.sh
 echo
 sleep 1
 echo -e "\e[1;31m 添加计划任务\e[0m"
