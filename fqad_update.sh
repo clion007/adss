@@ -48,7 +48,9 @@ do
 done < /etc/dnsmasq/whitelist
 
 # 删除注释和本地规则
-sed -i '/#/d' /tmp/fqad
+sed -i '/# /d' /tmp/fqad
+sed -i '/#★/d' /tmp/fqad
+sed -i '/#address/d' /tmp/fqad
 sed -i '/localhost/d' /tmp/fqad
 sed -i '/::1/d' /tmp/fqad
 echo
