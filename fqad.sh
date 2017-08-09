@@ -275,10 +275,11 @@ echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
 # 每天$timedata点28分更新翻墙和广告规则
 28 $timedata * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
+echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 echo
-echo "\e[1;36m 创建脚本更新检测副本\e[0m"
-cp /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
+echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
+wget --no-check-certificate -q -O /etc/dnsmasq/fqad_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_auto.sh
 sleep 1
 echo
 echo
