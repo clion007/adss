@@ -162,12 +162,12 @@ cp /etc/dnsmasq/blacklist /tmp/blacklist
 sed -i "/#/d" /tmp/blacklist
 sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
 echo
-echo -e -n "\e[1;36m 合并dnsmasq'hosts缓存\e[0m"
+echo -e "\e[1;36m 合并dnsmasq'hosts缓存\e[0m"
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
 echo
-echo -e -n "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
+echo -e "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
 rm -rf /tmp/userlist
 rm -rf /tmp/ad.conf
 rm -rf /tmp/sy618
@@ -196,7 +196,7 @@ sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
 echo
-echo -e -n "\e[1;36m 统一广告规则格式\e[0m"
+echo -e "\e[1;36m 统一广告规则格式\e[0m"
 sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/fqad
 sed -i "s/  / /g" /tmp/fqad
 sed -i "s/  / /g" /tmp/noad
@@ -257,7 +257,7 @@ echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 echo
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fq_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_update.sh
+wget --no-check-certificate -q -O /etc/dnsmasq/fqad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_update.sh
 echo
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
 wget --no-check-certificate -q -O /etc/dnsmasq/fqadrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqadrules_update.sh
