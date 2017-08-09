@@ -25,9 +25,11 @@ rm -rf /tmp/sy618
 #rm -rf /tmp/racaljk
 
 # 删除注释与本地规则
-sed -i '/#/d' /tmp/fq
 sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
+sed -i '/# /d' /tmp/fq
+sed -i '/#★/d' /tmp/fq
+sed -i '/#address/d' /tmp/fq
 
 # 创建dnsmasq规则文件
 echo "
