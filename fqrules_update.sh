@@ -59,7 +59,7 @@ rm -rf /tmp/fq
 echo
 if [ -s "/tmp/fq.conf" ]; then
 	if ( ! cmp -s /tmp/fq.conf /etc/dnsmasq.d/fq.conf ); then
-		mv /tmp/fq.conf /etc/dnsmasq.d/fq.conf
+		mv -f /tmp/fq.conf /etc/dnsmasq.d/fq.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到fq规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: fq规则转换完成，应用新规则。"
