@@ -82,15 +82,13 @@ nameserver 223.5.5.5
 nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf # 换成echo的方式注入
 echo
 sleep 3
-echo -e -n "\e[1;36m 创建自定义扶墙规则\e[0m"
-echo
+echo -e "\e[1;36m 创建自定义扶墙规则\e[0m"
 echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
 # 正确ip地址表示DNS解析扶墙，127地址表示去广告
 #address=/.001union.com/127.0.0.1
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
 echo
-echo -e -n "\e[1;36m 创建自定义广告黑名单\e[0m"
-echo
+echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 echo "# 请在下面添加广告黑名单
 # 每行输入要屏蔽广告网址不含http://符号
 active.admore.com.cn
@@ -99,8 +97,7 @@ mtty-cdn.mtty.com
 static-alias-1.360buyimg.com
 image.yzmg.com" > /etc/dnsmasq/blacklist
 echo
-echo -e -n "\e[1;36m 创建自定义广告白名单\e[0m"
-echo
+echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 echo "# ，请将误杀的网址添加到在下面白名单
 # 每行输入相应的网址或关键词即可，建议尽量输入准确的网址
 toutiao.com
@@ -285,6 +282,7 @@ echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 cp /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
+echo
 sleep 1
 echo
 echo
