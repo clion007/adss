@@ -9,7 +9,7 @@ echo "# 本脚本仅用于个人研究与学习使用，从未用于产生任何
 echo "# 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。"
 echo "# openwrt类固件使用，包括但不限于pandorabox、LEDE、ddwrt、明月、石像鬼等，华硕、老毛子、梅林等Padavan系列固件慎用。"
 echo -e "# 安装前请\e[1;31m备份原配置\e[0m；由此产生的一切后果自行承担！"
-echo -e "# 安装前请\e[1;31m检查确认路由器配置，lan IP必须是192.168.1.1\e[0m；全自动无人值守安装！"
+echo -e "# 全自动无人值守安装！"
 echo
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                          +"
@@ -19,45 +19,8 @@ echo "+                      Time:`date +'%Y-%m-%d'`                     +"
 echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
-echo "------------------------------------------------------------------"
-echo -e "\e[1;31m 请先查询你的\e[1;36mlan网关ip\e[1;31m再选择,\e[1;36mlan网关ip\e[1;31m必须为：\e[1;36m'192.168.1.1'\e[0m"
-echo "------------------------------------------------------------------"
-echo
-echo -e "\e[1;36m >         1. 安装 \e[0m"
-echo
-echo -e "\e[1;31m >         2. 卸载 \e[0m"
-echo
-echo -e "\e[1;36m >         3. 退出 \e[0m"
-echo
-echo -e -n "\e[1;34m 请输入数字继续执行: \e[0m" 
-read menu
-if [ "$menu" == "1" ]; then
 echo
 echo -e "\e[1;36m 三秒后开始安装......\e[0m"
-echo
-sleep 3
-echo -e "\e[1;36m 正在更新软件包，根据网络状态决定时长\e[0m"
-rm -f /var/lock/opkg.lock
-opkg update
-sleep 2
-echo
-echo -e "\e[1;36m 开始检查并安装wget-支持https\e[0m"
-echo
-if [ -f $wgetroute ]; then
-	echo -e "\e[1;31m 系统已经安装wget-ssl软件\e[0m"
-	#opkg remove wget > /dev/null 2>&1
-	#opkg install wget	
-	else
-	echo -e "\e[1;31m 没有发现wget-ssl开始安装\e[0m"
-	opkg install wget
-	echo
-	if [ -f $wgetroute ]; then
-		echo -e "\e[1;36m wget安装成功         \e[0m[\e[1;31mmwget has been installde successfully\e[0m]"
-		else
-		echo -e "\e[1;31m wget安装失败,请到路由器系统软件包手动安装后再试!\e[0m"
-		exit
-	fi	
-fi
 echo
 sleep 3
 echo -e "\e[1;36m 创建dnsmasq规则与更新脚本存放的文件夹\e[0m"
@@ -72,15 +35,17 @@ fi
 
 mkdir -p /etc/dnsmasq
 mkdir -p /etc/dnsmasq.d
-
 echo
 sleep 3
 echo -e "\e[1;36m 配置dnsmasq及hosts\e[0m"
 if [ -f /etc/dnsmasq.conf ]; then
 	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
-echo "# 添加监听地址（其中192.168.1.1为你的lan网关ip）
-listen-address=192.168.1.1,127.0.0.1
+echo
+lanip=$(ifconfig | awk -F'addr:|Bcast' '/Bcast/{print $2}')
+echo -e "\e[1;36m 路由器网关:$lanip\e[0m"
+echo "# 添加监听地址（其中$lanip为你的lan网关ip）
+listen-address=$lanip,127.0.0.1
 
 # 并发查询所有上游DNS服务器
 all-servers 
@@ -200,12 +165,12 @@ cp /etc/dnsmasq/blacklist /tmp/blacklist
 sed -i "/#/d" /tmp/blacklist
 sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
 echo
-echo -e -n "\e[1;36m 合并dnsmasq'hosts缓存\e[0m"
+echo -e "\e[1;36m 合并dnsmasq'hosts缓存\e[0m"
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
 echo
-echo -e -n "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
+echo -e "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
 rm -rf /tmp/userlist
 rm -rf /tmp/ad.conf
 rm -rf /tmp/sy618
@@ -234,7 +199,7 @@ sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
 echo
-echo -e -n "\e[1;36m 统一广告规则格式\e[0m"
+echo -e "\e[1;36m 统一广告规则格式\e[0m"
 sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/fqad
 sed -i "s/  / /g" /tmp/fqad
 sed -i "s/  / /g" /tmp/noad
@@ -294,24 +259,36 @@ echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 	/etc/init.d/dnsmasq restart > /dev/null 2>&1
 echo
 sleep 2
-echo -e "\e[1;36m 获取规则更新脚本\e[0m"
+echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
 wget --no-check-certificate -q -O /etc/dnsmasq/fqad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_update.sh
+echo
+echo -e "\e[1;36m 获取规则更新脚本\e[0m"
+wget --no-check-certificate -q -O /etc/dnsmasq/fqadrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqadrules_update.sh
 echo
 sleep 1
 echo -e "\e[1;31m 添加计划任务\e[0m"
 chmod 755 /etc/dnsmasq/fqad_update.sh
 sed -i '/dnsmasq/d' $CRON_FILE
 sed -i '/@/d' $CRON_FILE
-echo
+Update_time=$(cat /etc/crontabs/Update_time.conf)
+if [ -f /etc/crontabs/Update_time.conf ]; then
+	timedata=$Update_time
+	else
+	timedata='5'
+fi
 echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
-# 每天6点28分更新dnsmasq和hosts规则
-28 6 * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
+# 每天$timedata点25分更新翻墙和广告规则
+28 $timedata * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
+echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
+echo
+echo "\e[1;36m 创建脚本更新检测副本\e[0m"
+cp /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
 sleep 1
 echo
 echo
-clear 
+clear
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                          +"
 echo "+                 installation is complete                 +"
@@ -320,47 +297,6 @@ echo "+                     Time:`date +'%Y-%m-%d'`                      +"
 echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
-echo 
-rm -f /tmp/fqad_auto.sh
-fi
-echo
-if [ "$menu" == "2" ]; then
-echo
-echo -e "\e[1;31m 开始卸载dnsmasq扶墙及广告规则\e[0m"
-	rm -f /var/lock/opkg.lock
-sleep 1
-echo
-echo -e "\e[1;31m 删除残留文件夹以及配置\e[0m"
-	rm -rf /etc/dnsmasq
-	rm -rf /etc/dnsmasq.d
-if [ -d /etc/dnsmasq.bak ]; then
-	mv /etc/dnsmasq.bak /etc/dnsmasq
-fi
-echo
-if [ -d /etc/dnsmasq.d.bak ]; then
-	mv /etc/dnsmasq.d.bak /etc/dnsmasq.d
-fi
-echo
-if [ -f /etc/dnsmasq.conf.bak ]; then
-	rm -rf /etc/dnsmasq.conf
-	mv /etc/dnsmasq.conf.bak /etc/dnsmasq.conf
-fi
-echo
-sleep 1
-echo -e "\e[1;31m 删除相关计划任务\e[0m"
-sed -i '/dnsmasq/d' $CRON_FILE
-/etc/init.d/cron reload
-sleep 1
-echo
-echo -e "\e[1;31m 重启dnsmasq\e[0m"
-	/etc/init.d/dnsmasq restart > /dev/null 2>&1
-	rm -f /tmp/fqad_auto.sh
-fi
-echo
-if [ "$menu" == "3" ]; then
 echo
 rm -f /tmp/fqad_auto.sh
-echo
 exit 0
-fi
-echo
