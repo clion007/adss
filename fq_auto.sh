@@ -26,10 +26,10 @@ echo -e "\e[1;36m 创建dnsmasq规则与更新脚本存放的文件夹\e[0m"
 echo
 echo -e "\e[1;36m 检测和备份当前dnsmasq配置信息\e[0m"
 if [ -d /etc/dnsmasq ]; then
-	mv /etc/dnsmasq /etc/dnsmasq.bak
+	mv -f /etc/dnsmasq /etc/dnsmasq.bak
 fi
 if [ -d /etc/dnsmasq.d ]; then
-	mv /etc/dnsmasq.d /etc/dnsmasq.d.bak
+	mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
 fi
 mkdir -p /etc/dnsmasq
 mkdir -p /etc/dnsmasq.d
@@ -37,7 +37,7 @@ echo
 sleep 3
 echo -e "\e[1;36m 配置dnsmasq\e[0m"
 if [ -f /etc/dnsmasq.conf ]; then
-	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
+	mv -f /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
 echo
 lanip=$(ifconfig | awk -F'addr:|Bcast' '/Bcast/{print $2}')
