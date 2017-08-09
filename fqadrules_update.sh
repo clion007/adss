@@ -42,7 +42,7 @@ sed -i '/#address/d' /tmp/fqad
 sed -i '/localhost/d' /tmp/fqad
 sed -i '/::1/d' /tmp/fqad
 echo
-echo -e -n " 统一DNS广告规则格式"
+echo -e " 统一DNS广告规则格式"
 sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/fqad
 sed -i "s/  / /g" /tmp/fqad
 echo
@@ -116,7 +116,7 @@ sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
 sed -i '/localhost/d' /tmp/noad
 
-echo -e -n " 统一hosts广告规则格式"
+echo -e " 统一hosts广告规则格式"
 sed -i "s/  / /g" /tmp/noad
 sed -i "s/	/ /g" /tmp/noad
 sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/noad
