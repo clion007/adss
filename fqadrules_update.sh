@@ -150,7 +150,7 @@ rm -rf /tmp/noad
 echo
 if [ -s "/tmp/fqad.conf" ]; then
 	if ( ! cmp -s /tmp/fqad.conf /etc/dnsmasq.d/fqad.conf ); then
-		mv /tmp/fqad.conf /etc/dnsmasq.d/fqad.conf
+		mv -f /tmp/fqad.conf /etc/dnsmasq.d/fqad.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到fqad规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: fqad规则转换完成，应用新规则。"
@@ -161,7 +161,7 @@ fi
 echo
 if [ -s "/tmp/noad.conf" ]; then
 	if ( ! cmp -s /tmp/noad.conf /etc/dnsmasq/noad.conf ); then
-		mv /tmp/noad.conf /etc/dnsmasq/noad.conf
+		mv -f /tmp/noad.conf /etc/dnsmasq/noad.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到noad规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad规则转换完成，应用新规则。"
