@@ -19,8 +19,9 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到脚本更新......3秒后即将开始更新！"
 		sleep 3
 		echo -e "\e[1;36m 开始更新翻墙去广告脚本\e[0m"
+		echo
 		sh /tmp/fqad_auto.sh
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本及规则更新完成。"
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 翻墙去广告脚本及规则更新完成。"
 		else
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本无需更新，3秒后即将开始更新规则"
 		rm -f /tmp/fqad_auto.sh
