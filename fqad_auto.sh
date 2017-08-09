@@ -3,6 +3,7 @@ echo
 wgetroute="/usr/bin/wget-ssl"
 CRON_FILE=/etc/crontabs/$USER
 clear
+echo
 echo "# Copyright (c) 2014-2017,by clion007"
 echo
 echo "# 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
@@ -266,9 +267,8 @@ echo -e "\e[1;31m 添加计划任务\e[0m"
 chmod 755 /etc/dnsmasq/fqad_update.sh
 sed -i '/dnsmasq/d' $CRON_FILE
 sed -i '/@/d' $CRON_FILE
-Update_time=$(cat /etc/crontabs/Update_time.conf)
 if [ -f /etc/crontabs/Update_time.conf ]; then
-	timedata=$Update_time
+	timedata=$(cat /etc/crontabs/Update_time.conf)
 	else
 	timedata='5'
 fi
