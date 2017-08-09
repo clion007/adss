@@ -17,9 +17,11 @@ wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/m
 if [ -s "/tmp/fqad_auto.sh" ]; then
 	if ( ! cmp -s /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到脚本更新......3秒后即将开始更新！"
+		echo
 		sleep 3
 		echo -e "\e[1;36m 开始更新翻墙去广告脚本\e[0m"
 		echo
+		clear
 		sh /tmp/fqad_auto.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 翻墙去广告脚本及规则更新完成。"
 		else
