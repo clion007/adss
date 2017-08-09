@@ -283,7 +283,7 @@ echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
 echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 echo
-echo "\e[1;36m 创建脚本更新检测副本\e[0m"
+echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 cp /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
 sleep 1
 echo
