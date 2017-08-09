@@ -69,5 +69,4 @@ if [ -s "/tmp/fq.conf" ]; then
 fi
 echo
 echo -e "\e[1;36m 规则更新完成\e[0m"
-echo
 exit 0
