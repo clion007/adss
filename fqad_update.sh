@@ -10,15 +10,15 @@ echo
 #if [ $LOGSIZE -ge 5000 ]; then
 #	sed -i -e 1,10d $LOGFILE
 #fi
-echo "\e[1;36m 1秒钟后开始检测更新脚本\e[0m"
+echo -e "\e[1;36m 1秒钟后开始检测更新脚本\e[0m"
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_auto.sh -O \
       /tmp/fqad_auto.sh && chmod 775 /tmp/fqad_auto.sh
 if [ -s "/tmp/fqad_auto.sh" ]; then
 	if ( ! cmp -s /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到脚本更新......3秒后即将开始更新！"
 		sleep 3
-		echo "\e[1;36m 开始更新扶墙去广告脚本\e[0m"
-		/bin/sh /tmp/fqad_auto.sh
+		echo -e "\e[1;36m 开始更新翻墙去广告脚本\e[0m"
+		sh /tmp/fqad_auto.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本及规则更新完成。"
 		else
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本无需更新，3秒后即将开始更新规则"
