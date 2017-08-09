@@ -77,8 +77,7 @@ nameserver 223.5.5.5
 nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf # 换成echo的方式注入
 echo
 sleep 3
-echo -e -n "\e[1;36m 创建自定义扶墙规则\e[0m"
-echo
+echo -e "\e[1;36m 创建自定义扶墙规则\e[0m"
 echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
 # 正确ip地址表示DNS解析扶墙，127地址表示去广告
 #address=/.001union.com/127.0.0.1
@@ -170,6 +169,7 @@ echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 cp /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh
+echo
 sleep 1
 echo
 echo
