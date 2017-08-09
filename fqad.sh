@@ -18,45 +18,7 @@ echo "+                      Time:`date +'%Y-%m-%d'`                     +"
 echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
-echo "------------------------------------------------------------------"
-echo -e "\e[1;31m 请先查询你的\e[1;36mlan网关ip\e[1;31m再选择,其中必须输入\e[1;36mlan网关ip\e[1;31m,默认：\e[1;36m'192.168.1.1'\e[0m"
-echo "------------------------------------------------------------------"
-echo
-echo -e "\e[1;36m >         1. 安装 \e[0m"
-echo
-echo -e "\e[1;31m >         2. 卸载 \e[0m"
-echo
-echo -e "\e[1;36m >         3. 退出 \e[0m"
-echo
-echo -e -n "\e[1;34m 请输入数字继续执行: \e[0m" 
-read menu
-if [ "$menu" == "1" ]; then
-echo
 echo -e "\e[1;36m 三秒后开始安装......\e[0m"
-echo
-sleep 3
-echo -e "\e[1;36m 正在更新软件包，根据网络状态决定时长\e[0m"
-rm -f /var/lock/opkg.lock
-opkg update
-sleep 2
-echo
-echo -e "\e[1;36m 开始检查并安装wget-支持https\e[0m"
-echo
-if [ -f $wgetroute ]; then
-	echo -e "\e[1;31m 系统已经安装wget-ssl软件\e[0m"
-	#opkg remove wget > /dev/null 2>&1
-	#opkg install wget	
-	else
-	echo -e "\e[1;31m 没有发现wget-ssl开始安装\e[0m"
-	opkg install wget
-	echo
-	if [ -f $wgetroute ]; then
-		echo -e "\e[1;36m wget安装成功         \e[0m[\e[1;31mmwget has been installde successfully\e[0m]"
-		else
-		echo -e "\e[1;31m wget安装失败,请到路由器系统软件包手动安装后再试!\e[0m"
-		exit
-	fi	
-fi
 echo
 sleep 3
 echo -e "\e[1;36m 创建dnsmasq规则与更新脚本存放的文件夹\e[0m"
@@ -77,8 +39,8 @@ if [ -f /etc/dnsmasq.conf ]; then
 	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
 echo
-echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
-read lanip
+lanip=$(ifconfig | awk -F'addr:|Bcast' '/Bcast/{print $2}')
+echo -e "\e[1;36m 路由器网关:$lanip\e[0m"
 echo "# 添加监听地址（其中$lanip为你的lan网关ip）
 listen-address=$lanip,127.0.0.1
 
@@ -294,8 +256,11 @@ echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 	/etc/init.d/dnsmasq restart > /dev/null 2>&1
 echo
 sleep 2
+echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
+wget --no-check-certificate -q -O /etc/dnsmasq/fq_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_update.sh
+echo
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fqad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_update.sh
+wget --no-check-certificate -q -O /etc/dnsmasq/fqadrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqadrules_update.sh
 echo
 sleep 1
 echo -e "\e[1;31m 添加计划任务\e[0m"
@@ -305,16 +270,19 @@ sed -i '/@/d' $CRON_FILE
 echo
 echo -e -n "\e[1;36m 请输入更新时间(整点小时): \e[0m" 
 read timedata
-echo
+echo "$timedata" > /etc/crontabs/Update_time.conf
 echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
-# 每天$timedata点28分更新dnsmasq和hosts规则
+# 每天$timedata点28分更新翻墙和广告规则
 28 $timedata * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
+echo
+echo "\e[1;36m 创建脚本更新检测副本\e[0m"
+cp /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
 sleep 1
 echo
 echo
-clear 
+clear
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                          +"
 echo "+                 installation is complete                 +"
@@ -323,61 +291,13 @@ echo "+                     Time:`date +'%Y-%m-%d'`                      +"
 echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
-echo 
-rm -f /tmp/fqad.sh
-echo
-echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
-read boot
-	if [ "$boot" = "y" ];then
-		echo
-		reboot
-	fi
-fi
-echo
-if [ "$menu" == "2" ]; then
-echo
-echo -e "\e[1;31m 开始卸载dnsmasq扶墙及广告规则\e[0m"
-	rm -f /var/lock/opkg.lock
-	#opkg remove wget > /dev/null 2>&1
-sleep 1
-echo
-echo -e "\e[1;31m 删除残留文件夹以及配置\e[0m"
-	rm -rf /etc/dnsmasq
-	rm -rf /etc/dnsmasq.d
-if [ -d /etc/dnsmasq.bak ]; then
-	mv /etc/dnsmasq.bak /etc/dnsmasq
-fi
-if [ -d /etc/dnsmasq.d.bak ]; then
-	mv /etc/dnsmasq.d.bak /etc/dnsmasq.d
-fi
-if [ -f /etc/dnsmasq.conf.bak ]; then
-	rm -rf /etc/dnsmasq.conf
-	mv /etc/dnsmasq.conf.bak /etc/dnsmasq.conf
-fi
-echo
-sleep 1
-echo -e "\e[1;31m 删除相关计划任务\e[0m"
-sed -i '/dnsmasq/d' $CRON_FILE
-# echo '' > $CRON_FILE
-/etc/init.d/cron reload
-sleep 1
-echo
-echo -e "\e[1;31m 重启dnsmasq\e[0m"
-	/etc/init.d/dnsmasq restart > /dev/null 2>&1
-	rm -f /tmp/fqad.sh
-echo
-echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
-read boot
-	if [ "$boot" = "y" ];then
-		echo
-		reboot
-	fi
-fi
-echo
-if [ "$menu" == "3" ]; then
 echo
 rm -f /tmp/fqad.sh
-echo
-exit 0
+echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
+read boot
+if [ "$boot" = "y" ];then
+	reboot
+	else
+	exit 0
 fi
 echo
