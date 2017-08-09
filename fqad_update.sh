@@ -11,6 +11,7 @@ echo
 #	sed -i -e 1,10d $LOGFILE
 #fi
 echo -e "\e[1;36m 1秒钟后开始检测更新脚本\e[0m"
+echo
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_auto.sh -O \
       /tmp/fqad_auto.sh && chmod 775 /tmp/fqad_auto.sh
 if [ -s "/tmp/fqad_auto.sh" ]; then
