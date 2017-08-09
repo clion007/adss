@@ -41,7 +41,7 @@ if [ -f /etc/dnsmasq.conf ]; then
 	mv -f /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
 echo
-lanip=$(ifconfig | awk -F'addr:|Bcast' '/Bcast/{print $2}')
+lanip=$(ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:")
 echo -e "\e[1;36m 路由器网关:$lanip\e[0m"
 echo "# 添加监听地址（其中192.168.1.1为你的lan网关ip）
 listen-address=192.168.1.1,127.0.0.1
@@ -63,19 +63,20 @@ cache-size=10000" > /etc/dnsmasq.conf # 换成echo的方式注入
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
-cp /tmp/resolv.conf.auto /etc/dnsmasq/resolv.conf
 echo "# 上游DNS解析服务器
-nameserver 127.0.0.1
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
-# 选择最快的服务器，打开文件依次按速度快慢顺序手动改写
-nameserver 218.30.118.6
+# 选择最快的服务器，打开resolv文件依次按速度快慢顺序手动改写
+nameserver 127.0.0.1" > /etc/dnsmasq/resolv
+cat /tmp/resolv.conf.ppp /etc/dnsmasq/resolv > /etc/dnsmasq/resolv.conf
+rm -rf /etc/dnsmasq/resolv
+echo "nameserver 218.30.118.6
 nameserver 8.8.4.4
 nameserver 119.29.29.29
 nameserver 4.2.2.2
 nameserver 114.114.114.114
 nameserver 1.2.4.8
 nameserver 223.5.5.5
-nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf # 换成echo的方式注入
+nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建自定义扶墙规则\e[0m"
@@ -170,10 +171,10 @@ echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 cp /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh
 echo
+clear
 sleep 1
 echo
 echo
-clear
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                          +"
 echo "+                 installation is complete                 +"
