@@ -45,7 +45,6 @@ echo
 echo -e " 统一DNS广告规则格式"
 sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/fqad
 sed -i "s/  / /g" /tmp/fqad
-echo
 # 创建dnsmasq规则文件
 echo "
 ############################################################
@@ -120,7 +119,6 @@ echo -e " 统一hosts广告规则格式"
 sed -i "s/  / /g" /tmp/noad
 sed -i "s/	/ /g" /tmp/noad
 sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/noad
-echo
 # 创建hosts规则文件
 echo "
 ############################################################
@@ -171,5 +169,4 @@ if [ -s "/tmp/noad.conf" ]; then
 fi
 echo
 echo -e "\e[1;36m 规则更新成功\e[0m"
-echo
 exit 0
