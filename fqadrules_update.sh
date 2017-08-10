@@ -3,13 +3,13 @@ echo
 sleep 3
 echo " 开始更新dnsmasq规则"
 # 下载sy618扶墙规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 # 下载racaljk规则
-#/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 # 下载vokins广告规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
+wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 # 下载easylistchina广告规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
+wget --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
 
 # 删除racaljk规则中的冲突规则
 #sed -i '/google/d' /tmp/racaljk
@@ -73,21 +73,21 @@ rm -rf /tmp/fqad
 echo
 echo " 开始更新hosts规则"
 # 下载yhosts缓存
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
+wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
 # 下载malwaredomainlist规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/malwaredomainlist.conf http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/malwaredomainlist.conf
+wget --no-check-certificate -q -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/mallist
 # 下载adaway规则缓存
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway5 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=o&mimetype=plaintext'
-cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 /tmp/adaway5 > /tmp/adaway.conf
+wget --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
+wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
+wget --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
+wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
+#wget --no-check-certificate -q -O /tmp/adaway5 https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts
+cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
 rm -rf /tmp/adaway
 rm -rf /tmp/adaway2
 rm -rf /tmp/adaway3
 rm -rf /tmp/adaway4
-rm -rf /tmp/adaway5
+#rm -rf /tmp/adaway5
 echo
 echo -e " 创建自定义广告黑名单缓存"
 cp /etc/dnsmasq/blacklist /tmp/blacklist
@@ -95,13 +95,13 @@ sed -i "/#/d" /tmp/blacklist
 sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
 echo
 # 合并hosts缓存
-cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
+cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 
 # 删除hosts缓存
 rm -rf /tmp/blacklist
 rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
-rm -rf /tmp/malwaredomainlist.conf
+rm -rf /tmp/mallist
 
 # 删除误杀广告规则
 while read -r line
