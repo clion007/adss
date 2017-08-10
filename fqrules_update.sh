@@ -3,10 +3,10 @@ echo
 sleep 3
 echo " 开始更新dnsmasq规则"
 # 下载sy618扶墙规则
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 
 # 下载racaljk规则
-#/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 
 # 删除racaljk规则中的冲突规则
 #sed -i '/google/d' /tmp/racaljk
