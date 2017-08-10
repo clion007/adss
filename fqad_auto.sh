@@ -114,7 +114,9 @@ ai.m.taobao.com
 ai.taobao.com
 re.taobao.com
 shi.taobao.com
-tv.sohu.com" > /etc/dnsmasq/whitelist
+tv.sohu.com
+s.click.taobao.com
+s.click.tmall.com" > /etc/dnsmasq/whitelist
 echo
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
