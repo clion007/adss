@@ -1,6 +1,5 @@
 #!/bin/sh
 echo
-wgetroute="/usr/bin/wget-ssl"
 CRON_FILE=/etc/crontabs/$USER
 clear
 echo
@@ -88,10 +87,10 @@ echo
 echo -e "\e[1;36m 下载扶墙规则\e[0m"
 echo
 echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 echo
 #echo -e "\e[1;36m 下载racaljk规则\e[0m"
-#/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 #echo
 sleep 3
 #echo -e "\e[1;36m 删除racaljk规则中的冲突规则\e[0m"
