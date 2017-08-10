@@ -70,7 +70,7 @@ echo "# 上游DNS解析服务器
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
 # 选择最快的服务器，打开resolv文件依次按速度快慢顺序手动改写
 nameserver 127.0.0.1" > /etc/dnsmasq/resolv
-cat /tmp/resolv.conf.ppp /etc/dnsmasq/resolv > /etc/dnsmasq/resolv.conf
+cat /tmp/resolv.conf.auto /etc/dnsmasq/resolv > /etc/dnsmasq/resolv.conf
 rm -rf /etc/dnsmasq/resolv
 echo "nameserver 218.30.118.6
 nameserver 8.8.4.4
