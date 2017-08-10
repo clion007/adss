@@ -1,6 +1,5 @@
 #!/bin/sh
 echo
-wgetroute="/usr/bin/wget-ssl"
 CRON_FILE=/etc/crontabs/$USER
 clear
 echo
@@ -118,35 +117,35 @@ echo
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
 echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 echo
 #echo -e "\e[1;36m 下载racaljk规则\e[0m"
-#/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 #echo
 echo -e "\e[1;36m 下载vokins广告规则\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
+wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 echo
 echo -e "\e[1;36m 下载easylistchina广告规则\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
+wget --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
 echo
 echo -e "\e[1;36m 下载yhosts缓存\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
+wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
 echo
 echo -e "\e[1;36m 下载malwaredomainlist规则\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/malwaredomainlist.conf http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/malwaredomainlist.conf
+wget --no-check-certificate -q -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/mallist
 echo
 echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
-/usr/bin/wget-ssl --no-check-certificate -q -O /tmp/adaway5 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=o&mimetype=plaintext'
-cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 /tmp/adaway5 > /tmp/adaway.conf
+wget --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
+wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
+wget --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
+wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
+#wget --no-check-certificate -q -O /tmp/adaway5 https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts
+cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
 rm -rf /tmp/adaway
 rm -rf /tmp/adaway2
 rm -rf /tmp/adaway3
 rm -rf /tmp/adaway4
-rm -rf /tmp/adaway5
+#rm -rf /tmp/adaway5
 echo
 sleep 3
 #echo -e "\e[1;36m 删除racaljk规则中的冲突规则\e[0m"
@@ -164,7 +163,7 @@ echo
 echo -e "\e[1;36m 合并dnsmasq'hosts缓存\e[0m"
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/malwaredomainlist.conf > /tmp/noad
+cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 echo
 echo -e "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
 rm -rf /tmp/userlist
@@ -175,7 +174,7 @@ rm -rf /tmp/easylistchina.conf
 rm -rf /tmp/blacklist
 rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
-rm -rf /tmp/malwaredomainlist.conf
+rm -rf /tmp/mallist
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
 while read -r line
@@ -219,7 +218,7 @@ address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
 # Modified DNS start
-" > /etc/dnsmasq.d/fqad.conf # 换成echo的方式注入
+" > /etc/dnsmasq.d/fqad.conf
 echo
 echo -e "\e[1;36m 创建hosts规则文件\e[0m"
 echo "
@@ -239,7 +238,7 @@ echo "
 # 默认hosts结束
 
 # 修饰hosts开始
-" > /etc/dnsmasq/noad.conf # 换成echo的方式注入
+" > /etc/dnsmasq/noad.conf
 echo
 echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
 sort /tmp/fqad | uniq >> /etc/dnsmasq.d/fqad.conf
