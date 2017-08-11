@@ -274,9 +274,11 @@ if [ -f /etc/crontabs/Update_time.conf ]; then
 	else
 	timedata='5'
 fi
-echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
+echo "$USER@$HOSTNAME:~# cat /etc/crontabs/$USER
 # 每天$timedata点25分更新翻墙和广告规则
-28 $timedata * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
+25 $timedata * * * sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1
+# 每天$timedata点30分重启路由器
+30 $timedata * * * reboot > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
