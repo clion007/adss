@@ -62,7 +62,7 @@ bogus-priv
 conf-file=/etc/dnsmasq.d/fqad.conf
 
 # 设定域名解析缓存池大小
-cache-size=10000" > /etc/dnsmasq.conf
+cache-size=10000" >> /etc/dnsmasq.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
