@@ -57,7 +57,7 @@ bogus-priv
 conf-file=/etc/dnsmasq.d/fq.conf
 
 # 设定域名解析缓存池大小
-cache-size=10000" > /etc/dnsmasq.conf
+cache-size=10000" >> /etc/dnsmasq.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
@@ -158,7 +158,7 @@ echo
 echo -e -n "\e[1;36m 请输入更新时间(整点小时): \e[0m" 
 read timedata
 echo "$timedata" > /etc/crontabs/Update_time.conf
-echo "[$USER@$HOSTNAME:/$USER]#cat /etc/crontabs/$USER
+echo "$USER@$HOSTNAME:~# cat /etc/crontabs/$USER
 # 每天$timedata点28分更新扶墙规则
 28 $timedata * * * /bin/sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
