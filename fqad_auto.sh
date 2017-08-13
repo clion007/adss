@@ -116,7 +116,8 @@ re.taobao.com
 shi.taobao.com
 tv.sohu.com
 s.click.taobao.com
-s.click.tmall.com" > /etc/dnsmasq/whitelist
+s.click.tmall.com
+ju.taobao.com" > /etc/dnsmasq/whitelist
 echo
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
@@ -133,7 +134,7 @@ echo -e "\e[1;36m 下载easylistchina广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
 echo
 echo -e "\e[1;36m 下载yhosts缓存\e[0m"
-wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
+wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts
 echo
 echo -e "\e[1;36m 下载malwaredomainlist规则\e[0m"
 wget --no-check-certificate -q -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/mallist
