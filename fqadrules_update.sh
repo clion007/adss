@@ -73,7 +73,7 @@ rm -rf /tmp/fqad
 echo
 echo " 开始更新hosts规则"
 # 下载yhosts缓存
-wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
+wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts
 # 下载malwaredomainlist规则
 wget --no-check-certificate -q -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/mallist
 # 下载adaway规则缓存
