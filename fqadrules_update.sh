@@ -76,6 +76,8 @@ echo " 开始更新hosts规则"
 wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts
 # 下载malwaredomainlist规则
 wget --no-check-certificate -q -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/mallist
+# 下载whocare缓存
+wget --no-check-certificate -q -O /tmp/whocare http://someonewhocares.org/hosts/hosts
 # 下载adaway规则缓存
 wget --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
 wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
@@ -95,13 +97,14 @@ sed -i "/#/d" /tmp/blacklist
 sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
 echo
 # 合并hosts缓存
-cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
+cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare > /tmp/noad
 
 # 删除hosts缓存
 rm -rf /tmp/blacklist
 rm -rf /tmp/yhosts.conf
 rm -rf /tmp/adaway.conf
 rm -rf /tmp/mallist
+rm -rf /tmp/whocare
 
 # 删除误杀广告规则
 while read -r line
