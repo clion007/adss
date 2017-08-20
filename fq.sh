@@ -25,10 +25,20 @@ echo -e "\e[1;36m 创建dnsmasq规则与更新脚本存放的文件夹\e[0m"
 echo
 echo -e "\e[1;36m 检测和备份当前dnsmasq配置信息\e[0m"
 if [ -d /etc/dnsmasq ]; then
-	mv -f /etc/dnsmasq /etc/dnsmasq.bak
+	if [ -d /etc/dnsmasq.bak ]; then
+		rm -rf /etc/dnsmasq.bak
+		mv -f /etc/dnsmasq /etc/dnsmasq.bak
+		else
+		mv -f /etc/dnsmasq /etc/dnsmasq.bak
+	fi
 fi
 if [ -d /etc/dnsmasq.d ]; then
-	mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
+	if [ -d /etc/dnsmasq.d.bak ]; then
+		rm -rf /etc/dnsmasq.d.bak
+		mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
+		else
+		mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
+	fi
 fi
 mkdir -p /etc/dnsmasq
 mkdir -p /etc/dnsmasq.d
@@ -36,9 +46,13 @@ echo
 sleep 3
 echo -e "\e[1;36m 配置dnsmasq\e[0m"
 if [ -f /etc/dnsmasq.conf ]; then
-	mv -f /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
+	if [ -f /etc/dnsmasq.conf.bak ]; then
+		echo
+		else
+		mv -f /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
+		echo
+	fi
 fi
-echo
 lanip=$(ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:")
 echo -e "\e[1;36m 路由器网关:$lanip\e[0m"
 echo "# 添加监听地址（其中$lanip为你的lan网关ip）
