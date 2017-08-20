@@ -30,7 +30,7 @@ if [ -d /etc/dnsmasq ]; then
 		mv -f /etc/dnsmasq /etc/dnsmasq.bak
 		else
 		mv -f /etc/dnsmasq /etc/dnsmasq.bak
-	fi
+	fi	
 fi
 if [ -d /etc/dnsmasq.d ]; then
 	if [ -d /etc/dnsmasq.d.bak ]; then
@@ -38,7 +38,7 @@ if [ -d /etc/dnsmasq.d ]; then
 		mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
 		else
 		mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
-	fi
+	fi	
 fi
 mkdir -p /etc/dnsmasq
 mkdir -p /etc/dnsmasq.d
@@ -51,7 +51,7 @@ if [ -f /etc/dnsmasq.conf ]; then
 		else
 		mv -f /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 		echo
-	fi
+	fi	
 fi
 echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
 read lanip
@@ -72,7 +72,7 @@ bogus-priv
 conf-file=/etc/dnsmasq.d/fq.conf
 
 # 设定域名解析缓存池大小
-cache-size=10000" >> /etc/dnsmasq.conf
+cache-size=10000" > /etc/dnsmasq.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
@@ -154,7 +154,7 @@ rm -rf /tmp/fq
 echo
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
-#killall dnsmasq
+killall dnsmasq
 	/etc/init.d/dnsmasq restart > /dev/null 2>&1
 echo
 sleep 2
