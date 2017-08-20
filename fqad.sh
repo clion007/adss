@@ -284,15 +284,16 @@ echo
 sleep 1
 echo -e "\e[1;31m 添加计划任务\e[0m"
 chmod 755 /etc/dnsmasq/fqad_update.sh
-sed -i '/dnsmasq/d' $CRON_FILE
-sed -i '/@/d' $CRON_FILE
+sed -i '/null/d' $CRON_FILE
+sed -i '/#/d' $CRON_FILE
 echo
 echo -e -n "\e[1;36m 请输入更新时间(整点小时): \e[0m" 
 read timedata
 echo "$timedata" > /etc/crontabs/Update_time.conf
-echo "$USER@$HOSTNAME:~# cat /etc/crontabs/$USER
-# 每天$timedata点28分更新翻墙和广告规则
-28 $timedata * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
+echo "# 每天$timedata点28分更新翻墙和广告规则
+28 $timedata * * * sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1
+# 每天$timedata点30分重启路由器
+30 $timedata * * * reboot > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
