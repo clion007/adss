@@ -112,7 +112,9 @@ active.admore.com.cn
 g.163.com
 mtty-cdn.mtty.com
 static-alias-1.360buyimg.com
-image.yzmg.com" > /etc/dnsmasq/blacklist
+image.yzmg.com" >> /etc/dnsmasq/blacklist
+sort /etc/dnsmasq/blacklist | uniq > /etc/dnsmasq/blacklist.conf
+mv /etc/dnsmasq/blacklist.conf /etc/dnsmasq/blacklist
 echo
 echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 echo "# ，请将误杀的网址添加到在下面白名单
@@ -134,7 +136,9 @@ shi.taobao.com
 tv.sohu.com
 s.click.taobao.com
 s.click.tmall.com
-ju.taobao.com" > /etc/dnsmasq/whitelist
+ju.taobao.com" >> /etc/dnsmasq/whitelist
+sort /etc/dnsmasq/whitelist | uniq > /etc/dnsmasq/whitelist.conf
+mv /etc/dnsmasq/whitelist.conf /etc/dnsmasq/whitelist
 echo
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
