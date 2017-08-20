@@ -76,7 +76,7 @@ bogus-priv
 conf-file=/etc/dnsmasq.d/fq.conf
 
 # 设定域名解析缓存池大小
-cache-size=10000" > /etc/dnsmasq.conf # 换成echo的方式注入
+cache-size=10000" > /etc/dnsmasq.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
@@ -171,16 +171,17 @@ echo
 sleep 1
 echo -e "\e[1;31m 添加计划任务\e[0m"
 chmod 755 /etc/dnsmasq/fq_update.sh
-sed -i '/dnsmasq/d' $CRON_FILE
-sed -i '/@/d' $CRON_FILE
+sed -i '/null/d' $CRON_FILE
+sed -i '/#/d' $CRON_FILE
 if [ -f /etc/crontabs/Update_time.conf ]; then
 	timedata=$(cat /etc/crontabs/Update_time.conf)
 	else
 	timedata='5'
 fi
-echo "$USER@$HOSTNAME:~# cat /etc/crontabs/$USER
-# 每天$timedata点25分更新翻墙规则
-28 $timedata * * * /bin/sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1" >> $CRON_FILE
+echo "# 每天$timedata点25分更新翻墙规则
+28 $timedata * * * sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1
+# 每天$timedata点30分重启路由器
+30 $timedata * * * reboot > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
@@ -188,6 +189,9 @@ echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 if [ -f /tmp/fq_auto.sh ]; then
 	mv /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh
+	echo
+	else
+	echo
 fi
 echo
 clear
