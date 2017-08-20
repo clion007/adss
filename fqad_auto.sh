@@ -133,7 +133,8 @@ re.taobao.com
 shi.taobao.com
 tv.sohu.com
 s.click.taobao.com
-s.click.tmall.com" > /etc/dnsmasq/whitelist
+s.click.tmall.com
+ju.taobao.com" > /etc/dnsmasq/whitelist
 echo
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
@@ -316,5 +317,7 @@ echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo
-rm -f /tmp/fqad_auto.sh
+if [ -f /tmp/fqad_auto.sh ]; then
+	rm -f /tmp/fqad_auto.sh
+fi
 exit 0
