@@ -306,7 +306,9 @@ echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
-cp /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
+if [ -f /tmp/fqad_auto.sh ]; then
+	rm -f /tmp/fqad_auto.sh
+fi
 echo
 clear
 sleep 1
@@ -321,7 +323,4 @@ echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo
-if [ -f /tmp/fqad_auto.sh ]; then
-	rm -f /tmp/fqad_auto.sh
-fi
 exit 0
