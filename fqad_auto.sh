@@ -79,7 +79,7 @@ bogus-priv
 conf-file=/etc/dnsmasq.d/fqad.conf
 
 # 设定域名解析缓存池大小
-cache-size=10000" >> /etc/dnsmasq.conf
+cache-size=10000" > /etc/dnsmasq.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
@@ -96,7 +96,7 @@ nameserver 4.2.2.2
 nameserver 114.114.114.114
 nameserver 1.2.4.8
 nameserver 223.5.5.5
-nameserver 114.114.114.119" > /etc/dnsmasq/resolv.conf
+nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建自定义扶墙规则\e[0m"
