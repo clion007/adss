@@ -26,10 +26,9 @@ if [ -s "/tmp/fq_auto.sh" ]; then
 		echo -e "\e[1;36m 开始更新翻墙脚本\e[0m"
 		echo
 		mv -f /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh
-		rm -rf /tmp/fq_auto.sh
+		sh /etc/dnsmasq/fq_auto.sh
 		rm -rf /tmp/fq_update.sh
 		rm -rf /tmp/fqrules_update.sh
-		sh /etc/dnsmasq/fq_auto.sh > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 翻墙脚本及规则更新完成。"
 	elif ( ! cmp -s /tmp/fq_update.sh /etc/dnsmasq/fq_update.sh ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......3秒后即将开始更新！"
@@ -38,10 +37,9 @@ if [ -s "/tmp/fq_auto.sh" ]; then
 		echo -e "\e[1;36m 开始更新升级脚本\e[0m"
 		echo
 		mv -f /tmp/fq_update.sh /etc/dnsmasq/fq_update.sh
+		sh /etc/dnsmasq/fq_update.sh
 		rm -rf /tmp/fq_auto.sh
-		rm -rf /tmp/fq_update.sh
 		rm -rf /tmp/fqrules_update.sh
-		sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本更新完成。"
 	elif ( ! cmp -s /tmp/fqrules_update.sh /etc/dnsmasq/fqrules_update.sh ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......3秒后即将开始更新！"
@@ -50,17 +48,16 @@ if [ -s "/tmp/fq_auto.sh" ]; then
 		echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
 		echo
 		mv -f /tmp/fqrules_update.sh /etc/dnsmasq/fqrules_update.sh
+		sh /etc/dnsmasq/fqrules_update.sh
 		rm -rf /tmp/fq_auto.sh
 		rm -rf /tmp/fq_update.sh
-		rm -rf /tmp/fqrules_update.sh
-		sh /etc/dnsmasq/fqrules_update.sh > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 		else
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，3秒后即将开始检测翻墙规则更新"
+		sh /etc/dnsmasq/fqrules_update.sh
 		rm -rf /tmp/fq_auto.sh
 		rm -rf /tmp/fq_update.sh
 		rm -rf /tmp/fqrules_update.sh
-		sh /etc/dnsmasq/fqrules_update.sh > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
 	fi	
 fi
