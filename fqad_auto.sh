@@ -117,7 +117,7 @@ sort /etc/dnsmasq/blacklist | uniq > /etc/dnsmasq/blacklist.conf
 mv /etc/dnsmasq/blacklist.conf /etc/dnsmasq/blacklist
 echo
 echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
-echo "# ，请将误杀的网址添加到在下面白名单
+echo "# 请将误杀的网址添加到在下面白名单
 # 每行输入相应的网址或关键词即可，建议尽量输入准确的网址
 toutiao.com
 dl.360safe.com
