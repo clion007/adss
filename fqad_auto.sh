@@ -31,7 +31,7 @@ if [ -d /etc/dnsmasq ]; then
 		mv -f /etc/dnsmasq /etc/dnsmasq.bak
 		else
 		mv -f /etc/dnsmasq /etc/dnsmasq.bak
-	fi
+	fi	
 fi
 if [ -d /etc/dnsmasq.d ]; then
 	if [ -d /etc/dnsmasq.d.bak ]; then
@@ -39,7 +39,7 @@ if [ -d /etc/dnsmasq.d ]; then
 		mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
 		else
 		mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
-	fi
+	fi	
 fi
 mkdir -p /etc/dnsmasq
 mkdir -p /etc/dnsmasq.d
@@ -52,7 +52,7 @@ if [ -f /etc/dnsmasq.conf ]; then
 		else
 		mv -f /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 		echo
-	fi
+	fi	
 fi
 if [ -f /etc/dnsmasq/lanip ]; then
 	lanip=$(cat /etc/dnsmasq/lanip)
@@ -96,7 +96,7 @@ nameserver 4.2.2.2
 nameserver 114.114.114.114
 nameserver 1.2.4.8
 nameserver 223.5.5.5
-nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf
+nameserver 114.114.114.119" > /etc/dnsmasq/resolv.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建自定义扶墙规则\e[0m"
@@ -271,7 +271,7 @@ echo "# 修饰hosts结束" >> /etc/dnsmasq/noad.conf
 echo
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
-#killall dnsmasq
+killall dnsmasq
 	/etc/init.d/dnsmasq restart > /dev/null 2>&1
 echo
 sleep 2
