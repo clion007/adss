@@ -25,7 +25,6 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		sleep 3
 		echo -e "\e[1;36m 开始更新翻墙去广告脚本\e[0m"
 		echo
-		clear
 		mv -f /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
 		rm -rf /tmp/fqad_auto.sh
 		rm -rf /tmp/fqad_update.sh
@@ -38,7 +37,6 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		sleep 3
 		echo -e "\e[1;36m 开始更新升级脚本\e[0m"
 		echo
-		clear
 		mv -f /tmp/fqad_update.sh /etc/dnsmasq/fqad_update.sh
 		rm -rf /tmp/fqad_auto.sh
 		rm -rf /tmp/fqad_update.sh
@@ -51,7 +49,6 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		sleep 3
 		echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
 		echo
-		clear
 		mv -f /tmp/fqadrules_update.sh /etc/dnsmasq/fqadrules_update.sh
 		rm -rf /tmp/fqad_auto.sh
 		rm -rf /tmp/fqad_update.sh
@@ -64,6 +61,7 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		rm -rf /tmp/fqad_update.sh
 		rm -rf /tmp/fqadrules_update.sh
 		sh /etc/dnsmasq/fqadrules_update.sh > /dev/null 2>&1
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
 	fi	
 fi
 echo
