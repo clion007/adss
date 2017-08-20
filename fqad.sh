@@ -53,8 +53,9 @@ if [ -f /etc/dnsmasq.conf ]; then
 		echo
 	fi
 fi
-lanip=$(ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:")
-echo -e "\e[1;36m 路由器网关:$lanip\e[0m"
+echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
+read lanip
+echo "$lanip" > /etc/dnsmasq/lanip
 echo "# 添加监听地址（其中$lanip为你的lan网关ip）
 listen-address=$lanip,127.0.0.1
 
