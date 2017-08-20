@@ -8,7 +8,8 @@ echo
 echo "# 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
 echo "# 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。"
 echo "# openwrt类固件使用，包括但不限于pandorabox、LEDE、ddwrt、明月、石像鬼等，华硕、老毛子、梅林等Padavan系列固件慎用。"
-echo -e "# 安装前请\e[1;31m备份原配置\e[0m；安装过程中需要输入路由器相关配置信息，由此产生的一切后果自行承担！"
+echo -e "# 安装前请\e[1;31m备份原配置\e[0m；由此产生的一切后果自行承担！"
+echo -e "# 全自动无人值守安装！"
 echo
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                          +"
@@ -53,9 +54,12 @@ if [ -f /etc/dnsmasq.conf ]; then
 		echo
 	fi	
 fi
-echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
-read lanip
-echo "$lanip" > /etc/dnsmasq/lanip
+if [ -f /etc/dnsmasq/lanip ]; then
+	lanip=$(cat /etc/dnsmasq/lanip)
+	else
+	lanip=$(ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:")
+fi
+echo -e "\e[1;36m 路由器网关:$lanip\e[0m"
 echo "# 添加监听地址（其中$lanip为你的lan网关ip）
 listen-address=$lanip,127.0.0.1
 
@@ -108,7 +112,9 @@ active.admore.com.cn
 g.163.com
 mtty-cdn.mtty.com
 static-alias-1.360buyimg.com
-image.yzmg.com" > /etc/dnsmasq/blacklist
+image.yzmg.com" >> /etc/dnsmasq/blacklist
+sort /etc/dnsmasq/blacklist | uniq > /etc/dnsmasq/blacklist.conf
+mv /etc/dnsmasq/blacklist.conf /etc/dnsmasq/blacklist
 echo
 echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 echo "# ，请将误杀的网址添加到在下面白名单
@@ -129,7 +135,10 @@ re.taobao.com
 shi.taobao.com
 tv.sohu.com
 s.click.taobao.com
-s.click.tmall.com" > /etc/dnsmasq/whitelist
+s.click.tmall.com
+ju.taobao.com" >> /etc/dnsmasq/whitelist
+sort /etc/dnsmasq/whitelist | uniq > /etc/dnsmasq/whitelist.conf
+mv /etc/dnsmasq/whitelist.conf /etc/dnsmasq/whitelist
 echo
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
@@ -282,19 +291,22 @@ echo -e "\e[1;31m 添加计划任务\e[0m"
 chmod 755 /etc/dnsmasq/fqad_update.sh
 sed -i '/dnsmasq/d' $CRON_FILE
 sed -i '/@/d' $CRON_FILE
-echo
-echo -e -n "\e[1;36m 请输入更新时间(整点小时): \e[0m" 
-read timedata
-echo "$timedata" > /etc/crontabs/Update_time.conf
+if [ -f /etc/crontabs/Update_time.conf ]; then
+	timedata=$(cat /etc/crontabs/Update_time.conf)
+	else
+	timedata='5'
+fi
 echo "$USER@$HOSTNAME:~# cat /etc/crontabs/$USER
-# 每天$timedata点28分更新翻墙和广告规则
-28 $timedata * * * /bin/sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
+# 每天$timedata点25分更新翻墙和广告规则
+25 $timedata * * * sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1
+# 每天$timedata点30分重启路由器
+30 $timedata * * * reboot > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
 echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fqad_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_auto.sh
+cp /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
 echo
 clear
 sleep 1
@@ -309,12 +321,7 @@ echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo
-rm -f /tmp/fqad.sh
-echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
-read boot
-if [ "$boot" = "y" ];then
-	reboot
-	else
-	exit 0
+if [ -f /tmp/fqad_auto.sh ]; then
+	rm -f /tmp/fqad_auto.sh
 fi
-echo
+exit 0
