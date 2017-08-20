@@ -201,5 +201,7 @@ echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo
-rm -f /tmp/fq_auto.sh
+if [ -f /tmp/fq_auto.sh ]; then
+	rm -f /tmp/fq_auto.sh
+fi
 exit 0
