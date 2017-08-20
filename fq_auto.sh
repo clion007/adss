@@ -186,7 +186,9 @@ echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
-cp /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh
+if [ -f /tmp/fq_auto.sh ]; then
+	mv /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh
+fi
 echo
 clear
 sleep 1
