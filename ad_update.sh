@@ -35,7 +35,7 @@ if [ -s "/tmp/ad_auto.sh" ]; then
 		echo -e "\e[1;36m 开始更新升级脚本\e[0m"
 		echo
 		sh /tmp/ad_update.sh
-		mv /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh
+		mv -f /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh
 		rm -rf /tmp/ad_auto.sh /tmp/adrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本更新完成。"
 	elif ( ! cmp -s /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh ); then
@@ -45,7 +45,7 @@ if [ -s "/tmp/ad_auto.sh" ]; then
 		echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
 		echo
 		sh /tmp/adrules_update.sh
-		mv /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh
+		mv -f /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh
 		rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 		else
@@ -54,6 +54,8 @@ if [ -s "/tmp/ad_auto.sh" ]; then
 		rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh /tmp/adrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
 	fi	
+	else
+	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 检查更新失败，请检查网络后再次尝试。\e[0m"
 fi
 echo
 exit 0
