@@ -46,6 +46,7 @@ if [ -f /etc/dnsmasq.conf.bak ]; then
 fi
 sleep 3
 echo -e "\e[1;36m 配置dnsmasq\e[0m"
+echo
 echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
 read lanip
 echo "$lanip" > /etc/dnsmasq/lanip
