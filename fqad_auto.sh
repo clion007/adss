@@ -299,7 +299,7 @@ echo
 echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
-if [ -f /tmp/fqad_auto.sh ]; thenif [ -f /tmp/fqad_auto.sh ]; then
+if [ -f /tmp/fqad_auto.sh ]; then
 	mv /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
 	echo
 	else
