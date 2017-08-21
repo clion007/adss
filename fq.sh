@@ -25,7 +25,6 @@ echo -e "\e[1;36m 创建dnsmasq规则与更新脚本存放的文件夹\e[0m"
 echo
 echo -e "\e[1;36m 检测和备份当前dnsmasq配置信息\e[0m"
 if [ -d /etc/dnsmasq ]; then
-	if [ -d /etc/dnsmasq ]; then
 	if [ -d /etc/dnsmasq.bak ]; then
 		cp -r -u -p /etc/dnsmasq /etc/dnsmasq.bak
 	fi	
