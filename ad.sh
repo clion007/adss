@@ -110,14 +110,7 @@ echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
 echo
 echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 echo "# 请在下面添加广告黑名单
-# 每行输入要屏蔽广告网址不含http://符号
-active.admore.com.cn
-g.163.com
-mtty-cdn.mtty.com
-static-alias-1.360buyimg.com
-image.yzmg.com" >> /etc/dnsmasq/blacklist
-sort /etc/dnsmasq/blacklist | uniq > /etc/dnsmasq/blacklist.conf
-mv /etc/dnsmasq/blacklist.conf /etc/dnsmasq/blacklist
+# 每行输入要屏蔽广告网址不含http://符号" > /etc/dnsmasq/userblacklist
 echo
 echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 echo "# 请将误杀的网址添加到在下面白名单
@@ -169,8 +162,9 @@ sleep 3
 echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
-echo -e "\e[1;36m 创建自定义广告黑名单缓存\e[0m"
-cp /etc/dnsmasq/blacklist /tmp/blacklist
+echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
+wget --no-check-certificate -q -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
+sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
 sed -i "/#/d" /tmp/blacklist
 sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
 echo
