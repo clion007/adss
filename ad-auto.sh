@@ -48,7 +48,7 @@ fi
 sleep 3
 echo -e "\e[1;36m 配置dnsmasq\e[0m"
 echo
-grep "fqad.conf" /etc/dnsmasq.conf >/dev/null
+grep "ad.conf" /etc/dnsmasq.conf >/dev/null
 if [ $? -eq 0 ]; then
 	echo -e "\e[1;36m 检测到dnsmasq配置已存在，无需再次创建\e[0m"
 	else
