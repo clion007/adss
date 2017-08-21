@@ -23,10 +23,7 @@ cp /etc/dnsmasq.d/userlist /tmp/userlist
 cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 
 # 删除dnsmasq缓存
-rm -rf /tmp/userlist
-rm -rf /tmp/ad.conf
-rm -rf /tmp/sy618
-rm -rf /tmp/easylistchina.conf
+rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf
 #rm -rf /tmp/racaljk
 
 # 删除误杀广告规则
@@ -85,14 +82,11 @@ wget --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn
 wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
 #wget --no-check-certificate -q -O /tmp/adaway5 https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
-rm -rf /tmp/adaway
-rm -rf /tmp/adaway2
-rm -rf /tmp/adaway3
-rm -rf /tmp/adaway4
-#rm -rf /tmp/adaway5
+rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 #/tmp/adaway5
 echo
-echo -e " 创建自定义广告黑名单缓存"
-cp /etc/dnsmasq/blacklist /tmp/blacklist
+echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
+wget --no-check-certificate -q -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
+sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
 sed -i "/#/d" /tmp/blacklist
 sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
 echo
@@ -100,11 +94,7 @@ echo
 cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare > /tmp/noad
 
 # 删除hosts缓存
-rm -rf /tmp/blacklist
-rm -rf /tmp/yhosts.conf
-rm -rf /tmp/adaway.conf
-rm -rf /tmp/mallist
-rm -rf /tmp/whocare
+rm -rf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare
 
 # 删除误杀广告规则
 while read -r line
