@@ -153,7 +153,8 @@ cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
 echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
 wget --no-check-certificate -q -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
-sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
+sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/
+rm -rf /tmp/adblacklist
 sed -i "/#/d" /tmp/blacklist
 sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
 echo
