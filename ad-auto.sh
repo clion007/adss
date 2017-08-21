@@ -102,8 +102,7 @@ sleep 3
 echo -e "\e[1;36m 创建自定义扶墙规则\e[0m"
 echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
 # 正确ip地址表示DNS解析扶墙，127地址表示去广告
-#address=/.001union.com/127.0.0.1
-#address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
+#address=/.001union.com/127.0.0.1" > /etc/dnsmasq.d/userlist
 echo
 echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 if [ -f /etc/dnsmasq/blacklist ]; then
