@@ -72,7 +72,7 @@ sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
 echo "# 上游DNS解析服务器
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
-# 选择最快的服务器，打开resolv文件依次按速度快慢顺序手动改写
+# 选择最快的服务器依次按速度快慢顺序手动改写
 
 # 本地规则查询服务器
 nameserver 127.0.0.1
@@ -80,9 +80,10 @@ nameserver 127.0.0.1
 # 电信服务商当地DNS查询服务器" > /etc/dnsmasq/resolv
 cp /tmp/resolv.conf.auto /tmp/resolv
 sed -i '/#/d' /tmp/resolv
-cat /tmp/resolv /etc/dnsmasq/resolv >> /etc/dnsmasq/resolv.conf
+cat /etc/dnsmasq/resolv /tmp/resolv >> /etc/dnsmasq/resolv.conf
 rm -rf /etc/dnsmasq/resolv /tmp/resolv
-echo "# 主流公共DNS查血服务器
+echo "
+# 主流公共DNS查询服务器
 nameserver 114.114.114.114
 nameserver 218.30.118.6
 nameserver 114.114.114.119
