@@ -79,7 +79,12 @@ fi
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
-echo "# 上游DNS解析服务器
+echo
+if [ -f /etc/dnsmasq/resolv.conf ]; then
+	echo -e "\e[1;36m 检测到上游DNS配置已存在，无需再次创建\e[0m"
+	else
+	echo -e "\e[1;36m 开始创建上游DNS配置\e[0m"
+	echo "# 上游DNS解析服务器
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
 # 选择最快的服务器依次按速度快慢顺序手动改写
 
@@ -87,11 +92,11 @@ echo "# 上游DNS解析服务器
 nameserver 127.0.0.1
 
 # 电信服务商当地DNS查询服务器" > /etc/dnsmasq/resolv
-cp /tmp/resolv.conf.auto /tmp/resolv
-sed -i '/#/d' /tmp/resolv
-cat /etc/dnsmasq/resolv /tmp/resolv >> /etc/dnsmasq/resolv.conf
-rm -rf /etc/dnsmasq/resolv /tmp/resolv
-echo "
+	cp /tmp/resolv.conf.auto /tmp/resolv
+	sed -i '/#/d' /tmp/resolv
+	cat /etc/dnsmasq/resolv /tmp/resolv >> /etc/dnsmasq/resolv.conf
+	rm -rf /etc/dnsmasq/resolv /tmp/resolv
+	echo "
 # 主流公共DNS查询服务器
 nameserver 114.114.114.114
 nameserver 218.30.118.6
@@ -101,27 +106,46 @@ nameserver 8.8.4.4
 nameserver 4.2.2.2
 nameserver 1.2.4.8
 nameserver 223.5.5.5" >> /etc/dnsmasq/resolv.conf
+fi
 echo
 sleep 3
-echo -e "\e[1;36m 创建自定义扶墙规则\e[0m"
-echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
+echo -e "\e[1;36m 创建自定义dnsmasq广告规则\e[0m"
+echo
+if [ -f /etc/dnsmasq.d/userlist ]; then
+	echo -e "\e[1;36m 检测到自定义规则已存在，无需再次创建\e[0m"
+	else
+	echo -e "\e[1;36m 开始创建创建自定义规则\e[0m"
+	echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
 # 正确ip地址表示DNS解析扶墙，127地址表示去广告
 #address=/.001union.com/127.0.0.1" > /etc/dnsmasq.d/userlist
+fi
 echo
 echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
-if [ -f /etc/dnsmasq/blacklist ]; then
-	mv /etc/dnsmasq/blacklist /etc/dnsmasq/userblacklist
+echo
+if [ -f /etc/dnsmasq/userblacklist ]; then
+	echo -e "\e[1;36m 检测到自定义广告黑名单已存在，无需再次创建\e[0m"
 	else
-	echo "# 请在下面添加广告黑名单
+	if [ -f /etc/dnsmasq/blacklist ]; then
+		mv /etc/dnsmasq/blacklist /etc/dnsmasq/userblacklist
+		else
+		echo -e "\e[1;36m 开始创建创建自定义广告黑名单\e[0m"
+		echo "# 请在下面添加广告黑名单
 # 每行输入要屏蔽广告网址不含http://符号" > /etc/dnsmasq/userblacklist
+	fi	
 fi
 echo
 echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
-if [ -f /etc/dnsmasq/whitelist ]; then
-	mv /etc/dnsmasq/whitelist /etc/dnsmasq/userwhitelist
+echo
+if [ -f /etc/dnsmasq/userblacklist ]; then
+	echo -e "\e[1;36m 检测到自定义广告白名单已存在，无需再次创建\e[0m"
 	else
-	echo "# 请将误杀的网址域名添加到在下面
+	if [ -f /etc/dnsmasq/whitelist ]; then
+		mv /etc/dnsmasq/whitelist /etc/dnsmasq/userwhitelist
+		else
+		echo -e "\e[1;36m 开始创建创建自定义广告白名单\e[0m"
+		echo "# 请将误杀的网址域名添加到在下面
 # 每行输入相应的网址或关键词即可，建议尽量输入准确的网址" > /etc/dnsmasq/userwhitelist
+	fi	
 fi
 echo
 echo -e "\e[1;36m 下载广告规则\e[0m"
