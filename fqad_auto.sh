@@ -46,15 +46,20 @@ if [ -f /etc/dnsmasq.conf.bak ]; then
 	echo
 fi
 sleep 3
-if [ -f /etc/dnsmasq/lanip ]; then
-	lanip=$(cat /etc/dnsmasq/lanip)
-	else
-	lanip=$(ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:")
-fi
 echo -e "\e[1;36m 配置dnsmasq\e[0m"
 echo
-echo -e "\e[1;36m 路由器网关:$lanip\e[0m"
-echo "# 添加监听地址（其中$lanip为你的lan网关ip）
+grep "fqad.conf" /etc/dnsmasq.conf >/dev/null
+if [ $? -eq 0 ]; then
+	echo -e "\e[1;36m 检测到dnsmasq配置已存在，无需再次创建\e[0m"
+	else
+	if [ -f /etc/dnsmasq/lanip ]; then
+		lanip=$(cat /etc/dnsmasq/lanip)
+		else
+		lanip=$(ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:")
+	fi
+	echo -e "\e[1;36m 检测到路由器网关:$lanip，开始配置dnsmasq\e[0m"
+	echo "
+# 添加监听地址（其中$lanip为你的lan网关ip）
 listen-address=$lanip,127.0.0.1
 
 # 并发查询所有上游DNS服务器
@@ -73,7 +78,8 @@ bogus-priv
 conf-file=/etc/dnsmasq.d/fqad.conf
 
 # 设定域名解析缓存池大小
-cache-size=10000" > /etc/dnsmasq.conf
+cache-size=10000" >> /etc/dnsmasq.conf
+fi
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
