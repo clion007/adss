@@ -47,10 +47,15 @@ fi
 sleep 3
 echo -e "\e[1;36m 配置dnsmasq\e[0m"
 echo
-echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
-read lanip
-echo "$lanip" > /etc/dnsmasq/lanip
-echo "# 添加监听地址（其中$lanip为你的lan网关ip）
+grep "fqad.conf" /etc/dnsmasq.conf >/dev/null
+if [ $? -eq 0 ]; then
+	echo -e "\e[1;36m 检测到dnsmasq配置已存在，无需再次创建\e[0m"
+	else
+	echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
+	read lanip
+	echo "$lanip" > /etc/dnsmasq/lanip
+	echo "
+# 添加监听地址（其中$lanip为你的lan网关ip）
 listen-address=$lanip,127.0.0.1
 
 # 并发查询所有上游DNS服务器
@@ -59,14 +64,18 @@ all-servers
 # 指定上游DNS服务器配置文件路径
 resolv-file=/etc/dnsmasq/resolv.conf
 
+# 添加额外hosts规则路径
+addn-hosts=/etc/dnsmasq/noad.conf
+
 # IP反查域名
 bogus-priv
 
 # 添加DNS解析文件
-conf-file=/etc/dnsmasq.d/fq.conf
+conf-file=/etc/dnsmasq.d/fqad.conf
 
 # 设定域名解析缓存池大小
-cache-size=10000" > /etc/dnsmasq.conf
+cache-size=10000" >> /etc/dnsmasq.conf
+fi
 echo
 sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
@@ -197,7 +206,7 @@ echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo
-rm -f /tmp/fq.sh
+rm -f /tmp/fqad.sh
 echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
 read boot
 if [ "$boot" = "y" ];then
