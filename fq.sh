@@ -197,7 +197,7 @@ echo "+                                                          +"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo
-rm -f /tmp/fqad.sh
+rm -f /tmp/fq.sh
 echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
 read boot
 if [ "$boot" = "y" ];then
