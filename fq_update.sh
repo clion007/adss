@@ -36,7 +36,7 @@ if [ -s "/tmp/fq_auto.sh" ]; then
 		echo -e "\e[1;36m 开始更新升级脚本\e[0m"
 		echo
 		sh /tmp/fq_update.sh
-		mv /tmp/fq_update.sh /etc/dnsmasq/fq_update.sh
+		mv -f /tmp/fq_update.sh /etc/dnsmasq/fq_update.sh
 		rm -rf /tmp/fq_auto.sh
 		rm -rf /tmp/fqrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本更新完成。"
@@ -47,7 +47,7 @@ if [ -s "/tmp/fq_auto.sh" ]; then
 		echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
 		echo
 		sh /tmp/fqrules_update.sh
-		mv /tmp/fqrules_update.sh /etc/dnsmasq/fqrules_update.sh
+		mv -f /tmp/fqrules_update.sh /etc/dnsmasq/fqrules_update.sh
 		rm -rf /tmp/fq_auto.sh
 		rm -rf /tmp/fq_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
@@ -59,6 +59,8 @@ if [ -s "/tmp/fq_auto.sh" ]; then
 		rm -rf /tmp/fqrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
 	fi	
+	else
+	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 检查更新失败，请检查网络后再次尝试。\e[0m"
 fi
 echo
 exit 0
