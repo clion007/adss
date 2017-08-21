@@ -26,8 +26,10 @@ cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf
 #rm -rf /tmp/racaljk
 
+创建广告白名单缓存
 wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
-sort userwhitelist adwhitelist | uniq > /tmp/whitelist
+sort /etc/dnsmasq/userwhitelist /tmp/adwhitelist | uniq > /tmp/whitelist
+sed -i "/#/d" /tmp/whitelist
 rm -rf /tmp/adwhitelist
 
 # 删除误杀广告规则
@@ -104,8 +106,8 @@ rm -rf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocar
 while read -r line
 do
 	sed -i "/$line/d" /tmp/noad
-done < /etc/tmp/whitelist
-rm -rf /etc/tmp/whitelist
+done < /tmp/whitelist
+rm -rf /tmp/whitelist
 
 # 删除注释及本地规则
 sed -i '/#/d' /tmp/noad
