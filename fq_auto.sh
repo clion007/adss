@@ -27,33 +27,25 @@ echo
 echo -e "\e[1;36m 检测和备份当前dnsmasq配置信息\e[0m"
 if [ -d /etc/dnsmasq ]; then
 	if [ -d /etc/dnsmasq.bak ]; then
-		rm -rf /etc/dnsmasq.bak
-		mv -f /etc/dnsmasq /etc/dnsmasq.bak
-		else
-		mv -f /etc/dnsmasq /etc/dnsmasq.bak
+		cp -r -u -p /etc/dnsmasq /etc/dnsmasq.bak
 	fi	
+	else
+	mkdir -p /etc/dnsmasq
 fi
 if [ -d /etc/dnsmasq.d ]; then
 	if [ -d /etc/dnsmasq.d.bak ]; then
-		rm -rf /etc/dnsmasq.d.bak
-		mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
-		else
-		mv -f /etc/dnsmasq.d /etc/dnsmasq.d.bak
+		cp -r -u -p /etc/dnsmasq.d /etc/dnsmasq.d.bak
 	fi	
+	else
+	mkdir -p /etc/dnsmasq.d
 fi
-mkdir -p /etc/dnsmasq
-mkdir -p /etc/dnsmasq.d
-echo
+if [ -f /etc/dnsmasq.conf.bak ]; then
+	echo
+	else
+	cp -p /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
+	echo
+fi
 sleep 3
-echo -e "\e[1;36m 配置dnsmasq\e[0m"
-if [ -f /etc/dnsmasq.conf ]; then
-	if [ -f /etc/dnsmasq.conf.bak ]; then
-		echo
-		else
-		mv -f /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
-		echo
-	fi	
-fi
 if [ -f /etc/dnsmasq/lanip ]; then
 	lanip=$(cat /etc/dnsmasq/lanip)
 	else
@@ -193,7 +185,7 @@ echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
 echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 if [ -f /tmp/fq_auto.sh ]; then
-	mv /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh
+	mv -f /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh
 	echo
 	else
 	echo
