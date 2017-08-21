@@ -86,17 +86,25 @@ echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
 echo "# 上游DNS解析服务器
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
 # 选择最快的服务器，打开resolv文件依次按速度快慢顺序手动改写
-nameserver 127.0.0.1" > /etc/dnsmasq/resolv
-cat /tmp/resolv.conf.auto /etc/dnsmasq/resolv > /etc/dnsmasq/resolv.conf
+
+# 本地规则查询服务器
+nameserver 127.0.0.1
+
+# 电信服务商当地DNS查询服务器" > /etc/dnsmasq/resolv
+cp /tmp/resolv.conf.auto /tmp/resolv
+sed -i '/#/d' /tmp/resolv
+cat /tmp/resolv /etc/dnsmasq/resolv >> /etc/dnsmasq/resolv.conf
 rm -rf /etc/dnsmasq/resolv
-echo "nameserver 218.30.118.6
-nameserver 8.8.4.4
-nameserver 119.29.29.29
-nameserver 4.2.2.2
+rm -rf /tmp/resolv
+echo "# 主流公共DNS查血服务器
 nameserver 114.114.114.114
+nameserver 218.30.118.6
+nameserver 114.114.114.119
+nameserver 119.29.29.29
+nameserver 8.8.4.4
+nameserver 4.2.2.2
 nameserver 1.2.4.8
-nameserver 223.5.5.5
-nameserver 114.114.114.119" >> /etc/dnsmasq/resolv.conf
+nameserver 223.5.5.5" >> /etc/dnsmasq/resolv.conf
 echo
 sleep 3
 echo -e "\e[1;36m 创建自定义扶墙规则\e[0m"
