@@ -42,11 +42,15 @@ echo -e "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
 rm -rf /tmp/userlist /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
+wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
+sort userwhitelist adwhitelist | uniq > /tmp/whitelist
+rm -rf /tmp/adwhitelist
 while read -r line
 do
 	sed -i "/$line/d" /tmp/noad
 	sed -i "/$line/d" /tmp/ad
-done < /etc/dnsmasq/whitelist
+done < /etc/tmp/whitelist
+rm -rf /etc/tmp/whitelist
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/ad
