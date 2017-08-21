@@ -177,7 +177,7 @@ if [ -f /etc/crontabs/Update_time.conf ]; then
 	timedata='5'
 fi
 echo "# 每天$timedata点25分更新翻墙规则
-28 $timedata * * * sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1
+25 $timedata * * * sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1
 # 每天$timedata点30分重启路由器
 30 $timedata * * * reboot > /dev/null 2>&1" >> $CRON_FILE
 /etc/init.d/cron reload
