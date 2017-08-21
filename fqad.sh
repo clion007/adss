@@ -90,8 +90,7 @@ nameserver 127.0.0.1
 cp /tmp/resolv.conf.auto /tmp/resolv
 sed -i '/#/d' /tmp/resolv
 cat /tmp/resolv /etc/dnsmasq/resolv >> /etc/dnsmasq/resolv.conf
-rm -rf /etc/dnsmasq/resolv
-rm -rf /tmp/resolv
+rm -rf /etc/dnsmasq/resolv /tmp/resolv
 echo "# 主流公共DNS查血服务器
 nameserver 114.114.114.114
 nameserver 218.30.118.6
@@ -170,11 +169,7 @@ wget --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn
 wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
 #wget --no-check-certificate -q -O /tmp/adaway5 https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
-rm -rf /tmp/adaway
-rm -rf /tmp/adaway2
-rm -rf /tmp/adaway3
-rm -rf /tmp/adaway4
-#rm -rf /tmp/adaway5
+rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 #/tmp/adaway5
 echo
 sleep 3
 #echo -e "\e[1;36m 删除racaljk规则中的冲突规则\e[0m"
@@ -195,15 +190,8 @@ cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 echo
 echo -e "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
-rm -rf /tmp/userlist
-rm -rf /tmp/ad.conf
-rm -rf /tmp/sy618
-rm -rf /tmp/easylistchina.conf
+rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
 #rm -rf /tmp/racaljk
-rm -rf /tmp/blacklist
-rm -rf /tmp/yhosts.conf
-rm -rf /tmp/adaway.conf
-rm -rf /tmp/mallist
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
 while read -r line
@@ -272,8 +260,7 @@ echo
 echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
 sort /tmp/fqad | uniq >> /etc/dnsmasq.d/fqad.conf
 sort /tmp/noad | uniq >> /etc/dnsmasq/noad.conf
-rm -rf /tmp/fqad
-rm -rf /tmp/noad
+rm -rf /tmp/fqad /tmp/noad
 echo "# Modified DNS end" >> /etc/dnsmasq.d/fqad.conf
 echo "# 修饰hosts结束" >> /etc/dnsmasq/noad.conf
 echo
