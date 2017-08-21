@@ -46,6 +46,7 @@ if [ -f /etc/dnsmasq.conf.bak ]; then
 fi
 sleep 3
 echo -e "\e[1;36m 配置dnsmasq\e[0m"
+echo
 echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
 read lanip
 echo "$lanip" > /etc/dnsmasq/lanip
@@ -114,7 +115,6 @@ echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 if [ -f /etc/dnsmasq/whitelist ]; then
 	mv /etc/dnsmasq/whitelist /etc/dnsmasq/userwhitelist
 	else
-	echo -e "\e[1;36m 创建广告白名单\e[0m"
 	echo "# 请将误杀的网址域名添加到在下面
 # 每行输入相应的网址或关键词即可，建议尽量输入准确的网址" > /etc/dnsmasq/userwhitelist
 fi
@@ -176,14 +176,15 @@ rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blackl
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
-sort userwhitelist adwhitelist | uniq > /tmp/whitelist
+sort /etc/dnsmasq/userwhitelist /tmp/adwhitelist | uniq > /tmp/whitelist
+sed -i "/#/d" /tmp/whitelist
 rm -rf /tmp/adwhitelist
 while read -r line
 do
 	sed -i "/$line/d" /tmp/noad
 	sed -i "/$line/d" /tmp/fqad
-done < /etc/tmp/whitelist
-rm -rf /etc/tmp/whitelist
+done < /tmp/whitelist
+rm -rf /tmp/whitelist
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/fqad
