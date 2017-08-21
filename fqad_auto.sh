@@ -90,7 +90,7 @@ sed -i '/#/d' /tmp/resolv
 cat /etc/dnsmasq/resolv /tmp/resolv >> /etc/dnsmasq/resolv.conf
 rm -rf /etc/dnsmasq/resolv /tmp/resolv
 echo "
-# 主流公共DNS查血服务器
+# 主流公共DNS查询服务器
 nameserver 114.114.114.114
 nameserver 218.30.118.6
 nameserver 114.114.114.119
