@@ -151,13 +151,16 @@ echo -e "\e[1;36m 下载yhosts缓存\e[0m"
 wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
 echo
 echo -e "\e[1;36m 下载malwaredomainlist规则\e[0m"
-wget --no-check-certificate -q -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/mallist
+wget --no-check-certificate -q -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt
+sed -i "s/.$//g" /tmp/mallist
 echo
 echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
 wget --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
-wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
+wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
+sed -i "s/.$//g" /tmp/adaway2
 wget --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
-wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
+wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt
+sed -i "s/.$//g" /tmp/adaway4
 #wget --no-check-certificate -q -O /tmp/adaway5 https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
 rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 #/tmp/adaway5
