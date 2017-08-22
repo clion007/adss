@@ -317,10 +317,8 @@ fi
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 if [ -f /tmp/fqad_auto.sh ]; then
 	mv -f /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh
-	echo
-	else
-	echo
 fi
+echo
 clear
 sleep 1
 echo
