@@ -48,22 +48,18 @@ if [ -d /etc/dnsmasq.d.bak ]; then
 	else
 	cp -r /etc/dnsmasq.d /etc/dnsmasq.d.bak
 fi
-if [ -f /etc/dnsmasq.conf.bak ]; then
-	echo ""
-	else
+if [ ! -f /etc/dnsmasq.conf.bak ]; then
 	cp -p /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 fi
-if [ -f $CRON_FILE.bak ]; then
-	echo ""
-	else
+if [ ! -f $CRON_FILE.bak ]; then
 	cp -p $CRON_FILE $CRON_FILE.bak
 fi
 echo
 sleep 3
-echo -e "\e[1;36m 配置dnsmasq\e[0m"
-echo
 grep "fqad.conf" /etc/dnsmasq.conf >/dev/null
 if [ $? -eq 0 ]; then
+	echo -e "\e[1;36m 配置dnsmasq\e[0m"
+	echo
 	echo -e "\e[1;36m dnsmasq配置已存在，无需再次创建\e[0m"
 	else
 	echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
@@ -90,14 +86,12 @@ conf-file=/etc/dnsmasq.d/fqad.conf
 
 # 设定域名解析缓存池大小
 cache-size=10000" >> /etc/dnsmasq.conf
+	echo
 fi
-echo
 sleep 3
-echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
-echo
-if [ -f /etc/dnsmasq/resolv.conf ]; then
-	echo -e "\e[1;36m 上游DNS配置已存在，无需再次创建\e[0m"
-	else
+if [ ! -f /etc/dnsmasq/resolv.conf ]; then
+	echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
+	echo
 	echo -e "\e[1;36m 开始创建上游DNS配置\e[0m"
 	echo "# 上游DNS解析服务器
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
@@ -121,26 +115,22 @@ nameserver 8.8.4.4
 nameserver 4.2.2.2
 nameserver 1.2.4.8
 nameserver 223.5.5.5" >> /etc/dnsmasq/resolv.conf
+	echo
 fi
-echo
 sleep 3
-echo -e "\e[1;36m 创建自定义dnsmasq规则\e[0m"
-echo
-if [ -f /etc/dnsmasq.d/userlist ]; then
-	echo -e "\e[1;36m 自定义dnsmasq规则已存在，无需再次创建\e[0m"
-	else
+if [ ! -f /etc/dnsmasq.d/userlist ]; then
+	echo -e "\e[1;36m 创建自定义dnsmasq规则\e[0m"
+	echo
 	echo -e "\e[1;36m 开始创建创建自定义dnsmasq规则\e[0m"
 	echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
 # 正确ip地址表示DNS解析扶墙，127地址表示去广告
 #address=/.001union.com/127.0.0.1
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
+	echo
 fi
-echo
-echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
-echo
-if [ -f /etc/dnsmasq/userblacklist ]; then
-	echo -e "\e[1;36m 自定义广告黑名单已存在，无需再次创建\e[0m"
-	else
+if [ ! -f /etc/dnsmasq/userblacklist ]; then
+	echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
+	echo
 	if [ -f /etc/dnsmasq/blacklist ]; then
 		mv /etc/dnsmasq/blacklist /etc/dnsmasq/userblacklist
 		else
@@ -148,13 +138,11 @@ if [ -f /etc/dnsmasq/userblacklist ]; then
 		echo "# 请在下面添加广告黑名单
 # 每行输入要屏蔽广告网址不含http://符号" > /etc/dnsmasq/userblacklist
 	fi	
+	echo
 fi
-echo
+if [ ! -f /etc/dnsmasq/userblacklist ]; then
 echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 echo
-if [ -f /etc/dnsmasq/userblacklist ]; then
-	echo -e "\e[1;36m 自定义广告白名单已存在，无需再次创建\e[0m"
-	else
 	if [ -f /etc/dnsmasq/whitelist ]; then
 		mv /etc/dnsmasq/whitelist /etc/dnsmasq/userwhitelist
 		else
@@ -162,8 +150,8 @@ if [ -f /etc/dnsmasq/userblacklist ]; then
 		echo "# 请将误杀的网址域名添加到在下面
 # 每行输入相应的网址或关键词即可，建议尽量输入准确的网址" > /etc/dnsmasq/userwhitelist
 	fi	
+	echo
 fi
-echo
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
 echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
@@ -310,9 +298,7 @@ wget --no-check-certificate -q -O /etc/dnsmasq/fqadrules_update.sh https://raw.g
 echo
 sleep 1
 grep "dnsmasq" $CRON_FILE >/dev/null
-if [ $? -eq 0 ]; then
-	echo -e "\e[1;36m 自动更新任务已存在，无需再次创建\e[0m"
-	else
+if [ ! $? -eq 0 ]; then
 	echo -e "\e[1;31m 添加自动更新计划任务\e[0m"
 	echo
 	echo -e -n "\e[1;36m 请输入更新时间(整点小时): \e[0m" 
@@ -325,8 +311,8 @@ if [ $? -eq 0 ]; then
 	/etc/init.d/cron reload
 	echo
 	echo -e "\e[1;36m 自动更新任务添加完成\e[0m"
+	echo
 fi
-echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 wget --no-check-certificate -q -O /etc/dnsmasq/fqad_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_auto.sh
 chmod 755 /etc/dnsmasq/fqad_auto.sh
