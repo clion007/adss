@@ -22,8 +22,6 @@ echo
 echo -e "\e[1;36m 三秒后开始安装......\e[0m"
 echo
 sleep 3
-echo -e "\e[1;36m 创建dnsmasq规则与更新脚本存放的文件夹\e[0m"
-echo
 echo -e "\e[1;36m 检测和备份当前dnsmasq配置信息\e[0m"
 if [ -d /etc/dnsmasq.bak ]; then
 	filedir1=/etc/dnsmasq
