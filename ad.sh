@@ -12,7 +12,7 @@ echo -e "# 安装前请\e[1;31m备份原配置\e[0m；安装过程中需要输�
 echo
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                          +"
-echo "+     Install Fq+Noad for OpnWrt or LEDE or PandoraBox     +"
+echo "+     Install fq+Noad for OpnWrt or LEDE or PandoraBox     +"
 echo "+                                                          +"
 echo "+                      Time:`date +'%Y-%m-%d'`                     +"
 echo "+                                                          +"
@@ -49,17 +49,22 @@ if [ -d /etc/dnsmasq.d.bak ]; then
 	cp -r /etc/dnsmasq.d /etc/dnsmasq.d.bak
 fi
 if [ -f /etc/dnsmasq.conf.bak ]; then
-	echo
+	echo ""
 	else
 	cp -p /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
-	echo
 fi
+if [ -f $CRON_FILE.bak ]; then
+	echo ""
+	else
+	cp -p $CRON_FILE $CRON_FILE.bak
+fi
+echo
 sleep 3
 echo -e "\e[1;36m 配置dnsmasq\e[0m"
 echo
 grep "ad.conf" /etc/dnsmasq.conf >/dev/null
 if [ $? -eq 0 ]; then
-	echo -e "\e[1;36m 检测到dnsmasq配置已存在，无需再次创建\e[0m"
+	echo -e "\e[1;36m dnsmasq配置已存在，无需再次创建\e[0m"
 	else
 	echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
 	read lanip
@@ -81,7 +86,7 @@ addn-hosts=/etc/dnsmasq/noad.conf
 bogus-priv
 
 # 添加DNS解析文件
-conf-file=/etc/dnsmasq.d/fqad.conf
+conf-file=/etc/dnsmasq.d/ad.conf
 
 # 设定域名解析缓存池大小
 cache-size=10000" >> /etc/dnsmasq.conf
@@ -91,7 +96,7 @@ sleep 3
 echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
 echo
 if [ -f /etc/dnsmasq/resolv.conf ]; then
-	echo -e "\e[1;36m 检测到上游DNS配置已存在，无需再次创建\e[0m"
+	echo -e "\e[1;36m 上游DNS配置已存在，无需再次创建\e[0m"
 	else
 	echo -e "\e[1;36m 开始创建上游DNS配置\e[0m"
 	echo "# 上游DNS解析服务器
@@ -122,7 +127,7 @@ sleep 3
 echo -e "\e[1;36m 创建自定义dnsmasq广告规则\e[0m"
 echo
 if [ -f /etc/dnsmasq.d/userlist ]; then
-	echo -e "\e[1;36m 检测到自定义规则已存在，无需再次创建\e[0m"
+	echo -e "\e[1;36m 自定义规则已存在，无需再次创建\e[0m"
 	else
 	echo -e "\e[1;36m 开始创建创建自定义规则\e[0m"
 	echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
@@ -133,7 +138,7 @@ echo
 echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 echo
 if [ -f /etc/dnsmasq/userblacklist ]; then
-	echo -e "\e[1;36m 检测到自定义广告黑名单已存在，无需再次创建\e[0m"
+	echo -e "\e[1;36m 自定义广告黑名单已存在，无需再次创建\e[0m"
 	else
 	if [ -f /etc/dnsmasq/blacklist ]; then
 		mv /etc/dnsmasq/blacklist /etc/dnsmasq/userblacklist
@@ -147,7 +152,7 @@ echo
 echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 echo
 if [ -f /etc/dnsmasq/userblacklist ]; then
-	echo -e "\e[1;36m 检测到自定义广告白名单已存在，无需再次创建\e[0m"
+	echo -e "\e[1;36m 自定义广告白名单已存在，无需再次创建\e[0m"
 	else
 	if [ -f /etc/dnsmasq/whitelist ]; then
 		mv /etc/dnsmasq/whitelist /etc/dnsmasq/userwhitelist
@@ -284,30 +289,33 @@ killall dnsmasq
 echo
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/ad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh
+wget --no-check-certificate -q -O /etc/dnsmasq/ad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh && chmod 755 /etc/dnsmasq/ad_update.sh
 echo
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/adrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh
+wget --no-check-certificate -q -O /etc/dnsmasq/adrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
 echo
 sleep 1
-echo -e "\e[1;31m 添加计划任务\e[0m"
-chmod 755 /etc/dnsmasq/ad_update.sh
-sed -i '/null/d' $CRON_FILE
-sed -i '/#/d' $CRON_FILE
-echo
-echo -e -n "\e[1;36m 请输入更新时间(整点小时): \e[0m" 
-read timedata
-echo "$timedata" > /etc/crontabs/Update_time.conf
-echo "# 每天$timedata点28分更新翻墙和广告规则
-28 $timedata * * * sh /etc/dnsmasq/ad_update.sh > /dev/null 2>&1
+grep "dnsmasq" $CRON_FILE >/dev/null
+if [ $? -eq 0 ]; then
+	echo -e "\e[1;36m 自动更新任务已存在，无需再次创建\e[0m"
+	else
+	echo -e "\e[1;31m 添加自动更新计划任务\e[0m"
+	echo
+	echo -e -n "\e[1;36m 请输入更新时间(整点小时): \e[0m" 
+	read timedata
+	echo "$timedata" > /etc/crontabs/Update_time.conf
+	echo "# 每天$timedata点25分更新广告规则
+25 $timedata * * * sh /etc/dnsmasq/ad_update.sh > /dev/null 2>&1
 # 每天$timedata点30分重启路由器
 30 $timedata * * * reboot > /dev/null 2>&1" >> $CRON_FILE
-/etc/init.d/cron reload
-echo
-echo -e "\e[1;36m 定时计划任务添加完成！\e[0m"
+	/etc/init.d/cron reload
+	echo
+	echo -e "\e[1;36m 自动更新任务添加完成\e[0m"
+fi
 echo
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 wget --no-check-certificate -q -O /etc/dnsmasq/ad_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_auto.sh
+chmod 755 /etc/dnsmasq/ad_auto.sh
 echo
 clear
 sleep 1
