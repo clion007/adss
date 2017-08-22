@@ -57,11 +57,9 @@ fi
 echo
 sleep 3
 grep "fq.conf" /etc/dnsmasq.conf >/dev/null
-if [ $? -eq 0 ]; then
+if [ ! $? -eq 0 ]; then
 	echo -e "\e[1;36m 配置dnsmasq\e[0m"
 	echo
-	echo -e "\e[1;36m dnsmasq配置已存在，无需再次创建\e[0m"
-	else
 	echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
 	read lanip
 	echo "$lanip" > /etc/dnsmasq/lanip
