@@ -26,7 +26,7 @@ cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
 rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf
 #rm -rf /tmp/racaljk
 
-创建广告白名单缓存
+# 创建广告白名单缓存
 wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
 sort /etc/dnsmasq/userwhitelist /tmp/adwhitelist | uniq > /tmp/whitelist
 sed -i "/#/d" /tmp/whitelist
@@ -170,4 +170,5 @@ if [ -s "/tmp/noad.conf" ]; then
 fi
 echo
 echo -e "\e[1;36m 规则更新成功\e[0m"
+echo
 exit 0
