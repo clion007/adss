@@ -141,4 +141,5 @@ if [ -s "/tmp/noad.conf" ]; then
 fi
 echo
 echo -e "\e[1;36m 规则更新成功\e[0m"
+echo
 exit 0
