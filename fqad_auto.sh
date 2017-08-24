@@ -23,29 +23,37 @@ echo -e "\e[1;36m 三秒后开始安装......\e[0m"
 echo
 sleep 3
 echo -e "\e[1;36m 检测和备份当前dnsmasq配置信息\e[0m"
-if [ -d /etc/dnsmasq.bak ]; then
-	filedir1=/etc/dnsmasq
-	for file1 in ${filedir1}/*
-	do
-		filename1=`basename $file1`
-		if ( ! cmp -s $filedir1/$filename1 /etc/dnsmasq.bak/$filename1 ); then
-			cp -f $filedir1/$filename1 /etc/dnsmasq.bak/$filename1
-		fi
-	done
+if [ -d /etc/dnsmasq ]; then
+	if [ -d /etc/dnsmasq.bak ]; then
+		filedir1=/etc/dnsmasq
+		for file1 in ${filedir1}/*
+		do
+			filename1=`basename $file1`
+			if ( ! cmp -s $filedir1/$filename1 /etc/dnsmasq.bak/$filename1 ); then
+				cp -f $filedir1/$filename1 /etc/dnsmasq.bak/$filename1
+			fi
+		done
+		else
+		cp -r /etc/dnsmasq /etc/dnsmasq.bak
+	fi	
 	else
-	cp -r /etc/dnsmasq /etc/dnsmasq.bak
+	mkdir -p /etc/dnsmasq
 fi
-if [ -d /etc/dnsmasq.d.bak ]; then
-	filedir2=/etc/dnsmasq.d
-	for file2 in ${filedir2}/*
-	do
-		filename2=`basename $file2`
-		if ( ! cmp -s $filedir2/$filename2 /etc/dnsmasq.d.bak/$filename2 ); then
-			cp -f $filedir2/$filename2 /etc/dnsmasq.d.bak/$filename2
-		fi
-	done
+if [ -d /etc/dnsmasq.d ]; then
+	if [ -d /etc/dnsmasq.d.bak ]; then
+		filedir2=/etc/dnsmasq.d
+		for file2 in ${filedir2}/*
+		do
+			filename2=`basename $file2`
+			if ( ! cmp -s $filedir2/$filename2 /etc/dnsmasq.d.bak/$filename2 ); then
+				cp -f $filedir2/$filename2 /etc/dnsmasq.d.bak/$filename2
+			fi
+		done
+		else
+		cp -r /etc/dnsmasq.d /etc/dnsmasq.d.bak
+	fi	
 	else
-	cp -r /etc/dnsmasq.d /etc/dnsmasq.d.bak
+	mkdir -p /etc/dnsmasq.d
 fi
 if [ ! -f /etc/dnsmasq.conf.bak ]; then
 	cp -p /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
