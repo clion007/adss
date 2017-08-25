@@ -1,4 +1,4 @@
-#!/bin/sh
+	#!/bin/sh
 echo
 CRON_FILE=/etc/crontabs/$USER
 clear
@@ -143,20 +143,20 @@ if [ ! -f /etc/dnsmasq/userblacklist ]; then
 		echo -e "\e[1;36m 开始创建创建自定义广告黑名单\e[0m"
 		echo "# 请在下面添加广告黑名单
 # 每行输入要屏蔽广告网址不含http://符号" > /etc/dnsmasq/userblacklist
+		echo
 	fi	
-	echo
 fi
 if [ ! -f /etc/dnsmasq/userblacklist ]; then
-echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
-echo
+	echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
+	echo
 	if [ -f /etc/dnsmasq/whitelist ]; then
 		mv /etc/dnsmasq/whitelist /etc/dnsmasq/userwhitelist
 		else
 		echo -e "\e[1;36m 开始创建创建自定义广告白名单\e[0m"
 		echo "# 请将误杀的网址域名添加到在下面
-# 每行输入相应的网址或关键词即可，建议尽量输入准确的网址" > /etc/dnsmasq/userwhitelist
+# 每行输入相应的网址或关键词即可，建议尽量输入准确的网址" > /etc/dnsmasq/
+		echo
 	fi	
-	echo
 fi
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
