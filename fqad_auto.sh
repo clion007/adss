@@ -231,9 +231,9 @@ echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/fqad
 sed -i '/localhost/d' /tmp/fqad
-sed -i '/# /d' /tmp/fqad
-sed -i '/#★/d' /tmp/fqad
-sed -i '/#address/d' /tmp/fqad
+sed -i '/#/d' /tmp/fqad
+#sed -i '/#★/d' /tmp/fqad
+#sed -i '/#address/d' /tmp/fqad
 sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
