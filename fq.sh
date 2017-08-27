@@ -63,8 +63,12 @@ if [ ! -f /etc/dnsmasq.conf ]; then
 	else
 	echo "" > /etc/dnsmasq.conf
 fi
-if [ ! -f $CRON_FILE.bak ]; then
-	cp -p $CRON_FILE $CRON_FILE.bak
+if [ ! -f $CRON_FILE ]; then
+	if [ ! -f $CRON_FILE.bak ]; then
+		cp -p $CRON_FILE $CRON_FILE.bak
+	fi	
+	else
+	echo "" > $CRON_FILE
 fi
 echo
 sleep 3
