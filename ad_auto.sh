@@ -57,8 +57,12 @@ if [ -d /etc/dnsmasq.d ]; then
 	else
 	mkdir -p /etc/dnsmasq.d
 fi
-if [ ! -f /etc/dnsmasq.conf.bak ]; then
-	cp -p /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
+if [ ! -f /etc/dnsmasq.conf ]; then
+	if [ ! -f /etc/dnsmasq.conf.bak ]; then
+		cp -p /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
+	fi	
+	else
+	echo "" > /etc/dnsmasq.conf
 fi
 if [ ! -f $CRON_FILE.bak ]; then
 	cp -p $CRON_FILE $CRON_FILE.bak
