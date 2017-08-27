@@ -62,8 +62,12 @@ if [ ! -f /etc/dnsmasq.conf ]; then
 	else
 	echo "" > /etc/dnsmasq.conf
 fi
-if [ ! -f $CRON_FILE.bak ]; then
-	cp -p $CRON_FILE $CRON_FILE.bak
+if [ ! -f $CRON_FILE ]; then
+	if [ ! -f $CRON_FILE.bak ]; then
+		cp -p $CRON_FILE $CRON_FILE.bak
+	fi	
+	else
+	echo "" > $CRON_FILE
 fi
 echo
 sleep 3
@@ -152,7 +156,7 @@ if [ ! -f /etc/dnsmasq/userblacklist ]; then
 		echo
 	fi	
 fi
-if [ ! -f /etc/dnsmasq/userblacklist ]; then
+if [ ! -f /etc/dnsmasq/userwhitelist ]; then
 	echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 	echo
 	if [ -f /etc/dnsmasq/whitelist ]; then
