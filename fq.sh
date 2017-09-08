@@ -215,13 +215,29 @@ if [ ! $? -eq 0 ]; then
 	read timedata
 	echo "$timedata" > /etc/crontabs/Update_time.conf
 	echo "# 每天$timedata点25分更新翻墙规则
-25 $timedata * * * sh /etc/dnsmasq/fa_update.sh > /dev/null 2>&1
-# 每天6点06分重启路由器
-05 6 * * * sleep 1m && touch /etc/banner && reboot" >> $CRON_FILE
+25 $timedata * * * sh /etc/dnsmasq/fa_update.sh > /dev/null 2>&" >> $CRON_FILE
 	/etc/init.d/cron reload
 	echo
 	echo -e "\e[1;36m 自动更新任务添加完成\e[0m"
 	echo
+fi
+sleep 1
+grep "reboot" $CRON_FILE >/dev/null
+if [ ! $? -eq 0 ]; then
+	echo -e -n "\e[1;31m 是否设置路由器定时重启（y/n）:\e[0m"
+	read rebootop
+	if [ rebootop=y ]; then
+		echo
+		echo -e -n "\e[1;36m 请输入每天定时重启时间(整点小时): \e[0m" 
+		read reboottime
+		echo "$reboottime" > /etc/crontabs/reboottime.conf
+		echo "# 每天$reboottime点05分重启路由器
+04 $reboottime * * * sleep 1m && touch /etc/banner && reboot" >> $CRON_FILE
+		/etc/init.d/cron reload
+		echo
+		echo -e "\e[1;36m 定时重启任务设定完成\e[0m"
+		echo
+	fi	
 fi
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 wget --no-check-certificate -q -O /etc/dnsmasq/fq_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_auto.sh
