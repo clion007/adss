@@ -330,7 +330,7 @@ grep "reboot" $CRON_FILE >/dev/null
 if [ ! $? -eq 0 ]; then
 	echo -e -n "\e[1;31m 是否设置路由器定时重启（y/n）:\e[0m"
 	read rebootop
-	if [ rebootop=y ]; then
+	if [ $rebootop=y ]; then
 		echo
 		echo -e -n "\e[1;36m 请输入每天定时重启时间(整点小时): \e[0m" 
 		read reboottime
