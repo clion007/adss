@@ -220,7 +220,7 @@ if [ ! $? -eq 0 ]; then
 		timedata='5'
 	fi	
 	echo "# 每天$timedata点25分更新翻墙规则
-25 $timedata * * * sh /etc/dnsmasq/fa_update.sh > /dev/null 2>&1" >> $CRON_FILE
+25 $timedata * * * sh /etc/dnsmasq/fq_update.sh > /dev/null 2>&1" >> $CRON_FILE
 	/etc/init.d/cron reload
 	echo
 	echo -e "\e[1;36m 自动更新任务添加完成\e[0m"
