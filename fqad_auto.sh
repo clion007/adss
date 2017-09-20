@@ -55,14 +55,14 @@ if [ -d /etc/dnsmasq.d ]; then
 	else
 	mkdir -p /etc/dnsmasq.d
 fi
-if [ ! -f /etc/dnsmasq.conf ]; then
+if [ -f /etc/dnsmasq.conf ]; then
 	if [ ! -f /etc/dnsmasq.conf.bak ]; then
 		cp -p /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 	fi	
 	else
 	echo "" > /etc/dnsmasq.conf
 fi
-if [ ! -f $CRON_FILE ]; then
+if [ -f $CRON_FILE ]; then
 	if [ ! -f $CRON_FILE.bak ]; then
 		cp -p $CRON_FILE $CRON_FILE.bak
 	fi	
@@ -81,8 +81,7 @@ if [ ! $? -eq 0 ]; then
 		lanip=$(ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:")
 	fi
 	echo -e "\e[1;36m 路由器网关:$lanip，开始配置dnsmasq\e[0m"
-	echo "
-# 添加监听地址（其中$lanip为你的lan网关ip）
+	echo "# 添加监听地址（其中$lanip为你的lan网关ip）
 listen-address=$lanip,127.0.0.1
 
 # 并发查询所有上游DNS服务器
@@ -331,7 +330,7 @@ fi
 sleep 1
 grep "reboot" $CRON_FILE >/dev/null
 if [ ! $? -eq 0 ]; then
-	if [ /etc/crontabs/reboottime.conf ]; then
+	if [ -f /etc/crontabs/reboottime.conf ]; then
 		reboottime=$(cat /etc/crontabs/reboottime.conf)
 		else
 		reboottime='6'
