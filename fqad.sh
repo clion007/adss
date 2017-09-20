@@ -56,14 +56,14 @@ if [ -d /etc/dnsmasq.d ]; then
 	else
 	mkdir -p /etc/dnsmasq.d
 fi
-if [ ! -f /etc/dnsmasq.conf ]; then
+if [ -f /etc/dnsmasq.conf ]; then
 	if [ ! -f /etc/dnsmasq.conf.bak ]; then
 		cp -p /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 	fi	
 	else
 	echo "" > /etc/dnsmasq.conf
 fi
-if [ ! -f $CRON_FILE ]; then
+if [ -f $CRON_FILE ]; then
 	if [ ! -f $CRON_FILE.bak ]; then
 		cp -p $CRON_FILE $CRON_FILE.bak
 	fi	
@@ -79,8 +79,7 @@ if [ ! $? -eq 0 ]; then
 	echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
 	read lanip
 	echo "$lanip" > /etc/dnsmasq/lanip
-	echo "
-# 添加监听地址（其中$lanip为你的lan网关ip）
+	echo "# 添加监听地址（其中$lanip为你的lan网关ip）
 listen-address=$lanip,127.0.0.1
 
 # 并发查询所有上游DNS服务器
