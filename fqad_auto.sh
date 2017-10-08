@@ -81,7 +81,8 @@ if [ ! $? -eq 0 ]; then
 		lanip=$(ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:")
 	fi
 	echo -e "\e[1;36m 路由器网关:$lanip，开始配置dnsmasq\e[0m"
-	echo "# 添加监听地址（其中$lanip为你的lan网关ip）
+	echo "
+# 添加监听地址（其中$lanip为你的lan网关ip）
 listen-address=$lanip,127.0.0.1
 
 # 并发查询所有上游DNS服务器
