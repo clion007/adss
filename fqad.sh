@@ -211,14 +211,15 @@ wget --no-check-certificate -q -O /tmp/adblacklist https://raw.githubusercontent
 sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
 rm -rf /tmp/adblacklist
 sed -i "/#/d" /tmp/blacklist
-sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
+#sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist #hosts方式，不支持通配符
+sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
 echo
-echo -e "\e[1;36m 合并dnsmasq'hosts缓存\e[0m"
+echo -e "\e[1;36m 合并dnsmasq、hosts缓存\e[0m"
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
+cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
+cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 echo
-echo -e "\e[1;36m 删除dnsmasq'hosts临时文件\e[0m"
+echo -e "\e[1;36m 删除dnsmasq、hosts临时文件\e[0m"
 rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
 #rm -rf /tmp/racaljk
 echo
