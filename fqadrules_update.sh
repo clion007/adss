@@ -18,7 +18,7 @@ wget --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/
 # 创建用户自定规则缓存
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 
-echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
+# 创建广告黑名单缓存
 wget --no-check-certificate -q -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
 sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
 rm -rf /tmp/adblacklist
