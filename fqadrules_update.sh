@@ -18,12 +18,20 @@ wget --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/
 # 创建用户自定规则缓存
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 
+echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
+wget --no-check-certificate -q -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
+sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
+rm -rf /tmp/adblacklist
+sed -i "/#/d" /tmp/blacklist
+#sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist #hosts方式，不支持通配符
+sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
+echo
 # 合并dnsmasq缓存
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
 
 # 删除dnsmasq缓存
-rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf
+rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist
 #rm -rf /tmp/racaljk
 
 # 创建广告白名单缓存
@@ -90,18 +98,11 @@ wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
 rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 #/tmp/adaway5
 echo
-echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
-wget --no-check-certificate -q -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
-sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
-rm -rf /tmp/adblacklist
-sed -i "/#/d" /tmp/blacklist
-sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist
-echo
 # 合并hosts缓存
-cat /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare > /tmp/noad
+cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare > /tmp/noad
 
 # 删除hosts缓存
-rm -rf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare
+rm -rf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare
 
 # 删除误杀广告规则
 while read -r line
