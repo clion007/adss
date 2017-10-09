@@ -150,7 +150,8 @@ if [ ! -f /etc/dnsmasq/userblacklist ]; then
 		else
 		echo -e "\e[1;36m 开始创建创建自定义广告黑名单\e[0m"
 		echo "# 请在下面添加广告黑名单
-# 每行输入要屏蔽广告网址不含http://符号" > /etc/dnsmasq/userblacklist
+# 每行输入要屏蔽广告网址不含http://符号
+# 支持不完整域名地址，支持通配符" > /etc/dnsmasq/userblacklist
 		echo
 	fi	
 fi
