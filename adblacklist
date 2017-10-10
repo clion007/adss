@@ -15,10 +15,14 @@ cnzz.com
 statis.api.3g.youku.com
 ad.m.qunar.com
 lives.l.aiseet.atianqi.com
-qiyipic.com/common
-gtimg.com/v/pics
-mall*.qiyipic.com
+.qiyipic.com
+.gtimg.com/v/pics
 .sinaimg.cn
+.fuimg.com
+imgcache.qq.com
+.ciimg.com
+.51cto.com
+
 # 运营商ip劫持
 120.197.89.239
 211.139.178.49
@@ -28,6 +32,7 @@ mall*.qiyipic.com
 60.19.29.21
 60.19.29.24
 61.174.50.168
+
 # 广告IP劫持
 47.89.59.182
 106.75.65.90
