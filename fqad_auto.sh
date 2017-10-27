@@ -171,12 +171,12 @@ if [ ! -f /etc/dnsmasq/userwhitelist ]; then
 fi
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
-echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
-wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+# echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
+# wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+# echo
+echo -e "\e[1;36m 下载googlehosts规则\e[0m"
+wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
 echo
-#echo -e "\e[1;36m 下载racaljk规则\e[0m"
-#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
-#echo
 echo -e "\e[1;36m 下载vokins广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 echo
@@ -219,7 +219,7 @@ sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式
 echo
 echo -e "\e[1;36m 合并dnsmasq、hosts缓存\e[0m"
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
+cat /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
 cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 echo
 echo -e "\e[1;36m 删除dnsmasq、hosts临时文件\e[0m"
