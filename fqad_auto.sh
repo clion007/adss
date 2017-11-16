@@ -202,10 +202,6 @@ cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
 rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 #/tmp/adaway5
 echo
 sleep 3
-#echo -e "\e[1;36m 删除racaljk规则中的冲突规则\e[0m"
-#sed -i '/google/d' /tmp/racaljk
-#sed -i '/youtube/d' /tmp/racaljk
-#echo
 echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
@@ -240,8 +236,6 @@ echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/fqad
 sed -i '/localhost/d' /tmp/fqad
 sed -i '/#/d' /tmp/fqad
-#sed -i '/#★/d' /tmp/fqad
-#sed -i '/#address/d' /tmp/fqad
 sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
