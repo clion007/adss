@@ -20,14 +20,14 @@ wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/m
       /tmp/adrules_update.sh && chmod 775 /tmp/adrules_update.sh
 if [ -s "/tmp/ad_auto.sh" ]; then
 	if ( ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh ); then
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版翻墙去广告脚本......3秒后即将开始更新！"
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版去广告脚本......3秒后即将开始更新！"
 		echo
 		sleep 3
-		echo -e "\e[1;36m 开始更新翻墙去广告脚本\e[0m"
+		echo -e "\e[1;36m 开始更新去广告脚本\e[0m"
 		echo
 		sh /tmp/ad_auto.sh
 		rm -rf /tmp/ad_update.sh /tmp/adrules_update.sh
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: 翻墙去广告脚本及规则更新完成。"
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 去广告脚本及规则更新完成。"
 	elif ( ! cmp -s /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......3秒后即将开始更新！"
 		echo
@@ -49,13 +49,14 @@ if [ -s "/tmp/ad_auto.sh" ]; then
 		rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 		else
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，3秒后即将开始检测翻墙去广告规则更新"
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，3秒后即将开始检测去广告规则更新"
 		sh /etc/dnsmasq/adrules_update.sh
 		rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh /tmp/adrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
 	fi	
 	else
-	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 检查更新失败，请检查网络后再次尝试。\e[0m"
+	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络异常检查脚本更新失败，稍后尝试规则更新。\e[0m"
+	sh /etc/dnsmasq/adrules_update.sh
 fi
 echo
 exit 0
