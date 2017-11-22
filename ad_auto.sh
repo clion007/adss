@@ -146,7 +146,7 @@ if [ ! -f /etc/dnsmasq.d/userlist ]; then
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
 	echo
 fi
-if [ ! -f /etc/dnsmasq/userwhitelist ]; then
+if [ ! -f /etc/dnsmasq/userblacklist ]; then
 	echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 	echo
 	if [ -f /etc/dnsmasq/blacklist ]; then
@@ -159,7 +159,7 @@ if [ ! -f /etc/dnsmasq/userwhitelist ]; then
 		echo
 	fi	
 fi
-if [ ! -f /etc/dnsmasq/userblacklist ]; then
+if [ ! -f /etc/dnsmasq/userwhitelist ]; then
 	echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 	echo
 	if [ -f /etc/dnsmasq/whitelist ]; then
