@@ -55,7 +55,8 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
 	fi	
 	else
-	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 检查更新失败，请检查网络后再次尝试。\e[0m"
+	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络异常检查脚本更新失败，稍后尝试规则更新。\e[0m"
+	sh /etc/dnsmasq/fqadrules_update.sh
 fi
 echo
 exit 0
