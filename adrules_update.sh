@@ -58,9 +58,7 @@ echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/ad
 sed -i '/localhost/d' /tmp/ad
-sed -i '/# /d' /tmp/ad
-sed -i '/#★/d' /tmp/ad
-sed -i '/#address/d' /tmp/ad
+sed -i '/#/d' /tmp/ad
 sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
@@ -90,7 +88,7 @@ address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
 # Modified DNS start
-" > /etc/dnsmasq.d/ad.conf
+" > /tmp/ad.conf
 echo
 echo -e "\e[1;36m 创建hosts规则文件\e[0m"
 echo "
@@ -109,7 +107,7 @@ echo "
 # 默认hosts结束
 
 # 修饰hosts开始
-" > /etc/dnsmasq/noad.conf
+" > /tmp/noad.conf
 echo
 echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
 sort /tmp/ad | uniq >> /tmp/ad.conf
