@@ -231,9 +231,7 @@ echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/ad
 sed -i '/localhost/d' /tmp/ad
-sed -i '/# /d' /tmp/ad
-sed -i '/#★/d' /tmp/ad
-sed -i '/#address/d' /tmp/ad
+sed -i '/#/d' /tmp/ad
 sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
