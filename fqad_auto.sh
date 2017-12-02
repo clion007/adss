@@ -171,12 +171,12 @@ if [ ! -f /etc/dnsmasq/userwhitelist ]; then
 fi
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
-# echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
-# wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
-# echo
-echo -e "\e[1;36m 下载googlehosts规则\e[0m"
-wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
+echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
+wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 echo
+#echo -e "\e[1;36m 下载racaljk规则\e[0m"
+#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+#echo
 echo -e "\e[1;36m 下载vokins广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 echo
@@ -202,6 +202,10 @@ cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
 rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 #/tmp/adaway5
 echo
 sleep 3
+#echo -e "\e[1;36m 删除racaljk规则中的冲突规则\e[0m"
+#sed -i '/google/d' /tmp/racaljk
+#sed -i '/youtube/d' /tmp/racaljk
+#echo
 echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
@@ -214,11 +218,13 @@ sed -i "/#/d" /tmp/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
 echo
 echo -e "\e[1;36m 合并dnsmasq、hosts缓存\e[0m"
-cat /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
+#cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
+cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
 cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 echo
 echo -e "\e[1;36m 删除dnsmasq、hosts临时文件\e[0m"
-rm -rf /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
+rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
+#rm -rf /tmp/racaljk
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
@@ -236,6 +242,8 @@ echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/fqad
 sed -i '/localhost/d' /tmp/fqad
 sed -i '/#/d' /tmp/fqad
+#sed -i '/#★/d' /tmp/fqad
+#sed -i '/#address/d' /tmp/fqad
 sed -i '/#/d' /tmp/noad
 sed -i '/@/d' /tmp/noad
 sed -i '/::1/d' /tmp/noad
@@ -264,8 +272,7 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-# Modified DNS start
-" > /etc/dnsmasq.d/fqad.conf
+# Modified DNS start" > /etc/dnsmasq.d/fqad.conf
 echo
 echo -e "\e[1;36m 创建hosts规则文件\e[0m"
 echo "
@@ -284,15 +291,16 @@ echo "
 ::1	ip6-loopback
 # 默认hosts结束
 
-# 修饰hosts开始
-" > /etc/dnsmasq/noad.conf
+# 修饰hosts开始" > /etc/dnsmasq/noad.conf
 echo
 echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
 sort /tmp/fqad | uniq >> /etc/dnsmasq.d/fqad.conf
 sort /tmp/noad | uniq >> /etc/dnsmasq/noad.conf
 rm -rf /tmp/fqad /tmp/noad
-echo "# Modified DNS end" >> /etc/dnsmasq.d/fqad.conf
-echo "# 修饰hosts结束" >> /etc/dnsmasq/noad.conf
+echo "
+# Modified DNS end" >> /etc/dnsmasq.d/fqad.conf
+echo "
+# 修饰hosts结束" >> /etc/dnsmasq/noad.conf
 echo
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
