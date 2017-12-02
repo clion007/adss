@@ -1,7 +1,7 @@
-# 复制下面命令行，到Openwrt、pandorabox、ddwrt路由器webshell或者putty登录后，粘贴回车，即可一键安装dnsmasq及hosts扶墙广告屏蔽脚本
+# 复制下面命令行，到Openwrt、pandorabox、ddwrt、LEDE路由器webshell或者putty登录后，粘贴回车，即可一键安装dnsmasq及hosts扶墙广告屏蔽脚本
 wget --no-check-certificate -qO - https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_auto.sh > /tmp/fqad_auto.sh && sh /tmp/fqad_auto.sh
 
-# 复制下面命令行，到LEDE路由器webshell或者putty登录后，粘贴回车，即可一键安装dnsmasq及hosts扶墙广告屏蔽脚本
-wget --no-check-certificate -qO - https://raw.githubusercontent.com/clion007/dnsmasq/master/lede_dnsmasq_fqad.sh > /tmp/fqad.sh && /bin/sh /tmp/fqad.sh && rm -rf /tmp/fqad.sh
+# 复制下面命令行，到Openwrt、pandorabox、ddwrt、LEDE等路由器webshell或者putty登录后，粘贴回车，即可一键安装dnsmasq及hosts广告屏蔽脚本
+wget --no-check-certificate -qO - https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_auto.sh > /tmp/ad_auto.sh && sh /tmp/ad_auto.sh
 
-注意：一键安装的前提是系统带有wget软件包，且lan IP地址必须为192.168.1.1
+注意：一键安装的前，请确认路由固件已经安装了wget及dnsmasq或dnsmasq-full软件包，如果路由固件同时预装了dnsmasq和dnsmasq-full软件包，请安装前登录路由器web管理页面，进入系统-软件包菜单页面手动卸载dnsmasq，保留dnsmasq-full。
