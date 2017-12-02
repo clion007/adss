@@ -47,12 +47,12 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-# Modified hosts start
-" > /tmp/fq.conf
+# Modified hosts start" > /tmp/fq.conf
 
 # 删除dnsmasq重复规则
 sort /tmp/fq | uniq >> /tmp/fq.conf
-echo "# Modified DNS end" >> /tmp/fq.conf
+echo "
+# Modified DNS end" >> /tmp/fq.conf
 
 # 删除dnsmasq合并缓存
 rm -rf /tmp/fq
