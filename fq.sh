@@ -183,12 +183,12 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-# Modified DNS start
-" > /etc/dnsmasq.d/fq.conf
+# Modified DNS start" > /etc/dnsmasq.d/fq.conf
 echo
 echo -e "\e[1;36m 删除dnsmasq重复规则及相关临时文件\e[0m"
 sort /tmp/fq | uniq >> /etc/dnsmasq.d/fq.conf
-echo "# Modified DNS end" >> /etc/dnsmasq.d/fq.conf
+echo "
+# Modified DNS end" >> /etc/dnsmasq.d/fq.conf
 rm -rf /tmp/fq
 echo
 sleep 3
