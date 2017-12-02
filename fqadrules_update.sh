@@ -3,13 +3,17 @@ echo
 sleep 3
 echo " 开始更新dnsmasq规则"
 # 下载sy618扶墙规则
-#wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
-# 下载googlehosts规则
-wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
+wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
+# 下载racaljk规则
+#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
 # 下载vokins广告规则
 wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 # 下载easylistchina广告规则
 wget --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
+
+# 删除racaljk规则中的冲突规则
+#sed -i '/google/d' /tmp/racaljk
+#sed -i '/youtube/d' /tmp/racaljk
 
 # 创建用户自定规则缓存
 cp /etc/dnsmasq.d/userlist /tmp/userlist
@@ -24,10 +28,10 @@ sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式
 echo
 # 合并dnsmasq缓存
 #cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-cat /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
+cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
 
 # 删除dnsmasq缓存
-rm -rf /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist
+rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist
 #rm -rf /tmp/racaljk
 
 # 创建广告白名单缓存
@@ -68,12 +72,12 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-# Modified DNS start
-" > /tmp/fqad.conf
+# Modified DNS start" > /tmp/fqad.conf
 
 # 删除dnsmasq重复规则
 sort /tmp/fqad | uniq >> /tmp/fqad.conf
-echo "# Modified DNS end" >> /tmp/fqad.conf
+echo "
+# Modified DNS end" >> /tmp/fqad.conf
 
 # 删除dnsmasq合并缓存
 rm -rf /tmp/fqad
@@ -134,12 +138,12 @@ echo "
 ::1	ip6-loopback
 # 默认hosts结束
 
-# 修饰hosts开始
-" > /tmp/noad.conf
+# 修饰hosts开始" > /tmp/noad.conf
 
 # 删除hosts重复规则
 sort /tmp/noad | uniq >> /tmp/noad.conf
-echo "# 修饰hosts结束" >> /tmp/noad.conf
+echo "
+# 修饰hosts结束" >> /tmp/noad.conf
 
 # 删除hosts合并缓存
 rm -rf /tmp/noad
