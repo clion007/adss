@@ -87,8 +87,7 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Localhost (DO NOT REMOVE) End
 
-# Modified DNS start
-" > /tmp/ad.conf
+# Modified DNS start" > /tmp/ad.conf
 echo
 echo -e "\e[1;36m 创建hosts规则文件\e[0m"
 echo "
@@ -106,15 +105,16 @@ echo "
 ::1	ip6-loopback
 # 默认hosts结束
 
-# 修饰hosts开始
-" > /tmp/noad.conf
+# 修饰hosts开始" > /tmp/noad.conf
 echo
 echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
 sort /tmp/ad | uniq >> /tmp/ad.conf
 sort /tmp/noad | uniq >> /tmp/noad.conf
 rm -rf /tmp/ad /tmp/noad
-echo "# Modified DNS end" >> /tmp/ad.conf
-echo "# 修饰hosts结束" >> /tmp/noad.conf
+echo "
+# Modified DNS end" >> /tmp/ad.conf
+echo "
+# 修饰hosts结束" >> /tmp/noad.conf
 echo
 sleep 3
 if [ -s "/tmp/ad.conf" ]; then
