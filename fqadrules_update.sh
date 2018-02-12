@@ -4,16 +4,16 @@ sleep 3
 echo " 开始更新dnsmasq规则"
 # 下载sy618扶墙规则
 wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
-# 下载racaljk规则
-#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+# 下载googlehosts规则
+wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
 # 下载vokins广告规则
 wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 # 下载easylistchina广告规则
 wget --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
 
 # 删除racaljk规则中的冲突规则
-#sed -i '/google/d' /tmp/racaljk
-#sed -i '/youtube/d' /tmp/racaljk
+#sed -i '/google/d' /tmp/googlehosts
+#sed -i '/youtube/d' /tmp/googlehosts
 
 # 创建用户自定规则缓存
 cp /etc/dnsmasq.d/userlist /tmp/userlist
@@ -27,12 +27,12 @@ sed -i "/#/d" /tmp/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
 echo
 # 合并dnsmasq缓存
-#cat /tmp/userlist /tmp/racaljk /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf > /tmp/fqad
-cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
+cat /tmp/userlist /tmp/googlehosts /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
+#cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
 
 # 删除dnsmasq缓存
 rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist
-#rm -rf /tmp/racaljk
+rm -rf /tmp/googlehosts
 
 # 创建广告白名单缓存
 wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
@@ -47,11 +47,15 @@ do
 done < /tmp/whitelist
 
 # 删除注释和本地规则
+sed -i '/::1/d' /tmp/fqad
+sed -i '/localhost/d' /tmp/fqad
 sed -i '/# /d' /tmp/fqad
 sed -i '/#★/d' /tmp/fqad
+sed -i '/#@/d' /tmp/fqad
+sed -i '/##/d' /tmp/fqad
 sed -i '/#address/d' /tmp/fqad
-sed -i '/localhost/d' /tmp/fqad
-sed -i '/::1/d' /tmp/fqad
+sed -i '/#server/d' /tmp/fqad
+sed -i '/#youtube/d' /tmp/fqad
 echo
 echo -e " 统一DNS广告规则格式"
 sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/fqad
@@ -62,7 +66,7 @@ echo "
 ##【Copyright (c) 2014-2017, clion007】                           ##
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
-## 感谢https://github.com/racaljk/hosts                           ##
+## 感谢https://github.com/googlehosts/hosts                           ##
 ####################################################################
 
 # Localhost (DO NOT REMOVE) Start
@@ -128,7 +132,7 @@ echo "
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/vokins/hosts                            ##
-## 感谢https://github.com/racaljk/hosts                           ##
+## 感谢https://github.com/googlehosts/hosts                           ##
 ####################################################################
 
 # 默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
