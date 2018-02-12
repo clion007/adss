@@ -6,7 +6,7 @@ echo " 开始更新dnsmasq规则"
 wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 
 # 下载googlehosts规则
-wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
+#wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
 
 # 删除googlehosts规则中的冲突规则
 #sed -i '/google/d' /tmp/googlehosts
@@ -16,13 +16,13 @@ wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 
 # 合并dnsmasq缓存
-cat /tmp/userlist /tmp/googlehosts /tmp/sy618 > /tmp/fq
-#cat /tmp/userlist /tmp/sy618 > /tmp/fq
+#cat /tmp/userlist /tmp/googlehosts /tmp/sy618 > /tmp/fq
+cat /tmp/userlist /tmp/sy618 > /tmp/fq
 
 # 删除dnsmasq临时文件
 rm -rf /tmp/userlist
 rm -rf /tmp/sy618
-rm -rf /tmp/googlehosts
+#rm -rf /tmp/googlehosts
 
 # 删除注释与本地规则
 sed -i '/::1/d' /tmp/fq
