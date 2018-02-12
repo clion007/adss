@@ -1,76 +1,67 @@
 #!/bin/sh
 echo
-sleep 3
-echo " 开始更新dnsmasq规则"
-# 下载sy618扶墙规则
-wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
-
-# 下载googlehosts规则
-wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
-
-# 删除googlehosts规则中的冲突规则
-#sed -i '/google/d' /tmp/googlehosts
-#sed -i '/youtube/d' /tmp/googlehosts
-
-# 创建用户自定规则缓存
-cp /etc/dnsmasq.d/userlist /tmp/userlist
-
-# 合并dnsmasq缓存
-cat /tmp/userlist /tmp/googlehosts /tmp/sy618 > /tmp/fq
-#cat /tmp/userlist /tmp/sy618 > /tmp/fq
-
-# 删除dnsmasq临时文件
-rm -rf /tmp/userlist
-rm -rf /tmp/sy618
-rm -rf /tmp/googlehosts
-
-# 删除注释与本地规则
-sed -i '/::1/d' /tmp/fq
-sed -i '/localhost/d' /tmp/fq
-sed -i '/# /d' /tmp/fq
-sed -i '/#★/d' /tmp/fq
-sed -i '/#@/d' /tmp/fq
-sed -i '/##/d' /tmp/fq
-sed -i '/#address/d' /tmp/fq
-sed -i '/#server/d' /tmp/fq
-sed -i '/#youtube/d' /tmp/fq
-
-# 创建dnsmasq规则文件
-echo "
-############################################################
-## 【Copyright (c) 2014-2017, clion007】                          ##
-##                                                                ##
-## 感谢https://github.com/sy618/hosts                             ##
-## 感谢https://github.com/googlehosts/hosts                           ##
-####################################################################
-
-# Localhost (DO NOT REMOVE) Start
-address=/localhost/127.0.0.1
-address=/localhost/::1
-address=/ip6-localhost/::1
-address=/ip6-loopback/::1
-# Localhost (DO NOT REMOVE) End
-
-# Modified hosts start" > /tmp/fq.conf
-
-# 删除dnsmasq重复规则
-sort /tmp/fq | uniq >> /tmp/fq.conf
-echo "
-# Modified DNS end" >> /tmp/fq.conf
-
-# 删除dnsmasq合并缓存
-rm -rf /tmp/fq
+echo " Copyright (c) 2014-2017,by clion007"
 echo
-if [ -s "/tmp/fq.conf" ]; then
-	if ( ! cmp -s /tmp/fq.conf /etc/dnsmasq.d/fq.conf ); then
-		mv -f /tmp/fq.conf /etc/dnsmasq.d/fq.conf
-		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到fq规则有更新......开始转换规则！"
-		/etc/init.d/dnsmasq restart > /dev/null 2>&1
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: fq规则转换完成，应用新规则。"
+echo " 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
+echo " 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。"
+echo
+#LOGFILE=/tmp/fq_update.log
+#LOGSIZE=$(wc -c < $LOGFILE)
+#if [ $LOGSIZE -ge 5000 ]; then
+#	sed -i -e 1,10d $LOGFILE
+#fi
+echo -e "\e[1;36m 1秒钟后开始检测更新脚本及规则\e[0m"
+echo
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_auto.sh -O \
+      /tmp/fq_auto.sh && chmod 775 /tmp/fq_auto.sh
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_update.sh -O \
+      /tmp/fq_update.sh && chmod 775 /tmp/fq_update.sh
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fqrules_update.sh -O \
+      /tmp/fqrules_update.sh && chmod 775 /tmp/fqrules_update.sh
+if [ -s "/tmp/fq_auto.sh" ]; then
+	if ( ! cmp -s /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh ); then
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版翻墙脚本......3秒后即将开始更新！"
+		echo
+		sleep 3
+		echo -e "\e[1;36m 开始更新翻墙脚本\e[0m"
+		echo
+		sh /tmp/fq_auto.sh
+		rm -rf /tmp/fq_update.sh
+		rm -rf /tmp/fqrules_update.sh
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 翻墙脚本及规则更新完成。"
+	elif ( ! cmp -s /tmp/fq_update.sh /etc/dnsmasq/fq_update.sh ); then
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......3秒后即将开始更新！"
+		echo
+		sleep 3
+		echo -e "\e[1;36m 开始更新升级脚本\e[0m"
+		echo
+		sh /tmp/fq_update.sh
+		mv -f /tmp/fq_update.sh /etc/dnsmasq/fq_update.sh
+		rm -rf /tmp/fq_auto.sh
+		rm -rf /tmp/fqrules_update.sh
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本更新完成。"
+	elif ( ! cmp -s /tmp/fqrules_update.sh /etc/dnsmasq/fqrules_update.sh ); then
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......3秒后即将开始更新！"
+		echo
+		sleep 3
+		echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
+		echo
+		sh /tmp/fqrules_update.sh
+		mv -f /tmp/fqrules_update.sh /etc/dnsmasq/fqrules_update.sh
+		rm -rf /tmp/fq_auto.sh
+		rm -rf /tmp/fq_update.sh
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 		else
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: fq本地规则和在线规则相同，无需更新！" && rm -f /tmp/fq.conf
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，3秒后即将开始检测翻墙规则更新"
+		sh /etc/dnsmasq/fqrules_update.sh
+		rm -rf /tmp/fq_auto.sh
+		rm -rf /tmp/fq_update.sh
+		rm -rf /tmp/fqrules_update.sh
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
 	fi	
+	else
+	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络异常检查脚本更新失败，稍后尝试规则更新。\e[0m"
+	sh /etc/dnsmasq/fqrules_update.sh
 fi
 echo
-echo -e "\e[1;36m 规则更新完成\e[0m"
 exit 0
