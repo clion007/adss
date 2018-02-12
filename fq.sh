@@ -144,28 +144,34 @@ echo
 echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
 wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 echo
-#echo -e "\e[1;36m 下载racaljk规则\e[0m"
-#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
-#echo
+echo -e "\e[1;36m 下载googlehosts规则\e[0m"
+wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
+echo
 sleep 3
-#echo -e "\e[1;36m 删除racaljk规则中的冲突规则\e[0m"
-#sed -i '/google/d' /tmp/racaljk
-#sed -i '/youtube/d' /tmp/racaljk
+#echo -e "\e[1;36m 删除googlehosts规则中的冲突规则\e[0m"
+#sed -i '/google/d' /tmp/googlehosts
+#sed -i '/youtube/d' /tmp/googlehosts
 #echo
 echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
-#cat /tmp/userlist /tmp/racaljk /tmp/sy618 > /tmp/fq
-cat /tmp/userlist /tmp/sy618 > /tmp/fq
+cat /tmp/userlist /tmp/googlehosts /tmp/sy618 > /tmp/fq
+#cat /tmp/userlist /tmp/sy618 > /tmp/fq
 echo
 echo -e "\e[1;36m 删除dnsmasq临时文件\e[0m"
-rm -rf /tmp/userlist /tmp/sy618 #/tmp/racaljk
+rm -rf /tmp/userlist /tmp/sy618 /tmp/googlehosts
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
-sed -i '/#/d' /tmp/fq
 sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
+sed -i '/# /d' /tmp/fq
+sed -i '/#★/d' /tmp/fq
+sed -i '/#@/d' /tmp/fq
+sed -i '/##/d' /tmp/fq
+sed -i '/#address/d' /tmp/fq
+sed -i '/#server/d' /tmp/fq
+sed -i '/#youtube/d' /tmp/fq
 echo
 echo -e "\e[1;36m 创建dnsmasq规则文件\e[0m"
 echo "
@@ -173,7 +179,7 @@ echo "
 ## 【Copyright (c) 2014-2017, clion007】                          ##
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
-## 感谢https://github.com/racaljk/hosts                           ##
+## 感谢https://github.com/googlehosts/hosts                           ##
 ####################################################################
 
 # Localhost (DO NOT REMOVE) Start
