@@ -5,7 +5,7 @@ echo " 开始更新dnsmasq规则"
 # 下载sy618扶墙规则
 wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 # 下载googlehosts规则
-wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
+#wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
 # 下载vokins广告规则
 wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 # 下载easylistchina广告规则
@@ -27,12 +27,12 @@ sed -i "/#/d" /tmp/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
 echo
 # 合并dnsmasq缓存
-cat /tmp/userlist /tmp/googlehosts /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
-#cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
+#cat /tmp/userlist /tmp/googlehosts /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
+cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
 
 # 删除dnsmasq缓存
 rm -rf /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist
-rm -rf /tmp/googlehosts
+#rm -rf /tmp/googlehosts
 
 # 创建广告白名单缓存
 wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
