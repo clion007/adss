@@ -5,31 +5,35 @@ echo " 开始更新dnsmasq规则"
 # 下载sy618扶墙规则
 wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 
-# 下载racaljk规则
-#wget --no-check-certificate -q -O /tmp/racaljk https://raw.githubusercontent.com/racaljk/hosts/master/dnsmasq.conf
+# 下载googlehosts规则
+wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
 
-# 删除racaljk规则中的冲突规则
-#sed -i '/google/d' /tmp/racaljk
-#sed -i '/youtube/d' /tmp/racaljk
+# 删除googlehosts规则中的冲突规则
+#sed -i '/google/d' /tmp/googlehosts
+#sed -i '/youtube/d' /tmp/googlehosts
 
 # 创建用户自定规则缓存
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 
 # 合并dnsmasq缓存
-#cat /tmp/userlist /tmp/racaljk /tmp/sy618 > /tmp/fq
-cat /tmp/userlist /tmp/sy618 > /tmp/fq
+cat /tmp/userlist /tmp/googlehosts /tmp/sy618 > /tmp/fq
+#cat /tmp/userlist /tmp/sy618 > /tmp/fq
 
 # 删除dnsmasq临时文件
 rm -rf /tmp/userlist
 rm -rf /tmp/sy618
-#rm -rf /tmp/racaljk
+rm -rf /tmp/googlehosts
 
 # 删除注释与本地规则
 sed -i '/::1/d' /tmp/fq
 sed -i '/localhost/d' /tmp/fq
 sed -i '/# /d' /tmp/fq
 sed -i '/#★/d' /tmp/fq
+sed -i '/#@/d' /tmp/fq
+sed -i '/##/d' /tmp/fq
 sed -i '/#address/d' /tmp/fq
+sed -i '/#server/d' /tmp/fq
+sed -i '/#youtube/d' /tmp/fq
 
 # 创建dnsmasq规则文件
 echo "
@@ -37,7 +41,7 @@ echo "
 ## 【Copyright (c) 2014-2017, clion007】                          ##
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
-## 感谢https://github.com/racaljk/hosts                           ##
+## 感谢https://github.com/googlehosts/hosts                           ##
 ####################################################################
 
 # Localhost (DO NOT REMOVE) Start
