@@ -148,9 +148,9 @@ echo
 echo -e "\e[1;36m 下载sy618扶墙规则\e[0m"
 wget --no-check-certificate -q -O /tmp/sy618 https://raw.githubusercontent.com/sy618/hosts/master/dnsmasq/dnsfq
 echo
-echo -e "\e[1;36m 下载googlehosts规则\e[0m"
-wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
-echo
+#echo -e "\e[1;36m 下载googlehosts规则\e[0m"
+#wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
+#echo
 sleep 3
 #echo -e "\e[1;36m 删除googlehosts规则中的冲突规则\e[0m"
 #sed -i '/google/d' /tmp/googlehosts
@@ -160,11 +160,11 @@ echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
-cat /tmp/userlist /tmp/googlehosts /tmp/sy618 > /tmp/fq
-#cat /tmp/userlist /tmp/sy618 > /tmp/fq
+#cat /tmp/userlist /tmp/googlehosts /tmp/sy618 > /tmp/fq
+cat /tmp/userlist /tmp/sy618 > /tmp/fq
 echo
 echo -e "\e[1;36m 删除dnsmasq临时文件\e[0m"
-rm -rf /tmp/userlist /tmp/sy618 /tmp/googlehosts
+rm -rf /tmp/userlist /tmp/sy618 #/tmp/googlehosts
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::1/d' /tmp/fq
