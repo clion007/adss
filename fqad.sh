@@ -264,7 +264,7 @@ echo "
 ## 【Copyright (c) 2014-2017, clion007】                          ##
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
-## 感谢https://github.com/googlehosts/hosts                           ##
+## 感谢https://github.com/googlehosts/hosts                       ##
 ####################################################################
 
 # Localhost (DO NOT REMOVE) Start
@@ -283,7 +283,7 @@ echo "
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/vokins/hosts                            ##
-## 感谢https://github.com/googlehosts/hosts                           ##
+## 感谢https://github.com/googlehosts/hosts                       ##
 ####################################################################
 
 # 默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
