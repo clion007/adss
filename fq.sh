@@ -179,7 +179,7 @@ echo "
 ## 【Copyright (c) 2014-2017, clion007】                          ##
 ##                                                                ##
 ## 感谢https://github.com/sy618/hosts                             ##
-## 感谢https://github.com/googlehosts/hosts                           ##
+## 感谢https://github.com/googlehosts/hosts                       ##
 ####################################################################
 
 # Localhost (DO NOT REMOVE) Start
