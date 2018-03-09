@@ -25,7 +25,7 @@ rm -rf /tmp/adblacklist
 sed -i "/#/d" /tmp/blacklist
 #sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist #hosts方式，不支持通配符
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
-echo
+
 # 合并dnsmasq缓存
 #cat /tmp/userlist /tmp/googlehosts /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
 cat /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
