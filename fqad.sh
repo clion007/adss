@@ -347,6 +347,12 @@ if [ ! $? -eq 0 ]; then
 		echo
 		echo -e "\e[1;36m 定时重启任务设定完成\e[0m"
 		echo
+		elif [ $rebootop=n ]; then
+		echo
+		echo '您跳过了设置路由器定时重启任务！'
+		echo
+		else
+		echo '您的输入不正确！跳过相关设置！'
 	fi	
 fi
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
@@ -370,8 +376,10 @@ rm -f /tmp/fqad.sh
 echo -e -n "\e[1;31m 是否需要重启路由器？[y/n]：\e[0m" 
 read boot
 if [ "$boot" = "y" ];then
+	echo '开始重启路由器，请耐心等待重启完成！'
 	reboot
 	else
+	echo '跳过了重启路由器，您已经完成脚本全部配置，谢谢使用！'
 	exit 0
 fi
 echo
