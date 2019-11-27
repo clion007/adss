@@ -2,14 +2,12 @@
 # 每行输入要屏蔽广告网址域名即可不含http://符号
 # 支持地址中使用通配符*
 active.admore.com.cn
-g.163.com
 mtty-cdn.mtty.com
 static-alias-1.360buyimg.com
 image.yzmg.com
 files.jb51.net/image
 common.jb51.net/images
 du.ebioweb.com/ebiotrade/web_images
-www.37cs.com
 pic.iidvd.com
 cnzz.com
 statis.api.3g.youku.com
@@ -21,21 +19,13 @@ imgcache.qq.com
 .51cto.com
 msg.video.iqiyi.com
 titan.mgtv.com
-res.mgtv.com
 wx2.sinaimg.cn
-t7z.cupid.iqiyi.com
 a.xiguaimg.com
 k.youku.com
 vali.cp31.ott.cibntv.net
-vmindhls.tc.qq.com
-ad.molitv.cn
 sv-video.play.ott.video.qq.com
 valipl.cp31.ott.cibntv.net
-vali.cp31.ott.cibntv.net
-yktd.m.cn.miaozhen.com
-val.atm.youku.com
 ems.youku.com
-ipm.atm.youku.com
 g3.ykimg.com
 ykugc.cp31.ott.cibntv.net
 lives.l.qq.com/livemsg
