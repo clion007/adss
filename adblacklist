@@ -36,6 +36,7 @@ vv.video.qq.com
 #长虹电视广告
 ads.huan.tv
 chc.ads.huan.tv
+monitor.ads.huan.tv
 
 #优酷土豆
 atm.youku.com
@@ -158,6 +159,9 @@ p.tencentmind.com
 vqq.admaster.com.cn
 vmindhls.tc.qq.com
 g.ads.cn.miaozhen.com
+
+#芒果TV
+mobaliyun.res.mgtv.com
 
 # 运营商ip劫持
 120.197.89.239
