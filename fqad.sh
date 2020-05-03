@@ -3,7 +3,7 @@ echo
 CRON_FILE=/etc/crontabs/$USER
 clear
 echo
-echo "# Copyright (c) 2014-2017,by clion007"
+echo "# Copyright (c) 2014-2020,by clion007"
 echo
 echo "# 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
 echo "# 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。"
@@ -76,7 +76,7 @@ grep "fqad.conf" /etc/dnsmasq.conf >/dev/null
 if [ ! $? -eq 0 ]; then
 	echo -e "\e[1;36m 配置dnsmasq\e[0m"
 	echo
-	echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1 ): \e[0m" 
+	echo -e -n "\e[1;36m 请输入lan网关ip(默认：192.168.1.1,如有多个请用英文逗号分割): \e[0m" 
 	read lanip
 	echo "$lanip" > /etc/dnsmasq/lanip
 	echo "
@@ -178,8 +178,17 @@ echo
 echo -e "\e[1;36m 下载vokins广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 echo
-echo -e "\e[1;36m 下载easylistchina广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
+echo -e "\e[1;36m 下载yoyoAd广告规则\e[0m"
+wget --no-check-certificate -q -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq;showintro=0
+echo
+echo -e "\e[1;36m 下载notrackAd广告规则\e[0m"
+wget --no-check-certificate -q -O /tmp/notrackAdDomain.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt
+wget --no-check-certificate -q -O /tmp/notrackAdhosts.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt
+echo
+echo -e "\e[1;36m 下载Anti-Ad广告规则\e[0m"
+wget --no-check-certificate -q -O /tmp/antiAd.conf https://gitee.com/privacy-protection-tools/anti-ad/raw/master/anti-ad-for-dnsmasq.conf
+sed -i "/#/d" /tmp/antiAd.conf
+sed -i 's/$/&127.0.0.1/g' /tmp/antiAd.conf
 echo
 echo -e "\e[1;36m 下载yhosts缓存\e[0m"
 wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
@@ -192,11 +201,8 @@ echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
 wget --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
 wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
 sed -i "s/.$//g" /tmp/adaway2
-wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt
-sed -i "s/.$//g" /tmp/adaway4
-#wget --no-check-certificate -q -O /tmp/adaway5 https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts
-cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
-rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 #/tmp/adaway5
+cat /tmp/adaway /tmp/adaway2 > /tmp/adaway.conf
+rm -rf /tmp/adaway /tmp/adaway2
 echo
 sleep 3
 #echo -e "\e[1;36m 删除googlehosts规则中的冲突规则\e[0m"
@@ -215,13 +221,12 @@ sed -i "/#/d" /tmp/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
 echo
 echo -e "\e[1;36m 合并dnsmasq、hosts缓存\e[0m"
-cat /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
-#cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
-cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
+cat /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/yoyoAd.conf /tmp/notrackAdDomain.conf /tmp/antiAd.conf /tmp/blacklist > /tmp/fqad
+#cat /tmp/userlist /tmp/sy618 /tmp/ad.conf /tmp/antiAd.conf /tmp/blacklist > /tmp/fqad
+cat /tmp/notrackAdhosts.conf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 echo
 echo -e "\e[1;36m 删除dnsmasq、hosts临时文件\e[0m"
-rm -rf /tmp/userlist /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
-rm -rf /tmp/googlehosts #/tmp/sy618
+rm -rf /tmp/googlehosts /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/notrackAdDomain.conf /tmp/antiAd.conf /tmp/blacklist /tmp/notrackAdhosts.conf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist #/tmp/sy618
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
