@@ -8,8 +8,15 @@ echo " 开始更新dnsmasq规则"
 wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
 # 下载vokins广告规则
 wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
-# 下载easylistchina广告规则
-wget --no-check-certificate -q -O /tmp/easylistchina.conf https://c.nnjsx.cn/GL/dnsmasq/update/adblock/easylistchina.txt
+# 下载yoyoAd广告规则
+wget --no-check-certificate -q -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq;showintro=0
+# 下载notrackAd广告规则
+wget --no-check-certificate -q -O /tmp/notrackAdDomain.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt
+wget --no-check-certificate -q -O /tmp/notrackAdhosts.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt
+# 下载生成antiAd广告规则
+wget --no-check-certificate -q -O /tmp/antiAd.conf https://gitee.com/privacy-protection-tools/anti-ad/raw/master/anti-ad-for-dnsmasq.conf
+sed -i "/#/d" /tmp/antiAd.conf
+sed -i 's/$/&127.0.0.1/g' /tmp/antiAd.conf
 
 # 删除racaljk规则中的冲突规则
 #sed -i '/google/d' /tmp/googlehosts
@@ -28,7 +35,7 @@ sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式
 
 # 合并dnsmasq缓存
 #cat /tmp/userlist /tmp/googlehosts /tmp/sy618 /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
-cat /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/fqad
+cat /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/yoyoAd.conf /tmp/notrackAdDomain.conf /tmp/antiAd.conf /tmp/blacklist > /tmp/fqad
 
 # 删除dnsmasq缓存
 rm -rf /tmp/userlist /tmp/googlehosts /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist
@@ -63,9 +70,8 @@ sed -i "s/  / /g" /tmp/fqad
 # 创建dnsmasq规则文件
 echo "
 ############################################################
-##【Copyright (c) 2014-2017, clion007】                           ##
+##【Copyright (c) 2014-2020, clion007】                           ##
 ##                                                                ##
-## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/googlehosts/hosts                       ##
 ####################################################################
 
@@ -96,16 +102,14 @@ wget --no-check-certificate -q -O /tmp/whocare http://someonewhocares.org/hosts/
 # 下载adaway规则缓存
 wget --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
 wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
-wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt && sed -i "s/.$//g" /tmp/adaway4
-#wget --no-check-certificate -q -O /tmp/adaway5 https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts
-cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
-rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 #/tmp/adaway5
+cat /tmp/adaway /tmp/adaway2 > /tmp/adaway.conf
+rm -rf /tmp/adaway /tmp/adaway2
 echo
 # 合并hosts缓存
-cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare > /tmp/noad
+cat /tmp/notrackAdhosts.conf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare > /tmp/noad
 
 # 删除hosts缓存
-rm -rf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare
+rm -rf /tmp/notrackAdhosts.conf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist /tmp/whocare
 
 # 删除误杀广告规则
 while read -r line
@@ -127,11 +131,9 @@ sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/noad
 # 创建hosts规则文件
 echo "
 ############################################################
-##【Copyright (c) 2014-2017, clion007】                           ##
+##【Copyright (c) 2014-2020, clion007】                           ##
 ##                                                                ##
-## 感谢https://github.com/sy618/hosts                             ##
 ## 感谢https://github.com/vokins/hosts                            ##
-## 感谢https://github.com/googlehosts/hosts                       ##
 ####################################################################
 
 # 默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
