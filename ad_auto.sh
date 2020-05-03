@@ -175,30 +175,26 @@ fi
 echo -e "\e[1;36m 开始下载各广告规则\e[0m"
 echo
 echo -e "\e[1;36m 下载vokins广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
+wget --no-check-certificate -c -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 echo
 echo -e "\e[1;36m 下载yoyoAd广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq;showintro=0
-echo
-echo -e "\e[1;36m 下载notrackAd广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/notrackAdDomain.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt
-wget --no-check-certificate -q -O /tmp/notrackAdhosts.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt
+wget --no-check-certificate -c -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq;showintro=0
 echo
 echo -e "\e[1;36m 下载Anti-Ad广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/antiAd.conf https://gitee.com/privacy-protection-tools/anti-ad/raw/master/anti-ad-for-dnsmasq.conf
+wget --no-check-certificate -c -O /tmp/antiAd.conf https://gitee.com/privacy-protection-tools/anti-ad/raw/master/anti-ad-for-dnsmasq.conf
 sed -i "/#/d" /tmp/antiAd.conf
 sed -i 's/$/&127.0.0.1/g' /tmp/antiAd.conf
 echo
 echo -e "\e[1;36m 下载yhosts缓存\e[0m"
-wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
+wget --no-check-certificate -c -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
 echo
 echo -e "\e[1;36m 下载malwaredomainlist规则\e[0m"
-wget --no-check-certificate -q -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt
+wget --no-check-certificate -c -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt
 sed -i "s/.$//g" /tmp/mallist
 echo
 echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
-wget --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
-wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
+wget --no-check-certificate -c -O /tmp/adaway https://adaway.org/hosts.txt
+wget --no-check-certificate -c -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
 sed -i "s/.$//g" /tmp/adaway2
 echo
 echo -e "\e[1;36m adaway规则下载完成，开始合并规则\e[0m"
@@ -212,7 +208,7 @@ echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
 cp /etc/dnsmasq.d/userlist /tmp/userlist
 echo
 echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
-wget --no-check-certificate -q -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
+wget --no-check-certificate -c -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
 sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
 rm -rf /tmp/adblacklist
 sed -i "/#/d" /tmp/blacklist
@@ -220,14 +216,14 @@ sed -i "/#/d" /tmp/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
 echo
 echo -e "\e[1;36m 分别合并dnsmasq、hosts缓存\e[0m"
-cat /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/notrackAdDomain.conf /tmp/antiAd.conf /tmp/blacklist > /tmp/ad
-cat /tmp/notrackAdhosts.conf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
+cat /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist > /tmp/ad
+cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 echo
 echo -e "\e[1;36m 删除dnsmasq、hosts临时文件\e[0m"
-rm -rf /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/notrackAdDomain.conf /tmp/antiAd.conf /tmp/blacklist /tmp/notrackAdhosts.conf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
+rm -rf /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
+wget --no-check-certificate -c -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
 sort /etc/dnsmasq/userwhitelist /tmp/adwhitelist | uniq > /tmp/whitelist
 sed -i "/#/d" /tmp/whitelist
 rm -rf /tmp/adwhitelist
@@ -306,10 +302,10 @@ killall dnsmasq
 echo
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/ad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh && chmod 755 /etc/dnsmasq/ad_update.sh
+wget --no-check-certificate -c -O /etc/dnsmasq/ad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh && chmod 755 /etc/dnsmasq/ad_update.sh
 echo
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/adrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
+wget --no-check-certificate -c -O /etc/dnsmasq/adrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
 echo
 sleep 1
 grep "dnsmasq" $CRON_FILE >/dev/null
