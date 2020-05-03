@@ -78,14 +78,14 @@ if [ ! $? -eq 0 ]; then
 	echo -e "\e[1;36m 配置dnsmasq\e[0m"
 	echo
 	if [ -f /etc/dnsmasq/lanip ]; then
-		lanip=$(cat /etc/dnsmasq/lanip)
+		lanip=`cat /etc/dnsmasq/lanip`
 		else
-		lanip=$(ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:")
+		lanip=`ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:"|sed 's/,/\n/g'|awk '{{printf"%s,",$0}}'`
 	fi
 	echo -e "\e[1;36m 路由器网关:$lanip，开始配置dnsmasq\e[0m"
 	echo "
 # 添加监听地址（其中$lanip为你的lan网关ip）
-listen-address=$lanip,127.0.0.1
+listen-address=$lanip127.0.0.1
 
 # 并发查询所有上游DNS服务器
 all-servers 
@@ -171,7 +171,7 @@ if [ ! -f /etc/dnsmasq/userwhitelist ]; then
 		echo
 	fi	
 fi
-echo -e "\e[1;36m 下载广告规则\e[0m"
+echo -e "\e[1;36m 开始下载各广告规则\e[0m"
 echo
 echo -e "\e[1;36m 下载vokins广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
@@ -190,11 +190,15 @@ echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
 wget --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
 wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
 sed -i "s/.$//g" /tmp/adaway2
+wget --no-check-certificate -q -O /tmp/adaway3 http://77l5b4.com1.z0.glb.clouddn.com/hosts.txt
 wget --no-check-certificate -q -O /tmp/adaway4 https://hosts-file.net/ad_servers.txt
 sed -i "s/.$//g" /tmp/adaway4
-#wget --no-check-certificate -q -O /tmp/adaway5 https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts
+echo
+echo -e "\e[1;36m adaway规则下载完成，开始合并规则\e[0m"
 cat /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 > /tmp/adaway.conf
-rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4 #/tmp/adaway5
+echo
+echo -e "\e[1;36m adaway规则合并完成，清除生成的规则缓存文件\e[0m"
+rm -rf /tmp/adaway /tmp/adaway2 /tmp/adaway3 /tmp/adaway4
 echo
 sleep 3
 echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
@@ -208,7 +212,7 @@ sed -i "/#/d" /tmp/blacklist
 #sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist #hosts方式，不支持通配符
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
 echo
-echo -e "\e[1;36m 合并dnsmasq、hosts缓存\e[0m"
+echo -e "\e[1;36m 分别合并dnsmasq、hosts缓存\e[0m"
 cat /tmp/userlist /tmp/ad.conf /tmp/easylistchina.conf /tmp/blacklist > /tmp/ad
 cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 echo
