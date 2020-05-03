@@ -9,10 +9,6 @@ echo
 echo -e "\e[1;36m 下载yoyoAd广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq;showintro=0
 echo
-echo -e "\e[1;36m 下载notrackAd广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/notrackAdDomain.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt
-wget --no-check-certificate -q -O /tmp/notrackAdhosts.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt
-echo
 echo -e "\e[1;36m 下载Anti-Ad广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/antiAd.conf https://gitee.com/privacy-protection-tools/anti-ad/raw/master/anti-ad-for-dnsmasq.conf
 sed -i "/#/d" /tmp/antiAd.conf
@@ -43,11 +39,11 @@ sed -i "/#/d" /tmp/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
 echo
 echo -e "\e[1;36m 合并dnsmasq、hosts缓存\e[0m"
-cat /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/notrackAdDomain.conf /tmp/antiAd.conf /tmp/blacklist > /tmp/ad
-cat /tmp/notrackAdhosts.conf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
+cat /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist > /tmp/ad
+cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
 echo
 echo -e "\e[1;36m 删除dnsmasq、hosts临时文件\e[0m"
-rm -rf /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/notrackAdDomain.conf /tmp/antiAd.conf /tmp/blacklist /tmp/notrackAdhosts.conf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
+rm -rf /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
 echo
 echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
