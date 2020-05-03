@@ -3,7 +3,7 @@ echo
 CRON_FILE=/etc/crontabs/$USER
 clear
 echo
-echo "# Copyright (c) 2014-2017,by clion007"
+echo "# Copyright (c) 2014-2020,by clion007"
 echo
 echo "# 本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
 echo "# 未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规，文明上网。"
