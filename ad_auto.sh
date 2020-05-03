@@ -339,10 +339,6 @@ if [ ! $? -eq 0 ]; then
 	echo -e "\e[1;36m 定时重启任务设定完成\e[0m"
 	echo
 fi
-echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
-if [ -f /tmp/ad_auto.sh ]; then
-	mv -f /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh
-fi
 echo
 clear
 sleep 1
