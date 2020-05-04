@@ -48,5 +48,5 @@ if [ -s "/tmp/hostsrules.conf" ]; then
 	fi	
 fi
 echo
-echo -e "\e[1;36m 规则更新成功\e[0m"
+echo -e "\e[1;36m 规则更新完成...\e[0m"
 echo
