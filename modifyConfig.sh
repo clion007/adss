@@ -20,17 +20,29 @@ all-servers
 # 指定上游DNS服务器配置文件路径
 resolv-file=/etc/dnsmasq/resolv.conf
 
-# 添加额外hosts规则路径
-addn-hosts=/etc/dnsmasq/noad.conf
-
 # IP反查域名
 bogus-priv
 
-# 添加DNS解析文件
-conf-file=/etc/dnsmasq.d/ad.conf
-
 # 设定域名解析缓存池大小
 cache-size=10000" >> /etc/dnsmasq.conf
+if [ -f /tmp/ad_auto.sh | -f /tmp/ad.sh ]; then
+	echo "
+# 添加额外hosts规则路径
+addn-hosts=/etc/dnsmasq/noad.conf
+
+# 添加DNS解析文件
+conf-file=/etc/dnsmasq.d/ad.conf" >> /etc/dnsmasq.conf
+elif [ -f /tmp/fqad_auto.sh | -f /tmp/fqad.sh ]; then
+	echo "
+# 添加额外hosts规则路径
+addn-hosts=/etc/dnsmasq/noad.conf
+
+# 添加DNS解析文件
+conf-file=/etc/dnsmasq.d/fqad.conf" >> /etc/dnsmasq.conf
+elif [ -f /tmp/fq_auto.sh | -f /tmp/fq.sh ]; then
+	echo "
+# 添加DNS解析文件
+conf-file=/etc/dnsmasq.d/fq.conf" >> /etc/dnsmasq.conf
 	echo
 	echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
 	echo
@@ -70,28 +82,30 @@ if [ ! -f /etc/dnsmasq.d/userlist ]; then
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
 	echo
 fi
-if [ ! -f /etc/dnsmasq/userblacklist ]; then
-	echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
-	echo
-	if [ -f /etc/dnsmasq/blacklist ]; then
-		mv /etc/dnsmasq/blacklist /etc/dnsmasq/userblacklist
-		else
-		echo -e "\e[1;36m 开始创建创建自定义广告黑名单\e[0m"
-		echo "# 请在下面添加广告黑名单
-# 每行输入要屏蔽广告网址域名不含http://符号，如：www.baidu.com
-# 支持不完整域名地址，支持通配符" > /etc/dnsmasq/userblacklist
+if [ -f /tmp/ad_auto.sh | -f /tmp/ad.sh | -f /tmp/fqad_auto.sh | -f /tmp/fqad.sh ]; then
+	if [ ! -f /etc/dnsmasq/userblacklist ]; then
+		echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 		echo
+		if [ -f /etc/dnsmasq/blacklist ]; then
+			mv /etc/dnsmasq/blacklist /etc/dnsmasq/userblacklist
+			else
+			echo -e "\e[1;36m 开始创建创建自定义广告黑名单\e[0m"
+			echo "# 请在下面添加广告黑名单
+	# 每行输入要屏蔽广告网址域名不含http://符号，如：www.baidu.com
+	# 支持不完整域名地址，支持通配符" > /etc/dnsmasq/userblacklist
+			echo
+		fi	
 	fi	
-fi
-if [ ! -f /etc/dnsmasq/userwhitelist ]; then
-	echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
-	echo
-	if [ -f /etc/dnsmasq/whitelist ]; then
-		mv /etc/dnsmasq/whitelist /etc/dnsmasq/userwhitelist
-		else
-		echo -e "\e[1;36m 开始创建创建自定义广告白名单\e[0m"
-		echo "# 请将误杀的网址域名添加到在下面
-# 每个一行，不带http://，尽量输入准确地址以免删除有效广告规则" > /etc/dnsmasq/userwhitelist
+	if [ ! -f /etc/dnsmasq/userwhitelist ]; then
+		echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 		echo
+		if [ -f /etc/dnsmasq/whitelist ]; then
+			mv /etc/dnsmasq/whitelist /etc/dnsmasq/userwhitelist
+			else
+			echo -e "\e[1;36m 开始创建创建自定义广告白名单\e[0m"
+			echo "# 请将误杀的网址域名添加到在下面
+	# 每个一行，不带http://，尽量输入准确地址以免删除有效广告规则" > /etc/dnsmasq/userwhitelist
+			echo
+		fi	
 	fi	
 fi
