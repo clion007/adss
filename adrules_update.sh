@@ -1,146 +1,52 @@
 #!/bin/sh
+sleep 
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/initRulesFile.sh -c -O \
+	/tmp/initRulesFile.sh  && chmod 775 /tmp/initRulesFile.sh  && sh /tmp/initRulesFile.sh
+	rm -f /tmp/initRulesFile.sh
 echo
-sleep 3
-echo " 开始更新dnsmasq规则"
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/getDnsmasqAdRules.sh -c -O \
+	/tmp/getDnsmasqAdRules.sh  && chmod 775 /tmp/getDnsmasqAdRules.sh  && sh /tmp/getDnsmasqAdRules.sh
+	rm -f /tmp/getDnsmasqAdRules.sh
 echo
-echo -e "\e[1;36m 下载vokins广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/ad.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/getHostsAdRules.sh -c -O \
+	/tmp/getHostsAdRules.sh  && chmod 775 /tmp/getHostsAdRules.sh  && sh /tmp/getHostsAdRules.sh
+	rm -f /tmp/getHostsAdRules.sh
 echo
-echo -e "\e[1;36m 下载yoyoAd广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq;showintro=0
-echo
-echo -e "\e[1;36m 下载Anti-Ad广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/antiAd.conf https://gitee.com/privacy-protection-tools/anti-ad/raw/master/anti-ad-for-dnsmasq.conf
-sed -i "/#/d" /tmp/antiAd.conf
-sed -i 's/$/&127.0.0.1/g' /tmp/antiAd.conf
-echo
-echo -e "\e[1;36m 下载yhosts缓存\e[0m"
-wget --no-check-certificate -q -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
-echo
-echo -e "\e[1;36m 下载malwaredomainlist规则\e[0m"
-wget --no-check-certificate -q -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt && sed -i "s/.$//g" /tmp/mallist
-echo
-echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
-wget --no-check-certificate -q -O /tmp/adaway https://adaway.org/hosts.txt
-wget --no-check-certificate -q -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt && sed -i "s/.$//g" /tmp/adaway2
-cat /tmp/adaway /tmp/adaway2 > /tmp/adaway.conf
-rm -rf /tmp/adaway /tmp/adaway2
-echo
-sleep 3
-echo -e "\e[1;36m 创建用户自定规则缓存\e[0m"
-cp /etc/dnsmasq.d/userlist /tmp/userlist
-echo
-echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
-wget --no-check-certificate -q -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
-sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
-rm -rf /tmp/adblacklist
-sed -i "/#/d" /tmp/blacklist
-#sed -i 's/^/127.0.0.1 &/g' /tmp/blacklist #hosts方式，不支持通配符
-sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #改为dnsmasq方式，支持通配符
-echo
-echo -e "\e[1;36m 合并dnsmasq、hosts缓存\e[0m"
-cat /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist > /tmp/ad
-cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/noad
-echo
-echo -e "\e[1;36m 删除dnsmasq、hosts临时文件\e[0m"
-rm -rf /tmp/userlist /tmp/ad.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
-echo
-echo -e "\e[1;36m 删除被误杀的广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/adwhitelist https://raw.githubusercontent.com/clion007/dnsmasq/master/adwhitelist
-sort /etc/dnsmasq/userwhitelist /tmp/adwhitelist | uniq > /tmp/whitelist
-sed -i "/#/d" /tmp/whitelist
-rm -rf /tmp/adwhitelist
-while read -r line
-do
-	sed -i "/$line/d" /tmp/noad
-	sed -i "/$line/d" /tmp/ad
-done < /tmp/whitelist
-rm -rf /tmp/whitelist
-echo
-echo -e "\e[1;36m 删除注释和本地规则\e[0m"
-sed -i '/::1/d' /tmp/ad
-sed -i '/localhost/d' /tmp/ad
-sed -i '/#/d' /tmp/ad
-sed -i '/#/d' /tmp/noad
-sed -i '/@/d' /tmp/noad
-sed -i '/::1/d' /tmp/noad
-sed -i '/localhost/d' /tmp/noad
-echo
-echo -e "\e[1;36m 统一广告规则格式\e[0m"
-sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/ad
-sed -i "s/  / /g" /tmp/ad
-sed -i "s/  / /g" /tmp/noad
-sed -i "s/	/ /g" /tmp/noad
-sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/noad
-echo
-echo -e "\e[1;36m 创建dnsmasq规则文件\e[0m"
-echo "
-############################################################
-## 【Copyright (c) 2014-2020, clion007】                          ##
-##                                                                ##
-## 感谢https://github.com/vokins/hosts                            ##
-##                                                                ##
-####################################################################
-
-# Localhost (DO NOT REMOVE) Start
-address=/localhost/127.0.0.1
-address=/localhost/::1
-address=/ip6-localhost/::1
-address=/ip6-loopback/::1
-# Localhost (DO NOT REMOVE) End
-
-# Modified DNS start" > /tmp/ad.conf
-echo
-echo -e "\e[1;36m 创建hosts规则文件\e[0m"
-echo "
-############################################################
-## 【Copyright (c) 2014-2020 clion007】                          ##
-##                                                                ##
-## 感谢https://github.com/vokins/hosts                            ##
-##                                                                ##
-####################################################################
-
-# 默认hosts开始（想恢复最初状态的hosts，只保留下面两行即可）
-127.0.0.1 localhost
-::1	localhost
-::1	ip6-localhost
-::1	ip6-loopback
-# 默认hosts结束
-
-# 修饰hosts开始" > /tmp/noad.conf
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/deletWhiteListRules.sh -c -O \
+	/tmp/deletWhiteListRules.sh  && chmod 775 /tmp/deletWhiteListRules.sh  && sh /tmp/deletWhiteListRules.sh
+	rm -f /tmp/deletWhiteListRules.sh
 echo
 echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
-sort /tmp/ad | uniq >> /tmp/ad.conf
-sort /tmp/noad | uniq >> /tmp/noad.conf
-rm -rf /tmp/ad /tmp/noad
+sort /tmp/dnsAd | uniq >> /tmp/dnsrules.conf
+sort /tmp/noad | uniq >> /tmp/hostsrules.conf
+rm -rf  /tmp/dnsAd /tmp/hostsAd
 echo "
-# Modified DNS end" >> /tmp/ad.conf
+# Modified DNS end" >> /tmp/dnsrules.conf
 echo "
-# 修饰hosts结束" >> /tmp/noad.conf
+# 修饰hosts结束" >> /tmp/hostsrules.conf
 echo
 sleep 3
-if [ -s "/tmp/ad.conf" ]; then
-	if ( ! cmp -s /tmp/ad.conf /etc/dnsmasq.d/ad.conf ); then
-		mv -f /tmp/ad.conf /etc/dnsmasq.d/ad.conf
+if [ -s "/tmp/dnsrules.conf" ]; then
+	if ( ! cmp -s /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf ); then
+		mv -f /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到ad规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: ad规则转换完成，应用新规则。"
 		else
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: ad本地规则和在线规则相同，无需更新！" && rm -f /tmp/ad.conf
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: ad本地规则和在线规则相同，无需更新！" && rm -f /tmp/dnsrules.conf
 	fi	
 fi
 echo
-if [ -s "/tmp/noad.conf" ]; then
-	if ( ! cmp -s /tmp/noad.conf /etc/dnsmasq/noad.conf ); then
-		mv -f /tmp/noad.conf /etc/dnsmasq/noad.conf
+if [ -s "/tmp/hostsrules.conf" ]; then
+	if ( ! cmp -s /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf ); then
+		mv -f /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到noad规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad规则转换完成，应用新规则。"
 		else
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad本地规则和在线规则相同，无需更新！" && rm -f /tmp/noad.conf
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad本地规则和在线规则相同，无需更新！" && rm -f /tmp/hostsrules.conf
 	fi	
 fi
 echo
 echo -e "\e[1;36m 规则更新成功\e[0m"
 echo
-exit 0
