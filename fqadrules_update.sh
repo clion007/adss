@@ -31,9 +31,9 @@ sort /tmp/dnsrules | uniq >> /tmp/dnsrules.conf
 sort /tmp/hostsAd | uniq >> /tmp/hostsrules.conf
 rm -rf /tmp/googlehosts /tmp/dnsAd /tmp/dnsrules /tmp/hostsAd
 echo "
-# Modified DNS end" >> /etc/dnsmasq.d/dnsrules.conf
+# Modified DNS end" >> /tmp/dnsrules.conf
 echo "
-# 修饰hosts结束" >> /etc/dnsmasq/hostsrules.conf
+# 修饰hosts结束" >> /tmp/hostsrules.conf
 echo
 if [ -s "/tmp/dnsrules.conf" ]; then
 	if ( ! cmp -s /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf ); then
