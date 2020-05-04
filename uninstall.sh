@@ -1,7 +1,11 @@
 #!/bin/sh
-echo
+if [ ! -s /tmp/copyright.sh ]; then
 	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -O \
 		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh && sh /tmp/copyright.sh
+	else
+		sh /tmp/copyright.sh
+fi
+rm -f /tmp/copyright.sh
 echo
 echo -e "\e[1;31m 开始卸载已安装dnsmasq脚本配置 \e[0m"
 rm -f /var/lock/opkg.lock
