@@ -29,7 +29,7 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		sh /tmp/fqad_auto.sh
 		rm -rf /tmp/fqad_update.sh /tmp/fqadrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 翻墙去广告脚本及规则更新完成。"
-		exit 0
+		echo
 	elif ( ! cmp -s /tmp/fqad_update.sh /etc/dnsmasq/fqad_update.sh ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......3秒后即将开始更新！"
 		echo
@@ -40,7 +40,7 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		mv -f /tmp/fqad_update.sh /etc/dnsmasq/fqad_update.sh
 		rm -rf /tmp/fqad_auto.sh /tmp/fqadrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本更新完成。"
-		exit 0
+		echo
 	elif ( ! cmp -s /tmp/fqadrules_update.sh /etc/dnsmasq/fqadrules_update.sh ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......3秒后即将开始更新！"
 		echo
@@ -51,13 +51,14 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		mv -f /tmp/fqadrules_update.sh /etc/dnsmasq/fqadrules_update.sh
 		rm -rf /tmp/fqad_auto.sh /tmp/fqad_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
-		exit 0
+		echo
 		else
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，3秒后即将开始检测翻墙去广告规则更新"
 		sh /etc/dnsmasq/fqadrules_update.sh
 		rm -rf /tmp/fqad_auto.sh /tmp/fqad_update.sh /tmp/fqadrules_update.sh
+		echo
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
-		exit 0
+		echo
 	fi	
 	else
 		if ( -f /tmp/fqad_auto.sh); then
@@ -71,6 +72,7 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		fi	
 		echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络连接异常，稍后尝试规则更新。\e[0m"
 		sh /etc/dnsmasq/fqadrules_update.sh
+		echo
 fi
-rm -f  /tmp/copyright.sh
+rm -f /tmp/copyright.sh
 exit 0
