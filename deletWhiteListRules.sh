@@ -6,11 +6,11 @@ sed -i "/#/d" /tmp/whitelist
 rm -rf /tmp/adwhitelist
 while read -r line
 do
-	if[ -s "/tmp/ad" ]; then 
-		sed -i "/$line/d" /tmp/ad
+	if [ -s "/tmp/dnsrules.conf" ]; then 
+		sed -i "/$line/d" /tmp/dnsrules.conf
 	fi
-	if[ -s "/tmp/noad" ]; then 
-		sed -i "/$line/d" /tmp/noad
+	if [ -s "/tmp/hostsrules.conf" ]; then 
+		sed -i "/$line/d" /tmp/hostsrules.conf
 	fi
 done < /tmp/whitelist
 rm -rf /tmp/whitelist
