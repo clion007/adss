@@ -14,7 +14,7 @@ echo -e "\e[1;36m 三秒后开始备份安装前路由器相关配置......\e[0m
 echo
 sleep 3
 	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/backup.sh -O \
-		/tmp/backup.sh && chmod 775 /tmp/backup.sh.sh && sh /tmp/backup.sh
+		/tmp/backup.sh && chmod 775 /tmp/backup.sh && sh /tmp/backup.sh
 	rm -f /tmp/backup.sh
 echo
 sleep 3
