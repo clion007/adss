@@ -8,7 +8,7 @@ echo -e "\e[1;36m 下载yoyoAd广告规则\e[0m"
 wget --no-check-certificate -c -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq\&showintro=0\&mimetype=plaintext
 echo
 echo -e "\e[1;36m 下载notrackAd广告规则\e[0m"
-wget --no-check-certificate -q -O /tmp/notrackAdDomain.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt
+wget --no-check-certificate -c -O /tmp/notrackAdDomain.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt
 echo
 echo -e "\e[1;36m 下载Anti-Ad广告规则\e[0m"
 wget --no-check-certificate -c -O /tmp/antiAd.conf https://gitee.com/privacy-protection-tools/anti-ad/raw/master/anti-ad-for-dnsmasq.conf
