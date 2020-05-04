@@ -58,8 +58,17 @@ if [ -s "/tmp/ad_update.sh" ]; then
 		exit 0
 	fi	
 	else
-	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络连接异常，稍后尝试进行规则更新。\e[0m"
-	sh /etc/dnsmasq/adrules_update.sh
+		if ( -f /tmp/ad_auto.sh); then
+			rm -f  /tmp/ad_auto.sh
+		fi	
+		if ( -f /tmp/ad_update.sh); then
+			rm -f  /tmp/ad_update.sh
+		fi	
+		if ( -f /tmp/adrules_update.sh); then
+			rm -f  /tmp/adrules_update.sh
+		fi	
+		echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络连接异常，稍后尝试进行规则更新。\e[0m"
+		sh /etc/dnsmasq/adrules_update.sh
 fi
 rm -f  /tmp/copyright.sh
 exit 0
