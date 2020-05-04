@@ -29,26 +29,26 @@ sleep 3
 if [ -s "/tmp/dnsrules.conf" ]; then
 	if ( ! cmp -s /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf ); then
 		mv -f /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf
-		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到ad规则有更新......开始转换规则！"
+		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到dnsmasq规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: ad规则转换完成，应用新规则。"
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: dnsmasq规则转换完成，应用新规则。"
 		echo
 		else
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: ad本地规则和在线规则相同，无需更新！" && rm -f /tmp/dnsrules.conf
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: dnsmasq本地规则和在线规则相同，无需更新！" && rm -f /tmp/dnsrules.conf
 		echo
 	fi	
 fi
 if [ -s "/tmp/hostsrules.conf" ]; then
 	if ( ! cmp -s /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf ); then
 		mv -f /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到noad规则有更新......开始转换规则！"
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到hosts规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad规则转换完成，应用新规则。"
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: hosts规则转换完成，应用新规则。"
 		echo
 		else
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad本地规则和在线规则相同，无需更新！" && rm -f /tmp/hostsrules.conf
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: hosts本地规则和在线规则相同，无需更新！" && rm -f /tmp/hostsrules.conf
 		echo
 	fi	
 fi
