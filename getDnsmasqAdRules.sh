@@ -5,7 +5,7 @@ echo -e "\e[1;36m 下载vokins广告规则\e[0m"
 wget --no-check-certificate -c -O /tmp/vokins.conf https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf
 echo
 echo -e "\e[1;36m 下载yoyoAd广告规则\e[0m"
-wget --no-check-certificate -c -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq\&showintro=0&mimetype=plaintext
+wget --no-check-certificate -c -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq\&showintro=0\&mimetype=plaintext
 echo
 echo -e "\e[1;36m 下载notrackAd广告规则\e[0m"
 wget --no-check-certificate -q -O /tmp/notrackAdDomain.conf https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt
