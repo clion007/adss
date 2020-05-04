@@ -48,7 +48,7 @@ echo
 echo -e "\e[1;36m 合并扶墙、广告规则缓存\e[0m"
 cat /tmp/googlehosts /tmp/dnsAd > /tmp/dnsrules
 mv /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf
-mv /tmp/hostsrules.conf /etc/dnsmasq.d/hostsrules.conf
+mv /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf
 echo
 echo -e "\e[1;36m 删除dnsmasq,hosts重复规则及临时文件\e[0m"
 sort /tmp/dnsrules | uniq >> /etc/dnsmasq.d/dnsrules.conf
