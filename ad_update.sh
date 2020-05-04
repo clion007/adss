@@ -16,13 +16,13 @@ wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/m
       /tmp/adrules_update.sh && chmod 775 /tmp/adrules_update.sh
 if [ -s "/tmp/ad_update.sh" ]; then
 	if  ( ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh ); then
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版翻墙脚本......3秒后即将开始更新！"
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版脚本......3秒后即将开始更新！"
 		echo
 		sleep 3
-		echo -e "\e[1;36m 开始更新翻墙脚本\e[0m"
+		echo -e "\e[1;36m 开始更新脚本\e[0m"
 		echo
 		wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/uninstall.sh -O \
-			/tmp/ad_auto.sh && chmod 775 /tmp/ad_auto.sh && sh /tmp/uninstall.sh > /dev/null 2>&1
+			/tmp/uninstall.sh && chmod 775 /tmp/uninstall.sh && sh /tmp/uninstall.sh > /dev/null 2>&1
 		rm -f /tmp/uninstall.sh
 		sh /tmp/ad_auto.sh
 		rm -rf /tmp/ad_update.sh /tmp/adrules_update.sh
