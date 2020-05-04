@@ -27,35 +27,36 @@ if [ -s "/tmp/ad_update.sh" ]; then
 		sh /tmp/ad_auto.sh
 		rm -rf /tmp/ad_update.sh /tmp/adrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 翻墙脚本及规则更新完成。"
-		exit 0
-		elif( ! cmp -s /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh ); then
-			echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......3秒后即将开始更新！"
-			echo
-			sleep 3
-			echo -e "\e[1;36m 开始更新升级脚本\e[0m"
-			echo
-			sh /tmp/ad_update.sh
-			mv -f /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh
-			rm -rf /tmp/ad_auto.sh /tmp/adrules_update.sh
-			echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本更新完成。"
-			exit 0
-		elif ( ! cmp -s /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh ); then
-			echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......3秒后即将开始更新！"
-			echo
-			sleep 3
-			echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
-			echo
-			sh /tmp/adrules_update.sh
-			mv -f /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh
-			rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh
-			echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
-			exit 0
-		else
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，3秒后即将开始检测规则更新"
-		sh /etc/dnsmasq/adrules_update.sh
-		rm -rf /tmp/ad_update.sh /tmp/adrules_update.sh
-		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
-		exit 0
+		echo
+	elif( ! cmp -s /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh ); then
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......3秒后即将开始更新！"
+		echo
+		sleep 3
+		echo -e "\e[1;36m 开始更新升级脚本\e[0m"
+		echo
+		sh /tmp/ad_update.sh
+		mv -f /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh
+		rm -rf /tmp/ad_auto.sh /tmp/adrules_update.sh
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本更新完成。"
+		echo
+	elif ( ! cmp -s /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh ); then
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......3秒后即将开始更新！"
+		echo
+		sleep 3
+		echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
+		echo
+		sh /tmp/adrules_update.sh
+		mv -f /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh
+		rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh
+		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
+		echo
+	else
+	echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，3秒后即将开始检测规则更新"
+	sh /etc/dnsmasq/adrules_update.sh
+	rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh /tmp/adrules_update.sh
+	echo
+	echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
+	echo
 	fi	
 	else
 		if ( -f /tmp/ad_auto.sh); then
@@ -69,6 +70,7 @@ if [ -s "/tmp/ad_update.sh" ]; then
 		fi	
 		echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络连接异常，稍后尝试进行规则更新。\e[0m"
 		sh /etc/dnsmasq/adrules_update.sh
+		echo
 fi
-rm -f  /tmp/copyright.sh
+rm -f /tmp/copyright.sh
 exit 0
