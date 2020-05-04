@@ -7,7 +7,6 @@ if [ ! -s /tmp/copyright.sh ]; then
 	else
 		sh /tmp/copyright.sh
 fi
-rm -f /tmp/copyright.sh
 echo -e "\e[1;36m 1秒钟后开始检测更新脚本及规则\e[0m"
 echo
 sleep 1
@@ -61,16 +60,17 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		exit 0
 	fi	
 	else
-	if ( -f /tmp/fqad_auto.sh); then
-		rm -f  /tmp/fqad_auto.sh
-	fi	
-	if ( -f /tmp/fqad_update.sh); then
-		rm -f  /tmp/fqad_update.sh
-	fi	
-	if ( -f /tmp/fqadrules_update.sh); then
-		rm -f  /tmp/fqadrules_update.sh
-	fi	
-	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络连接异常，稍后尝试规则更新。\e[0m"
-	sh /etc/dnsmasq/fqadrules_update.sh
+		if ( -f /tmp/fqad_auto.sh); then
+			rm -f  /tmp/fqad_auto.sh
+		fi	
+		if ( -f /tmp/fqad_update.sh); then
+			rm -f  /tmp/fqad_update.sh
+		fi	
+		if ( -f /tmp/fqadrules_update.sh); then
+			rm -f  /tmp/fqadrules_update.sh
+		fi	
+		echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络连接异常，稍后尝试规则更新。\e[0m"
+		sh /etc/dnsmasq/fqadrules_update.sh
 fi
+rm -f  /tmp/copyright.sh
 exit 0
