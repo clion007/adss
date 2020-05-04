@@ -28,6 +28,7 @@ cat /etc/dnsmasq.d/userlist > /tmp/dnsAd
 echo
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
 cat /tmp/vokins.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist >> /tmp/dnsAd
+echo
 echo -e "\e[1;36m 删除dnsmasq临时文件\e[0m"
 rm -rf /tmp/vokins.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist
 echo
