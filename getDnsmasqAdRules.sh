@@ -23,8 +23,11 @@ rm -rf /tmp/adblacklist
 sed -i "/#/d" /tmp/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/blacklist #支持通配符
 echo
+echo -e "\e[1;36m 添加用户定义的解析规则\e[0m"
+cat /etc/dnsmasq.d/userlist > /tmp/dnsAd
+echo
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
-cat /tmp/vokins.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist > /tmp/dnsAd
+cat /tmp/vokins.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist >> /tmp/dnsAd
 echo -e "\e[1;36m 删除dnsmasq临时文件\e[0m"
 rm -rf /tmp/vokins.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist
 echo
