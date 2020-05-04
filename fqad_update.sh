@@ -36,8 +36,8 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		sleep 3
 		echo -e "\e[1;36m 开始更新升级脚本\e[0m"
 		echo
-		sh /tmp/fqad_update.sh
 		mv -f /tmp/fqad_update.sh /etc/dnsmasq/fqad_update.sh
+		sh /etc/dnsmasq/fqad_update.sh
 		rm -rf /tmp/fqad_auto.sh /tmp/fqadrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本更新完成。"
 		echo
@@ -47,8 +47,8 @@ if [ -s "/tmp/fqad_auto.sh" ]; then
 		sleep 3
 		echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
 		echo
-		sh /tmp/fqadrules_update.sh
 		mv -f /tmp/fqadrules_update.sh /etc/dnsmasq/fqadrules_update.sh
+		sh /etc/dnsmasq/fqadrules_update.sh
 		rm -rf /tmp/fqad_auto.sh /tmp/fqad_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 		echo
