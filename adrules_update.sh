@@ -1,5 +1,5 @@
 #!/bin/sh
-sleep 
+sleep 3
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/initRulesFile.sh -c -O \
 	/tmp/initRulesFile.sh  && chmod 775 /tmp/initRulesFile.sh  && sh /tmp/initRulesFile.sh
 	rm -f /tmp/initRulesFile.sh
@@ -31,22 +31,26 @@ if [ -s "/tmp/dnsrules.conf" ]; then
 		mv -f /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到ad规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
+		echo
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: ad规则转换完成，应用新规则。"
+		echo
 		else
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: ad本地规则和在线规则相同，无需更新！" && rm -f /tmp/dnsrules.conf
+		echo
 	fi	
 fi
-echo
 if [ -s "/tmp/hostsrules.conf" ]; then
 	if ( ! cmp -s /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf ); then
 		mv -f /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到noad规则有更新......开始转换规则！"
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
+		echo
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad规则转换完成，应用新规则。"
+		echo
 		else
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: noad本地规则和在线规则相同，无需更新！" && rm -f /tmp/hostsrules.conf
+		echo
 	fi	
 fi
-echo
 echo -e "\e[1;36m 规则更新完成...\e[0m"
 echo
