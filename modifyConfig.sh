@@ -1,6 +1,7 @@
 #!/bin/sh
 sleep 3
-if [ ! -s /etc/dnsmasq/resolv.conf ]; then
+grep "hostsrules" /etc/dnsmasq.conf >/dev/null
+if [ ! $? -eq 0 ]; then
 	echo -e "\e[1;36m 配置dnsmasq\e[0m"
 	echo
 	if [ -f /etc/dnsmasq/lanip ]; then
@@ -24,26 +25,17 @@ resolv-file=/etc/dnsmasq/resolv.conf
 bogus-priv
 
 # 设定域名解析缓存池大小
-cache-size=10000" >> /etc/dnsmasq.conf
-if [ -f /tmp/ad_auto.sh | -f /tmp/ad.sh ]; then
-	echo "
-# 添加额外hosts规则路径
-addn-hosts=/etc/dnsmasq/noad.conf
+cache-size=10000
 
 # 添加DNS解析文件
-conf-file=/etc/dnsmasq.d/ad.conf" >> /etc/dnsmasq.conf
-elif [ -f /tmp/fqad_auto.sh | -f /tmp/fqad.sh ]; then
-	echo "
-# 添加额外hosts规则路径
-addn-hosts=/etc/dnsmasq/noad.conf
+conf-file=/etc/dnsmasq.d/dnsrules.conf
 
-# 添加DNS解析文件
-conf-file=/etc/dnsmasq.d/fqad.conf" >> /etc/dnsmasq.conf
-elif [ -f /tmp/fq_auto.sh | -f /tmp/fq.sh ]; then
-	echo "
-# 添加DNS解析文件
-conf-file=/etc/dnsmasq.d/fq.conf" >> /etc/dnsmasq.conf
+# 添加额外hosts规则路径
+addn-hosts=/etc/dnsmasq/hostsrules.conf
+" >> /etc/dnsmasq.conf
 	echo
+fi
+if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 	echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
 	echo
 	echo -e "\e[1;36m 开始创建上游DNS配置\e[0m"
@@ -82,7 +74,7 @@ if [ ! -f /etc/dnsmasq.d/userlist ]; then
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
 	echo
 fi
-if [ -f /tmp/ad_auto.sh | -f /tmp/ad.sh | -f /tmp/fqad_auto.sh | -f /tmp/fqad.sh ]; then
+if [ -f /tmp/ad_auto.sh || -f /tmp/ad.sh || -f /tmp/fqad_auto.sh || -f /tmp/fqad.sh ]; then
 	if [ ! -f /etc/dnsmasq/userblacklist ]; then
 		echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 		echo
