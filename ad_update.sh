@@ -8,6 +8,8 @@ fi
 echo
 echo -e "\e[1;36m 1秒钟后开始检测更新脚本及规则\e[0m"
 echo
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_auto.sh -O \
+      /tmp/ad_auto.sh && chmod 775 /tmp/ad_auto.sh
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh -O \
       /tmp/ad_update.sh && chmod 775 /tmp/ad_update.sh
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh -O \
