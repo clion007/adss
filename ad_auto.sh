@@ -39,7 +39,7 @@ rm -f /tmp/deletWhiteListRules.sh
 echo
 echo -e "\e[1;36m 删除dnsmasq,hosts重复规则及临时文件\e[0m"
 mv /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf
-mv /tmp/hostsrules.conf /etc/dnsmasq.d/hostsrules.conf
+mv /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf
 sort /tmp/dnsAd | uniq >> /etc/dnsmasq.d/dnsrules.conf
 sort /tmp/hostsAd | uniq >> /etc/dnsmasq/hostsrules.conf
 rm -rf /tmp/dnsAd /tmp/hostsAd
