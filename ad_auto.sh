@@ -62,7 +62,7 @@ wget --no-check-certificate -c -O /etc/dnsmasq/adrules_update.sh https://raw.git
 echo
 sleep 3
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/cron.sh -O \
-	/tmp/cron.sh.sh && chmod 775 /tmp/cron.sh.sh && sh /tmp/cron.sh.sh
+	/tmp/cron.sh && chmod 775 /tmp/cron.sh && sh /tmp/cron.sh
 rm -f /tmp/cron.sh
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 if [ -s /tmp/ad_auto.sh ]; then
