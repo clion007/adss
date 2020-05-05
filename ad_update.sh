@@ -1,4 +1,13 @@
 #!/bin/sh
+echo "检测网络环境是否正常"
+echo
+res_code=`curl -I -s --connect-timeout 1 raw.githubusercontent.com -w %{http_code} | tail -n1`
+if [ $res_code != 200 -a $res_code != 301 ]; then
+	echo "检测到网络异常，放弃本次更新"
+	echo
+	exit 1
+fi
+clear
 if [ ! -s /tmp/copyright.sh ]; then
 	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -O \
 		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh && sh /tmp/copyright.sh
@@ -6,7 +15,7 @@ if [ ! -s /tmp/copyright.sh ]; then
 		sh /tmp/copyright.sh
 fi
 echo
-echo -e "\e[1;36m 1秒钟后开始检测更新脚本及规则\e[0m"
+echo -e "\e[1;36m 开始检测更新脚本及规则\e[0m"
 echo
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_auto.sh -O \
       /tmp/ad_auto.sh && chmod 775 /tmp/ad_auto.sh
