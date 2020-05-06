@@ -1,4 +1,5 @@
 #!/bin/sh
+echo
 echo "检测网络环境是否正常"
 echo
 res_code=`curl -I -s --connect-timeout 1 raw.githubusercontent.com -w %{http_code} | tail -n1`
@@ -22,11 +23,11 @@ fi
 echo
 echo -e "\e[1;36m 开始检测更新脚本及规则\e[0m"
 echo
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_auto.sh -O \
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_auto.sh -qO \
       /tmp/ad_auto.sh && chmod 775 /tmp/ad_auto.sh
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh -O \
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh -qO \
       /tmp/ad_update.sh && chmod 775 /tmp/ad_update.sh
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh -O \
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh -qO \
       /tmp/adrules_update.sh && chmod 775 /tmp/adrules_update.sh
 if  ( ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh ); then
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版脚本......3秒后即将开始更新！"
@@ -34,7 +35,7 @@ if  ( ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh ); then
 	sleep 3
 	echo -e "\e[1;36m 开始更新脚本\e[0m"
 	echo
-	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/uninstall.sh -O \
+	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/uninstall.sh -qO \
 		/tmp/uninstall.sh && chmod 775 /tmp/uninstall.sh && sh /tmp/uninstall.sh > /dev/null 2>&1
 	rm -f /tmp/uninstall.sh
 	sh /tmp/ad_auto.sh
