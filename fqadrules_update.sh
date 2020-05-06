@@ -62,3 +62,4 @@ if [ -s "/tmp/hostsrules.conf" ]; then
 	fi	
 fi
 echo -e "\e[1;36m hosts,dnsmasq规则更新成功\e[0m"
+echo
