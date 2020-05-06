@@ -42,7 +42,6 @@ sleep 3
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/modifyConfig.sh -c -q -O \
 	/tmp/modifyConfig.sh  && chmod 775 /tmp/modifyConfig.sh  && sh /tmp/modifyConfig.sh
 rm -f /tmp/modifyConfig.sh
-echo
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/initRulesFile.sh -c -q -O \
 	/tmp/initRulesFile.sh  && chmod 775 /tmp/initRulesFile.sh  && sh /tmp/initRulesFile.sh
 rm -f /tmp/initRulesFile.sh
@@ -54,7 +53,6 @@ echo
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/getHostsAdRules.sh -c -q -O \
 	/tmp/getHostsAdRules.sh  && chmod 775 /tmp/getHostsAdRules.sh  && sh /tmp/getHostsAdRules.sh
 rm -f /tmp/getHostsAdRules.sh
-echo
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/deletWhiteListRules.sh -c -q -O \
 	/tmp/deletWhiteListRules.sh  && chmod 775 /tmp/deletWhiteListRules.sh  && sh /tmp/deletWhiteListRules.sh
 rm -f /tmp/deletWhiteListRules.sh
