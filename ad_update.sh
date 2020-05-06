@@ -65,8 +65,8 @@ elif ( ! cmp -s /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh ); then
 else
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，3秒后即将开始检测规则更新"
 	echo
-	sh /etc/dnsmasq/adrules_update.sh
 	rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh /tmp/adrules_update.sh
+	sh /etc/dnsmasq/adrules_update.sh
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
 	echo
 fi
