@@ -1,5 +1,5 @@
 #!/bin/sh
-if [ -s "/etc/dnsmasq.d/dnsrules.conf" ]; then
+if [ -s "/etc/dnsmasq/resolv.conf" ]; then
 	rm -f /var/lock/opkg.lock
 	rm -rf /etc/dnsmasq
 	rm -rf /etc/dnsmasq.d
