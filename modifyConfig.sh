@@ -82,7 +82,6 @@ if [ "$hasad" ]; then
 			echo "# 请在下面添加广告黑名单
 	# 每行输入要屏蔽广告网址域名不含http://符号，如：www.baidu.com
 	# 支持不完整域名地址，支持通配符" > /etc/dnsmasq/userblacklist
-			echo
 		fi	
 	fi	
 	if [ ! -f /etc/dnsmasq/userwhitelist ]; then
@@ -93,7 +92,6 @@ if [ "$hasad" ]; then
 			else
 			echo "# 请将误杀的网址域名添加到在下面
 	# 每个一行，不带http://，尽量输入准确地址以免删除有效广告规则" > /etc/dnsmasq/userwhitelist
-			echo
 		fi	
 	fi	
 fi
