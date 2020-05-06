@@ -2,15 +2,15 @@
 echo -e "\e[1;36m 开始下载Hosts广告规则\e[0m"
 echo
 echo -e "\e[1;36m 下载yhosts缓存\e[0m"
-wget --no-check-certificate -c -q -t 5 -T 60 -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
+wget --no-check-certificate -c -q -T 60 -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
 echo
 echo -e "\e[1;36m 下载malwaredomainlist规则\e[0m"
-wget --no-check-certificate -c -q -t 5 -T 60 -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt
+wget --no-check-certificate -c -q -T 60 -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt
 sed -i "s/.$//g" /tmp/mallist
 echo
 echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
-wget --no-check-certificate -c -q -t 5 -T 60 -O /tmp/adaway https://adaway.org/hosts.txt
-wget --no-check-certificate -c -q -t 5 -T 60 -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
+wget --no-check-certificate -c -q -T 60 -O /tmp/adaway https://adaway.org/hosts.txt
+wget --no-check-certificate -c -q -T 60 -O /tmp/adaway2 http://winhelp2002.mvps.org/hosts.txt
 sed -i "s/.$//g" /tmp/adaway2
 echo
 echo -e "\e[1;36m adaway规则下载完成，开始合并规则\e[0m"
