@@ -7,7 +7,6 @@ echo
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/getDnsmasqAdRules.sh -c -q -O \
 	/tmp/getDnsmasqAdRules.sh  && chmod 775 /tmp/getDnsmasqAdRules.sh  && sh /tmp/getDnsmasqAdRules.sh
 	rm -f /tmp/getDnsmasqAdRules.sh
-echo
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/getHostsAdRules.sh -c -q -O \
 	/tmp/getHostsAdRules.sh  && chmod 775 /tmp/getHostsAdRules.sh  && sh /tmp/getHostsAdRules.sh
 	rm -f /tmp/getHostsAdRules.sh
@@ -53,4 +52,3 @@ if [ -s "/tmp/hostsrules.conf" ]; then
 	fi	
 fi
 echo -e "\e[1;36m 规则更新完成...\e[0m"
-echo
