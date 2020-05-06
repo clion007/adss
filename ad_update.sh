@@ -35,9 +35,6 @@ if  ( ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh ); then
 	sleep 3
 	echo -e "\e[1;36m 开始更新脚本\e[0m"
 	echo
-	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/uninstall.sh -qO \
-		/tmp/uninstall.sh && chmod 775 /tmp/uninstall.sh && sh /tmp/uninstall.sh > /dev/null 2>&1
-	rm -f /tmp/uninstall.sh
 	sh /tmp/ad_auto.sh
 	rm -rf /tmp/ad_update.sh /tmp/adrules_update.sh
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本及规则更新完成。"
