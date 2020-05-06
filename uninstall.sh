@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ ! -s /tmp/copyright.sh ]; then
-	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -O \
+	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -qO \
 		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh && sh /tmp/copyright.sh
 	else
 		sh /tmp/copyright.sh
