@@ -72,7 +72,7 @@ if [ ! -f /etc/dnsmasq.d/userlist ]; then
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
 fi
 hasad=/tmp/*ad*.sh
-if [ -f $hasad ]; then
+if [ "$hasad" ]; then
 	if [ ! -f /etc/dnsmasq/userblacklist ]; then
 		echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 		echo
