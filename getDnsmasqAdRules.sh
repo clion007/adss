@@ -33,7 +33,7 @@ echo -e "\e[1;36m 删除dnsmasq临时文件\e[0m"
 rm -rf /tmp/vokins.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/antiAd.conf /tmp/blacklist
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
-sed -i '/::1/d' /tmp/dnsAd
+sed -i '/::/d' /tmp/dnsAd
 sed -i '/localhost/d' /tmp/dnsAd
 sed -i '/#/d' /tmp/dnsAd
 echo
