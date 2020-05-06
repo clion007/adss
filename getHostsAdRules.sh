@@ -35,4 +35,3 @@ echo -e "\e[1;36m 统一广告规则格式\e[0m"
 sed -i "s/  / /g" /tmp/hostsAd
 sed -i "s/	/ /g" /tmp/hostsAd
 sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/hostsAd
-echo
