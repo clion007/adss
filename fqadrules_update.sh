@@ -8,14 +8,13 @@ echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
 echo -e "\e[1;36m 下载googlehosts规则\e[0m"
 wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
-sed -i '/::1/d' /tmp/googlehosts
+sed -i '/::/d' /tmp/googlehosts
 sed -i '/localhost/d' /tmp/googlehosts
 sed -i '/#/d' /tmp/googlehosts
 echo
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/getDnsmasqAdRules.sh -c -O \
 	/tmp/getDnsmasqAdRules.sh  && chmod 775 /tmp/getDnsmasqAdRules.sh  && sh /tmp/getDnsmasqAdRules.sh
 rm -f /tmp/getDnsmasqAdRules.sh
-echo
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/getHostsAdRules.sh -c -O \
 	/tmp/getHostsAdRules.sh  && chmod 775 /tmp/getHostsAdRules.sh  && sh /tmp/getHostsAdRules.sh
 rm -f /tmp/getHostsAdRules.sh
@@ -62,4 +61,3 @@ if [ -s "/tmp/hostsrules.conf" ]; then
 	fi	
 fi
 echo -e "\e[1;36m hosts,dnsmasq规则更新成功\e[0m"
-echo
