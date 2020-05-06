@@ -71,7 +71,6 @@ else
 	echo
 	rm -rf /tmp/fqad_auto.sh /tmp/fqad_update.sh /tmp/fqadrules_update.sh
 	sh /etc/dnsmasq/fqadrules_update.sh
-	echo
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。"
 	echo
 fi
