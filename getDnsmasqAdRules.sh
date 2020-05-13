@@ -38,5 +38,5 @@ sed -i '/localhost/d' /tmp/dnsAd
 sed -i '/#/d' /tmp/dnsAd
 echo
 echo -e "\e[1;36m 统一广告规则格式\e[0m"
-sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/dnsAd
+sed -i "s/\/0.0.0.0/\/127.0.0.1/g" /tmp/dnsAd
 sed -i "s/  / /g" /tmp/dnsAd
