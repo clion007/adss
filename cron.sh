@@ -32,7 +32,7 @@ if [ ! $? -eq 0 ]; then
 		reboottime='5'
 	fi	
 	echo -e "\e[1;36m 设置路由器定时重启\e[0m"
-	echo "# 每2周$reboottime点05分重启路由器，每两天检测一次网络是否畅通，如果不通重启路由器
+	echo "# 每两天检测一次网络是否畅通，如果不通重启路由器；每2周$reboottime点05分强制重启路由器
 04 $reboottime */2 * * [ $(date +%w) -eq 0 ] sleep 1m && touch /etc/banner && reboot || ping -c2 -w5 114.114.114.114 || sleep 1m && touch /etc/banner && reboot" >> $CRON_FILE
 	/etc/init.d/cron reload
 	echo
