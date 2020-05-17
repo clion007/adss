@@ -1,7 +1,7 @@
 # 请在下面添加广告黑名单
 # 每行输入要屏蔽广告网址域名即可不含http://符号
 # 支持地址中使用通配符*
-active.admore.com.cn
+.active.admore.com.cn
 mtty-cdn.mtty.com
 static-alias-1.360buyimg.com
 image.yzmg.com
@@ -22,14 +22,12 @@ titan.mgtv.com
 wx2.sinaimg.cn
 a.xiguaimg.com
 k.youku.com
-vali.cp31.ott.cibntv.net
 sv-video.play.ott.video.qq.com
-valipl.cp31.ott.cibntv.net
 ems.youku.com
 g3.ykimg.com
 ykugc.cp31.ott.cibntv.net
-lives.l.qq.com/livemsg
-valipl-dns.cp31.ott.cibntv.net
+.lives.l.qq.com
+.ott.cibntv.net
 splashqqlive.gtimg.com
 .vv.video.qq.com
 
