@@ -8,7 +8,8 @@ while read -r line
 do
 	if [ -s "/tmp/dnsAd" ]; then 
 		sed -i "/$line/d" /tmp/dnsAd
-	elif [ -s "/tmp/hostsAd" ]; then 
+	fi
+	if [ -s "/tmp/hostsAd" ]; then 
 		sed -i "/$line/d" /tmp/hostsAd
 	fi
 done < /tmp/whitelist
