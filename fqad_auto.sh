@@ -1,6 +1,8 @@
 #!/bin/sh
 if [ -s "/etc/dnsmasq/resolv.conf" ]; then
-	rm -f /var/lock/opkg.lock
+	if [ -f /var/lock/opkg.lock ]; then
+		rm -f /var/lock/opkg.lock
+	fi
 	rm -rf /etc/dnsmasq
 	rm -rf /etc/dnsmasq.d
 	if [ -d /etc/dnsmasq.bak ]; then
@@ -24,12 +26,11 @@ fi
 clear
 echo
 if [ ! -s /tmp/copyright.sh ]; then
-	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -qO \
+	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -c -q -O \
 		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh && sh /tmp/copyright.sh
-	else
-		sh /tmp/copyright.sh
+else
+	sh /tmp/copyright.sh
 fi
-rm -f /tmp/copyright.sh
 echo
 echo -e "\e[1;36m 三秒后开始备份安装前路由器相关配置......\e[0m"
 echo
