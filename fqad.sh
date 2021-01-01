@@ -12,7 +12,7 @@ echo
 echo -e "\e[1;36m 三秒后开始备份安装前路由器相关配置......\e[0m"
 echo
 sleep 3
-	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/backup.sh -qO \
+	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/backup.sh -c -q -O \
 		/tmp/backup.sh && chmod 775 /tmp/backup.sh && sh /tmp/backup.sh
 	rm -f /tmp/backup.sh
 echo
@@ -27,7 +27,7 @@ echo
 echo -e "\e[1;36m 下载扶墙和广告规则\e[0m"
 echo
 echo -e "\e[1;36m 下载googlehosts规则\e[0m"
-wget --no-check-certificate -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
+wget --no-check-certificate -c -q -O /tmp/googlehosts https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/dnsmasq.conf
 sed -i '/::1/d' /tmp/googlehosts
 sed -i '/localhost/d' /tmp/googlehosts
 sed -i '/#/d' /tmp/googlehosts
@@ -65,10 +65,10 @@ killall dnsmasq
 echo
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fqad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_update.sh && chmod 755 /etc/dnsmasq/fqad_update.sh
+wget --no-check-certificate -c -q -O /etc/dnsmasq/fqad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_update.sh && chmod 755 /etc/dnsmasq/fqad_update.sh
 echo
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fqadrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqadrules_update.sh && chmod 755 /etc/dnsmasq/fqadrules_update.sh
+wget --no-check-certificate -c -q -O /etc/dnsmasq/fqadrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqadrules_update.sh && chmod 755 /etc/dnsmasq/fqadrules_update.sh
 echo
 sleep 3
 grep "dnsmasq" $CRON_FILE >/dev/null
@@ -100,7 +100,7 @@ if [ ! $? -eq 0 ]; then
 	fi	
 fi
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fqad_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_auto.sh
+wget --no-check-certificate -c -q -O /etc/dnsmasq/fqad_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_auto.sh
 chmod 755 /etc/dnsmasq/fqad_auto.sh
 echo
 echo
