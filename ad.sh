@@ -54,10 +54,10 @@ killall dnsmasq
 echo
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/ad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh && chmod 755 /etc/dnsmasq/ad_update.sh
+wget --no-check-certificate -c -q -O /etc/dnsmasq/ad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh && chmod 755 /etc/dnsmasq/ad_update.sh
 echo
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/adrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
+wget --no-check-certificate -c -q -O /etc/dnsmasq/adrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
 echo
 sleep 3
 grep "dnsmasq" $CRON_FILE >/dev/null
@@ -92,7 +92,7 @@ if [ ! $? -eq 0 ]; then
 	fi	
 fi
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/ad_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_auto.sh
+wget --no-check-certificate -c -q -O /etc/dnsmasq/ad_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_auto.sh
 chmod 755 /etc/dnsmasq/ad_auto.sh
 echo
 echo
