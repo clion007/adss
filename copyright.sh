@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "Auto DNS Science Internet V3.0.0"
+echo "Auto DNS Science Internet V3.1.0"
 echo "Copyright (c) 2014-`date +'%Y'`,by clion007"
 echo
 echo "本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
