@@ -1,29 +1,5 @@
 #!/bin/sh
 CRON_FILE=/etc/crontabs/$USER
-if [ -s "/etc/dnsmasq/resolv.conf" ]; then
-	if [ -f /var/lock/opkg.lock ]; then
-		rm -f /var/lock/opkg.lock
-	fi
-	rm -rf /etc/dnsmasq
-	rm -rf /etc/dnsmasq.d
-	if [ -d /etc/dnsmasq.bak ]; then
-		if [ -s /etc/dnsmasq/originalState ]; then
-			mv -f /etc/dnsmasq.bak /etc/dnsmasq
-		else
-			rm -rf /etc/dnsmasq.bak
-		fi
-	fi	
-	if [ -d /etc/dnsmasq.d.bak ]; then
-		if [ -s /etc/dnsmasq.d/originalState ]; then
-			mv -f /etc/dnsmasq.d.bak /etc/dnsmasq.d
-		else
-			rm -rf /etc/dnsmasq.d.bak
-		fi
-	fi
-	if [ -f /etc/dnsmasq.conf.bak ]; then
-		mv -f /etc/dnsmasq.conf.bak /etc/dnsmasq.conf
-	fi	
-fi
 clear
 echo
 if [ ! -s /tmp/copyright.sh ]; then
