@@ -1,4 +1,4 @@
-# 超强大的dnsmasq及hosts扶墙去广告全自动脚本（ADSI）
+# 超强大的dnsmasq防劫持去广告全自动脚本（ADSI）
 
 1、什么是ADSI？
 
