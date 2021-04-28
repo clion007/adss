@@ -1,18 +1,4 @@
 #!/bin/sh
-echo
-echo "检测网络环境是否正常"
-echo
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -c -q -O \
-	/tmp/copyright.sh && chmod 775 /tmp/copyright.sh
-if [ ! -s "/tmp/copyright.sh" ]; then
-	echo "检测到网络异常，放弃本次更新"
-	echo
-	if [ ! -f "/tmp/copyright.sh" ]; then
-		rm -f /tmp/copyright.sh
-	fi
-	exit 1
-fi
-clear
 if [ ! -s /tmp/copyright.sh ]; then
 	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -qO \
 		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh
