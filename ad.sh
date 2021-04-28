@@ -94,6 +94,9 @@ fi
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 wget --no-check-certificate -c -q -O /etc/dnsmasq/ad_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_auto.sh
 chmod 755 /etc/dnsmasq/ad_auto.sh
+if [ ! -f "/tmp/copyright.sh" ]; then
+	rm -f /tmp/copyright.sh
+fi
 echo
 echo
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
