@@ -66,6 +66,9 @@ echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
 if [ -s /tmp/ad_auto.sh ]; then
 	mv -f /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh
 fi
+if [ ! -f "/tmp/copyright.sh" ]; then
+	rm -f /tmp/copyright.sh
+fi
 echo
 echo
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
