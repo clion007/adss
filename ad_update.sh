@@ -2,10 +2,14 @@
 echo
 echo "检测网络环境是否正常"
 echo
-res_code=`curl -I -s --connect-timeout 1 raw.githubusercontent.com -w %{http_code} | tail -n1`
-if [ $res_code != 200 -a $res_code != 301 ]; then
+wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -c -q -O \
+	/tmp/copyright.sh && chmod 775 /tmp/copyright.sh
+if [ ! -s "/tmp/copyright.sh" ]; then
 	echo "检测到网络异常，放弃本次更新"
 	echo
+	if [ ! -f "/tmp/copyright.sh" ]; then
+		rm -f /tmp/copyright.sh
+	fi
 	exit 1
 fi
 clear
