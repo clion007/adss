@@ -27,7 +27,6 @@ if [ -s "/tmp/ad_auto.sh" -a -s "/tmp/ad_update.sh" -a -s "/tmp/adrules_update.s
 		echo
 		sleep 3
 		echo -e "\e[1;36m 开始更新脚本\e[0m"
-		echo
 		sh /tmp/ad_auto.sh
 		rm -rf /tmp/ad_update.sh /tmp/adrules_update.sh
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本及规则更新完成。"
@@ -37,7 +36,6 @@ if [ -s "/tmp/ad_auto.sh" -a -s "/tmp/ad_update.sh" -a -s "/tmp/adrules_update.s
 		echo
 		sleep 3
 		echo -e "\e[1;36m 开始更新升级脚本\e[0m"
-		echo
 		mv -f /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh
 		sh /etc/dnsmasq/ad_update.sh
 		rm -rf /tmp/ad_auto.sh /tmp/adrules_update.sh
@@ -48,7 +46,6 @@ if [ -s "/tmp/ad_auto.sh" -a -s "/tmp/ad_update.sh" -a -s "/tmp/adrules_update.s
 		echo
 		sleep 3
 		echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
-		echo
 		mv -f /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh
 		rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh
 		sh /etc/dnsmasq/adrules_update.sh
