@@ -17,20 +17,20 @@ wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/m
 	rm -f /tmp/deletWhiteListRules.sh
 echo
 echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
+echo
 sort /tmp/dnsAd | uniq >> /tmp/dnsrules.conf
 sort /tmp/hostsAd | uniq >> /tmp/hostsrules.conf
-rm -rf /tmp/dnsAd /tmp/hostsAd
 echo "
 # Modified DNS end" >> /tmp/dnsrules.conf
 echo "
 # 修饰hosts结束" >> /tmp/hostsrules.conf
-echo
+rm -rf /tmp/dnsAd /tmp/hostsAd
 sleep 3
 if [ -s "/tmp/dnsrules.conf" ]; then
 	if ( ! cmp -s /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到dnsmasq规则有更新......生成新dnsmasq规则！"
-		mv -f /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf
 		echo
+		mv -f /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: dnsmasq规则更新完成，应用新规则。"
 		echo
@@ -42,8 +42,8 @@ fi
 if [ -s "/tmp/hostsrules.conf" ]; then
 	if ( ! cmp -s /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到hosts规则有更新......生成新hosts规则！"
-		mv -f /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf
 		echo
+		mv -f /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf
 		/etc/init.d/dnsmasq restart > /dev/null 2>&1
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: hosts规则转换完成，应用新规则。"
 		echo
