@@ -3,9 +3,16 @@ clear
 echo
 if [ ! -s /tmp/copyright.sh ]; then
 	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -c -q -O \
-		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh && sh /tmp/copyright.sh
-else
+		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh
+fi
+if [ -s "/tmp/copyright.sh" ]; then
 	sh /tmp/copyright.sh
+else
+	echo
+	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃本次更新。\e[0m"
+	echo
+	rm -f /tmp/copyright.sh
+	exit 1
 fi
 echo
 echo -e "\e[1;36m 三秒后开始备份安装前路由器相关配置......\e[0m"
@@ -36,28 +43,28 @@ wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/m
 rm -f /tmp/deletWhiteListRules.sh
 echo
 echo -e "\e[1;36m 删除dnsmasq,hosts重复规则及临时文件\e[0m"
+echo
+sort /tmp/dnsAd | uniq >> /tmp/dnsrules.conf
+sort /tmp/hostsAd | uniq >> /tmp/hostsrules.conf
+echo "
+# Modified DNS end" >> /tmp/dnsrules.conf
+echo "
+# 修饰hosts结束" >> /tmp/hostsrules.conf
 mv /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf
 mv /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf
-sort /tmp/dnsAd | uniq >> /etc/dnsmasq.d/dnsrules.conf
-sort /tmp/hostsAd | uniq >> /etc/dnsmasq/hostsrules.conf
 rm -rf /tmp/dnsAd /tmp/hostsAd
-echo "
-# Modified DNS end" >> /etc/dnsmasq.d/dnsrules.conf
-echo "
-# 修饰hosts结束" >> /etc/dnsmasq/hostsrules.conf
-echo
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
+echo
 killall dnsmasq
 	/etc/init.d/dnsmasq restart > /dev/null 2>&1
-echo
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
+echo
 wget --no-check-certificate -c -q -O /etc/dnsmasq/ad_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/ad_update.sh && chmod 755 /etc/dnsmasq/ad_update.sh
-echo
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-wget --no-check-certificate -c -q -O /etc/dnsmasq/adrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
 echo
+wget --no-check-certificate -c -q -O /etc/dnsmasq/adrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
 sleep 3
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/cron.sh -c -q -O \
 	/tmp/cron.sh && chmod 775 /tmp/cron.sh && sh /tmp/cron.sh
@@ -71,12 +78,12 @@ if [ ! -f "/tmp/copyright.sh" ]; then
 fi
 echo
 echo
-echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo "+                                                          +"
-echo "+      Dnsmasq shell script installation is complete       +"
-echo "+                                                          +"
-echo "+                     Time:`date +'%Y-%m-%d'`                      +"
-echo "+                                                          +"
-echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "+                                                           +"
+echo "+       Dnsmasq shell script installation is complete       +"
+echo "+                                                           +"
+echo "+                      Time:`date +'%Y-%m-%d'`                      +"
+echo "+                                                           +"
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo
