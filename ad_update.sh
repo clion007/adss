@@ -20,8 +20,18 @@ wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/m
       /tmp/ad_update.sh && chmod 775 /tmp/ad_update.sh
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh -qO \
       /tmp/adrules_update.sh && chmod 775 /tmp/adrules_update.sh
-if [ ( ! -s "/tmp/ad_auto.sh" ) -o ( ! -s "/tmp/ad_update.sh" ) -o ( ! -s "/tmp/adrules_update.sh" ) ]; then
-	echo " `date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃本次更新。"
+if [ ! -s "/tmp/ad_auto.sh" ]; then
+	echo " `date +'%Y-%m-%d %H:%M:%S'`: 自动脚本文件下载异常，放弃本次更新。"
+	echo
+	rm -f /tmp/copyright.sh /tmp/ad_auto.sh /tmp/ad_update.sh /tmp/adrules_update.sh
+	exit 1;
+elif [ ! -s "/tmp/ad_update.sh" ]; then
+	echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本文件下载异常，放弃本次更新。"
+	echo
+	rm -f /tmp/copyright.sh /tmp/ad_auto.sh /tmp/ad_update.sh /tmp/adrules_update.sh
+	exit 1;
+elif [ ! -s "/tmp/adrules_update.sh" ]; then
+	echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则更新脚本文件下载异常，放弃本次更新。"
 	echo
 	rm -f /tmp/copyright.sh /tmp/ad_auto.sh /tmp/ad_update.sh /tmp/adrules_update.sh
 	exit 1;
