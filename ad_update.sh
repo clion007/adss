@@ -19,7 +19,12 @@ wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/m
       /tmp/ad_update.sh && chmod 775 /tmp/ad_update.sh
 wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/adrules_update.sh -qO \
       /tmp/adrules_update.sh && chmod 775 /tmp/adrules_update.sh
-if  ( -s "/tmp/ad_auto.sh" && ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh ); then
+if [ -s "/tmp/ad_auto.sh" || -s "/tmp/ad_update.sh" || -s "/tmp/adrules_update.sh" ]; then
+	echo " `date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃本次更新。"
+	echo
+	exit 1;
+fi
+if ( ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh ); then
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版脚本......3秒后即将开始更新！"
 	echo
 	sleep 3
@@ -29,8 +34,7 @@ if  ( -s "/tmp/ad_auto.sh" && ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh )
 	rm -rf /tmp/ad_update.sh /tmp/adrules_update.sh
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本及规则更新完成。"
 	echo
-	exit 0
-elif( -s "/tmp/ad_update.sh" && ! cmp -s /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh ); then
+elif ( ! cmp -s /tmp/ad_update.sh /etc/dnsmasq/ad_update.sh ); then
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......3秒后即将开始更新！"
 	echo
 	sleep 3
@@ -41,7 +45,7 @@ elif( -s "/tmp/ad_update.sh" && ! cmp -s /tmp/ad_update.sh /etc/dnsmasq/ad_updat
 	rm -rf /tmp/ad_auto.sh /tmp/adrules_update.sh
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本更新完成。"
 	echo
-elif ( -s "/tmp/adrules_update.sh" && ! cmp -s /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh ); then
+elif ( ! cmp -s /tmp/adrules_update.sh /etc/dnsmasq/adrules_update.sh ); then
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......3秒后即将开始更新！"
 	echo
 	sleep 3
@@ -53,7 +57,7 @@ elif ( -s "/tmp/adrules_update.sh" && ! cmp -s /tmp/adrules_update.sh /etc/dnsma
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 	echo
 else
-	echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，3秒后即将开始检测规则更新"
+	echo " `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，开始检测规则更新"
 	echo
 	rm -rf /tmp/ad_auto.sh /tmp/ad_update.sh /tmp/adrules_update.sh
 	sh /etc/dnsmasq/adrules_update.sh
