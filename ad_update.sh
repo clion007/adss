@@ -8,6 +8,7 @@ if [ -s "/tmp/copyright.sh" ]; then
 else
 	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃本次更新。\e[0m"
 	echo
+	rm -f /tmp/copyright.sh
 	exit 1
 fi
 echo
@@ -22,6 +23,7 @@ wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/m
 if [ -s "/tmp/ad_auto.sh" || -s "/tmp/ad_update.sh" || -s "/tmp/adrules_update.sh" ]; then
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃本次更新。"
 	echo
+	rm -f /tmp/ad_auto.sh /tmp/ad_update.sh /tmp/adrules_update.sh
 	exit 1;
 fi
 if ( ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh ); then
