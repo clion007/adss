@@ -12,7 +12,7 @@ echo
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                           +"
 echo "+        Install ADSI for OpnWrt/LEDE/PandoraBox etc        +"
-echo "+                                                          +"
+echo "+                                                           +"
 echo "+                      Time:`date +'%Y-%m-%d'`                      +"
 echo "+                                                           +"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
