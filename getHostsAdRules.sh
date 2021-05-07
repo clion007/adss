@@ -2,7 +2,7 @@
 echo -e "\e[1;36m 开始下载Hosts广告规则\e[0m"
 echo
 echo -e "\e[1;36m 下载yhosts缓存\e[0m"
-wget --no-check-certificate -c -q -T 60 -O /tmp/yhosts.conf https://raw.githubusercontent.com/vokins/yhosts/master/hosts.txt
+wget --no-check-certificate -c -q -T 60 -O /tmp/yhosts.conf https://cdn.jsdelivr.net/gh/VeleSila/yhosts/hosts.txt
 echo
 echo -e "\e[1;36m 下载malwaredomainlist规则\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/mallist http://www.malwaredomainlist.com/hostslist/hosts.txt
