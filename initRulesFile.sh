@@ -8,12 +8,12 @@ echo "
 ##                                                                ##
 ####################################################################
 
-# Localhost (DO NOT REMOVE) Start
+# Local DNS (DO NOT REMOVE) Start
 address=/localhost/127.0.0.1
 address=/localhost/::1
 address=/ip6-localhost/::1
 address=/ip6-loopback/::1
-# Localhost (DO NOT REMOVE) End
+# Local DNS (DO NOT REMOVE) End
 
 # Modified DNS start" > /tmp/dnsrules.conf
 echo
