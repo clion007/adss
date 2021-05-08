@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ ! -s /tmp/copyright.sh ]; then
-	wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/copyright.sh -qO \
+	wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/copyright.sh -qO \
 		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh
 fi
 if [ -s "/tmp/copyright.sh" ]; then
@@ -15,11 +15,11 @@ fi
 echo
 echo -e "\e[1;36m 开始检测更新脚本及规则\e[0m"
 echo
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/ad_auto.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/ad_auto.sh -qO \
       /tmp/ad_auto.sh && chmod 775 /tmp/ad_auto.sh
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/ad_update.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/ad_update.sh -qO \
       /tmp/ad_update.sh && chmod 775 /tmp/ad_update.sh
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/adrules_update.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/adrules_update.sh -qO \
       /tmp/adrules_update.sh && chmod 775 /tmp/adrules_update.sh
 if [ -s "/tmp/ad_auto.sh" -a -s "/tmp/ad_update.sh" -a -s "/tmp/adrules_update.sh" ]; then
 	if ( ! cmp -s /tmp/ad_auto.sh /etc/dnsmasq/ad_auto.sh ); then
