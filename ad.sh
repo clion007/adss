@@ -3,7 +3,7 @@ CRON_FILE=/etc/crontabs/$USER
 clear
 echo
 if [ ! -s /tmp/copyright.sh ]; then
-	wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/copyright.sh -qO \
+	wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/copyright.sh -qO \
 		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh && sh /tmp/copyright.sh
 else
 	sh /tmp/copyright.sh
@@ -12,27 +12,27 @@ echo
 echo -e "\e[1;36m 三秒后开始备份安装前路由器相关配置......\e[0m"
 echo
 sleep 3
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/backup.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/backup.sh -qO \
 	/tmp/backup.sh && chmod 775 /tmp/backup.sh && sh /tmp/backup.sh
 rm -f /tmp/backup.sh
 echo
 sleep 3
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/modifyConfig.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/modifyConfig.sh -qO \
 	/tmp/modifyConfig.sh  && chmod 775 /tmp/modifyConfig.sh  && sh /tmp/modifyConfig.sh
 rm -f /tmp/modifyConfig.sh
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/initRulesFile.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/initRulesFile.sh -qO \
 	/tmp/initRulesFile.sh  && chmod 775 /tmp/initRulesFile.sh  && sh /tmp/initRulesFile.sh
 rm -f /tmp/initRulesFile.sh
 echo
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/getDnsmasqAdRules.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/getDnsmasqAdRules.sh -qO \
 	/tmp/getDnsmasqAdRules.sh  && chmod 775 /tmp/getDnsmasqAdRules.sh  && sh /tmp/getDnsmasqAdRules.sh
 rm -f /tmp/getDnsmasqAdRules.sh
 echo
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/getHostsAdRules.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/getHostsAdRules.sh -qO \
 	/tmp/getHostsAdRules.sh  && chmod 775 /tmp/getHostsAdRules.sh  && sh /tmp/getHostsAdRules.sh
 rm -f /tmp/getHostsAdRules.sh
 echo
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/deletWhiteListRules.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/deletWhiteListRules.sh -qO \
 	/tmp/deletWhiteListRules.sh  && chmod 775 /tmp/deletWhiteListRules.sh  && sh /tmp/deletWhiteListRules.sh
 rm -f /tmp/deletWhiteListRules.sh
 echo
@@ -54,11 +54,11 @@ killall dnsmasq
 echo
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/ad_update.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/ad_update.sh -qO \
 	/etc/dnsmasq/ad_update.sh && chmod 755 /etc/dnsmasq/ad_update.sh
 echo
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/adrules_update.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/adrules_update.sh -qO \
 	/etc/dnsmasq/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
 echo
 sleep 3
@@ -94,7 +94,7 @@ if [ ! $? -eq 0 ]; then
 	fi	
 fi
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
-wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/ad_auto.sh -qO \
+wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/ad_auto.sh -qO \
 	/etc/dnsmasq/ad_auto.sh && chmod 755 /etc/dnsmasq/ad_auto.sh
 if [ -f "/tmp/copyright.sh" ]; then
 	rm -f /tmp/copyright.sh
