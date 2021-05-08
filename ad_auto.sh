@@ -61,10 +61,10 @@ killall dnsmasq
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
 echo
-wget --no-check-certificate -c -q -O /etc/dnsmasq/ad_update.sh https://gitee.com/clion007/dnsmasq/raw/master/ad_update.sh && chmod 755 /etc/dnsmasq/ad_update.sh
+wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/ad_update.sh -c -q -O /etc/dnsmasq/ad_update.sh && chmod 755 /etc/dnsmasq/ad_update.sh
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
 echo
-wget --no-check-certificate -c -q -O /etc/dnsmasq/adrules_update.sh https://gitee.com/clion007/dnsmasq/raw/master/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
+wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/adrules_update.sh -c -q -O /etc/dnsmasq/adrules_update.sh && chmod 755 /etc/dnsmasq/adrules_update.sh
 sleep 3
 wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/cron.sh -c -q -O \
 	/tmp/cron.sh && chmod 775 /tmp/cron.sh && sh /tmp/cron.sh
