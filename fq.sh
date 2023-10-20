@@ -204,10 +204,10 @@ killall dnsmasq
 echo
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fq_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_update.sh && chmod 755 /etc/dnsmasq/fq_update.sh
+wget --no-check-certificate -q -O /etc/dnsmasq/fq_update.sh https://gitcode.net/clion007/dnsmasq/raw/master/fq_update.sh && chmod 755 /etc/dnsmasq/fq_update.sh
 echo
 echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fqrules_update.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fqrules_update.sh && chmod 755 /etc/dnsmasq/fqrules_update.sh
+wget --no-check-certificate -q -O /etc/dnsmasq/fqrules_update.sh https://gitcode.net/clion007/dnsmasq/raw/master/fqrules_update.sh && chmod 755 /etc/dnsmasq/fqrules_update.sh
 echo
 sleep 1
 grep "dnsmasq" $CRON_FILE >/dev/null
@@ -250,7 +250,7 @@ if [ ! $? -eq 0 ]; then
 	fi	
 fi
 echo -e "\e[1;36m 创建脚本更新检测副本\e[0m"
-wget --no-check-certificate -q -O /etc/dnsmasq/fq_auto.sh https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_auto.sh
+wget --no-check-certificate -q -O /etc/dnsmasq/fq_auto.sh https://gitcode.net/clion007/dnsmasq/raw/master/fq_auto.sh
 chmod 755 /etc/dnsmasq/fq_auto.sh
 echo
 clear
