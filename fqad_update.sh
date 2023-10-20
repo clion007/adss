@@ -10,7 +10,7 @@ fi
 clear
 echo
 if [ ! -s /tmp/copyright.sh ]; then
-	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/copyright.sh -qO \
+	wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/copyright.sh -qO \
 		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh
 fi
 if [ -s "/tmp/copyright.sh" ]; then
@@ -24,11 +24,11 @@ echo
 echo -e "\e[1;36m 1秒钟后开始检测更新脚本及规则\e[0m"
 echo
 sleep 1
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_auto.sh -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/fqad_auto.sh -O \
       /tmp/fqad_auto.sh && chmod 775 /tmp/fqad_auto.sh
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fqad_update.sh -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/fqad_update.sh -O \
       /tmp/fqad_update.sh && chmod 775 /tmp/fqad_update.sh
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fqadrules_update.sh -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/fqadrules_update.sh -O \
       /tmp/fqadrules_update.sh && chmod 775 /tmp/fqadrules_update.sh
 if ( ! cmp -s /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh ); then
 	echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版脚本......3秒后即将开始更新！"
@@ -36,7 +36,7 @@ if ( ! cmp -s /tmp/fqad_auto.sh /etc/dnsmasq/fqad_auto.sh ); then
 	sleep 3
 	echo -e "\e[1;36m 开始更新脚本\e[0m"
 	echo
-	wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/uninstall.sh -O \
+	wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/uninstall.sh -O \
 		/tmp/uninstall.sh && chmod 775 /tmp/uninstall.sh && sh /tmp/uninstall.sh > /dev/null 2>&1
 	rm -f /tmp/uninstall.sh
 	sh /tmp/fqad_auto.sh
