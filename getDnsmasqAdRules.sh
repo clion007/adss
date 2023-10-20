@@ -1,8 +1,8 @@
 #!/bin/sh
 echo -e "\e[1;36m 开始下载Dnsmasq广告规则\e[0m"
 echo
-echo -e "\e[1;36m 下载vokins广告规则\e[0m"
-wget --no-check-certificate -c -q -T 60 -O /tmp/vokins.conf https://raw.gitmirror.com/vokins/yhosts/master/dnsmasq/union.conf
+echo -e "\e[1;36m 下载anti-AD广告规则\e[0m"
+wget --no-check-certificate -c -q -T 60 -O /tmp/antiAD.conf 'https://raw.gitmirror.com/privacy-protection-tools/anti-AD/master/adblock-for-dnsmasq.conf'
 echo
 echo -e "\e[1;36m 下载yoyoAd广告规则\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/yoyoAd.conf https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq\&showintro=0\&mimetype=plaintext
@@ -22,10 +22,10 @@ echo -e "\e[1;36m 添加用户定义的解析规则\e[0m"
 cat /etc/dnsmasq.d/userlist > /tmp/dnsAd
 echo
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
-cat /tmp/vokins.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/blacklist >> /tmp/dnsAd
+cat /tmp/antiAD.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/blacklist >> /tmp/dnsAd
 echo
 echo -e "\e[1;36m 删除dnsmasq临时文件\e[0m"
-rm -rf /tmp/vokins.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/blacklist
+rm -rf /tmp/antiAD.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/blacklist
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/::/d' /tmp/dnsAd
