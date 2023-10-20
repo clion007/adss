@@ -13,7 +13,7 @@ if [ ! $? -eq 0 ]; then
 	echo "
 
 # 添加监听地址（其中$lanip为你的lan网关ip）
-listen-address=$lanip 127.0.0.1
+listen-address=$lanip127.0.0.1
 
 # 并发查询所有上游DNS服务器
 all-servers 
@@ -47,7 +47,7 @@ if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 nameserver 127.0.0.1
 
 # 电信服务商当地DNS查询服务器" > /etc/dnsmasq/resolv
-	cp /tmp/resolv.conf.auto /tmp/resolv
+	cp /tmp/resolv.conf.d/resolv.conf.auto /tmp/resolv
 	sed -i '/#/d' /tmp/resolv
 	cat /etc/dnsmasq/resolv /tmp/resolv > /etc/dnsmasq/resolv.conf
 	rm -f /etc/dnsmasq/resolv /tmp/resolv
