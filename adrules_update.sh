@@ -1,18 +1,18 @@
 #!/bin/sh
 sleep 3
-wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/initRulesFile.sh -c -q -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/initRulesFile.sh -c -q -O \
 	/tmp/initRulesFile.sh  && chmod 775 /tmp/initRulesFile.sh  && sh /tmp/initRulesFile.sh
 	rm -f /tmp/initRulesFile.sh
 echo
-wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/getDnsmasqAdRules.sh -c -q -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/getDnsmasqAdRules.sh -c -q -O \
 	/tmp/getDnsmasqAdRules.sh  && chmod 775 /tmp/getDnsmasqAdRules.sh  && sh /tmp/getDnsmasqAdRules.sh
 	rm -f /tmp/getDnsmasqAdRules.sh
 echo
-wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/getHostsAdRules.sh -c -q -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/getHostsAdRules.sh -c -q -O \
 	/tmp/getHostsAdRules.sh  && chmod 775 /tmp/getHostsAdRules.sh  && sh /tmp/getHostsAdRules.sh
 	rm -f /tmp/getHostsAdRules.sh
 echo
-wget --no-check-certificate https://clion.coding.net/p/my/d/dnsmasq/git/raw/master/deletWhiteListRules.sh -c -q -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/deletWhiteListRules.sh -c -q -O \
 	/tmp/deletWhiteListRules.sh  && chmod 775 /tmp/deletWhiteListRules.sh  && sh /tmp/deletWhiteListRules.sh
 	rm -f /tmp/deletWhiteListRules.sh
 echo
