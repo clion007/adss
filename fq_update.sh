@@ -12,11 +12,11 @@ echo
 #fi
 echo -e "\e[1;36m 1秒钟后开始检测更新脚本及规则\e[0m"
 echo
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_auto.sh -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/fq_auto.sh -O \
       /tmp/fq_auto.sh && chmod 775 /tmp/fq_auto.sh
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fq_update.sh -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/fq_update.sh -O \
       /tmp/fq_update.sh && chmod 775 /tmp/fq_update.sh
-wget --no-check-certificate https://raw.githubusercontent.com/clion007/dnsmasq/master/fqrules_update.sh -O \
+wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/fqrules_update.sh -O \
       /tmp/fqrules_update.sh && chmod 775 /tmp/fqrules_update.sh
 if [ -s "/tmp/fq_auto.sh" ]; then
 	if ( ! cmp -s /tmp/fq_auto.sh /etc/dnsmasq/fq_auto.sh ); then
