@@ -12,7 +12,7 @@ wget --no-check-certificate -c -q -T 60 -O /tmp/notrackAdDomain.conf https://raw
 echo
 sleep 3
 echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
-wget --no-check-certificate -c -q -T 60 -O /tmp/adblacklist https://raw.githubusercontent.com/clion007/dnsmasq/master/adblacklist
+wget --no-check-certificate -c -q -T 60 -O /tmp/adblacklist https://gitcode.net/clion007/dnsmasq/raw/master/adblacklist
 sort /etc/dnsmasq/userblacklist /tmp/adblacklist | uniq > /tmp/blacklist
 rm -rf /tmp/adblacklist
 sed -i "/#/d" /tmp/blacklist
