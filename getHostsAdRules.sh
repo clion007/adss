@@ -20,10 +20,10 @@ echo -e "\e[1;36m adaway规则合并完成，清除生成的规则缓存文件\e
 rm -rf /tmp/adaway /tmp/adaway2
 echo
 echo -e "\e[1;36m 合并hosts缓存\e[0m"
-cat /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist > /tmp/hostsAd
+cat /tmp/someonewhocares.conf /tmp/adaway.conf /tmp/mallist > /tmp/hostsAd
 echo
 echo -e "\e[1;36m 删除hosts临时文件\e[0m"
-rm -rf /tmp/yhosts.conf /tmp/adaway.conf /tmp/mallist
+rm -rf /tmp/someonewhocares.conf /tmp/adaway.conf /tmp/mallist
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/#/d' /tmp/hostsAd
