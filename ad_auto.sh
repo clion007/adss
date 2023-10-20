@@ -9,7 +9,7 @@ if [ -s "/tmp/copyright.sh" ]; then
 	sh /tmp/copyright.sh
 else
 	echo
-	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃本次更新。\e[0m"
+	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃安装。\e[0m"
 	echo
 	rm -f /tmp/copyright.sh
 	exit 1
