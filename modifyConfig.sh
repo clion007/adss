@@ -12,21 +12,21 @@ if [ ! $? -eq 0 ]; then
 	echo -e "\e[1;36m 路由器网关:$lanip开始配置dnsmasq\e[0m"
 	echo "
 
+# 设定域名解析缓存池大小
+cache-size=1000000
+dns-forward-max=1000000
+
 # 添加监听地址（其中$lanip为你的lan网关ip）
 listen-address=$lanip127.0.0.1
-
-# 并发查询所有上游DNS服务器
-all-servers 
 
 # 指定上游DNS服务器配置文件路径
 resolv-file=/etc/dnsmasq/resolv.conf
 
-# IP反查域名
-bogus-priv
+# 并发查询所有上游DNS服务器
+all-servers 
 
-# 设定域名解析缓存池大小
-cache-size=1000000
-dns-forward-max=1000000
+# 添加配置文件目录
+conf-dir=/etc/dnsmasq.d
 
 # 添加DNS解析文件
 conf-file=/etc/dnsmasq.d/dnsrules.conf
