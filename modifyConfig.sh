@@ -45,8 +45,7 @@ if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 nameserver 127.0.0.1
 
 # 电信服务商当地DNS查询服务器" > /etc/dnsmasq/resolv
-	cp /tmp/resolv.conf.ppp /tmp/resolv
-	sed -i '/#/d' /tmp/resolv
+	find /tmp/ -name "resolv.conf.auto" -type f -exec cp {} /tmp/resolv \;
 	cat /etc/dnsmasq/resolv /tmp/resolv > /etc/dnsmasq/resolv.conf
 	rm -f /etc/dnsmasq/resolv /tmp/resolv
 	echo "
