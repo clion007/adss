@@ -6,7 +6,6 @@ if [ ! $? -eq 0 ]; then
 	echo
 	lanip=`ifconfig|grep Bcast|awk '{print $2}'|tr -d "addr:"|sed 's/,/\n/g'|awk '{{printf"%s,",$0}}'`
 	lanipv6=`ifconfig -a|grep ::1/64|awk '{print $3}'|tr -d "/64"`
-	echo -e "\e[1;36m 路由器网关:$lanip开始配置dnsmasq\e[0m"
 	echo "
 
 # 设定域名解析缓存池大小
@@ -33,7 +32,6 @@ conf-dir=/etc/dnsmasq.d,*.conf
 # 添加额外hosts规则
 addn-hosts=/etc/dnsmasq/hostsrules.conf
 " >> /etc/dnsmasq.conf
-	echo
 fi
 if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 	echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
