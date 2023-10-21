@@ -28,10 +28,7 @@ all-servers
 # 添加配置文件目录
 conf-dir=/etc/dnsmasq.d
 
-# 添加DNS解析文件
-conf-file=/etc/dnsmasq.d/dnsrules.conf
-
-# 添加额外hosts规则路径
+# 添加额外hosts规则
 addn-hosts=/etc/dnsmasq/hostsrules.conf
 " >> /etc/dnsmasq.conf
 	echo
