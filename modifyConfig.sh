@@ -26,7 +26,7 @@ resolv-file=/etc/dnsmasq/resolv.conf
 all-servers 
 
 # 添加解析文件目录
-conf-dir=/etc/dnsmasq.d
+conf-dir=/etc/dnsmasq.d,*.conf
 
 # 添加额外hosts规则
 addn-hosts=/etc/dnsmasq/hostsrules.conf
