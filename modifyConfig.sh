@@ -7,7 +7,7 @@ if [ ! $? -eq 0 ]; then
 	if [ -f /etc/dnsmasq/lanip ]; then
 		lanip=`cat /etc/dnsmasq/lanip`
 		else
-		lanip=`ifconfig |grep Bcast|awk '{print $2}'|tr -d "addr:"|sed 's/,/\n/g'|awk '{{printf"%s,",$0}}'`
+		lanip=`ifconfig|grep Bcast|awk '{print $2}'|tr -d "addr:"|sed 's/,/\n/g'|awk '{{printf"%s,",$0}}'`
 	fi
 	echo -e "\e[1;36m 路由器网关:$lanip开始配置dnsmasq\e[0m"
 	echo "
