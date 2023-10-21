@@ -25,7 +25,7 @@ resolv-file=/etc/dnsmasq/resolv.conf
 # 并发查询所有上游DNS服务器
 all-servers 
 
-# 添加配置文件目录
+# 添加解析文件目录
 conf-dir=/etc/dnsmasq.d
 
 # 添加额外hosts规则
