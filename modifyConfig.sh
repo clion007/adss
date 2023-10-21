@@ -4,11 +4,8 @@ grep "hostsrules" /etc/dnsmasq.conf >/dev/null
 if [ ! $? -eq 0 ]; then
 	echo -e "\e[1;36m 配置dnsmasq\e[0m"
 	echo
-	if [ -f /etc/dnsmasq/lanip ]; then
-		lanip=`cat /etc/dnsmasq/lanip`
-		else
-		lanip=`ifconfig|grep Bcast|awk '{print $2}'|tr -d "addr:"|sed 's/,/\n/g'|awk '{{printf"%s,",$0}}'`
-	fi
+	lanip=`ifconfig|grep Bcast|awk '{print $2}'|tr -d "addr:"|sed 's/,/\n/g'|awk '{{printf"%s,",$0}}'`
+	lanipv6=`ifconfig -a|grep ::1/64|awk '{print $3}'|tr -d "/64"`
 	echo -e "\e[1;36m 路由器网关:$lanip开始配置dnsmasq\e[0m"
 	echo "
 
@@ -16,8 +13,13 @@ if [ ! $? -eq 0 ]; then
 cache-size=1000000
 dns-forward-max=1000000
 
-# 添加监听地址（其中$lanip为你的lan网关ip）
-listen-address=$lanip127.0.0.1,::1
+# 添加监听地址"
+	if [$lanipv6]; then
+		echo "listen-address=$lanip127.0.0.1,::1,$lanipv6"
+	else
+		echo "listen-address=$lanip127.0.0.1"
+	fi
+	echo "
 
 # 指定上游DNS服务器配置文件路径
 resolv-file=/etc/dnsmasq/resolv.conf
