@@ -17,7 +17,7 @@ cache-size=1000000
 dns-forward-max=1000000
 
 # 添加监听地址（其中$lanip为你的lan网关ip）
-listen-address=$lanip127.0.0.1
+listen-address=$lanip127.0.0.1,::1
 
 # 指定上游DNS服务器配置文件路径
 resolv-file=/etc/dnsmasq/resolv.conf
@@ -41,10 +41,7 @@ if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
 # 选择最快的服务器依次按速度快慢顺序手动改写
 
-# 本地规则查询服务器
-nameserver 127.0.0.1
-
-# 电信服务商当地DNS查询服务器" > /etc/dnsmasq/resolv
+# 当地ISP DNS查询服务器" > /etc/dnsmasq/resolv
 	find /tmp/ -name "resolv.conf.auto" -type f -exec cp {} /tmp/resolv \;
 	cat /etc/dnsmasq/resolv /tmp/resolv > /etc/dnsmasq/resolv.conf
 	rm -f /etc/dnsmasq/resolv /tmp/resolv
