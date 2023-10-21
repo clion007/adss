@@ -25,7 +25,7 @@ resolv-file=/etc/dnsmasq/resolv.conf
 bogus-priv
 
 # 设定域名解析缓存池大小
-cache-size=10000
+cache-size=1000000
 
 # 添加DNS解析文件
 conf-file=/etc/dnsmasq.d/dnsrules.conf
