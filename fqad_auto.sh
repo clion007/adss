@@ -49,8 +49,8 @@ mv /tmp/dnsrules.conf /etc/dnsmasq.d/dnsrules.conf
 mv /tmp/hostsrules.conf /etc/dnsmasq/hostsrules.conf
 echo
 echo -e "\e[1;36m 删除dnsmasq,hosts重复规则及临时文件\e[0m"
-sort /tmp/dnsrules | uniq >> /etc/dnsmasq.d/dnsrules.conf
-sort /tmp/hostsAd | uniq >> /etc/dnsmasq/hostsrules.conf
+awk '!a[$0]++' /tmp/dnsrules >> /etc/dnsmasq.d/dnsrules.conf
+awk '!a[$0]++' /tmp/hostsAd >> /etc/dnsmasq/hostsrules.conf
 rm -rf /tmp/googlehosts /tmp/dnsAd /tmp/dnsrules /tmp/hostsAd
 echo "
 # Modified DNS end" >> /etc/dnsmasq.d/dnsrules.conf
