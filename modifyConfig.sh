@@ -23,11 +23,11 @@ dns-forward-max=1000000
 # 指定上游DNS服务器配置文件路径
 resolv-file=/etc/dnsmasq/resolv.conf
 
-# 并发查询所有上游DNS服务器
+# 上游DNS服务器并发查询
 all-servers 
 
 # 添加解析文件目录
-conf-dir=/etc/dnsmasq.d,*.conf
+conf-file=/etc/dnsmasq.d/dnsrules.conf
 
 # 添加额外hosts规则
 addn-hosts=/etc/dnsmasq/hostsrules.conf
@@ -41,7 +41,7 @@ if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
 # 选择最快的服务器依次按速度快慢顺序手动改写
 
-# 当地ISP DNS查询服务器" > /etc/dnsmasq/resolv
+# 当地ISP DNS服务器" > /etc/dnsmasq/resolv
 	find /tmp/ -name "resolv.conf.auto" -type f -exec cp {} /tmp/resolv \;
 	cat /etc/dnsmasq/resolv /tmp/resolv > /etc/dnsmasq/resolv.conf
 	rm -f /etc/dnsmasq/resolv /tmp/resolv
