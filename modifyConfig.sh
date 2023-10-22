@@ -11,7 +11,7 @@ if [ ! $? -eq 0 ]; then
 cache-size=1000000
 
 # 添加监听地址" >> /etc/dnsmasq.conf
-	if [$lanipv6]; then
+	if [ $lanipv6 ]; then
 		echo "listen-address=$lanip127.0.0.1,::1,$lanipv6" >> /etc/dnsmasq.conf
 	else
 		echo "listen-address=$lanip127.0.0.1" >> /etc/dnsmasq.conf
@@ -27,8 +27,7 @@ all-servers
 conf-file=/etc/dnsmasq.d/dnsrules.conf
 
 # 添加额外hosts规则
-addn-hosts=/etc/dnsmasq/hostsrules.conf
-" >> /etc/dnsmasq.conf
+addn-hosts=/etc/dnsmasq/hostsrules.conf" >> /etc/dnsmasq.conf
 fi
 if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 	echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
