@@ -18,8 +18,8 @@ wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/dele
 echo
 echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
 echo
-sort /tmp/dnsAd | uniq >> /tmp/dnsrules.conf
-sort /tmp/hostsAd | uniq >> /tmp/hostsrules.conf
+sort -u /tmp/dnsAd >> /tmp/dnsrules.conf
+sort -u /tmp/hostsAd >> /tmp/hostsrules.conf
 echo "
 # Modified DNS end" >> /tmp/dnsrules.conf
 echo "
