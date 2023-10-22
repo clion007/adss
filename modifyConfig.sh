@@ -4,7 +4,7 @@ grep "hostsrules" /etc/dnsmasq.conf >/dev/null
 if [ ! $? -eq 0 ]; then
 	echo -e "\e[1;36m 配置dnsmasq\e[0m"
 	echo
-	lanip=`ifconfig|grep Bcast|awk '{print $2}'|tr -d "addr:"|sed 's/,/\n/g'|awk '{{printf"%s,",$0}}'`
+	lanip=`ifconfig|grep Bcast|awk '{print $2}'|tr -d "addr:"| tr '\n' ',' | sed 's/,$//'`
 	lanipv6=`ifconfig -a|grep ::1/64|awk '{print $3}'|tr -d "/64"`
 	echo "
 # 设定域名解析缓存池大小
@@ -12,9 +12,9 @@ cache-size=1000000
 
 # 添加监听地址" >> /etc/dnsmasq.conf
 	if [ -n $lanipv6 ]; then
-		echo "listen-address=$lanip 127.0.0.1,::1,$lanipv6" >> /etc/dnsmasq.conf
+		echo "listen-address=$lanip,127.0.0.1,::1,$lanipv6" >> /etc/dnsmasq.conf
 	else
-		echo "listen-address=$lanip 127.0.0.1" >> /etc/dnsmasq.conf
+		echo "listen-address=$lanip,127.0.0.1" >> /etc/dnsmasq.conf
 	fi
 	echo "
 # 指定上游DNS服务器配置文件路径
