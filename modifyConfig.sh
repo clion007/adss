@@ -10,7 +10,6 @@ if [ ! $? -eq 0 ]; then
 
 # 设定域名解析缓存池大小
 cache-size=1000000
-dns-forward-max=1000000
 
 # 添加监听地址"
 	if [$lanipv6]; then
