@@ -32,26 +32,19 @@ fi
 if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 	echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
 	echo
-	echo -e "\e[1;36m 开始创建上游DNS配置\e[0m"
 	echo "# 上游DNS解析服务器
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
 # 选择最快的服务器依次按速度快慢顺序手动改写
 
-# 当地ISP DNS服务器" > /etc/dnsmasq/resolv
-	find /tmp/ -name "resolv.conf.auto" -type f -exec cp {} /tmp/resolv \;
-	cat /etc/dnsmasq/resolv /tmp/resolv > /etc/dnsmasq/resolv.conf
-	rm -f /etc/dnsmasq/resolv /tmp/resolv
-	echo "
 # 主流公共DNS查询服务器
 nameserver 114.114.114.114
+nameserver 223.5.5.5
 nameserver 218.30.118.6
 nameserver 114.114.114.119
 nameserver 119.29.29.29
 nameserver 8.8.4.4
 nameserver 4.2.2.2
-nameserver 1.2.4.8
-nameserver 223.5.5.5" >> /etc/dnsmasq/resolv.conf
-	echo
+nameserver 1.2.4.8" >> /etc/dnsmasq/resolv.conf
 fi
 sleep 3
 if [ ! -f /etc/dnsmasq.d/userlist ]; then
