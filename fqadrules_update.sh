@@ -27,8 +27,8 @@ echo
 echo -e "\e[1;36m 合并扶墙、广告规则缓存\e[0m"
 cat /tmp/googlehosts /tmp/dnsAd > /tmp/dnsrules
 echo -e "\e[1;36m 删除dnsmasq,hosts重复规则及临时文件\e[0m"
-sort /tmp/dnsrules | uniq >> /tmp/dnsrules.conf
-sort /tmp/hostsAd | uniq >> /tmp/hostsrules.conf
+awk '!a[$0]++' /tmp/dnsrules >> /tmp/dnsrules.conf
+awk '!a[$0]++' /tmp/hostsAd >> /tmp/hostsrules.conf
 rm -rf /tmp/googlehosts /tmp/dnsAd /tmp/dnsrules /tmp/hostsAd
 echo "
 # Modified DNS end" >> /tmp/dnsrules.conf
