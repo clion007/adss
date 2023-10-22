@@ -46,6 +46,7 @@ if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 	cat /etc/dnsmasq/resolv /tmp/resolv > /etc/dnsmasq/resolv.conf
 	rm -f /etc/dnsmasq/resolv /tmp/resolv
 	echo "
+	
 # 主流公共DNS查询服务器
 nameserver 114.114.114.114
 nameserver 218.30.118.6
