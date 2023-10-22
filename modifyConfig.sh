@@ -11,7 +11,7 @@ if [ ! $? -eq 0 ]; then
 cache-size=1000000
 
 # 添加监听地址" >> /etc/dnsmasq.conf
-	if [ $lanipv6 ]; then
+	if [ -n $lanipv6 ]; then
 		echo "listen-address=$lanip127.0.0.1,::1,$lanipv6" >> /etc/dnsmasq.conf
 	else
 		echo "listen-address=$lanip127.0.0.1" >> /etc/dnsmasq.conf
