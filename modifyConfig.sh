@@ -7,18 +7,16 @@ if [ ! $? -eq 0 ]; then
 	lanip=`ifconfig|grep Bcast|awk '{print $2}'|tr -d "addr:"|sed 's/,/\n/g'|awk '{{printf"%s,",$0}}'`
 	lanipv6=`ifconfig -a|grep ::1/64|awk '{print $3}'|tr -d "/64"`
 	echo "
-
 # 设定域名解析缓存池大小
 cache-size=1000000
 
-# 添加监听地址"
+# 添加监听地址" >> /etc/dnsmasq.conf
 	if [$lanipv6]; then
-		echo "listen-address=$lanip127.0.0.1,::1,$lanipv6"
+		echo "listen-address=$lanip127.0.0.1,::1,$lanipv6" >> /etc/dnsmasq.conf
 	else
-		echo "listen-address=$lanip127.0.0.1"
+		echo "listen-address=$lanip127.0.0.1" >> /etc/dnsmasq.conf
 	fi
 	echo "
-
 # 指定上游DNS服务器配置文件路径
 resolv-file=/etc/dnsmasq/resolv.conf
 
@@ -45,7 +43,6 @@ if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 	cat /etc/dnsmasq/resolv /tmp/resolv > /etc/dnsmasq/resolv.conf
 	rm -f /etc/dnsmasq/resolv /tmp/resolv
 	echo "
-	
 # 主流公共DNS查询服务器
 nameserver 114.114.114.114
 nameserver 218.30.118.6
