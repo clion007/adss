@@ -56,8 +56,7 @@ rm -rf /tmp/dnsAd /tmp/hostsAd
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 echo
-killall dnsmasq
-	/etc/init.d/dnsmasq restart > /dev/null 2>&1
+killall dnsmasq && /etc/init.d/dnsmasq restart > /dev/null 2>&1
 sleep 2
 echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
 echo
