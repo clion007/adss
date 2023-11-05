@@ -1,22 +1,26 @@
 #!/bin/sh
 sleep 3
-wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/initRulesFile.sh -c -q -O \
-	/tmp/initRulesFile.sh  && chmod 775 /tmp/initRulesFile.sh  && sh /tmp/initRulesFile.sh
-	rm -f /tmp/initRulesFile.sh
+wget --no-check-certificate -c -q -O /tmp/initRulesFile.sh https://gitcode.net/clion007/dnsmasq/raw/master/initRulesFile.sh
+chmod 775 /tmp/initRulesFile.sh
+sh /tmp/initRulesFile.sh
+rm -f /tmp/initRulesFile.sh
 echo
-wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/getDnsmasqAdRules.sh -c -q -O \
-	/tmp/getDnsmasqAdRules.sh  && chmod 775 /tmp/getDnsmasqAdRules.sh  && sh /tmp/getDnsmasqAdRules.sh
-	rm -f /tmp/getDnsmasqAdRules.sh
+wget --no-check-certificate -c -q -O /tmp/getDnsmasqAdRules.sh https://gitcode.net/clion007/dnsmasq/raw/master/getDnsmasqAdRules.sh
+chmod 775 /tmp/getDnsmasqAdRules.sh
+sh /tmp/getDnsmasqAdRules.sh
+rm -f /tmp/getDnsmasqAdRules.sh
 echo
-wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/getHostsAdRules.sh -c -q -O \
-	/tmp/getHostsAdRules.sh  && chmod 775 /tmp/getHostsAdRules.sh  && sh /tmp/getHostsAdRules.sh
-	rm -f /tmp/getHostsAdRules.sh
+wget --no-check-certificate -c -q -O /tmp/getHostsAdRules.sh https://gitcode.net/clion007/dnsmasq/raw/master/getHostsAdRules.sh
+chmod 775 /tmp/getHostsAdRules.sh
+sh /tmp/getHostsAdRules.sh
+rm -f /tmp/getHostsAdRules.sh
 echo
-wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/deletWhiteListRules.sh -c -q -O \
-	/tmp/deletWhiteListRules.sh  && chmod 775 /tmp/deletWhiteListRules.sh  && sh /tmp/deletWhiteListRules.sh
-	rm -f /tmp/deletWhiteListRules.sh
+wget --no-check-certificate -c -q -O /tmp/deletWhiteListRules.sh https://gitcode.net/clion007/dnsmasq/raw/master/deletWhiteListRules.sh
+chmod 775 /tmp/deletWhiteListRules.sh
+sh /tmp/deletWhiteListRules.sh
+rm -f /tmp/deletWhiteListRules.sh
 echo
-echo -e "\e[1;36m 删除dnsmasq'hosts重复规则及临时文件\e[0m"
+echo -e "\e[1;36m 删除dnsmasq及hosts重复规则及临时文件\e[0m"
 echo
 awk '!a[$0]++' /tmp/dnsAd >> /tmp/dnsrules.conf
 awk '!a[$0]++' /tmp/hostsAd >> /tmp/hostsrules.conf
