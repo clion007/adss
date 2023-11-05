@@ -6,8 +6,8 @@ sed -i "/#/d" /tmp/whitelist
 rm -rf /tmp/adwhitelist
 while read -r line
 do
-	if [ -s "/tmp/dnsAd" ]; then 
-		sed -i "/$line/d" /tmp/dnsAd
+	if [ -s "/etc/dnsmasq/dnsAd" ]; then 
+		sed -i "/$line/d" /etc/dnsmasq/dnsAd
 	fi
 	if [ -s "/tmp/hostsAd" ]; then 
 		sed -i "/$line/d" /tmp/hostsAd
