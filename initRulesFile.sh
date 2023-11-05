@@ -15,7 +15,7 @@ address=/ip6-localhost/::1
 address=/ip6-loopback/::1
 # Local DNS (DO NOT REMOVE) End
 
-# Modified DNS start" > /tmp/dnsrules.conf
+# Modified DNS start" > /etc/dnsmasq/dnsrules.conf
 echo
 echo -e "\e[1;36m 创建hosts规则文件\e[0m"
 echo "
