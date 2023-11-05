@@ -51,7 +51,7 @@ if [ ! -f /etc/dnsmasq.d/userlist ]; then
 	echo -e "\e[1;36m 创建自定义dnsmasq规则\e[0m"
 	echo
 	echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
-# 后面的ip表示希望域名解析到的IP，屏蔽域名（如广告拦截）解析到127.0.0.1
+# 后面的ip表示希望域名解析到的IP
 #address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
 fi
 if [ ! -f /etc/dnsmasq/userblacklist ]; then
