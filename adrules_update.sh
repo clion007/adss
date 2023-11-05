@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 sleep 3
 wget --no-check-certificate -c -q -O /tmp/initRulesFile.sh https://gitcode.net/clion007/dnsmasq/raw/master/initRulesFile.sh
 chmod 775 /tmp/initRulesFile.sh
