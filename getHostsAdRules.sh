@@ -14,10 +14,10 @@ echo -e "\e[1;36m 删除hosts临时文件\e[0m"
 rm -rf /tmp/someonewhocares.conf /tmp/adaway.conf
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
+sed -i '/#<localhost/,/#<\/localhost>/d' /tmp/hostsAd
+sed -i '/local/d' /tmp/hostsAd
 sed -i 's/#.*//g' /tmp/hostsAd
 sed -i 's/@.*//g' /tmp/hostsAd
-sed -i '/::1/d' /tmp/hostsAd
-sed -i '/localhost/d' /tmp/hostsAd
 sed -i '/^$/d' /tmp/hostsAd
 echo
 echo -e "\e[1;36m 统一广告规则格式\e[0m"
