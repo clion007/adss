@@ -1,6 +1,6 @@
 #!/bin/sh
 echo
-echo "Auto DNS Science Internet V3.1.0"
+echo "Auto DNS Smart Script V3.2.0"
 echo "Copyright @ 2014-`date +'%Y'`,by clion007"
 echo
 echo "本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
