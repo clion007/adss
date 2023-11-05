@@ -15,7 +15,7 @@ echo
 echo -e "\e[1;36m 下载notrackAd广告规则,文件较大请耐心等待\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/notrackAdDomain.conf 'https://raw.gitmirror.com/notracking/hosts-blocklists/master/domains.txt'
 echo
-echo -e "\e[1;36m 下载neodevhost广告规则,文件较大请耐心等待\e[0m"
+echo -e "\e[1;36m 下载neodevhost广告规则\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/neodevhost.conf 'https://neodev.team/dnsmasq.conf'
 echo
 sleep 3
