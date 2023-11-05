@@ -37,7 +37,7 @@ rm -rf /tmp/antiAD.conf /tmp/notrackAdDomain.conf /tmp/yoyoAd.conf /tmp/neodevho
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/localhost/d' /tmp/dnsAd # 删除本地规则
-sed -i '/#.*//g' /tmp/dnsAd # 删除注释内容
+sed -i 's/#.*//g' /tmp/dnsAd # 删除注释内容
 sed -i '/^$/d' /tmp/dnsAd # 删除空行
 echo
 echo -e "\e[1;36m 统一广告规则格式\e[0m"
