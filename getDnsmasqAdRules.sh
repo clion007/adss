@@ -9,6 +9,8 @@ echo
 echo -e "\e[1;36m 下载yoyoAd广告规则\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/yoyoAd.conf 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq'
 sed -i "/</d" /tmp/yoyoAd.conf
+sed -i "/]/d" /tmp/yoyoAd.conf
+sed -i '/^$/d' /tmp/yoyoAd.conf
 echo
 echo -e "\e[1;36m 下载notrackAd广告规则,文件较大请耐心等待\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/notrackAdDomain.conf 'https://raw.gitmirror.com/notracking/hosts-blocklists/master/domains.txt'
