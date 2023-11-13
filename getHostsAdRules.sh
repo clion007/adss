@@ -1,5 +1,8 @@
 #!/bin/sh
-echo -e "\e[1;36m 开始下载Hosts广告规则\e[0m"
+echo -e "\e[1;36m 开始下载Hosts规则\e[0m"
+echo
+echo -e "\e[1;36m 下载fastgithub缓存\e[0m"
+wget --no-check-certificate -c -q -T 60 -O /tmp/fastgithub.conf https://raw.hellogithub.com/hosts
 echo
 echo -e "\e[1;36m 下载someonewhocares缓存\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/someonewhocares.conf https://someonewhocares.org/hosts/zero/hosts
@@ -8,10 +11,10 @@ echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/adaway.conf https://adaway.org/hosts.txt
 echo
 echo -e "\e[1;36m 合并hosts缓存\e[0m"
-cat /tmp/someonewhocares.conf /tmp/adaway.conf > /tmp/hostsAd
+cat /tmp/fastgithub /tmp/someonewhocares.conf /tmp/adaway.conf > /tmp/hostsAd
 echo
 echo -e "\e[1;36m 删除hosts临时文件\e[0m"
-rm -rf /tmp/someonewhocares.conf /tmp/adaway.conf
+rm -rf /tmp/fastgithub /tmp/someonewhocares.conf /tmp/adaway.conf
 echo
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/#<localhost/,/#<\/localhost>/d' /tmp/hostsAd
