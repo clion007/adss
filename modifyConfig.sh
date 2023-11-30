@@ -36,15 +36,14 @@ if [ ! -s /etc/dnsmasq/resolv.conf ]; then
 # 如需根据自己的网络环境优化DNS服务器，可用ping或DNSBench测速
 # 选择最快的服务器依次按速度快慢顺序手动改写
 
-# 主流公共DNS查询服务器
-nameserver 114.114.114.114
-nameserver 223.5.5.5
-nameserver 218.30.118.6
-nameserver 114.114.114.119
-nameserver 119.29.29.29
-nameserver 8.8.4.4
-nameserver 4.2.2.2
-nameserver 1.2.4.8" >> /etc/dnsmasq/resolv.conf
+# 纯净免费公共DNS查询服务器
+nameserver 119.29.29.29 #DNSPod IPv4
+nameserver 2402:4e00:: #DNSPod IPv6
+nameserver 8.8.8.8 #Google IPv4 DNS
+nameserver 101.102.103.104 #TWNIC DNS IPv4
+nameserver 2001:de4::102 #TWNIC DNS IPv6
+nameserver 168.126.63.1 #韩国 DNS IPv4
+nameserver 205.252.144.228 #香港 DNS IPv4" >> /etc/dnsmasq/resolv.conf
 fi
 sleep 3
 if [ ! -f /etc/dnsmasq.d/userlist ]; then
