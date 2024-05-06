@@ -1,9 +1,6 @@
 #!/bin/sh
 echo -e "\e[1;36m 开始下载Hosts规则\e[0m"
 echo
-echo -e "\e[1;36m 下载fastgithub缓存\e[0m"
-wget --no-check-certificate -c -q -T 60 -O /tmp/fastgithub.conf https://raw.hellogithub.com/hosts
-echo
 echo -e "\e[1;36m 下载someonewhocares缓存\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/someonewhocares.conf https://someonewhocares.org/hosts/zero/hosts
 echo
