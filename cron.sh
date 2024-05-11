@@ -29,7 +29,7 @@ if [ ! $? -eq 0 ]; then
 	fi	
 	echo -e "\e[1;36m 设置路由器定时重启\e[0m"
 	echo "# 每两天检测一次网络是否畅通，如果不通重启路由器；每2周$reboottime点05分强制重启路由器
-04 $reboottime */2 * * [ $(date +%w) -eq 0 ] sleep 1m && touch /etc/banner && reboot || ping -c2 -w5 114.114.114.114 || sleep 1m && touch /etc/banner && reboot" >> $CRON_FILE
+04 $reboottime */2 * * [ $(date +%w) -eq 0 ] sleep 1m && touch /etc/banner && reboot || (ping -c2 -w5 114.114.114.114 || sleep 1m && touch /etc/banner && reboot)" >> $CRON_FILE
 	/etc/init.d/cron reload >/dev/null
 	echo
 	echo -e "\e[1;36m 定时重启任务设定完成\e[0m"
