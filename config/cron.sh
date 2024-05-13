@@ -8,12 +8,9 @@ if [ ! $? -eq 0 ]; then
 		else
 		timedata='4'
 	fi	
-	if [ -f /etc/dnsmasq/ad_update.sh ]; then
+	if [ -f /etc/dnsmasq.d/ad_update.sh ]; then
 		echo "# 每天$timedata点25分更新广告规则
-25 $timedata * * * sh /etc/dnsmasq/ad_update.sh > /dev/null 2>&1" >> $CRON_FILE
-	elif [ -f /etc/dnsmasq/fqad_update.sh ]; then
-		echo "# 每天$timedata点25分更新翻墙和广告规则
-25 $timedata * * * sh /etc/dnsmasq/fqad_update.sh > /dev/null 2>&1" >> $CRON_FILE
+25 $timedata * * * sh /etc/dnsmasq.d/ad_update.sh > /dev/null 2>&1" >> $CRON_FILE
 	fi	
 	/etc/init.d/cron reload >/dev/null
 	echo
