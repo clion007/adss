@@ -59,21 +59,14 @@ fi
 if [ ! -f /etc/dnsmasq.d/adss/userblacklist ]; then
 	echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 	echo
-	if [ -f /etc/dnsmasq.d/adss/blacklist ]; then
-		mv /etc/dnsmasq.d/adss/blacklist /etc/dnsmasq.d/adss/userblacklist
-		else
-		echo "# 请在下面添加广告黑名单
+	echo "# 请在下面添加广告黑名单
 # 每行输入要屏蔽广告网址域名不含http://符号，如：www.baidu.com
 # 支持不完整域名地址，支持通配符" > /etc/dnsmasq.d/adss/userblacklist
-	fi	
+
 fi	
 if [ ! -f /etc/dnsmasq.d/adss/userwhitelist ]; then
 	echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 	echo
-	if [ -f /etc/dnsmasq.d/adss/whitelist ]; then
-		mv /etc/dnsmasq.d/adss/whitelist /etc/dnsmasq.d/adss/userwhitelist
-		else
-		echo "# 请将误杀的网址域名添加到在下面
+	echo "# 请将误杀的网址域名添加到在下面
 # 每个一行，不带http://，尽量输入准确地址以免删除有效广告规则" > /etc/dnsmasq.d/adss/userwhitelist
-	fi	
 fi	
