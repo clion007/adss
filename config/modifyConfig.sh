@@ -1,7 +1,8 @@
 #!/bin/sh
 sleep 3
-grep "hostsrules" /etc/dnsmasq.conf >/dev/null
+grep "dnsmasq.d" /etc/dnsmasq.conf >/dev/null
 if [ ! $? -eq 0 ]; then
+	sed  -i 's/\#*conf-dir=\/etc\/dnsmasq.d/conf-dir=\/etc\/dnsmasq.d/g' /etc/dnsmasq.conf
 	echo -e "\e[1;36m 配置dnsmasq\e[0m"
 	echo
 	lanip=`ifconfig|grep Bcast|awk '{print $2}'|tr -d "addr:"| tr '\n' ',' | sed 's/,$//'`
@@ -12,24 +13,26 @@ cache-size=1000000
 
 # 添加监听地址" >> /etc/dnsmasq.conf
 	if [ -n $lanipv6 ]; then
-		echo "listen-address=$lanip,$lanipv6,127.0.0.1,::1" >> /etc/dnsmasq.conf
+		echo "listen-address=$lanip,$lanipv6,127.0.0.1,::1" >> /etc/dnsmasq.d/adss.conf
 	else
-		echo "listen-address=$lanip,127.0.0.1" >> /etc/dnsmasq.conf
+		echo "listen-address=$lanip,127.0.0.1" >> /etc/dnsmasq.d/adss.conf
 	fi
 	echo "
 # 指定上游DNS服务器配置文件路径
-resolv-file=/etc/dnsmasq/resolv.conf
+resolv-file=/etc/dnsmasq.d/adss/resolv.conf
 
 # 上游DNS服务器并发查询
 all-servers 
 
 # 添加解析文件目录
-conf-file=/etc/dnsmasq.d/dnsrules.conf
+conf-file=/etc/dnsmasq.d/adss/dnsrules.conf
 
 # 添加额外hosts规则
-addn-hosts=/etc/dnsmasq/hostsrules.conf" >> /etc/dnsmasq.conf
+addn-hosts=/etc/dnsmasq.d/adss/hostsrules.conf" >> /etc/dnsmasq.d/adss.conf
+else
+	echo "conf-dir=/etc/dnsmasq.d" >> /etc/dnsmasq.conf
 fi
-if [ ! -s /etc/dnsmasq/resolv.conf ]; then
+if [ ! -s /etc/dnsmasq.d/adss/resolv.conf ]; then
 	echo -e "\e[1;36m 创建上游DNS配置文件\e[0m"
 	echo
 	echo "# 上游DNS解析服务器
@@ -43,34 +46,34 @@ nameserver 8.8.8.8 #Google IPv4 DNS
 nameserver 101.102.103.104 #TWNIC DNS IPv4
 nameserver 2001:de4::102 #TWNIC DNS IPv6
 nameserver 168.126.63.1 #韩国 DNS IPv4
-nameserver 205.252.144.228 #香港 DNS IPv4" >> /etc/dnsmasq/resolv.conf
+nameserver 205.252.144.228 #香港 DNS IPv4" >> /etc/dnsmasq.d/adss/resolv.conf
 fi
 sleep 3
-if [ ! -f /etc/dnsmasq.d/userlist ]; then
+if [ ! -f /etc/dnsmasq.d/adss/userlist ]; then
 	echo -e "\e[1;36m 创建自定义dnsmasq规则\e[0m"
 	echo
 	echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
 # 后面的ip表示希望域名解析到的IP
-#address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/userlist
+#address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/adss/userlist
 fi
-if [ ! -f /etc/dnsmasq/userblacklist ]; then
+if [ ! -f /etc/dnsmasq.d/adss/userblacklist ]; then
 	echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
 	echo
-	if [ -f /etc/dnsmasq/blacklist ]; then
-		mv /etc/dnsmasq/blacklist /etc/dnsmasq/userblacklist
+	if [ -f /etc/dnsmasq.d/adss/blacklist ]; then
+		mv /etc/dnsmasq.d/adss/blacklist /etc/dnsmasq.d/adss/userblacklist
 		else
 		echo "# 请在下面添加广告黑名单
 # 每行输入要屏蔽广告网址域名不含http://符号，如：www.baidu.com
-# 支持不完整域名地址，支持通配符" > /etc/dnsmasq/userblacklist
+# 支持不完整域名地址，支持通配符" > /etc/dnsmasq.d/adss/userblacklist
 	fi	
 fi	
-if [ ! -f /etc/dnsmasq/userwhitelist ]; then
+if [ ! -f /etc/dnsmasq.d/adss/userwhitelist ]; then
 	echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
 	echo
-	if [ -f /etc/dnsmasq/whitelist ]; then
-		mv /etc/dnsmasq/whitelist /etc/dnsmasq/userwhitelist
+	if [ -f /etc/dnsmasq.d/adss/whitelist ]; then
+		mv /etc/dnsmasq.d/adss/whitelist /etc/dnsmasq.d/adss/userwhitelist
 		else
 		echo "# 请将误杀的网址域名添加到在下面
-# 每个一行，不带http://，尽量输入准确地址以免删除有效广告规则" > /etc/dnsmasq/userwhitelist
+# 每个一行，不带http://，尽量输入准确地址以免删除有效广告规则" > /etc/dnsmasq.d/adss/userwhitelist
 	fi	
 fi	
