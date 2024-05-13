@@ -20,7 +20,7 @@ wget --no-check-certificate -c -q -T 60 -O /etc/dnsmasq/neodevhost.conf https://
 echo
 sleep 3
 echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
-wget --no-check-certificate -c -q -T 60 -O /etc/dnsmasq/adblacklist https://gitcode.net/clion007/dnsmasq/raw/master/adblacklist
+wget --no-check-certificate -c -q -T 60 -O /etc/dnsmasq/adblacklist https://gitcode.net/clion007/adss/raw/master/adblacklist
 awk '!a[$0]++' /etc/dnsmasq/userblacklist /etc/dnsmasq/adblacklist > /etc/dnsmasq/blacklist
 rm -rf /etc/dnsmasq/adblacklist
 sed -i "/#/d" /etc/dnsmasq/blacklist
