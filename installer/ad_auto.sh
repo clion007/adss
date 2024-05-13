@@ -18,7 +18,7 @@ echo
 echo -e "\e[1;36m 三秒后开始备份安装前路由器相关配置......\e[0m"
 echo
 sleep 3
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/installer/backup.sh -qO \
+wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/config/backup.sh -qO \
 	/tmp/adss/backup.sh && chmod 775 /tmp/adss/backup.sh && sh /tmp/adss/backup.sh
 rm -f /tmp/adss/backup.sh
 echo
