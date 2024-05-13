@@ -1,11 +1,11 @@
 #!/bin/sh
-if [ ! -s /tmp/copyright.sh ]; then
+if [ ! -s /tmp/adss/copyright.sh ]; then
 	wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/copyright.sh -qO \
-		/tmp/copyright.sh && chmod 775 /tmp/copyright.sh && sh /tmp/copyright.sh
+		/tmp/adss/copyright.sh && chmod 775 /tmp/adss/copyright.sh && sh /tmp/adss/copyright.sh
 	else
-		sh /tmp/copyright.sh
+		sh /tmp/adss/copyright.sh
 fi
-rm -f /tmp/copyright.sh
+rm -f /tmp/adss/copyright.sh
 echo
 if [ -f /var/lock/opkg.lock ]; then
 	rm -f /var/lock/opkg.lock
@@ -13,7 +13,6 @@ fi
 echo -e "\e[1;31m 开始卸载已安装dnsmasq脚本配置 \e[0m"
 echo
 echo -e "\e[1;31m 删除残留文件夹以及配置 \e[0m"
-rm -rf /etc/dnsmasq
 rm -rf /etc/dnsmasq.d
 if [ -f /etc/dnsmasq.conf.bak ]; then
 	mv -f /etc/dnsmasq.conf.bak /etc/dnsmasq.conf
