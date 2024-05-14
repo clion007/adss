@@ -70,7 +70,6 @@ wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/updater
 sleep 3
 wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/config/cron.sh -qO \
 	/tmp/adss/cron.sh && chmod 775 /tmp/adss/cron.sh && sh /tmp/adss/cron.sh
-rm -f /tmp/adss/cron.sh
 echo -e "\e[1;36m 删除安装临时文件\e[0m"
 rm -rf /tmp/adss
 echo
