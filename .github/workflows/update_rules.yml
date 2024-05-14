@@ -35,7 +35,7 @@ jobs:
       
       - name: Build Rules
         run: |
-          $GITHUB_WORKSPACE/rules/bulder/build.sh
+          $GITHUB_WORKSPACE/rules/builder/build.sh
           mv -f /tmp/adss/dnsrules.conf $GITHUB_WORKSPACE/rules/file/dnsrules.conf
           mv -f /tmp/adss/hostsrules.conf $GITHUB_WORKSPACE/rules/file/hostsrules.conf
 
