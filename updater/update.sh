@@ -1,6 +1,6 @@
 #!/bin/sh
 wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/adss.sh -qO \
-	/tmp/adss/adss.sh && chmod 775 /tmp/adss/coadsspyright.sh
+	/tmp/adss/adss.sh && chmod 775 /tmp/adss/adss.sh
 if [ -s "/tmp/adss/adss.sh" ]; then
 	source /tmp/adss/adss.sh && show_copyright
 else
