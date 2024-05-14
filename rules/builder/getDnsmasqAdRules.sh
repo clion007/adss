@@ -21,13 +21,17 @@ echo
 sleep 3
 echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
 wget --no-check-certificate -c -q -T 60 -O /tmp/adss/adblacklist https://gitcode.net/clion007/adss/raw/master/rules/adss/adblacklist
-awk '!a[$0]++' /etc/dnsmasq.d/adss/userblacklist /tmp/adss/adblacklist > /tmp/adss/blacklist
+if [ -f /usr/share/adss/userblacklist ]; then
+  awk '!a[$0]++' /usr/share/adss/rules/userblacklist /tmp/adss/adblacklist > /tmp/adss/blacklist
+else
+  awk '!a[$0]++' /tmp/adss/adblacklist > /tmp/adss/blacklist
+fi
 rm -rf /tmp/adss/adblacklist
 sed -i "/#/d" /tmp/adss/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist #支持通配符
 echo
 echo -e "\e[1;36m 添加用户定义的解析规则\e[0m"
-cat /etc/dnsmasq.d/adss/userlist > /tmp/adss/dnsAd
+cat /usr/share/adss/userlist > /tmp/adss/dnsAd
 echo
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
 cat /tmp/adss/antiAD.conf /tmp/adss/notrackAdDomain.conf /tmp/adss/yoyoAd.conf /tmp/adss/neodevhost.conf /tmp/adss/blacklist >> /tmp/adss/dnsAd

@@ -1,7 +1,11 @@
 #!/bin/sh
 echo -e "\e[1;36m 删除白名单及误杀规则，时间较长，请耐心等待。。。\e[0m"
 wget --no-check-certificate -c -q -O /tmp/adss/adwhitelist https://gitcode.net/clion007/adss/raw/master/rules/adss/adwhitelist
-sort /etc/dnsmasq.d/adss/userwhitelist /tmp/adss/adwhitelist | uniq > /tmp/adss/whitelist
+if [ -f /usr/share/adss/userwhitelist ]; then
+  sort /usr/share/adss/rules/userwhitelist /tmp/adss/adwhitelist | uniq > /tmp/adss/whitelist
+else
+  awk '!a[$0]++' /tmp/adss/adblacklist > /tmp/adss/blacklist
+fi
 sed -i "/#/d" /tmp/adss/whitelist
 rm -rf /tmp/adss/adwhitelist
 while read -r line
