@@ -26,16 +26,12 @@ jobs:
     
       - name: CheckOut
         uses: actions/checkout@v4
-    
-      - name: SSH远程连接
-        uses: danshui-git/debugger-action@main
 
-      - name: Initialization environment
+      - name: Set Timezone
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo timedatectl set-timezone "$TZ"
-          [ ! type wget >/dev/null 2>&1 ] && sudo -E apt-get -qq install -y wget
       
       - name: Build Rules
         run: |
