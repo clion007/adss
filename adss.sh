@@ -8,7 +8,7 @@
 #
 
 function show_copyright() {
-    curl -o /tmp/adss/logo -O https://gitcode.net/clion007/adss/raw/master/config/logo
+    curl -osL /tmp/adss/logo https://gitcode.net/clion007/adss/raw/master/config/logo
     cat /tmp/adss/logo
     echo
     echo "Auto DNS Smart Script V4.0"
