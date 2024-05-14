@@ -1,3 +1,5 @@
+#!/bin/sh
+mkdir -p /tmp/adss
 wget --no-check-certificate -c -q -O /tmp/adss/initRulesFile.sh https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh
 chmod 775 /tmp/adss/initRulesFile.sh
 sh /tmp/adss/initRulesFile.sh

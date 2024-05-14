@@ -8,6 +8,7 @@
 #
 
 function show_copyright() {
+  mkdir -p /tmp/adss
   curl -osL /tmp/adss/logo https://gitee.com/clion007/adss/raw/master/config/logo
   cat /tmp/adss/logo
   echo
