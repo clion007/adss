@@ -8,7 +8,7 @@
 #
 
 function show_copyright() {
-    cat ()
+    cat (curl -fsSL https://gitcode.net/clion007/adss/raw/master/config/logo)
     echo
     echo "Auto DNS Smart Script V4.0"
     echo "Project URL https://github.com/clion007/adss"
