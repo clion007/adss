@@ -8,6 +8,7 @@
 #
 
 function show_copyright() {
+    cat ()
     echo
     echo "Auto DNS Smart Script V4.0"
     echo "Project URL https://github.com/clion007/adss"
