@@ -3,7 +3,7 @@ echo
 echo "Auto DNS Smart Script V4.0"
 echo "Project URL https://github.com/clion007/adss"
 echo "Copyright © 2014-`date +'%Y'`,by Clion Nieh Email: clion007@126.com"
-echo "Licenses in GLP V3.0"
+echo "Licenses in GPL V3.0"
 echo
 echo "本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
 echo "未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规!"
