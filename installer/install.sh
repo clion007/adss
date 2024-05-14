@@ -1,21 +1,6 @@
 #!/bin/sh
-clear
 echo
-if [ ! -s /tmp/adss/copyright.sh ]; then
-	wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/copyright.sh -qO \
-		/tmp/adss/copyright.sh && chmod 775 /tmp/adss/copyright.sh
-fi
-if [ -s "/tmp/adss/copyright.sh" ]; then
-	sh /tmp/adss/copyright.sh
-else
-	echo
-	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃安装。\e[0m"
-	echo
-	rm -f /tmp/adss/copyright.sh
-	exit 1
-fi
-echo
-echo -e "\e[1;36m 三秒后开始备份安装前路由器相关配置......\e[0m"
+echo -e "\e[1;36m 三秒后开始备份路由器相关配置......\e[0m"
 echo
 sleep 3
 wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/config/backup.sh -qO \
@@ -54,7 +39,7 @@ echo
 echo
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                           +"
-echo "+       Dnsmasq shell script installation is complete       +"
+echo "+       Auto DNS Smart Script installation is complete      +"
 echo "+                                                           +"
 echo "+                      Time:`date +'%Y-%m-%d'`                      +"
 echo "+                                                           +"

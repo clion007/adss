@@ -13,7 +13,7 @@ echo -e "支持全自动无人值守安装和手动配置安装！"
 echo
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "+                                                           +"
-echo "+        Install ADSI for OpnWrt/LEDE/PandoraBox etc        +"
+echo "+        Install ADSS for OpnWrt/LEDE/PandoraBox etc        +"
 echo "+                                                           +"
 echo "+                      Time:`date +'%Y-%m-%d'`                      +"
 echo "+                                                           +"
