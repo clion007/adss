@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Auto DNS Smart Script V4.0
+# ADSS(Auto DNS Smart Script) V4.0
 # Project URL https://github.com/clion007/adss
 # Main Module file
 # Copyright © by Clion Nieh Email: clion007@126.com
@@ -14,11 +14,12 @@ function show_copyright() {
     echo "Copyright © 2014-`date +'%Y'`,by Clion Nieh Email: clion007@126.com"
     echo "Licenses in GPL V3.0"
     echo
-    echo "本脚本仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
+    echo "------------------------------------------------------------------------------"
+    echo "ADSS 仅用于个人研究与学习使用，从未用于产生任何盈利（包括“捐赠”等方式）"
     echo "未经许可，请勿内置于软件内发布与传播！请勿用于产生盈利活动！请遵守当地法律法规!"
-    echo "本脚本仅供openwrt类固件使用，包括但不限于pandorabox、LEDE、ddwrt、明月、石像鬼等。"
+    echo "ADSS 仅供openwrt类固件使用，包括但不限于pandorabox、LEDE、ddwrt、明月、石像鬼等。"
     echo -e "安装前请\e[1;31m备份原配置\e[0m；由此产生的一切后果自行承担！"
-    echo -e "支持全自动无人值守安装和手动配置安装！"
+    echo "------------------------------------------------------------------------------"
     echo
     echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "+                                                           +"
@@ -34,7 +35,7 @@ function install() {
     show_copyright
     echo "检测与处理倚赖关系"
     if [ ! type opkg > /dev/null 2>&1 ]; then
-      echo "本脚本仅支持 Openwrt 系列固件使用，您的当前固件不支持安装"
+      echo "ADSS 仅支持 Openwrt 系列固件使用，暂时不支持当前固件"
       exit 1
     fi
     if [ -f /var/lock/opkg.lock ]; then
@@ -65,8 +66,9 @@ function install() {
     echo
     echo "倚赖关系处理完成"
     echo
-    echo -e "\e[1;36m ***脚本为全自动安装，规则更新时间为每天04:25***\e[0m"
-    echo -e "\e[1;36m ***脚本会自动检测网络状态，网络不通则重启路由器***\e[0m"
+    echo -e "\e[1;36m ***ADSS 每天04:25自动更新规则，自动检测网络不通重启路由器，如需修改更新时间，可自行在计划任务中修改***\e[0m"
+    echo
+    echo -e "\e[1;36m 三秒后开始安装配置 ADSS\e[0m"
 }
 
 function uninstall() {
