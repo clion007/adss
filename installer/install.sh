@@ -1,6 +1,6 @@
 #!/bin/sh
 echo
-echo -e "\e[1;36m 三秒后开始备份路由器相关配置......\e[0m"
+echo -e "\e[1;36m 三秒后开始备份路由器相关配置\e[0m"
 echo
 sleep 3
 wget --no-check-certificate https://gitee.com/clion007/adss/raw/master/config/backup.sh -qO \
