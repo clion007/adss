@@ -1,0 +1,28 @@
+# Description: Update ADSS Rules using GitHub Actions
+#
+# This is free software, licensed under the GPLv3 License.
+# See /LICENSE for more information.
+
+name: Update Rules
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 18 * * *
+
+jobs:
+  Update:
+    name: Update Rules
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: write
+      contents: write
+
+    steps:
+    
+      - name: CheckOut
+        uses: actions/checkout@v4
+      
+      - name: Run a one-line script
+        run: echo Hello, world!
