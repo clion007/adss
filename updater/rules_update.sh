@@ -39,4 +39,3 @@ fi
 echo -e "\e[1;36m 规则更新已完成...\e[0m"
 echo
 rm -rf /tmp/adss
-exit 0
