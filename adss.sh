@@ -8,7 +8,7 @@
 #
 
 function install() {
-    
+    echo "检测与处理倚赖关系"
 }
 
 function uninstall() {
