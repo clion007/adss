@@ -26,33 +26,12 @@ sleep 3
 wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/config/modifyConfig.sh -qO \
 	/tmp/adss/modifyConfig.sh  && chmod 775 /tmp/adss/modifyConfig.sh  && sh /tmp/adss/modifyConfig.sh
 rm -f /tmp/modifyConfig.sh
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/builder/initRulesFile.sh -qO \
-	/tmp/adss/initRulesFile.sh  && chmod 775 /tmp/adss/initRulesFile.sh  && sh /tmp/adss/initRulesFile.sh
-rm -f /tmp/adss/initRulesFile.sh
-echo
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/builder/getDnsmasqAdRules.sh -qO \
-	/tmp/adss/getDnsmasqAdRules.sh  && chmod 775 /tmp/adss/getDnsmasqAdRules.sh  && sh /tmp/adss/getDnsmasqAdRules.sh
-rm -f /tmp/adss/getDnsmasqAdRules.sh
-echo
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/builder/getHostsAdRules.sh -qO \
-	/tmp/adss/getHostsAdRules.sh  && chmod 775 /tmp/adss/getHostsAdRules.sh  && sh /tmp/adss/getHostsAdRules.sh
-rm -f /tmp/adss/getHostsAdRules.sh
-echo
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/builder/deletWhiteListRules.sh -qO \
-	/tmp/adss/deletWhiteListRules.sh  && chmod 775 /tmp/adss/deletWhiteListRules.sh  && sh /tmp/adss/deletWhiteListRules.sh
-rm -f /tmp/adss/deletWhiteListRules.sh
-echo
-echo -e "\e[1;36m 删除dnsmasq,hosts重复规则及临时文件\e[0m"
-echo
-awk '!a[$0]++' /tmp/adss/dnsAd >> /tmp/adss/dnsrules.conf
-awk '!a[$0]++' /tmp/adss/hostsAd >> /tmp/adss/hostsrules.conf
-echo "
-# Modified DNS end" >> /tmp/adss/dnsrules.conf
-echo "
-# 修饰hosts结束" >> /tmp/adss/hostsrules.conf
-mv /tmp/adss/dnsrules.conf /usr/share/adss/dnsrules.conf
-mv /tmp/adss/hostsrules.conf /usr/share/adss/hostsrules.conf
-rm -rf /tmp/adss/dnsAd /tmp/adss/hostsAd
+sleep 3
+wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/builder/build.sh -qO \
+	/tmp/adss/build.sh  && chmod 775 /tmp/adss/build.sh  && sh /tmp/adss/build.sh
+rm -f /tmp/adss/build.sh
+mv /tmp/adss/dnsrules.conf /usr/share/adss/rules/dnsrules.conf
+mv /tmp/adss/hostsrules.conf /usr/share/adss/rules/hostsrules.conf
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 echo

@@ -87,6 +87,10 @@ function uninstall() {
 	rm -rf /tmp/adss
 }
 
+function update_rules() {
+  sudo git clone
+}
+
 function implant_to_openwrt() {
 
 }
