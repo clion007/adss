@@ -14,8 +14,8 @@ if [ ! -d /etc/dnsmasq.d.adss.bak ]; then
 fi
 echo
 echo -e "\e[1;31m 删除相关计划任务\e[0m"
-if [ -f /etc/crontabs/$USER.bak ]; then
-	mv -f /etc/crontabs/$USER.bak /etc/crontabs/$USER
+if [ -f /etc/crontabs/$USER.adss.bak ]; then
+	mv -f /etc/crontabs/$USER.adss.bak /etc/crontabs/$USER
 fi
 /etc/init.d/cron reload > /dev/null 2>&1
 echo
