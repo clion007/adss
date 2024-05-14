@@ -4,7 +4,7 @@ wget --no-check-certificate -c -q -O /tmp/adss/adwhitelist https://gitcode.net/c
 if [ -f /usr/share/adss/userwhitelist ]; then
   sort /usr/share/adss/rules/userwhitelist /tmp/adss/adwhitelist | uniq > /tmp/adss/whitelist
 else
-  awk '!a[$0]++' /tmp/adss/adblacklist > /tmp/adss/blacklist
+  sort /tmp/adss/adwhitelist | uniq > /tmp/adss/whitelist
 fi
 sed -i "/#/d" /tmp/adss/whitelist
 rm -rf /tmp/adss/adwhitelist
