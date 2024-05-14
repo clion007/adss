@@ -86,11 +86,3 @@ function uninstall() {
 		/tmp/adss/uninstall.sh && chmod 775 /tmp/adss/uninstall.sh && sh /tmp/adss/uninstall.sh
 	rm -rf /tmp/adss
 }
-
-function update_rules() {
-  sudo git clone
-}
-
-function implant_to_openwrt() {
-
-}
