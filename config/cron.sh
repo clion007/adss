@@ -9,9 +9,6 @@ if [ ! $? -eq 0 ]; then
   echo -e "\e[1;36m 设置网络不通重启任务\e[0m"
   echo "# 检测网络，如果不通重启路由器
 */2 * * * * /etc/dnsmasq.d/adss/netcheck.sh" >> $CRON_FILE
-  echo
-  echo -e "\e[1;36m 网络不通重启任务设定完成\e[0m"
-  echo
   /etc/init.d/cron reload >/dev/null
   echo
 fi
