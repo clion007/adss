@@ -1,6 +1,6 @@
 #!/bin/sh
 sleep 3
-echo -e "\e[1;36m 获取规则文件......\e[0m"
+echo -e "\e[1;36m 获取规则文件\e[0m"
 echo
 wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/file/dnsrules.conf -qO \
 	/tmp/adss/rules/dnsrules.conf
