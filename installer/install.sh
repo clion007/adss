@@ -27,11 +27,12 @@ wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/config/
 	/tmp/adss/modifyConfig.sh  && chmod 775 /tmp/adss/modifyConfig.sh  && sh /tmp/adss/modifyConfig.sh
 rm -f /tmp/modifyConfig.sh
 sleep 3
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/builder/build.sh -qO \
-	/tmp/adss/build.sh  && chmod 775 /tmp/adss/build.sh  && sh /tmp/adss/build.sh
-rm -f /tmp/adss/build.sh
-mv /tmp/adss/dnsrules.conf /usr/share/adss/rules/dnsrules.conf
-mv /tmp/adss/hostsrules.conf /usr/share/adss/rules/hostsrules.conf
+echo -e "\e[1;36m 获取规则文件......\e[0m"
+echo
+wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/file/dnsrules.conf -qO \
+	/usr/share/adss/rules/dnsrules.conf
+wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/file/hostsrules.conf -qO \
+	/usr/share/adss/rules/hostsrules.conf
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 echo
