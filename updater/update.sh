@@ -1,10 +1,8 @@
 #!/bin/sh
-if [ ! -s /tmp/adss/copyright.sh ]; then
-	wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/copyright.sh -qO \
-		/tmp/adss/copyright.sh && chmod 775 /tmp/adss/copyright.sh
-fi
-if [ -s "/tmp/adss/copyright.sh" ]; then
-	sh /tmp/adss/copyright.sh
+wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/adss.sh -qO \
+	/tmp/adss/adss.sh && chmod 775 /tmp/adss/coadsspyright.sh
+if [ -s "/tmp/adss/adss.sh" ]; then
+	source /tmp/adss/adss.sh && show_copyright
 else
 	echo
 	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络异常，放弃本次更新。\e[0m"
