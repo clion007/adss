@@ -1,9 +1,12 @@
 # Description: Update ADSS Rules using GitHub Actions
 #
-# This is free software, licensed under the GPLv3 License.
+# This is free software, licensed under the GPL v3 License.
 # See /LICENSE for more information.
 
 name: Update Rules
+
+env:
+  TZ: Asia/Shanghai
 
 on:
   workflow_dispatch:
@@ -23,6 +26,29 @@ jobs:
     
       - name: CheckOut
         uses: actions/checkout@v4
+
+      - name: Initialization environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo timedatectl set-timezone "$TZ"
+          [ ! type wget >/dev/null 2>&1 ] && sudo -E apt-get -qq install -y wget
       
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Build Rules
+        run: |
+          $GITHUB_WORKSPACE/rules/bulder/build.sh
+          mv -f /tmp/adss/dnsrules.conf $GITHUB_WORKSPACE/rules/file/dnsrules.conf
+          mv -f /tmp/adss/hostsrules.conf $GITHUB_WORKSPACE/rules/file/hostsrules.conf
+
+      - name: Git Auto Update Rules
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_author: Clion <clion007@126.com>
+          file_pattern: rules/file/*srules.conf
+      
+      - name: Delete Workflow Runs
+        uses: Mattraks/delete-workflow-runs@main
+        continue-on-error: true
+        with:
+          retain_days: 0
+          keep_minimum_runs: 5
