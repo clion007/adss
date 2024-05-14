@@ -90,14 +90,6 @@ function check_network() {
         fi
     else
         echo "$(date '+%Y-%m-%d %H:%M:%S') 网络连接正常"
-        # 可以通过server 酱发送消息
-        #if [ $(cat $NETWORK_CHECK_COUNTER_FILE) -ge 1 ]; then
-        # 如果网络畅通且之前有失败计数，则进行POST请求
-        #echo "$(date '+%Y-%m-%d %H:%M:%S') 网络连接已恢复，发送POST请求"
-        #echo "$(date '+%Y-%m-%d %H:%M:%S') 网络连接已恢复，发送POST请求" >>$NETWORK_CHECK_LOG_FILE
-        # 使用curl发送POST请求到 http://aaa.com
-        # curl -X POST http://baidu.com
-        #fi
         echo "0" >$NETWORK_CHECK_COUNTER_FILE
     fi
 }
