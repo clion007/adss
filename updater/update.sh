@@ -52,4 +52,3 @@ else
 fi
 rm -rf /tmp/adss
 exit 0
-
