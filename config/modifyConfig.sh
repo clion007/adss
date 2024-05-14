@@ -43,7 +43,7 @@ if [ ! -f /usr/share/adss/rules/rules/userlist ]; then
 	echo
 	echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
 # 后面的ip表示希望域名解析到的IP
-#address=/telegram.org/149.154.167.99" > /usr/share/adss/rules/userlist
+# address=/telegram.org/149.154.167.99" > /usr/share/adss/rules/userlist
 fi
 if [ ! -f /usr/share/adss/rules/rules/userblacklist ]; then
 	echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
