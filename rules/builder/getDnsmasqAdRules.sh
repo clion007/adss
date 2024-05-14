@@ -20,7 +20,7 @@ wget --no-check-certificate -c -q -T 60 -O /tmp/adss/neodevhost.conf https://neo
 echo
 sleep 3
 echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
-wget --no-check-certificate -c -q -T 60 -O /tmp/adss/adblacklist https://gitcode.net/clion007/adss/raw/master/rules/adss/adblacklist
+wget --no-check-certificate -c -q -T 60 -O /tmp/adss/adblacklist https://gitee.com/clion007/adss/raw/master/rules/adss/adblacklist
 if [ -f /usr/share/adss/userblacklist ]; then
   awk '!a[$0]++' /usr/share/adss/rules/userblacklist /tmp/adss/adblacklist > /tmp/adss/blacklist
 else

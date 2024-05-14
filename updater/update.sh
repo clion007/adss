@@ -1,5 +1,5 @@
 #!/bin/sh
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/adss.sh -qO \
+wget --no-check-certificate https://gitee.com/clion007/adss/raw/master/adss.sh -qO \
 	/tmp/adss/adss.sh && chmod 775 /tmp/adss/adss.sh
 if [ -s "/tmp/adss/adss.sh" ]; then
 	source /tmp/adss/adss.sh && show_copyright
@@ -12,9 +12,9 @@ fi
 echo
 echo -e "\e[1;36m 开始检测更新脚本及规则\e[0m"
 echo
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/updater/update.sh -qO \
+wget --no-check-certificate https://gitee.com/clion007/adss/raw/master/updater/update.sh -qO \
       /tmp/adss/update.sh && chmod 775 /tmp/adss/update.sh
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/updater/rules_update.sh -qO \
+wget --no-check-certificate https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -qO \
       /tmp/adss/rules_update.sh && chmod 775 /tmp/adss/rules_update.sh
 if [ -s "/tmp/adss/update.sh" -a -s "/tmp/adss/rules_update.sh" ]; then
 	if ( ! cmp -s /tmp/adss/update.sh /usr/share/adss/update.sh ); then

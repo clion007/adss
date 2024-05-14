@@ -1,19 +1,19 @@
-wget --no-check-certificate -c -q -O /tmp/adss/initRulesFile.sh https://gitcode.net/clion007/adss/raw/master/rules/builder/initRulesFile.sh
+wget --no-check-certificate -c -q -O /tmp/adss/initRulesFile.sh https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh
 chmod 775 /tmp/adss/initRulesFile.sh
 sh /tmp/adss/initRulesFile.sh
 rm -f /tmp/adss/initRulesFile.sh
 echo
-wget --no-check-certificate -c -q -O /tmp/adss/getDnsmasqAdRules.sh https://gitcode.net/clion007/adss/raw/master/rules/builder/getDnsmasqAdRules.sh
+wget --no-check-certificate -c -q -O /tmp/adss/getDnsmasqAdRules.sh https://gitee.com/clion007/adss/raw/master/rules/builder/getDnsmasqAdRules.sh
 chmod 775 /tmp/adss/getDnsmasqAdRules.sh
 sh /tmp/adss/getDnsmasqAdRules.sh
 rm -f /tmp/adss/getDnsmasqAdRules.sh
 echo
-wget --no-check-certificate -c -q -O /tmp/adss/getHostsAdRules.sh https://gitcode.net/clion007/adss/raw/master/rules/builder/getHostsAdRules.sh
+wget --no-check-certificate -c -q -O /tmp/adss/getHostsAdRules.sh https://gitee.com/clion007/adss/raw/master/rules/builder/getHostsAdRules.sh
 chmod 775 /tmp/adss/getHostsAdRules.sh
 sh /tmp/adss/getHostsAdRules.sh
 rm -f /tmp/adss/getHostsAdRules.sh
 echo
-wget --no-check-certificate -c -q -O /tmp/adss/deletWhiteListRules.sh https://gitcode.net/clion007/adss/raw/master/rules/builder/deletWhiteListRules.sh
+wget --no-check-certificate -c -q -O /tmp/adss/deletWhiteListRules.sh https://gitee.com/clion007/adss/raw/master/rules/builder/deletWhiteListRules.sh
 chmod 775 /tmp/adss/deletWhiteListRules.sh
 sh /tmp/adss/deletWhiteListRules.sh
 rm -f /tmp/adss/deletWhiteListRules.sh

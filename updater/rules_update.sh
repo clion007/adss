@@ -2,9 +2,9 @@
 sleep 3
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/file/dnsrules.conf -qO \
+wget --no-check-certificate https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -qO \
 	/tmp/adss/rules/dnsrules.conf
-wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/rules/file/hostsrules.conf -qO \
+wget --no-check-certificate https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -qO \
 	/tmp/adss/rules/hostsrules.conf
 sleep 3
 if [ -s "/tmp/adss/dnsrules.conf" ]; then
