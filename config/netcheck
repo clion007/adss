@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # 日志默认目录
-Log_DIR="/etc/dnsmasq.d/adss/log"
+Log_DIR="/usr/share/adss/log"
 # 连续计数
 NETWORK_CHECK_COUNTER_FILE="${Log_DIR}/network-check-counter.log"
 # 执行日志

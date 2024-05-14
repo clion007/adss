@@ -50,8 +50,8 @@ echo "
 # Modified DNS end" >> /tmp/adss/dnsrules.conf
 echo "
 # 修饰hosts结束" >> /tmp/adss/hostsrules.conf
-mv /tmp/adss/dnsrules.conf /etc/dnsmasq.d/adss/dnsrules.conf
-mv /tmp/adss/hostsrules.conf /etc/dnsmasq.d/adss/hostsrules.conf
+mv /tmp/adss/dnsrules.conf /usr/share/adss/dnsrules.conf
+mv /tmp/adss/hostsrules.conf /usr/share/adss/hostsrules.conf
 rm -rf /tmp/adss/dnsAd /tmp/adss/hostsAd
 sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
@@ -59,14 +59,12 @@ echo
 killall dnsmasq > /dev/null 2>&1
 /etc/init.d/dnsmasq restart > /dev/null 2>&1
 sleep 2
-echo -e "\e[1;36m 获取脚本更新脚本\e[0m"
-echo
+wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/adss.sh -qO \
+	/usr/share/adss/update.sh && chmod 755 /usr/share/adss/adss.sh
 wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/updater/update.sh -qO \
-	/etc/dnsmasq.d/adss/update.sh && chmod 755 /etc/dnsmasq.d/adss/update.sh
-echo -e "\e[1;36m 获取规则更新脚本\e[0m"
-echo
+	/usr/share/adss/update.sh && chmod 755 /usr/share/adss/update.sh
 wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/updater/rules_update.sh -qO \
-	/etc/dnsmasq.d/adss/rules_update.sh && chmod 755 /etc/dnsmasq.d/adss/rules_update.sh
+	/usr/share/adss/rules_update.sh && chmod 755 /usr/share/adss/rules_update.sh
 sleep 3
 wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/config/cron.sh -qO \
 	/tmp/adss/cron.sh && chmod 775 /tmp/adss/cron.sh && sh /tmp/adss/cron.sh

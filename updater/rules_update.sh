@@ -31,10 +31,10 @@ echo "
 rm -rf /tmp/adss/dnsAd /tmp/adss/hostsAd
 sleep 3
 if [ -s "/tmp/adss/dnsrules.conf" ]; then
-    if ( ! cmp -s /tmp/adss/dnsrules.conf /etc/dnsmasq.d/adss/dnsrules.conf ); then
+    if ( ! cmp -s /tmp/adss/dnsrules.conf /usr/share/adss/rules/dnsrules.conf ); then
         echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到dnsmasq规则有更新......生成新dnsmasq规则！"
         echo
-        mv -f /tmp/adss/dnsrules.conf /etc/dnsmasq.d/adss/dnsrules.conf
+        mv -f /tmp/adss/dnsrules.conf /usr/share/adss/rules/dnsrules.conf
         /etc/init.d/dnsmasq restart > /dev/null 2>&1
         echo " `date +'%Y-%m-%d %H:%M:%S'`: dnsmasq规则更新完成，应用新规则。"
         echo
@@ -45,10 +45,10 @@ if [ -s "/tmp/adss/dnsrules.conf" ]; then
     fi  
 fi
 if [ -s "/tmp/adss/hostsrules.conf" ]; then
-    if ( ! cmp -s /tmp/adss/hostsrules.conf /etc/dnsmasq.d/adss/hostsrules.conf ); then
+    if ( ! cmp -s /tmp/adss/hostsrules.conf /usr/share/adss/rules/hostsrules.conf ); then
         echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到hosts规则有更新......生成新hosts规则！"
         echo
-        mv -f /tmp/adss/hostsrules.conf /etc/dnsmasq.d/adss/hostsrules.conf
+        mv -f /tmp/adss/hostsrules.conf /usr/share/adss/rules/hostsrules.conf
         /etc/init.d/dnsmasq restart > /dev/null 2>&1
         echo " `date +'%Y-%m-%d %H:%M:%S'`: hosts规则转换完成，应用新规则。"
         echo
