@@ -1,12 +1,4 @@
 #!/bin/sh
-if [ ! -s /tmp/adss/copyright.sh ]; then
-	wget --no-check-certificate https://gitcode.net/clion007/adss/raw/master/copyright.sh -qO \
-		/tmp/adss/copyright.sh && chmod 775 /tmp/adss/copyright.sh && sh /tmp/adss/copyright.sh
-	else
-		sh /tmp/adss/copyright.sh
-fi
-rm -f /tmp/adss/copyright.sh
-echo
 if [ -f /var/lock/opkg.lock ]; then
 	rm -f /var/lock/opkg.lock
 fi

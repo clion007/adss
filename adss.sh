@@ -71,11 +71,20 @@ function install() {
   echo -e "\e[1;36m ***ADSS 每天04:25自动更新规则，自动检测网络不通重启路由器，如需修改更新时间，可自行在计划任务中修改***\e[0m"
   echo
   echo -e "\e[1;36m 三秒后开始安装配置 ADSS\e[0m"
-    
+	echo
+	sleep 3
+	wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/install.sh -c -q -O \
+		/tmp/adss/install.sh && chmod 775 /tmp/adss/install.sh && sh /tmp/adss/install.sh
 }
 
 function uninstall() {
-
+  show_copyright
+	echo -e "\e[1;36m 三秒后开始卸载已安装脚本......\e[0m"
+	echo
+	sleep 3
+	wget --no-check-certificate https://gitcode.net/clion007/dnsmasq/raw/master/installer/uninstall.sh -c -q -O \
+		/tmp/adss/uninstall.sh && chmod 775 /tmp/adss/uninstall.sh && sh /tmpadss//uninstall.sh
+	rm -rf /tmp/adss
 }
 
 function implant_to_openwrt() {
