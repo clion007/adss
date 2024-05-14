@@ -10,6 +10,12 @@ env:
 
 on:
   workflow_dispatch:
+    inputs:
+      SSH_ACTION:
+        description: 'SSH远程配置固件'
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: 0 18 * * *
 
@@ -26,6 +32,10 @@ jobs:
     
       - name: CheckOut
         uses: actions/checkout@v4
+    
+      - name: SSH远程连接（make menuconfig）
+        if: ${{ github.event.inputs.SSH_ACTION }} == 'true'
+        uses: danshui-git/debugger-action@main
 
       - name: Initialization environment
         env:
