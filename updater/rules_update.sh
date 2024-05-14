@@ -1,4 +1,5 @@
 #!/bin/sh
+mkdir -p /tmp/adss
 sleep 3
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo
@@ -37,3 +38,5 @@ if [ -s "/tmp/adss/hostsrules.conf" ]; then
 fi
 echo -e "\e[1;36m 规则更新已完成...\e[0m"
 echo
+rm -rf /tmp/adss
+exit 0

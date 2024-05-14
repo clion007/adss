@@ -1,4 +1,5 @@
 #!/bin/sh
+mkdir -p /tmp/adss
 wget --no-check-certificate https://gitee.com/clion007/adss/raw/master/adss.sh -qO \
 	/tmp/adss/adss.sh && chmod 775 /tmp/adss/adss.sh
 if [ -s "/tmp/adss/adss.sh" ]; then
