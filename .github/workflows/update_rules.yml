@@ -36,7 +36,7 @@ jobs:
       - name: Build Rules
         run: |
           cd ${GITHUB_WORKSPACE}
-          source ./adss.sh && show_copyright
+          bash ./adss.sh && show_copyright
           bash ./rules/builder/build.sh
           cp -f /tmp/adss/dnsrules.conf rules/file/dnsrules.conf
           cp -f /tmp/adss/hostsrules.conf rules/file/hostsrules.conf
