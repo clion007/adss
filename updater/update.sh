@@ -1,6 +1,6 @@
  #!/bin/bash
-wget https://gitee.com/clion007/adss/raw/master/adss.sh -qO \
-	/tmp/adss/adss.sh && chmod 775 /tmp/adss/adss.sh
+curl -sSo /tmp/adss/adss.sh https://gitee.com/clion007/adss/raw/master/adss.sh
+chmod 775 /tmp/adss/adss.sh
 if [ -s "/tmp/adss/adss.sh" ]; then
 	. /tmp/adss/adss.sh && show_copyright
 else
@@ -12,10 +12,10 @@ fi
 echo 
 echo -e "\e[1;36m 开始检测更新脚本及规则\e[0m"
 echo 
-wget https://gitee.com/clion007/adss/raw/master/updater/update.sh -qO \
-      /tmp/adss/update.sh && chmod 775 /tmp/adss/update.sh
-wget https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -qO \
-      /tmp/adss/rules_update.sh && chmod 775 /tmp/adss/rules_update.sh
+curl -sSo /tmp/adss/update.sh https://gitee.com/clion007/adss/raw/master/updater/update.sh
+chmod 775 /tmp/adss/update.sh
+curl -sSo /tmp/adss/rules_update.sh https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh
+chmod 775 /tmp/adss/rules_update.sh
 if [ -s "/tmp/adss/update.sh" -a -s "/tmp/adss/rules_update.sh" ]; then
 	if ( ! cmp -s /tmp/adss/update.. /usr/share/adss/update.sh ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......3秒后即将开始更新！"

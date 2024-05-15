@@ -52,15 +52,6 @@ function install() {
       exit 1
     fi
   fi
-  opkg list_installed | grep "wget" > /dev/null
-  if [ ! $? -eq 0 ]; then
-    opkg install dnsmasq-full
-    opkg list_installed | grep "wget" > /dev/null
-    if [ ! $? -eq 0 ]; then
-      echo -e "\e[1;31m wget安装失败,请web登录路由器到系统软件包中手动安装后再试!\e[0m"
-      exit 1
-    fi
-  fi
   opkg list_installed | grep "ujail" > /dev/null
   if [ $? -eq 0 ]; then
     opkg remove ujail
@@ -68,13 +59,13 @@ function install() {
   echo 
   echo "倚赖关系处理完成"
   echo 
-  echo -e "\e[1;36m ***ADSS 每天04:25自动更新规则，自动检测网络不通重启路由器，如需修改更新时间，可自行在计划任务中修改***\e[0m"
+  echo -e "\e[1;36m ADSS 每天04:25自动更新规则，自动检测网络不通重启路由器，如需修改更新时间，可自行在计划任务中修改\e[0m"
   echo 
   echo -e "\e[1;36m 三秒后开始安装配置 ADSS\e[0m"
 	echo 
 	sleep 3
-	wget https://gitee.com/clion007/dnsmasq/raw/master/install.sh -cqO \
-		/tmp/adss/install.sh && chmod 775 /tmp/adss/install.sh && . /tmp/adss/install.sh
+	curl -sSo /tmp/adss/install.sh https://gitee.com/clion007/dnsmasq/raw/master/install.sh
+	chmod 775 /tmp/adss/install.sh && . /tmp/adss/install.sh
 }
 
 function uninstall() {
@@ -82,7 +73,7 @@ function uninstall() {
 	echo -e "\e[1;36m 三秒后开始卸载已安装脚本......\e[0m"
 	echo 
 	sleep 3
-	wget https://gitee.com/clion007/dnsmasq/raw/master/installer/uninstall.sh -cqO \
-		/tmp/adss/uninstall.sh && chmod 775 /tmp/adss/uninstall.sh && . /tmp/adss/uninstall.sh
+	curl -sSo /tmp/adss/uninstall.sh https://gitee.com/clion007/dnsmasq/raw/master/installer/uninstall.sh
+	chmod 775 /tmp/adss/uninstall.sh && . /tmp/adss/uninstall.sh
 	rm -rf /tmp/adss
 }
