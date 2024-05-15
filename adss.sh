@@ -74,7 +74,7 @@ function install() {
 	echo
 	sleep 3
 	wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/install.sh -c -q -O \
-		/tmp/adss/install.sh && chmod 775 /tmp/adss/install.sh && sh /tmp/adss/install.sh
+		/tmp/adss/install.sh && chmod 775 /tmp/adss/install.sh && . /tmp/adss/install.sh
 }
 
 function uninstall() {
@@ -83,6 +83,6 @@ function uninstall() {
 	echo
 	sleep 3
 	wget --no-check-certificate https://gitee.com/clion007/dnsmasq/raw/master/installer/uninstall.sh -c -q -O \
-		/tmp/adss/uninstall.sh && chmod 775 /tmp/adss/uninstall.sh && sh /tmp/adss/uninstall.sh
+		/tmp/adss/uninstall.sh && chmod 775 /tmp/adss/uninstall.sh && . /tmp/adss/uninstall.sh
 	rm -rf /tmp/adss
 }
