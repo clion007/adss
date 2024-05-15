@@ -4,12 +4,12 @@ echo -e "\e[1;36m 三秒后开始备份路由器相关配置\e[0m"
 echo 
 sleep 3
 curl https://gitee.com/clion007/adss/raw/master/config/backup.sh -sSo /tmp/adss/backup.sh
-chmod 775 /tmp/adss/backup.sh && bash /tmp/adss/backup.sh
+chmod 775 /tmp/adss/backup.sh && . /tmp/adss/backup.sh
 rm -f /tmp/adss/backup.sh
 echo 
 sleep 3
 curl https://gitee.com/clion007/adss/raw/master/config/modifyConfig.sh -sSo /tmp/adss/modifyConfig.sh
-chmod 775 /tmp/adss/modifyConfig.sh  && bash /tmp/adss/modifyConfig.sh
+chmod 775 /tmp/adss/modifyConfig.sh  && . /tmp/adss/modifyConfig.sh
 rm -f /tmp/modifyConfig.sh
 sleep 3
 echo -e "\e[1;36m 获取规则文件......\e[0m"
@@ -30,7 +30,7 @@ curl https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -sSo /us
 chmod 755 /usr/share/adss/rules_update.sh
 sleep 3
 curl https://gitee.com/clion007/adss/raw/master/config/cron.sh -sSo /tmp/adss/cron.sh
-chmod 775 /tmp/adss/cron.sh && bash /tmp/adss/cron.sh
+chmod 775 /tmp/adss/cron.sh && . /tmp/adss/cron.sh
 echo -e "\e[1;36m 删除安装临时文件\e[0m"
 rm -rf /tmp/adss
 echo 
