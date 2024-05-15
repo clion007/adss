@@ -38,6 +38,7 @@ jobs:
           cd ${GITHUB_WORKSPACE}
           source ./adss.sh && show_copyright
           bash ./rules/builder/build.sh
+          rm -rf $GITHUB_WORKSPACE/rules/file/*rules.conf
           mv -f /tmp/adss/dnsrules.conf $GITHUB_WORKSPACE/rules/file/dnsrules.conf
           mv -f /tmp/adss/hostsrules.conf $GITHUB_WORKSPACE/rules/file/hostsrules.conf
 
