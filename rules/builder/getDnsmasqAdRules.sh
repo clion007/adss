@@ -2,18 +2,18 @@
 echo -e "\e[1;36m 开始下载Dnsmasq广告规则\e[0m"
 echo 
 echo -e "\e[1;36m 下载anti-AD广告规则\e[0m"
-curl 'https://raw.gitmirror.com/privacy-protection-tools/anti-AD/master/adblock-for-dnsmasq.conf' -sSo /tmp/adss/antiAD.conf
+curl "https://raw.gitmirror.com/privacy-protection-tools/anti-AD/master/adblock-for-dnsmasq.conf" -sSo /tmp/adss/antiAD.conf
 sed -i "/#/d" /tmp/adss/antiAD.conf
 sed -i 's/$/&127.0.0.1/g' /tmp/adss/antiAD.conf
 echo 
 echo -e "\e[1;36m 下载yoyoAd广告规则\e[0m"
-curl 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq' -sSo /tmp/adss/yoyoAd.conf
+curl "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=dnsmasq" -sSo /tmp/adss/yoyoAd.conf
 sed -i "/</d" /tmp/adss/yoyoAd.conf
 sed -i "/]/d" /tmp/adss/yoyoAd.conf
 sed -i '/^$/d' /tmp/adss/yoyoAd.conf
 echo 
 echo -e "\e[1;36m 下载notrackAd广告规则,文件较大请耐心等待\e[0m"
-curl 'https://raw.gitmirror.com/notracking/hosts-blocklists/master/domains.txt' -sSo /tmp/adss/notrackAdDomain.conf
+curl "https://raw.gitmirror.com/notracking/hosts-blocklists/master/domains.txt" -sSo /tmp/adss/notrackAdDomain.conf
 echo 
 echo -e "\e[1;36m 下载neodevhost广告规则\e[0m"
 curl https://neodev.team/dnsmasq.conf -sSo /tmp/adss/neodevhost.conf
