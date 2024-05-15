@@ -36,7 +36,7 @@ if [ -f /usr/share/adss/userlist ]; then
   echo 
 fi
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
-cat /tmp/adss/antiAD.conf /tmp/adss/notrackAdDomain.conf /tmp/adss/yoyoAd.conf /tmp/adss/neodevhost.conf /tmp/adss/blacklist >> /tmp/adss/dnsAd
+cat /tmp/adss/antiAD.conf /tmp/adss/notrackAdDomain.conf /tmp/adss/yoyoAd.conf /tmp/adss/neodevhost.conf /tmp/adss/blacklist >> /tmp/adss/dnsAd 
 echo 
 echo -e "\e[1;36m 删除dnsmasq临时文件\e[0m"
 rm -rf /tmp/adss/antiAD.conf /tmp/adss/notrackAdDomain.conf /tmp/adss/yoyoAd.conf /tmp/adss/neodevhost.conf /tmp/adss/blacklist
