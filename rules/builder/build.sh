@@ -1,10 +1,10 @@
  #!/bin/bash
-curl -sSo /tmp/adss/initRulesFile.sh https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh
+curl -sSo /tmp/adss/initRulesFile.sh "https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh"
 chmod 775 /tmp/adss/initRulesFile.sh
 . /tmp/adss/initRulesFile.sh
 rm -f /tmp/adss/initRulesFile.sh
 echo 
-curl -sSo /tmp/adss/getDnsmasqAdRules.sh https://gitee.com/clion007/adss/raw/master/rules/builder/getDnsmasqAdRules.sh
+curl -sSo /tmp/adss/getDnsmasqAdRules.sh "https://gitee.com/clion007/adss/raw/master/rules/builder/getDnsmasqAdRules.sh"
 chmod 775 /tmp/adss/getDnsmasqAdRules.sh
 . /tmp/adss/getDnsmasqAdRules.sh
 rm -f /tmp/adss/getDnsmasqAdRules.sh
