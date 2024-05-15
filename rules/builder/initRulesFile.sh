@@ -3,7 +3,7 @@ echo -e "\e[1;36m 创建dnsmasq规则文件\e[0m"
 echo "
 ####################################################################
 ##                                                                ##
-## 【Copyright (c) 2014-`date +'%Y'`, clion007】                          ##
+##      【Copyright (c) 2014-`date +'%Y'`, clion007】                     ##
 ##                                                                ##
 ##              Update Time:`date +'%Y-%m-%d'`                            ##
 ##                                                                ##
@@ -22,7 +22,7 @@ echo -e "\e[1;36m 创建hosts规则文件\e[0m"
 echo "
 ####################################################################
 ##                                                                ##
-## 【Copyright (c) 2014-`date +'%Y'`, clion007】                          ##
+##      【Copyright (c) 2014-`date +'%Y'`, clion007】                     ##
 ##                                                                ##
 ##              Update Time:`date +'%Y-%m-%d'`                            ##
 ##                                                                ##
