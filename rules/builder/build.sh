@@ -1,5 +1,5 @@
  #!/bin/bash
-wget -cqO /tmp/adss/initRulesFile.sh https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh
+wget -cO /tmp/adss/initRulesFile.sh https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh
 chmod 775 /tmp/adss/initRulesFile.sh
 . /tmp/adss/initRulesFile.sh
 rm -f /tmp/adss/initRulesFile.sh
