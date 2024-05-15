@@ -27,12 +27,10 @@ jobs:
       - name: CheckOut
         uses: actions/checkout@v4
 
-      - name: 部署环境
+      - name: Set TimeZone
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sudo -E apt-get -qq update -y
-          sudo -E apt-get -qq install -y wget
           sudo timedatectl set-timezone "$TZ"
       
       - name: Build Rules
