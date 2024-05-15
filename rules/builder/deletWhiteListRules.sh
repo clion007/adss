@@ -1,6 +1,6 @@
  #!/bin/bash
 echo -e "\e[1;36m 删除白名单及误杀规则，时间较长，请耐心等待。。。\e[0m"
-curl -sSo /tmp/adss/adwhitelist https://gitee.com/clion007/adss/raw/master/rules/adss/adwhitelist
+curl https://gitee.com/clion007/adss/raw/master/rules/adss/adwhitelist -sSo /tmp/adss/adwhitelist
 if [ -f /usr/share/adss/userwhitelist ]; then
   sort /usr/share/adss/rules/userwhitelist /tmp/adss/adwhitelist | uniq > /tmp/adss/whitelist
 else

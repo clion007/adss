@@ -4,17 +4,17 @@ chmod 775 /tmp/adss/initRulesFile.sh
 . /tmp/adss/initRulesFile.sh
 rm -f /tmp/adss/initRulesFile.sh
 echo 
-curl -sSo /tmp/adss/getDnsmasqAdRules.sh https://gitee.com/clion007/adss/raw/master/rules/builder/getDnsmasqAdRules.sh
+curl https://gitee.com/clion007/adss/raw/master/rules/builder/getDnsmasqAdRules.sh -sSo /tmp/adss/getDnsmasqAdRules.sh
 chmod 775 /tmp/adss/getDnsmasqAdRules.sh
 . /tmp/adss/getDnsmasqAdRules.sh
 rm -f /tmp/adss/getDnsmasqAdRules.sh
 echo 
-curl -sSo /tmp/adss/getHostsAdRules.sh https://gitee.com/clion007/adss/raw/master/rules/builder/getHostsAdRules.sh
+curl https://gitee.com/clion007/adss/raw/master/rules/builder/getHostsAdRules.sh -sSo /tmp/adss/getHostsAdRules.sh
 chmod 775 /tmp/adss/getHostsAdRules.sh
 . /tmp/adss/getHostsAdRules.sh
 rm -f /tmp/adss/getHostsAdRules.sh
 echo 
-curl -sSo /tmp/adss/deletWhiteListRules.sh https://gitee.com/clion007/adss/raw/master/rules/builder/deletWhiteListRules.sh
+curl https://gitee.com/clion007/adss/raw/master/rules/builder/deletWhiteListRules.sh -sSo /tmp/adss/deletWhiteListRules.sh
 chmod 775 /tmp/adss/deletWhiteListRules.sh
 . /tmp/adss/deletWhiteListRules.sh
 rm -f /tmp/adss/deletWhiteListRules.sh

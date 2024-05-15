@@ -2,10 +2,10 @@
 echo -e "\e[1;36m 开始下载Hosts规则\e[0m"
 echo 
 echo -e "\e[1;36m 下载someonewhocares缓存\e[0m"
-curl -sSo /tmp/adss/someonewhocares.conf https://someonewhocares.org/hosts/zero/hosts
+curl https://someonewhocares.org/hosts/zero/hosts -sSo /tmp/adss/someonewhocares.conf
 echo 
 echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
-curl -sSo /tmp/adss/adaway.conf https://adaway.org/hosts.txt
+curl https://adaway.org/hosts.txt -sSo /tmp/adss/adaway.conf
 echo 
 echo -e "\e[1;36m 合并hosts缓存\e[0m"
 cat /tmp/adss/someonewhocares.conf /tmp/adss/adaway.conf > /tmp/adss/hostsAd

@@ -3,8 +3,8 @@ mkdir -p /tmp/adss
 sleep 3
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
-curl -sSo /tmp/adss/rules/dnsrules.conf https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf
-curl -sSo /tmp/adss/rules/hostsrules.conf https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf
+curl https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -sSo /tmp/adss/rules/dnsrules.conf
+curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sSo /tmp/adss/rules/hostsrules.conf
 sleep 3
 if [ -s "/tmp/adss/dnsrules.conf" ]; then
     if ( ! cmp -s /tmp/adss/dnsrules.conf /usr/share/adss/rules/dnsrules.conf ); then
