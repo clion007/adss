@@ -30,9 +30,11 @@ rm -rf /tmp/adss/adblacklist
 sed -i "/#/d" /tmp/adss/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist #支持通配符
 echo 
-echo -e "\e[1;36m 添加用户定义的解析规则\e[0m"
-cat /usr/share/adss/userlist > /tmp/adss/dnsAd
-echo 
+if [ -f /usr/share/adss/userlist ]; then
+  echo -e "\e[1;36m 添加用户定义的解析规则\e[0m"
+  cat /usr/share/adss/userlist > /tmp/adss/dnsAd
+  echo 
+fi
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
 cat /tmp/adss/antiAD.conf /tmp/adss/notrackAdDomain.conf /tmp/adss/yoyoAd.conf /tmp/adss/neodevhost.conf /tmp/adss/blacklist >> /tmp/adss/dnsAd
 echo 
