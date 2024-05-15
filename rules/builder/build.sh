@@ -27,4 +27,4 @@ echo "
 # Modified DNS end" >> /tmp/adss/dnsrules.conf
 echo "
 # 修饰hosts结束" >> /tmp/adss/hostsrules.conf
-rm -rf /tmp/adss/dnsAd /tmp/adss/hostsAd
+rm -rf /tmp/adss/*Ad
