@@ -27,16 +27,19 @@ jobs:
       - name: CheckOut
         uses: actions/checkout@v4
 
-      - name: Set Timezone
+      - name: 部署环境
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
+          sudo -E apt-get -qq update -y
+          sudo -E apt-get -qq install -y wget
           sudo timedatectl set-timezone "$TZ"
       
       - name: Build Rules
         run: |
-          source $GITHUB_WORKSPACE/adss.sh && show_copyright
-          bash $GITHUB_WORKSPACE/rules/builder/build.sh
+          cd ${GITHUB_WORKSPACE}
+          source ./adss.sh && show_copyright
+          bash ./rules/builder/build.sh
           sudo mv -f /tmp/adss/dnsrules.conf $GITHUB_WORKSPACE/rules/file/dnsrules.conf
           sudo mv -f /tmp/adss/hostsrules.conf $GITHUB_WORKSPACE/rules/file/hostsrules.conf
 
