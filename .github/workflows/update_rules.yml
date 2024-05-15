@@ -32,7 +32,6 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo timedatectl set-timezone "$TZ"
-          sudo chmod -R 775 $GITHUB_WORKSPACE
       
       - name: Build Rules
         run: |
