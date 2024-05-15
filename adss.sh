@@ -9,7 +9,8 @@
 
 function show_copyright() {
   mkdir -p /tmp/adss
-  curl -sL https://gitee.com/clion007/adss/raw/master/config/logo
+  curl -fosL /tmp/adss/logo https://gitee.com/clion007/adss/raw/master/config/logo
+  cat /tmp/adss/logo
   echo
   echo "Auto DNS Smart Script V4.0"
   echo "Project URL https://github.com/clion007/adss"
