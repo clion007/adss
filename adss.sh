@@ -25,7 +25,7 @@ function show_copyright() {
   echo
   echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
   echo "+                                                           +"
-  echo "+        Install ADSI for OpnWrt/LEDE/PandoraBox etc        +"
+  echo "+            ADSS for OpnWrt/LEDE/PandoraBox etc            +"
   echo "+                                                           +"
   echo "+                      Time:`date +'%Y-%m-%d'`                      +"
   echo "+                                                           +"
