@@ -16,7 +16,7 @@ address=/ip6-loopback/::1
 # Local DNS (DO NOT REMOVE) End
 
 # Modified DNS start" > /tmp/adss/dnsrules.conf
-echo
+echo 
 echo -e "\e[1;36m 创建hosts规则文件\e[0m"
 echo "
 ####################################################################
