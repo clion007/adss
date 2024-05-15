@@ -1,14 +1,14 @@
  #!/bin/bash
 bash <(curl -fsSL  https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh)
-echo
+echo ""
 bash <(curl -fsSL  https://gitee.com/clion007/adss/raw/master/rules/builder/getDnsmasqAdRules.sh)
-echo
+echo ""
 bash <(curl -fsSL  https://gitee.com/clion007/adss/raw/master/rules/builder/getHostsAdRules.sh)
-echo
+echo ""
 bash <(curl -fsSL  https://gitee.com/clion007/adss/raw/master/rules/builder/deletWhiteListRules.sh)
-echo
+echo ""
 echo -e "\e[1;36m 删除dnsmasq及hosts重复规则及临时文件\e[0m"
-echo
+echo ""
 awk '!a[$0]++' /tmp/adss/dnsAd >> /tmp/adss/dnsrules.conf
 awk '!a[$0]++' /tmp/adss/hostsAd >> /tmp/adss/hostsrules.conf
 echo "
