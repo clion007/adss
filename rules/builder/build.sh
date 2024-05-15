@@ -1,5 +1,5 @@
  #!/bin/bash
-curl -sSO https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh -o /tmp/adss/initRulesFile.sh
+curl -S https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh -o /tmp/adss/initRulesFile.sh
 chmod 775 /tmp/adss/initRulesFile.sh
 . /tmp/adss/initRulesFile.sh
 rm -f /tmp/adss/initRulesFile.sh
