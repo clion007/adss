@@ -24,7 +24,7 @@ echo
 awk '!a[$0]++' /tmp/dnsAd >> /tmp/dnsrules.conf 
 awk '!a[$0]++' /tmp/hostsAd >> /tmp/hostsrules.conf 
 echo "
-# Modified DNS end" >> /tmp/adss/dnsrules.conf
+# Modified DNS end" >> /tmp/adss/dnsrules.conf 
 echo "
-# 修饰hosts结束" >> /tmp/adss/hostsrules.conf
+# 修饰hosts结束" >> /tmp/adss/hostsrules.conf 
 rm -f /tmp/adss/*Ad
