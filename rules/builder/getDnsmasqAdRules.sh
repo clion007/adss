@@ -1,4 +1,4 @@
- #!/bin/bash
+ #!/bin/sh
 echo -e "\e[1;36m 开始下载Dnsmasq广告规则\e[0m"
 echo 
 echo -e "\e[1;36m 下载anti-AD广告规则\e[0m"
