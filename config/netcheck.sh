@@ -1,4 +1,4 @@
-#!/bin/sh
+ #!/bin/bash
 
 # 日志默认目录
 Log_DIR="/usr/share/adss/log"

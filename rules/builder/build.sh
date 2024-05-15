@@ -1,4 +1,4 @@
-#!/bin/sh
+ #!/bin/bash
 mkdir -p /tmp/adss
 wget -cqO /tmp/adss/initRulesFile.sh https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh
 chmod 775 /tmp/adss/initRulesFile.sh

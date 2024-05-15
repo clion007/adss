@@ -1,4 +1,4 @@
-#!/bin/sh
+ #!/bin/bash
 if [ -f /var/lock/opkg.lock ]; then
   rm -f /var/lock/opkg.lock
 fi

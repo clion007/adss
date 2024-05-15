@@ -1,6 +1,6 @@
-#!/bin/sh
+ #!/bin/bash
 echo -e "\e[1;36m 删除白名单及误杀规则，时间较长，请耐心等待。。。\e[0m"
-wget --no-check-certificate -c -q -O /tmp/adss/adwhitelist https://gitee.com/clion007/adss/raw/master/rules/adss/adwhitelist
+wget -c -q -O /tmp/adss/adwhitelist https://gitee.com/clion007/adss/raw/master/rules/adss/adwhitelist
 if [ -f /usr/share/adss/userwhitelist ]; then
   sort /usr/share/adss/rules/userwhitelist /tmp/adss/adwhitelist | uniq > /tmp/adss/whitelist
 else

@@ -1,4 +1,4 @@
-#!/bin/sh
+ #!/bin/bash
 sleep 3
 grep "adss" /etc/dnsmasq.conf >/dev/null
 echo "conf-dir=/usr/share/adss" >> /etc/dnsmasq.conf
