@@ -22,9 +22,9 @@ sleep 3
 echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
 curl https://gitee.com/clion007/adss/raw/master/rules/adss/adblacklist -sSo /tmp/adss/adblacklist
 if [ -f /usr/share/adss/userblacklist ]; then
-  awk '!a[$0]++' /usr/share/adss/rules/userblacklist /tmp/adss/adblacklist > /tmp/adss/blacklist
+  awk '!a[$0]++' /usr/share/adss/rules/userblacklist /tmp/adss/adblacklist > /tmp/adss/blacklist 
 else
-  awk '!a[$0]++' /tmp/adss/adblacklist > /tmp/adss/blacklist
+  awk '!a[$0]++' /tmp/adss/adblacklist > /tmp/adss/blacklist 
 fi
 rm -rf /tmp/adss/adblacklist
 sed -i "/#/d" /tmp/adss/blacklist
@@ -36,7 +36,7 @@ if [ -f /usr/share/adss/userlist ]; then
   echo 
 fi
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
-cat /tmp/adss/antiAD.conf /tmp/adss/notrackAdDomain.conf /tmp/adss/yoyoAd.conf /tmp/adss/neodevhost.conf /tmp/adss/blacklist >> /tmp/adss/dnsAd
+cat /tmp/adss/antiAD.conf /tmp/adss/notrackAdDomain.conf /tmp/adss/yoyoAd.conf /tmp/adss/neodevhost.conf /tmp/adss/blacklist >> /tmp/adss/dnsAd 
 echo 
 echo -e "\e[1;36m 删除dnsmasq临时文件\e[0m"
 rm -rf /tmp/adss/antiAD.conf /tmp/adss/notrackAdDomain.conf /tmp/adss/yoyoAd.conf /tmp/adss/neodevhost.conf /tmp/adss/blacklist

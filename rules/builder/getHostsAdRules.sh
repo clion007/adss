@@ -8,7 +8,7 @@ echo -e "\e[1;36m 下载adaway规则缓存\e[0m"
 curl https://adaway.org/hosts.txt -sSo /tmp/adss/adaway.conf
 echo 
 echo -e "\e[1;36m 合并hosts缓存\e[0m"
-cat /tmp/adss/someonewhocares.conf /tmp/adss/adaway.conf > /tmp/adss/hostsAd
+cat /tmp/adss/someonewhocares.conf /tmp/adss/adaway.conf > /tmp/adss/hostsAd 
 echo 
 echo -e "\e[1;36m 删除hosts临时文件\e[0m"
 rm -rf /tmp/adss/someonewhocares.conf /tmp/adss/adaway.conf
