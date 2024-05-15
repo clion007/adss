@@ -32,7 +32,7 @@ sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist #支持通配�
 echo 
 if [ -f /usr/share/adss/userlist ]; then
   echo -e "\e[1;36m 添加用户定义的解析规则\e[0m"
-  cat /usr/share/adss/userlist > /tmp/adss/dnsAd
+  cat /usr/share/adss/userlist > /tmp/adss/dnsAd 
   echo 
 fi
 echo -e "\e[1;36m 合并dnsmasq缓存\e[0m"
