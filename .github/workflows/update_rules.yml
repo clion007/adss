@@ -35,7 +35,7 @@ jobs:
       
       - name: Build Rules
         run: |
-          chmod -R 775 ${GITHUB_WORKSPACE}
+          # chmod -R 775 ${GITHUB_WORKSPACE}
           cd ${GITHUB_WORKSPACE}
           . ./adss.sh
           . ./rules/builder/initRulesFile.sh
