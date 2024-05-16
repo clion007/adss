@@ -34,7 +34,6 @@ function show_copyright() {
 }
 
 function install() {
-  show_copyright
   echo "检测与处理倚赖关系"
   if [ ! type opkg > /dev/null 2>&1 ]; then
     echo "ADSS 仅支持 Openwrt 系列固件使用，暂时不支持当前固件"
@@ -69,7 +68,6 @@ function install() {
 }
 
 function uninstall() {
-  show_copyright
 	echo -e "\e[1;36m 三秒后开始卸载已安装脚本......\e[0m"
 	echo 
 	sleep 3
@@ -77,3 +75,5 @@ function uninstall() {
 	chmod 775 /tmp/adss/uninstall.sh && . /tmp/adss/uninstall.sh
 	rm -rf /tmp/adss
 }
+
+show_copyright
