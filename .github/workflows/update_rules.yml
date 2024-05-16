@@ -34,6 +34,7 @@ jobs:
           sudo timedatectl set-timezone "$TZ"
       
       - name: Build Rules
+        shell: sh
         run: |
           cd ${GITHUB_WORKSPACE}
           sh ./installer/copyright.sh
