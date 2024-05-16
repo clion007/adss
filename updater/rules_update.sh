@@ -1,11 +1,46 @@
  #!/bin/sh
 mkdir -p /tmp/adss
-sleep 3
+echo -e "\e[1;36m 初始化规则文件\e[0m"
+curl https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh -sSo /tmp/adss/initRulesFile.sh
+sh /tmp/adss/initRulesFile.sh
+echo 
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
-curl https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -sSo /tmp/adss/rules/dnsrules.conf
-curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sSo /tmp/adss/rules/hostsrules.conf
-sleep 3
+curl https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -sSo /tmp/adss/dnsrules
+curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sSo /tmp/adss/hostsrules.conf
+echo -e "\e[1;36m 添加用户定义规则\e[0m"
+cat /usr/share/adss/userlist > /tmp/adss/userlist 
+sed -i "/#/d" /tmp/adss/userlist
+sed -i '/^$/d' /tmp/adss/dnsAd # 删除空行
+echo 
+echo -e "\e[1;36m 添加用户定义黑名单\e[0m"
+cat /usr/share/adss/rules/userblacklist > /tmp/adss/blacklist 
+sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist #支持通配符
+echo 
+echo -e "\e[1;36m 合并广告规则\e[0m"
+cat  /tmp/adss/dnsrules /tmp/adss/blacklist >> /tmp/adss/dnsAd 
+sed -i '/localhost/d' /tmp/adss/dnsAd # 删除本地规则
+sed -i 's/#.*//g' /tmp/adss/dnsAd # 删除注释内容
+sed -i '/^$/d' /tmp/adss/dnsAd # 删除空行
+awk '!a[$0]++' /tmp/adss/dnsAd #去除重复
+echo 
+echo -e "\e[1;36m 添加用户定义白名单\e[0m"
+cat /usr/share/adss/rules/userwhitelist | uniq > /tmp/adss/whitelist 
+sed -i "/#/d" /tmp/adss/whitelist
+while read -r line
+do
+	if [ -s "/tmp/adss/dnsAd" ]; then 
+		sed -i "/$line/d" /tmp/adss/dnsAd
+	fi
+	if [ -s "/tmp/adss/hostsAd" ]; then 
+		sed -i "/$line/d" /tmp/adss/hostsAd
+	fi
+done < /tmp/adss/whitelist
+echo 
+echo -e "\e[1;36m 生成最终DNS规则\e[0m"
+cat /tmp/adss/userlist /tmp/adss/dnsAd >> /tmp/adss/dnsrules.conf
+echo "# Modified DNS end" >> /tmp/adss/dnsrules.conf 
+echo 
 if [ -s "/tmp/adss/dnsrules.conf" ]; then
     if ( ! cmp -s /tmp/adss/dnsrules.conf /usr/share/adss/rules/dnsrules.conf ); then
         echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到dnsmasq规则有更新......生成新dnsmasq规则！"
@@ -35,5 +70,4 @@ if [ -s "/tmp/adss/hostsrules.conf" ]; then
     fi  
 fi
 echo -e "\e[1;36m 规则更新已完成...\e[0m"
-echo 
 rm -rf /tmp/adss
