@@ -54,6 +54,7 @@ jobs:
           echo "# 修饰hosts结束" >> /tmp/adss/hostsrules.conf 
           mv -f /tmp/adss/dnsrules.conf ./rules/file/dnsrules.conf
           mv -f /tmp/adss/hostsrules.conf ./rules/file/hostsrules.conf
+          echo -e "\e[1;36m 规则创建完成！\e[0m"
 
       - name: Git Auto Update Rules
         uses: stefanzweifel/git-auto-commit-action@v5
