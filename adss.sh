@@ -17,7 +17,7 @@ else
   exit 1
 fi
 echo 
-echo -e "\e[1;36m >         1. 安装配置 ADSS \e[0m"
+echo -e "\e[1;36m >         1. 安装 ADSS \e[0m"
 echo 
 echo -e "\e[1;36m >         2. 卸载 ADSS \e[0m"
 echo 
