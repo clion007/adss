@@ -37,7 +37,7 @@ jobs:
         run: |
           chmod -R 775 ${GITHUB_WORKSPACE}
           cd ${GITHUB_WORKSPACE}
-          . ./adss.sh && show_copyright
+          . ./adss.sh
           ./rules/builder/initRulesFile.sh
           echo 
           ./rules/builder/getDnsmasqAdRules.sh
