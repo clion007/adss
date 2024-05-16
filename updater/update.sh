@@ -1,14 +1,12 @@
  #!/bin/sh
-curl https://gitee.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh
-if [ -s "/tmp/adss/adss.sh" ]; then
-	sh /tmp/adss/adss.sh
+curl https://gitee.com/clion007/adss/raw/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
+if [ -s "/tmp/adss/copyright.sh" ]; then
+  sh /tmp/adss/copyright.sh
 else
-	echo 
-	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络异常，放弃本次更新。\e[0m"
-	echo 
-	exit 1
+  echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络异常，t退出更新。\e[0m"
+  echo 
+  exit 1
 fi
-echo 
 echo -e "\e[1;36m 开始检测更新脚本及规则\e[0m"
 echo 
 curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sSo /tmp/adss/update.sh

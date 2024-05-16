@@ -1,24 +1,28 @@
  #!/bin/sh
 echo "检测与处理倚赖关系"
 if [ ! type opkg > /dev/null 2>&1 ]; then
-echo "ADSS 仅支持 Openwrt 系列固件使用，暂时不支持当前固件"
-exit 1
+  echo "ADSS 仅支持 Openwrt 系列固件使用，暂时不支持当前固件"
+  exit 1
 fi
 if [ -f /var/lock/opkg.lock ]; then
-rm -f /var/lock/opkg.lock
+ rm -f /var/lock/opkg.lock
 fi
 opkg list_installed | grep "dnsmasq" > /dev/null
 if [ ! $? -eq 0 ]; then
-opkg install dnsmasq-full
-opkg list_installed | grep "dnsmasq" > /dev/null
-if [ ! $? -eq 0 ]; then
+  opkg install dnsmasq-full
+  opkg list_installed | grep "dnsmasq" > /dev/null
+  if [ ! $? -eq 0 ]; then
     echo -e "\e[1;31m dnsmasq-full安装失败,请web登录路由器到系统软件包中手动安装后再试!\e[0m"
     exit 1
+  fi
 fi
+opkg list_installed | grep "bash" > /dev/null
+ if [ $? -eq 0 ]; then
+ opkg install bash
 fi
 opkg list_installed | grep "ujail" > /dev/null
 if [ $? -eq 0 ]; then
-opkg remove ujail
+  opkg remove ujail
 fi
 echo 
 echo "倚赖关系处理完成"
