@@ -40,7 +40,7 @@ jobs:
           . ./adss.sh
           . ./rules/builder/initRulesFile.sh
           echo 
-          ../rules/builder/getDnsmasqAdRules.sh
+          . ./rules/builder/getDnsmasqAdRules.sh
           echo 
           . ./rules/builder/getHostsAdRules.sh
           echo 
