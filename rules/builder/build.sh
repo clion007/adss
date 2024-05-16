@@ -1,4 +1,5 @@
  #!/bin/bash
+pwd
 ./rules/builder/initRulesFile.sh
 echo 
 ./rules/builder/getDnsmasqAdRules.sh
