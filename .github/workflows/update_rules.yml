@@ -46,7 +46,7 @@ jobs:
           echo 
           ./rules/builder/deletWhiteListRules.sh
           echo 
-          
+          ./rules/builder/finish.sh
 
       - name: Git Auto Update Rules
         uses: stefanzweifel/git-auto-commit-action@v5
