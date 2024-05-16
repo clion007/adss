@@ -1,5 +1,5 @@
  #!/bin/bash
-pwd
+cd ${GITHUB_WORKSPACE}
 ./rules/builder/initRulesFile.sh
 echo 
 ./rules/builder/getDnsmasqAdRules.sh
