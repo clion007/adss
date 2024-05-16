@@ -21,8 +21,8 @@ rm -f /tmp/adss/deletWhiteListRules.sh
 echo 
 echo -e "\e[1;36m 删除dnsmasq及hosts重复规则\e[0m"
 echo 
-cat /tmp/adss/dnsAd >> /tmp/adss/dnsrules.conf
-cat /tmp/adss/hostsAd | awk '!a[$0]++' >> /tmp/adss/hostsrules.conf
+cat /tmp/adss/dnsAd >> /tmp/adss/dnsrules.conf 
+cat /tmp/adss/hostsAd | awk '!a[$0]++' >> /tmp/adss/hostsrules.conf 
 echo "
 # Modified DNS end" >> /tmp/adss/dnsrules.conf
 echo "
