@@ -1,4 +1,4 @@
- #!/bin/bash
+ #!/bin/sh
 CRON_FILE=/etc/crontabs/$USER
 echo -e "\e[1;36m 创建dnsmasq规则与更新脚本存放的文件夹\e[0m"
 echo 

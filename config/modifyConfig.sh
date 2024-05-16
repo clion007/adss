@@ -1,5 +1,4 @@
- #!/bin/bash
-sleep 3
+ #!/bin/sh
 grep "adss" /etc/dnsmasq.conf >/dev/null
 echo "conf-dir=/usr/share/adss" >> /etc/dnsmasq.conf 
 lanip=`ifconfig|grep Bcast|awk '{print $2}'|tr -d "addr:"| tr '\n' ',' | sed 's/,$//'`

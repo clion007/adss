@@ -1,4 +1,4 @@
- #!/bin/bash
+ #!/bin/sh
 mkdir -p /tmp/adss
 sleep 3
 echo -e "\e[1;36m 获取规则文件\e[0m"

@@ -1,4 +1,9 @@
- #!/bin/bash
+ #!/bin/sh
+echo -e "\e[1;36m 三秒后开始卸载已安装脚本......\e[0m"
+echo 
+sleep 3
+curl https://gitee.com/clion007/dnsmasq/raw/master/installer/uninstall.sh -sSo /tmp/adss/uninstall.sh
+sh /tmp/adss/uninstall.sh
 if [ -f /var/lock/opkg.lock ]; then
   rm -f /var/lock/opkg.lock
 fi
@@ -19,3 +24,4 @@ echo
 echo -e "\e[1;31m 重启dnsmasq服务\e[0m"
 killall dnsmasq > /dev/null 2>&1
 /etc/init.d/dnsmasq restart > /dev/null 2>&1
+rm -rf /tmp/adss

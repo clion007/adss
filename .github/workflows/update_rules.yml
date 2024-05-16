@@ -36,14 +36,14 @@ jobs:
       - name: Build Rules
         run: |
           cd ${GITHUB_WORKSPACE}
-          . ./adss.sh
-          . ./rules/builder/initRulesFile.sh
+          sh ./installer/copyright.sh
+          sh ./rules/builder/initRulesFile.sh
           echo 
-          . ./rules/builder/getDnsmasqAdRules.sh
+          sh ./rules/builder/getDnsmasqAdRules.sh
           echo 
-          . ./rules/builder/getHostsAdRules.sh
+          sh ./rules/builder/getHostsAdRules.sh
           echo 
-          . ./rules/builder/deletWhiteListRules.sh
+          sh ./rules/builder/deletWhiteListRules.sh
           echo 
           echo -e "\e[1;36m 删除dnsmasq及hosts重复规则\e[0m"
           echo 
