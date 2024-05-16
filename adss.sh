@@ -17,3 +17,26 @@ else
   exit 1
 fi
 echo 
+echo -e "\e[1;36m >         1. 安装配置 ADSS \e[0m"
+echo 
+echo -e "\e[1;36m >         2. 卸载 ADSS \e[0m"
+echo 
+echo -e "\e[1;36m >         3. 退出 \e[0m"
+echo 
+echo -e -n "\e[1;34m 请输入数字回车执行: \e[0m" 
+read Run_Num
+echo 
+if [ "$Run_Num" == "1" ]; then
+	echo -e "\e[1;36m 即将开始安装配置去广告全自动脚本\e[0m"
+	echo 
+	curl https://gitee.com/clion007/adss/raw/master/installer/install.sh -sSo /tmp/adss/install.sh
+    sh /tmp/adss/install.sh
+elif [ "$Run_Num" == "2" ]; then
+	echo -e "\e[1;36m 开始卸载已安装脚本\e[0m"
+	echo 
+	curl https://gitee.com/clion007/adss/raw/master/installer/uninstall.sh -sSo /tmp/adss/uninstall.sh
+	sh /tmp/adss/uninstall.sh
+else
+    rm -rf /tmp/adss
+fi
+exit 0
