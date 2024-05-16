@@ -38,13 +38,13 @@ jobs:
           chmod -R 775 ${GITHUB_WORKSPACE}
           cd ${GITHUB_WORKSPACE}
           . ./adss.sh
-          ./rules/builder/initRulesFile.sh
+          . ./rules/builder/initRulesFile.sh
           echo 
-          ./rules/builder/getDnsmasqAdRules.sh
+          ../rules/builder/getDnsmasqAdRules.sh
           echo 
-          ./rules/builder/getHostsAdRules.sh
+          . ./rules/builder/getHostsAdRules.sh
           echo 
-          ./rules/builder/deletWhiteListRules.sh
+          . ./rules/builder/deletWhiteListRules.sh
           echo 
           echo -e "\e[1;36m 删除dnsmasq及hosts重复规则\e[0m"
           echo 
