@@ -44,8 +44,6 @@ curl https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -sSo /u
 curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sSo /usr/share/adss/rules/hostsrules.conf
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 echo 
-killall dnsmasq > /dev/null 2>&1
-/etc/init.d/dnsmasq restart > /dev/null 2>&1
 curl https://gitee.com/clion007/adss/raw/master/adss.sh -sSo /usr/share/adss/adss.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sSo /usr/share/adss/update.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -sSo /usr/share/adss/rules_update.sh
@@ -64,3 +62,5 @@ echo "+                                                           +"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo 
 echo 
+killall dnsmasq > /dev/null 2>&1
+/etc/init.d/dnsmasq restart > /dev/null 2>&1
