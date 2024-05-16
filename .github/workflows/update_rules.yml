@@ -35,6 +35,7 @@ jobs:
       
       - name: Build Rules
         run: |
+          chmod ${GITHUB_WORKSPACE}
           cd ${GITHUB_WORKSPACE}
           . ./adss.sh && show_copyright
           ./rules/builder/build.sh
