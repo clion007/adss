@@ -2,7 +2,7 @@
 curl https://gitee.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh
 chmod 775 /tmp/adss/adss.sh
 if [ -s "/tmp/adss/adss.sh" ]; then
-	. /tmp/adss/adss.sh && show_copyright
+	. /tmp/adss/adss.sh
 else
 	echo 
 	echo -e "\e[1;36m  `date +'%Y-%m-%d %H:%M:%S'`: 网络异常，放弃本次更新。\e[0m"
