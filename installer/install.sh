@@ -1,22 +1,18 @@
  #!/bin/bash
 echo 
-echo -e "\e[1;36m 三秒后开始备份路由器相关配置\e[0m"
+echo -e "\e[1;36m 开始备份路由器相关配置\e[0m"
 echo 
-sleep 3
 curl https://gitee.com/clion007/adss/raw/master/config/backup.sh -sSo /tmp/adss/backup.sh
 chmod 775 /tmp/adss/backup.sh && . /tmp/adss/backup.sh
 rm -f /tmp/adss/backup.sh
 echo 
-sleep 3
 curl https://gitee.com/clion007/adss/raw/master/config/modifyConfig.sh -sSo /tmp/adss/modifyConfig.sh
 chmod 775 /tmp/adss/modifyConfig.sh  && . /tmp/adss/modifyConfig.sh
 rm -f /tmp/modifyConfig.sh
-sleep 3
-echo -e "\e[1;36m 获取规则文件......\e[0m"
+echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
 curl https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -sSo /usr/share/adss/rules/dnsrules.conf
 curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sSo /usr/share/adss/rules/hostsrules.conf
-sleep 3
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 echo 
 killall dnsmasq > /dev/null 2>&1
