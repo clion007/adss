@@ -36,8 +36,8 @@ echo
 curl https://gitee.com/clion007/adss/raw/master/config/prepare.sh -sLSo /tmp/adss/prepare.sh
 sh /tmp/adss/prepare.sh
 echo 
-curl https://gitee.com/clion007/adss/raw/master/config/modifyConfig.sh -sLSo /tmp/adss/modifyConfig.sh
-sh /tmp/adss/modifyConfig.sh
+curl https://gitee.com/clion007/adss/raw/master/config/configer.sh -sLSo /tmp/adss/configer.sh
+sh /tmp/adss/configer.sh
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf
