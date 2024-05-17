@@ -1,13 +1,13 @@
  #!/bin/sh
 mkdir -p /tmp/adss
 echo -e "\e[1;36m 初始化规则文件\e[0m"
-curl https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh -sSo /tmp/adss/initRulesFile.sh
+curl https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh -sLSo /tmp/adss/initRulesFile.sh
 sh /tmp/adss/initRulesFile.sh
 echo 
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
-curl https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -sSo /tmp/adss/dnsrules
-curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sSo /tmp/adss/hostsrules.conf
+curl https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -sLSo /tmp/adss/dnsrules
+curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf
 echo -e "\e[1;36m 添加用户定义规则\e[0m"
 cat /usr/share/adss/userlist > /tmp/adss/userlist 
 sed -i "/#/d" /tmp/adss/userlist

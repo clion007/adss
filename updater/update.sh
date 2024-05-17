@@ -1,5 +1,5 @@
  #!/bin/sh
-curl https://gitee.com/clion007/adss/raw/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
+curl https://gitee.com/clion007/adss/raw/master/installer/copyright.sh -sLSo /tmp/adss/copyright.sh
 if [ -s "/tmp/adss/copyright.sh" ]; then
   sh /tmp/adss/copyright.sh
 else
@@ -9,8 +9,8 @@ else
 fi
 echo -e "\e[1;36m 开始检测更新脚本及规则\e[0m"
 echo 
-curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sSo /tmp/adss/update.sh
-curl https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -sSo /tmp/adss/rules_update.sh
+curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sLSo /tmp/adss/update.sh
+curl https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -sLSo /tmp/adss/rules_update.sh
 if [ -s "/tmp/adss/update.sh" -a -s "/tmp/adss/rules_update.sh" ]; then
 	if ( ! cmp -s /tmp/adss/update.sh /usr/share/adss/update.sh ); then
 		echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......开始更新！"

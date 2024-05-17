@@ -2,7 +2,7 @@
 echo -e "\e[1;36m 三秒后开始卸载已安装脚本......\e[0m"
 echo 
 sleep 3
-curl https://gitee.com/clion007/dnsmasq/raw/master/installer/uninstall.sh -sSo /tmp/adss/uninstall.sh
+curl https://gitee.com/clion007/dnsmasq/raw/master/installer/uninstall.sh -sLSo /tmp/adss/uninstall.sh
 sh /tmp/adss/uninstall.sh
 if [ -f /var/lock/opkg.lock ]; then
   rm -f /var/lock/opkg.lock
