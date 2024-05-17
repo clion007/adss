@@ -33,8 +33,8 @@ echo -e "\e[1;36m 开始安装配置 ADSS\e[0m"
 echo 
 echo -e "\e[1;36m 开始备份路由器相关配置\e[0m"
 echo 
-curl https://gitee.com/clion007/adss/raw/master/config/backup.sh -sLSo /tmp/adss/backup.sh
-sh /tmp/adss/backup.sh
+curl https://gitee.com/clion007/adss/raw/master/config/prepare.sh -sLSo /tmp/adss/prepare.sh
+sh /tmp/adss/prepare.sh
 echo 
 curl https://gitee.com/clion007/adss/raw/master/config/modifyConfig.sh -sLSo /tmp/adss/modifyConfig.sh
 sh /tmp/adss/modifyConfig.sh
