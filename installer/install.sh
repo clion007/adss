@@ -46,6 +46,7 @@ echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 echo 
 curl https://gitee.com/clion007/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sLSo /usr/share/adss/update.sh
+curl https://gitee.com/clion007/adss/raw/master/updater/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -sLSo /usr/share/adss/rules_update.sh
 curl https://gitee.com/clion007/adss/raw/master/config/cron.sh -sLSo /tmp/adss/cron.sh
 . /tmp/adss/cron.sh
