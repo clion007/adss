@@ -40,7 +40,7 @@ curl https://gitee.com/clion007/adss/raw/master/config/modifyConfig.sh -sSo /tmp
 sh /tmp/adss/modifyConfig.sh
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
-curl https://gitcode.net/clion007/adss/raw/master/rules/file/dnsrules.conf -sSo /usr/share/adss/rules/dnsrules.conf
+curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sSo /usr/share/adss/rules/dnsrules.conf
 curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sSo /usr/share/adss/rules/hostsrules.conf
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 echo 
