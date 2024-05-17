@@ -37,7 +37,7 @@ PS：
 **安装配置方法：**
 使用putty软件登录路由器或者web端登录路由器，进入tty终端，输入以下命令行回车：
 ```
-curl https://gitee.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && sh /tmp/adss/adss.sh
+sh <(curl -fsLS https://gitee.com/clion007/adss/raw/master/adss.sh)
 ```
 即可运行脚本根据需要选择配置路由器dnsmasq及hosts，完成后立即既可生效，一般无需重启路由器。putty运行脚本显示乱码的问题请设置putty软件的编码为UTF-8。
 
