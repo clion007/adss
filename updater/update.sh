@@ -1,5 +1,5 @@
  #!/bin/sh
-mkdir /tmp/adss
+mkdir -p /tmp/adss
 curl https://gitee.com/clion007/adss/raw/master/installer/copyright.sh -sLSo /tmp/adss/copyright.sh
 if [ -s "/tmp/adss/copyright.sh" ]; then
   sh /tmp/adss/copyright.sh
