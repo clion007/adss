@@ -12,7 +12,7 @@ cache-size=1000000
 listen-address=::1,127.0.0.1,$lanip
 
 # 指定上游DNS服务器配置文件路径
-resolv-file=/usr/share/adss/resolv.conf
+# resolv-file=/usr/share/adss/resolv.conf
 
 # 上游DNS服务器并发查询
 all-servers 
