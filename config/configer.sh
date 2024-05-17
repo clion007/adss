@@ -21,7 +21,7 @@ echo "# 上游DNS解析服务器
 # 纯净免费公共DNS查询服务器
 nameserver 119.29.29.29      # DNSPod IPv4
 nameserver 2402:4e00::       # DNSPod IPv6
-# nameserver 8.8.8.8           # Google IPv4 DNS
+nameserver 8.8.8.8           # Google IPv4 DNS
 nameserver 101.102.103.104   # TWNIC DNS IPv4
 nameserver 2001:de4::102     # TWNIC DNS IPv6
 nameserver 168.126.63.1      # 韩国 DNS IPv4
