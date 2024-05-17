@@ -5,7 +5,7 @@ echo "# 设定域名解析缓存池大小
 cache-size=1000000
 
 # 指定上游DNS服务器配置文件
-# resolv-file=/etc/dnsmasq.d/adss/resolv-adss.conf
+resolv-file=/etc/dnsmasq.d/adss/resolv-adss.conf
 
 # 添加解析文件目录
 conf-file=/etc/dnsmasq.d/adss/rules/dnsrules.conf
