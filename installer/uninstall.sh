@@ -1,14 +1,9 @@
  #!/bin/sh
-echo -e "\e[1;36m 三秒后开始卸载已安装脚本......\e[0m"
+echo -e "\e[1;36m 开始卸载ADSS\e[0m"
 echo 
-sleep 3
-curl https://gitee.com/clion007/dnsmasq/raw/master/installer/uninstall.sh -sLSo /tmp/adss/uninstall.sh
-sh /tmp/adss/uninstall.sh
 if [ -f /var/lock/opkg.lock ]; then
   rm -f /var/lock/opkg.lock
 fi
-echo -e "\e[1;31m 开始卸载已安装dnsmasq脚本配置 \e[0m"
-echo 
 echo -e "\e[1;31m 删除残留文件夹以及配置 \e[0m"
 echo 
 rm -rf /usr/share/adss /etc/dnsmasq.d/*adss* /tmp/dnsmasq.d/*adss*
