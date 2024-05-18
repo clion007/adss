@@ -42,7 +42,6 @@ echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf
 curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf
-echo 
 curl https://gitee.com/clion007/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sLSo /usr/share/adss/update.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
@@ -51,6 +50,7 @@ curl https://gitee.com/clion007/adss/raw/master/config/cron.sh -sLSo /tmp/adss/c
 . /tmp/adss/cron.sh
 echo -e "\e[1;36m 删除安装临时文件\e[0m"
 rm -rf /tmp/adss
+echo 
 echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
 killall dnsmasq > /dev/null 2>&1
 /etc/init.d/dnsmasq restart > /dev/null 2>&1
