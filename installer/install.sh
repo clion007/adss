@@ -51,6 +51,9 @@ curl https://gitee.com/clion007/adss/raw/master/config/cron.sh -sLSo /tmp/adss/c
 . /tmp/adss/cron.sh
 echo -e "\e[1;36m 删除安装临时文件\e[0m"
 rm -rf /tmp/adss
+echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
+killall dnsmasq > /dev/null 2>&1
+/etc/init.d/dnsmasq restart > /dev/null 2>&1
 echo 
 echo 
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -62,6 +65,3 @@ echo "+                                                           +"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo 
 echo 
-echo -e "\e[1;36m 重启dnsmasq服务\e[0m"
-killall dnsmasq > /dev/null 2>&1
-/etc/init.d/dnsmasq restart > /dev/null 2>&1
