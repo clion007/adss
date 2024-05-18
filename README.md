@@ -40,6 +40,7 @@ PS：
 mkdir -p /tmp/adss && curl https://gitee.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && sh /tmp/adss/adss.sh
 ```
 即可运行脚本根据需要选择配置路由器dnsmasq及hosts，完成后立即既可生效，一般无需重启路由器。putty运行脚本显示乱码的问题请设置putty软件的编码为UTF-8。
+
 如果发现配置后dns解析出现问题，可以ip登录路由器，用dnsmasq --test命令行检测配置的问题在哪里，一般如果同时使用别的软件涉及dns设置可能会出现类似冲突的问题。
 
 **注意：**
