@@ -1,15 +1,16 @@
  #!/bin/sh
 mkdir -p /tmp/adss
-echo -e "\e[1;36m 初始化规则文件\e[0m"
-curl https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh -sLSo /tmp/adss/initRulesFile.sh
+echo -e "\e[1;36m 初始化规则文件 \e[0m"
+echo 
+curl https://raw.gitmirror.com/clion007/adss/master/rules/builder/initRulesFile.sh -sLSo /tmp/adss/initRulesFile.sh
 sh /tmp/adss/initRulesFile.sh
 echo 
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
-curl https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -sLSo /tmp/adss/dnsrules
-curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf
+curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /tmp/adss/dnsrules
+curl https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf
 echo -e "\e[1;36m 添加用户定义规则\e[0m"
-cat /etc/dnsmasq.d/adss/userlist > /tmp/adss/userlist 
+cat /etc/dnsmasq.d/adss/rules/userlist > /tmp/adss/userlist 
 sed -i "/#/d" /tmp/adss/userlist
 sed -i '/^$/d' /tmp/adss/dnsAd # 删除空行
 echo 

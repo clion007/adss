@@ -33,20 +33,20 @@ echo -e "\e[1;36m 开始安装配置 ADSS\e[0m"
 echo 
 echo -e "\e[1;36m 开始备份路由器相关配置\e[0m"
 echo 
-curl https://gitee.com/clion007/adss/raw/master/config/prepare.sh -sLSo /tmp/adss/prepare.sh
+curl https://raw.gitmirror.com/clion007/adss/master/config/prepare.sh -sLSo /tmp/adss/prepare.sh
 sh /tmp/adss/prepare.sh
 echo 
-curl https://gitee.com/clion007/adss/raw/master/config/configer.sh -sLSo /tmp/adss/configer.sh
+curl https://raw.gitmirror.com/clion007/adss/master/config/configer.sh -sLSo /tmp/adss/configer.sh
 sh /tmp/adss/configer.sh
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf
-curl https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf
-curl https://gitee.com/clion007/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
-curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sLSo /usr/share/adss/update.sh
-curl https://gitee.com/clion007/adss/raw/master/updater/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
-curl https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -sLSo /usr/share/adss/rules_update.sh
-curl https://gitee.com/clion007/adss/raw/master/config/cron.sh -sLSo /tmp/adss/cron.sh
+curl https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf
+curl https://raw.gitmirror.com/clion007/adss/master/adss.sh -sLSo /usr/share/adss/adss.sh
+curl https://raw.gitmirror.com/clion007/adss/master/updater/update.sh -sLSo /usr/share/adss/update.sh
+curl https://raw.gitmirror.com/clion007/adss/master/updater/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
+curl https://raw.gitmirror.com/clion007/adss/master/updater/rules_update.sh -sLSo /usr/share/adss/rules_update.sh
+curl https://raw.gitmirror.com/clion007/adss/master/config/cron.sh -sLSo /tmp/adss/cron.sh
 . /tmp/adss/cron.sh
 echo -e "\e[1;36m 删除安装临时文件\e[0m"
 rm -rf /tmp/adss
