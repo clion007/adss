@@ -12,7 +12,7 @@ echo
 echo -e "\e[1;36m 添加用户定义规则\e[0m"
 cat /etc/dnsmasq.d/adss/rules/userlist > /tmp/adss/userlist 
 sed -i "/#/d" /tmp/adss/userlist
-sed -i '/^$/d' /tmp/adss/dnsAd # 删除空行
+sed -i '/^$/d' /tmp/adss/userlist # 删除空行
 echo 
 echo -e "\e[1;36m 添加用户定义黑名单\e[0m"
 cat /etc/dnsmasq.d/adss/rules/userblacklist > /tmp/adss/blacklist 
