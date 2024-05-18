@@ -6,7 +6,7 @@ if [ -f /var/lock/opkg.lock ]; then
 fi
 echo -e "\e[1;31m 删除残留文件夹以及配置 \e[0m"
 echo 
-rm -rf /usr/share/adss /etc/dnsmasq.d/*adss* /tmp/dnsmasq.d/*adss*
+rm -rf /usr/share/adss /etc/dnsmasq.d/*adss* /tmp/dnsmasq.d/adss
 echo -e "\e[1;31m 删除相关计划任务 \e[0m"
 echo 
 if [ -f /etc/crontabs/$USER-adss.bak ]; then
