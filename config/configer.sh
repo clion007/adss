@@ -4,7 +4,7 @@ echo
 echo "# 指定上游DNS服务器配置文件
 resolv-file=/etc/dnsmasq.d/adss/resolv-adss.conf
 
-# 添加解析文件目录
+# 添加解析规则
 conf-file=/etc/dnsmasq.d/adss/rules/dnsrules.conf
 
 # 添加额外hosts规则
