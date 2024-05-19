@@ -47,5 +47,4 @@ if [ ! -f /etc/dnsmasq.d/adss/rules/userwhitelist ]; then
 	echo "# 请将误杀的网址域名添加到在下面
 # 每个一行，不带http://，尽量输入准确地址以免删除有效广告规则" > /etc/dnsmasq.d/adss/rules/userwhitelist 
 fi
-ln -s /etc/dnsmasq.d/adss /tmp/dnsmasq.d
-ln -s /etc/dnsmasq.d/dnsmasq-adss.conf /tmp/dnsmasq.d/dnsmasq-adss.conf
+ln /etc/dnsmasq.d/dnsmasq-adss.conf /tmp/dnsmasq.d/dnsmasq-adss.conf
