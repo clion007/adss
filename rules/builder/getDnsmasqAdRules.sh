@@ -31,7 +31,7 @@ rm -rf /tmp/adss/antiAD.conf /tmp/adss/notrackAdDomain.conf /tmp/adss/cats.conf 
 echo 
 echo -e "\e[1;36m 删除注释和本地规则\e[0m"
 sed -i '/localhost/d' /tmp/adss/dnsAd # 删除本地规则
-sed -i 's/^#/d' /tmp/adss/dnsAd # 删除注释行
+sed -i '/^#/d' /tmp/adss/dnsAd # 删除注释行
 sed -i 's/#.*//g' /tmp/adss/dnsAd # 删除行尾注释
 sed -i '/^$/d' /tmp/adss/dnsAd # 删除空行
 echo 
