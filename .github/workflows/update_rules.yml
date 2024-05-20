@@ -74,7 +74,6 @@ jobs:
           git checkout --orphan clearhistory
           git add rules/file/*.conf
           git commit -am "Auto update at $(TZ=UTC-8 date +"%Y-%m-%d %H:%M")"
-          git branch -m main
           git push --force --set-upstream origin master
       
       - name: Delete Workflow Runs
