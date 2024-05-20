@@ -33,7 +33,6 @@ jobs:
           sudo timedatectl set-timezone "$TZ"
 
       - name: Update Mirrors To Other Repos
-        continue-on-error: true
         run: |
           rm -rf .git/
           git init          

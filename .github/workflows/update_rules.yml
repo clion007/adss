@@ -63,7 +63,6 @@ jobs:
           file_pattern: rules/file/*.conf
 
       - name: Update Mirror To Other Repos
-        continue-on-error: true
         run: |
           rm -rf .git/
           git init          
