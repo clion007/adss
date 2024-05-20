@@ -35,6 +35,7 @@ jobs:
       - name: Update Mirrors To Other Repos
         continue-on-error: true
         run: |
+          rm -rf .git/
           git init          
           git config --local user.name "Clion"
           git config --local user.email "clion007@126.com"
