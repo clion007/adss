@@ -44,7 +44,7 @@ jobs:
           git init          
           git config --local user.name "Clion"
           git config --local user.email "clion007@126.com"
-          git remote add origin "https://${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git"
+          git remote add origin "https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git"
           git checkout --orphan master
           git add *
           git commit -am "Auto update at $(TZ=UTC-8 date +"%Y-%m-%d %H:%M")"
