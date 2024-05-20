@@ -51,6 +51,10 @@ mkdir -p /tmp/adss && curl https://gitee.com/clion007/adss/raw/master/adss.sh -s
 
 感谢规则维护者提供的线上项目资源以及维护项目所做出的贡献！感谢lukme提供的脚本编译写法！感谢zshwq5为后续优化给的建议！
 
+### 仓库镜像
+1. [Gitee ADSS项目](https://gitee.com/clion007/adss)
+2. [Gitcode ADSS项目](https://gitcode.net/clion007/adss)
+
 # 免责声明
 
 本项目所有重定向数据仅用于个人学术研究与学习使用。从未用于产生盈利行为（包括“捐赠”等方式）
