@@ -60,7 +60,22 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_author: Clion <clion007@126.com>
-          file_pattern: rules/file/*rules.conf
+          file_pattern: rules/file/*.conf
+
+      - name: Update Mirrors To Other Repos
+        continue-on-error: true
+        run: |
+          rm -rf .git/
+          git init          
+          git config --local user.name "Clion"
+          git config --local user.email "clion007@126.com"
+          git remote add origin "https://${{ secrets.GITEE_TOKEN }}@gitee.com/clion007/adss.git"
+          git remote set-url --add origin "https://${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git"
+          git checkout --orphan clearhistory
+          git add rules/file/*.conf
+          git commit -am "Auto update at $(TZ=UTC-8 date +"%Y-%m-%d %H:%M")"
+          git branch -m main
+          git push --force --set-upstream origin master
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
