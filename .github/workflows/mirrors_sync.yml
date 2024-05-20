@@ -3,7 +3,7 @@
 # This is free software, licensed under the GPL v3 License.
 # See /LICENSE for more information.
 
-name: Update Rules
+name: 镜像同步
 
 env:
   TZ: Asia/Shanghai
