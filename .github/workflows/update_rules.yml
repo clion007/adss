@@ -61,18 +61,6 @@ jobs:
         with:
           commit_author: Clion <clion007@126.com>
           file_pattern: rules/file/*.conf
-
-      - name: Update Mirror To Other Repos
-        run: |
-          rm -rf .git/
-          git init          
-          git config --local user.name "Clion"
-          git config --local user.email "clion007@126.com"
-          git remote add origin "https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git"
-          git checkout --orphan master
-          git add rules/file/*rules.conf
-          git commit -am "Auto update at $(TZ=UTC-8 date +"%Y-%m-%d %H:%M")"
-          git push --force --set-upstream origin master
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
