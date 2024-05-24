@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 # 日志默认目录
 Log_DIR="/usr/share/adss/log"
@@ -32,7 +32,7 @@ COUNTER=$(cat $NETWORK_CHECK_COUNTER_FILE)
 # 检测网络是否畅通
 function ping_domain() {
     # ping的域名或者DNS
-    local domain=114.114.114.114
+    local domain=baidu.com
     # ping的次数
     local tries=6
     # 请求成功次数
@@ -55,7 +55,7 @@ function ping_domain() {
 
 # 检测网络连接函数
 function check_network() {
-    # 如果ping 6次至少有2次包未响应，则执行一下代码
+    # 如果ping 6次至少有2次包未响应，则执行以下代码
     if [ $(ping_domain) = "false" ]; then
         # 如果N无法连接网络，则重启网络
         echo "$(date '+%Y-%m-%d %H:%M:%S') 网络连接失败"
