@@ -1,4 +1,4 @@
- #!/bin/sh
+#!/bin/sh
 echo "检测与处理倚赖关系"
 if [ ! type opkg > /dev/null 2>&1 ]; then
   echo "ADSS 仅支持 Openwrt 系列固件使用，暂时不支持当前固件"
@@ -40,8 +40,8 @@ curl https://gitee.com/clion007/adss/raw/master/config/configer.sh -sLSo /tmp/ad
 sh /tmp/adss/configer.sh
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
-curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf
-curl https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf
+curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /tmp/dnsmasq.d/adss/rules/dnsrules.conf
+curl https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/dnsmasq.d/adss/rules/hostsrules.conf
 curl https://gitee.com/clion007/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sLSo /usr/share/adss/update.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
