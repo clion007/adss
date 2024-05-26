@@ -10,12 +10,12 @@ curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sL
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf
 echo 
 echo -e "\e[1;36m 添加用户定义规则\e[0m"
-cat /tmp/dnsmasq.d/adss/rules/userlist > /tmp/adss/userlist 
+cat /etc/dnsmasq.d/adss/rules/userlist > /tmp/adss/userlist 
 sed -i "/#/d" /tmp/adss/userlist
 sed -i '/^$/d' /tmp/adss/userlist # 删除空行
 echo 
 echo -e "\e[1;36m 添加用户定义黑名单\e[0m"
-cat /tmp/dnsmasq.d/adss/rules/userblacklist > /tmp/adss/blacklist 
+cat /etc/dnsmasq.d/adss/rules/userblacklist > /tmp/adss/blacklist 
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist #支持通配符
 echo 
 echo -e "\e[1;36m 合并广告规则\e[0m"
@@ -26,7 +26,7 @@ sed -i '/^$/d' /tmp/adss/dnsAd # 删除空行
 awk '!a[$0]++' /tmp/adss/dnsAd > /tmp/adss/dnsAd.conf #去除重复
 echo 
 echo -e "\e[1;36m 添加用户定义白名单\e[0m"
-cat /tmp/dnsmasq.d/adss/rules/userwhitelist | uniq > /tmp/adss/whitelist 
+cat /etc/dnsmasq.d/adss/rules/userwhitelist | uniq > /tmp/adss/whitelist 
 sed -i "/#/d" /tmp/adss/whitelist
 while read -r line
 do
@@ -43,10 +43,10 @@ cat /tmp/adss/userlist /tmp/adss/dnsAd.conf >> /tmp/adss/dnsrules.conf
 echo "# Modified DNS end" >> /tmp/adss/dnsrules.conf 
 echo 
 if [ -s "/tmp/adss/dnsrules.conf" ]; then
-    if ( ! cmp -s /tmp/adss/dnsrules.conf /tmp/dnsmasq.d/adss/rules/dnsrules.conf ); then
+    if ( ! cmp -s /tmp/adss/dnsrules.conf /etc/dnsmasq.d/adss/rules/dnsrules.conf ); then
         echo " `date +'%Y-%m-%d %H:%M:%S'`:检测到dnsmasq规则有更新......生成新dnsmasq规则！"
         echo 
-        mv -f /tmp/adss/dnsrules.conf /tmp/dnsmasq.d/adss/rules/dnsrules.conf
+        mv -f /tmp/adss/dnsrules.conf /etc/dnsmasq.d/adss/rules/dnsrules.conf
         /etc/init.d/dnsmasq restart > /dev/null 2>&1
         echo " `date +'%Y-%m-%d %H:%M:%S'`: dnsmasq规则更新完成，应用新规则。"
         echo 
@@ -57,10 +57,10 @@ if [ -s "/tmp/adss/dnsrules.conf" ]; then
     fi  
 fi
 if [ -s "/tmp/adss/hostsrules.conf" ]; then
-    if ( ! cmp -s /tmp/adss/hostsrules.conf /tmp/dnsmasq.d/adss/rules/hostsrules.conf ); then
+    if ( ! cmp -s /tmp/adss/hostsrules.conf /etc/dnsmasq.d/adss/rules/hostsrules.conf ); then
         echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到hosts规则有更新......生成新hosts规则！"
         echo 
-        mv -f /tmp/adss/hostsrules.conf /tmp/dnsmasq.d/adss/rules/hostsrules.conf
+        mv -f /tmp/adss/hostsrules.conf /etc/dnsmasq.d/adss/rules/hostsrules.conf
         /etc/init.d/dnsmasq restart > /dev/null 2>&1
         echo " `date +'%Y-%m-%d %H:%M:%S'`: hosts规则转换完成，应用新规则。"
         echo 
