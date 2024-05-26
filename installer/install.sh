@@ -18,10 +18,10 @@ if [ ! $? -eq 0 ]; then
     exit 1
   fi
 fi
-opkg list_installed | grep "bash" > /dev/null
- if [ $? -eq 0 ]; then
- opkg install bash > /dev/null
-fi
+# opkg list_installed | grep "bash" > /dev/null
+#  if [ $? -eq 0 ]; then
+#  opkg install bash > /dev/null
+# fi
 # opkg list_installed | grep "ujail" > /dev/null
 # if [ $? -eq 0 ]; then
 #   opkg remove procd-ujail > /dev/null
