@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 
-START=18
+START=90
 
 CONFIG_FILE=/etc/dnsmasq.d/dnsmasq-adss.conf
 RUN_CONF_FILE=/tmp/dnsmasq.d/dnsmasq-adss.conf
