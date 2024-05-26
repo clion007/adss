@@ -1,1 +1,21 @@
 #!/bin/sh /etc/rc.common
+
+START=18
+STOP=16
+
+CONFIG_FILE=/etc/dnsmasq.d/dnsmasq-adss.conf
+RUN_CONF_FILE=/tmp/dnsmasq.d/dnsmasq-adss.conf
+
+boot() {
+	start
+}
+
+start() {
+	ln -s $CONFIG_FILE $RUN_CONF_FILE
+}
+
+stop() {
+	rm -f $RUN_CONF_FILE
+    killall dnsmasq > /dev/null 2>&1
+    /etc/init.d/dnsmasq restart > /dev/null 2>&1
+}
