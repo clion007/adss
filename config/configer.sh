@@ -1,5 +1,5 @@
 #!/bin/sh
-echo -e "\e[1;36m 配置dnsmasq\e[0m"
+echo -e "\e[1;36m 配置ADSS\e[0m"
 echo 
 echo "# 指定上游DNS服务器配置文件
 resolv-file=/etc/dnsmasq.d/adss/resolv-adss.conf
@@ -47,3 +47,7 @@ if [ ! -f /etc/dnsmasq.d/adss/rules/userwhitelist ]; then
 	echo "# 请将误杀的网址域名添加到在下面
 # 每个一行，不带http://，尽量输入准确地址以免删除有效广告规则" > /etc/dnsmasq.d/adss/rules/userwhitelist 
 fi
+
+echo -e "\e[1;31m 添加配置目录权限 \e[0m"
+echo 
+sed -i 's/$resolvdir $user_dhcpscript/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//g' /etc/init.d/dnsmasq
