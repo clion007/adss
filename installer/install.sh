@@ -37,6 +37,8 @@ curl https://gitee.com/clion007/adss/raw/master/config/configer.sh -sLSo /tmp/ad
 sh /tmp/adss/configer.sh
 echo -e "\e[1;36m 获取规则文件\e[0m"
 echo 
+curl https://gitee.com/clion007/adss/raw/master/installer/adss -sLSo /etc/init.d/adss
+chmod +x /etc/init.d/adss
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf
 curl https://gitee.com/clion007/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
