@@ -6,10 +6,6 @@ STOP=16
 CONFIG_FILE=/etc/dnsmasq.d/dnsmasq-adss.conf
 RUN_CONF_FILE=/tmp/dnsmasq.d/dnsmasq-adss.conf
 
-boot() {
-	start
-}
-
 start() {
 	ln -s $CONFIG_FILE $RUN_CONF_FILE
 }
