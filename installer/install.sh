@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "检测与处理倚赖关系"
+echo -e "\e[1;36m 检测与处理倚赖关系\e[0m"
 echo 
 if [ ! type opkg > /dev/null 2>&1 ]; then
   echo "ADSS 仅支持 Openwrt 系列固件使用，暂时不支持当前固件"
@@ -18,11 +18,11 @@ if [ ! $? -eq 0 ]; then
     exit 1
   fi
 fi
-opkg list_installed | grep "ujail" > /dev/null
-if [ $? -eq 0 ]; then
-  opkg remove procd-ujail > /dev/null
-fi
-echo "倚赖关系处理完成"
+# opkg list_installed | grep "ujail" > /dev/null
+# if [ $? -eq 0 ]; then
+#   opkg remove procd-ujail > /dev/null
+# fi
+echo -e "\e[1;36m 倚赖关系处理完成\e[0m"
 echo 
 echo -e "\e[1;36m ADSS 每天04:25自动更新规则，自动检测网络不通重启路由器，如需修改更新时间，可自行在计划任务中修改\e[0m"
 echo 
