@@ -1,4 +1,4 @@
- #!/bin/sh
+#!/bin/sh
 mkdir -p /tmp/adss
 curl -fsSL https://gitee.com/clion007/adss/raw/master/config/logo
 echo 

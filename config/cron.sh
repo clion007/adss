@@ -1,4 +1,4 @@
- #!/bin/sh
+#!/bin/sh
 CRON_FILE=/etc/crontabs/$USER
 grep "adss" $CRON_FILE >/dev/null
 if [ ! $? -eq 0 ]; then
