@@ -14,6 +14,7 @@ if [ -f /etc/crontabs/$USER-adss.bak ]; then
 fi
 echo -e "\e[1;31m 删除配置目录权限 \e[0m"
 sed -i 's/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//$resolvdir $user_dhcpscript/g' /etc/init.d/dnsmasq
+echo 
 /etc/init.d/cron reload > /dev/null 2>&1
 echo -e "\e[1;31m 重启dnsmasq服务 \e[0m"
 killall dnsmasq > /dev/null 2>&1
