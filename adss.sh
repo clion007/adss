@@ -1,4 +1,4 @@
- #!/bin/sh
+#!/bin/sh
 #
 # ADSS(Auto DNS Smart Script) V4.0
 # Project URL https://github.com/clion007/adss
