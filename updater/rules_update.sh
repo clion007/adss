@@ -1,4 +1,4 @@
- #!/bin/sh
+#!/bin/sh
 mkdir -p /tmp/adss
 echo -e "\e[1;36m 初始化规则文件 \e[0m"
 echo 
