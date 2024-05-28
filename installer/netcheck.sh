@@ -9,5 +9,9 @@ if [ $? -ne 0 ];then
     if [ $? -ne 0 ];then
         # 重启网络服务后，检测到网络仍然异常，重启路由器
         reboot
+    else
+        exit 0
     fi
+else
+    exit 0
 fi
