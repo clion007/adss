@@ -6,7 +6,7 @@ echo
 /etc/init.d/adss stop > /dev/null 2>&1
 echo -e "\e[1;31m 删除残留文件夹以及配置 \e[0m"
 echo 
-rm -rf /usr/share/adss /etc/dnsmasq.d/*adss* /etc/init.d/adss
+rm -rf /usr/share/adss /etc/dnsmasq.d/*adss* /etc/rc.d/S90adss /etc/init.d/adss 
 echo -e "\e[1;31m 删除相关计划任务 \e[0m"
 echo 
 if [ -f /etc/crontabs/$USER-adss.bak ]; then
