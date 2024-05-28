@@ -9,6 +9,6 @@ if [ $? -ne 0 ]; then
   echo -e "\e[1;36m 设置网络不通重启任务\e[0m"
   echo 
   echo "# 每半小时检测一次网络，网络异常，重启网络服务，如果网络仍热异常,则重启路由器
-30 * * * * /usr/share/adss/netcheck.sh > /dev/null 2>&1" >> $CRON_FILE
+*/30 * * * * /usr/share/adss/netcheck.sh > /dev/null 2>&1" >> $CRON_FILE
   /etc/init.d/cron reload > /dev/null
 fi
