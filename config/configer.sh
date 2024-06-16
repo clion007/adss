@@ -25,31 +25,30 @@ nameserver 168.126.63.1      # 韩国 DNS IPv4
 nameserver 205.252.144.228   # 香港 DNS IPv4" > /etc/dnsmasq.d/adss/resolv-adss.conf 
 
 if [ ! -f /etc/dnsmasq.d/adss/rules/rules/userlist ]; then
-	echo -e "\e[1;36m 创建自定义dnsmasq规则\e[0m"
-	echo 
-	echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
+  echo -e "\e[1;36m 创建自定义dnsmasq规则\e[0m"
+  echo 
+  echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
 # 后面的ip表示希望域名解析到的IP
 # address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/adss/rules/userlist 
 fi
 
 if [ ! -f /etc/dnsmasq.d/adss/rules/rules/userblacklist ]; then
-	echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
-	echo 
-	echo "# 请在下面添加广告黑名单
+  echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
+  echo 
+  echo "# 请在下面添加广告黑名单
 # 每行输入要屏蔽广告网址域名不含http://符号，如：www.baidu.com
 # 支持不完整域名地址，支持通配符" > /etc/dnsmasq.d/adss/rules/userblacklist 
-
 fi	
 
 if [ ! -f /etc/dnsmasq.d/adss/rules/userwhitelist ]; then
-	echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
-	echo 
-	echo "# 请将误杀的网址域名添加到在下面
+  echo -e "\e[1;36m 创建自定义广告白名单\e[0m"
+  echo 
+  echo "# 请将误杀的网址域名添加到在下面
 # 每个一行，不带http://，尽量输入准确地址以免删除有效广告规则" > /etc/dnsmasq.d/adss/rules/userwhitelist 
 fi
 
 echo -e "\e[1;31m 添加配置目录权限 \e[0m"
 echo 
 if [ `grep -c "\/etc\/dnsmasq.d\/" /etc/init.d/dnsmasq` -ne '0' ];then
-	sed -i 's/$resolvdir $user_dhcpscript/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//g' /etc/init.d/dnsmasq
+  sed -i 's/$resolvdir $user_dhcpscript/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//g' /etc/init.d/dnsmasq
 fi
