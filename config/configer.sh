@@ -50,4 +50,6 @@ fi
 
 echo -e "\e[1;31m 添加配置目录权限 \e[0m"
 echo 
-sed -i 's/$resolvdir $user_dhcpscript/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//g' /etc/init.d/dnsmasq
+if [ `grep -c "\/etc\/dnsmasq.d\/" /etc/init.d/dnsmasq` -ne '0' ];then
+	sed -i 's/$resolvdir $user_dhcpscript/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//g' /etc/init.d/dnsmasq
+fi
