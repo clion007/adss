@@ -46,7 +46,7 @@ curl https://gitee.com/clion007/adss/raw/master/adss.sh -sLSo /usr/share/adss/ad
 curl https://gitee.com/clion007/adss/raw/master/installer/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sLSo /usr/share/adss/update.sh
 curl https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -sLSo /usr/share/adss/rules_update.sh
-chmod -R 755 /usr/share/adss.sh
+chmod -R 755 /usr/share/adss
 curl https://gitee.com/clion007/adss/raw/master/config/cron.sh -sLSo /tmp/adss/cron.sh
 . /tmp/adss/cron.sh
 echo -e "\e[1;36m 删除安装临时文件\e[0m"
