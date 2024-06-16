@@ -5,14 +5,18 @@ START=90
 CONFIG_FILE=/etc/dnsmasq.d/dnsmasq-adss.conf
 RUN_CONF_FILE=/tmp/dnsmasq.d/dnsmasq-adss.conf
 
-start() {
+start() 
+{
   if [ `grep -c "\/etc\/dnsmasq.d\/" /etc/init.d/dnsmasq` -ne '0' ];then
     sed -i 's/$resolvdir $user_dhcpscript/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//g' /etc/init.d/dnsmasq
   fi
   ln -s $CONFIG_FILE $RUN_CONF_FILE
+  killall dnsmasq > /dev/null 2>&1
+  /etc/init.d/dnsmasq restart > /dev/null 2>&1
 }
 
-stop() {
+stop() 
+{
   rm -f $RUN_CONF_FILE
   killall dnsmasq > /dev/null 2>&1
   /etc/init.d/dnsmasq restart > /dev/null 2>&1
