@@ -40,9 +40,9 @@ jobs:
           git config --local user.email "clion007@126.com"
           git remote add origin "https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git"
           git checkout --orphan master
-          git add *
+          git add .
           git commit -am "Auto update at $(TZ=UTC-8 date +"%Y-%m-%d %H:%M")"
-          git push --force --set-upstream origin master
+          git push --set-upstream origin master
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
