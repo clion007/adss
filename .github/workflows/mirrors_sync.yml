@@ -42,8 +42,7 @@ jobs:
           git checkout --orphan master
           git add .
           git commit -am "Auto update at $(TZ=UTC-8 date +"%Y-%m-%d %H:%M")"
-          git pull origin master
-          git push origin master
+          git push -u origin master
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
