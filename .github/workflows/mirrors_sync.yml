@@ -35,13 +35,11 @@ jobs:
       - name: Update Mirrors To Other Repos
         run: |
           rm -rf .git/
-          git init          
-          git config --local user.name "Clion"
-          git config --local user.email "clion007@126.com"
+          git init
           git remote add origin https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git
           git add .
           git commit -am "Auto update at $(TZ=UTC-8 date +"%Y-%m-%d %H:%M")"
-          git pull --ff-only origin master
+          git pull origin master
           git push origin master
       
       - name: Delete Workflow Runs
