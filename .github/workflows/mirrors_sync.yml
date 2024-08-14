@@ -41,8 +41,8 @@ jobs:
           git remote add origin https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git
           git add .
           git commit -am "Auto update at $(TZ=UTC-8 date +"%Y-%m-%d %H:%M")"
-          git pull --rebase origin master
-          git push -u origin master
+          # git pull --rebase origin master
+          git push -f -u origin master
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
