@@ -58,7 +58,7 @@ if [ -s "/tmp/adss/dnsrules.conf" ]; then
 fi
 if [ -s "/tmp/adss/hostsrules.conf" ]; then
     if ( ! cmp -s /tmp/adss/hostsrules.conf /etc/dnsmasq.d/adss/rules/hostsrules.conf ); then
-        echo " `date +'%Y-%m-%d %H:%M:%S'`: 检测到hosts规则有更新......生成新hosts规则！\e[0m"
+        echo "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 检测到hosts规则有更新......生成新hosts规则！\e[0m"
         echo 
         mv -f /tmp/adss/hostsrules.conf /etc/dnsmasq.d/adss/rules/hostsrules.conf
         /etc/init.d/dnsmasq restart > /dev/null 2>&1
