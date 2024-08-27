@@ -39,7 +39,9 @@ echo -e "\e[1;36m 部署相关文件\e[0m"
 echo 
 curl https://gitee.com/clion007/adss/raw/master/installer/adss -sLSo /etc/init.d/adss
 chmod 755 /etc/init.d/adss
-ln -s /etc/init.d/adss /etc/rc.d/S90adss
+if [ -f /etc/rc.d/S90adss ]; then
+  ln -s /etc/init.d/adss /etc/rc.d/S90adss
+fi
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf
 curl https://gitee.com/clion007/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
