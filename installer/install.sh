@@ -42,7 +42,7 @@ chmod 755 /etc/init.d/adss
 if [ -f /etc/rc.d/S90adss ]; then
   ln -s /etc/init.d/adss /etc/rc.d/S90adss
 fi
-curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf
+curl https://gitdl.cn/https://raw.githubusercontent.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf
 curl https://gitee.com/clion007/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
 curl https://gitee.com/clion007/adss/raw/master/installer/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
