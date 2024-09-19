@@ -6,8 +6,8 @@ curl https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh -
 sh /tmp/adss/initRulesFile.sh
 echo 
 echo -e "\e[1;36m 获取规则文件\e[0m"
-curl https://raw.kkgithub.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /tmp/adss/dnsrules
-curl https://raw.kkgithub.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf
+curl https://gitdl.cn/https://raw.githubusercontent.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /tmp/adss/dnsrules
+curl https://gitdl.cn/https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf
 echo 
 echo -e "\e[1;36m 添加用户定义规则\e[0m"
 cat /etc/dnsmasq.d/adss/rules/userlist > /tmp/adss/userlist 
