@@ -2,7 +2,7 @@
 mkdir -p /tmp/adss
 curl -fsSL https://gitee.com/clion007/adss/raw/master/config/logo
 echo 
-echo "Auto DNS Smart Script V4.0"
+echo "Auto DNS Smart Script V4.1"
 echo "Project URL https://github.com/clion007/adss"
 echo "Copyright © 2014-`date +'%Y'`,by Clion Nieh Email: clion007@126.com"
 echo "Licenses in GPL V3.0"
