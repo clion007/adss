@@ -25,23 +25,27 @@ if [ -s "/tmp/adss/update.sh" -a -s "/tmp/adss/rules_update.sh" ]; then
 		if ( ! cmp -s /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh ); then
 			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......开始更新。\e[0m"
 			echo 
-			echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
 			mv -f /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh
 			chmod 755 /usr/share/adss/rules_update.sh
-			echo 
 			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。\e[0m"
 			echo 
+			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。\e[0m"
+			echo 
 			/usr/share/adss/rules_update.sh
+			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。\e[0m"
+			echo 
 		fi
 	elif ( ! cmp -s /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh ); then
 		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......开始更新。\e[0m"
 		echo 
-		echo -e "\e[1;36m 开始更新规则升级脚本\e[0m"
 		mv -f /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh
 		chmod 755 /usr/share/adss/rules_update.sh
+		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。\e[0m"
+		echo 
+		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。\e[0m"
 		echo 
 		/usr/share/adss/rules_update.sh
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。\e[0m"
+		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。\e[0m"
 		echo 
 	else
 		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，开始检测规则更新。\e[0m"
