@@ -18,7 +18,7 @@ echo -e "\e[1;36m 添加用户定义黑名单\e[0m"
 cat /etc/dnsmasq.d/adss/rules/userblacklist > /tmp/adss/blacklist 
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist #支持通配符
 echo 
-echo -e "\e[1;36m 合并广告规则\e[0m"
+echo -e "\e[1;36m 合并处理规则\e[0m"
 cat  /tmp/adss/dnsrules /tmp/adss/blacklist > /tmp/adss/dnsAd 
 sed -i '/localhost/d' /tmp/adss/dnsAd # 删除本地规则
 sed -i 's/#.*//g' /tmp/adss/dnsAd # 删除注释内容
