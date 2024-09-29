@@ -39,8 +39,9 @@ done < /tmp/adss/whitelist
 echo 
 echo -e "\e[1;36m 生成最终 DNS 规则\e[0m"
 cat /tmp/adss/userlist >> /tmp/adss/dnsrules.conf
+rm -f /tmp/adss/userlist
 sort -u /tmp/adss/dnsrules >> /tmp/adss/dnsrules.conf # 排序并去除重复规则
-rm -f /tmp/adss/userlist /tmp/adss/dnsrules
+rm -f /tmp/adss/dnsrules
 echo "# Modified DNS end" >> /tmp/adss/dnsrules.conf 
 echo 
 if [ -s "/tmp/adss/dnsrules.conf" ]; then
