@@ -1,5 +1,5 @@
  #!/bin/sh
-echo -e "\e[1;36m 创建dnsmasq规则文件\e[0m"
+echo -e "\e[1;36m 创建 dnsmasq 规则文件\e[0m"
 echo "
 ####################################################################
 ##                                                                ##
@@ -18,7 +18,7 @@ address=/ip6-loopback/::1
 
 # Modified DNS start" > /tmp/adss/dnsrules.conf 
 echo 
-echo -e "\e[1;36m 创建hosts规则文件\e[0m"
+echo -e "\e[1;36m 创建 hosts 规则文件\e[0m"
 echo "
 ####################################################################
 ##                                                                ##
@@ -28,12 +28,12 @@ echo "
 ##                                                                ##
 ####################################################################
 
-# 默认hosts开始
+# 默认 hosts 开始
 127.0.0.1 localhost
 ::1	localhost
 ::1	ip6-localhost
 ::1	ip6-loopback
-# 默认hosts结束
+# 默认 hosts 结束
 
-# 修饰hosts开始" > /tmp/adss/hostsrules.conf 
+# 修饰 hosts 开始" > /tmp/adss/hostsrules.conf 
 rm -f /tmp/adss/initRulesFile.sh
