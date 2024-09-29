@@ -31,10 +31,10 @@ echo
 echo -e "\e[1;36m 开始备份路由器相关配置\e[0m"
 echo 
 curl https://gitee.com/clion007/adss/raw/master/config/prepare.sh -sLSo /tmp/adss/prepare.sh
-sh /tmp/adss/prepare.sh
+. /tmp/adss/prepare.sh
 echo 
 curl https://gitee.com/clion007/adss/raw/master/config/configer.sh -sLSo /tmp/adss/configer.sh
-sh /tmp/adss/configer.sh
+. /tmp/adss/configer.sh
 echo -e "\e[1;36m 部署相关文件\e[0m"
 echo 
 curl https://gitee.com/clion007/adss/raw/master/installer/adss -sLSo /etc/init.d/adss
