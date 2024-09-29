@@ -36,3 +36,4 @@ echo "
 # 默认hosts结束
 
 # 修饰hosts开始" > /tmp/adss/hostsrules.conf 
+rm -f /tmp/adss/initRulesFile.sh
