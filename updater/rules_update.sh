@@ -19,20 +19,19 @@ cat /etc/dnsmasq.d/adss/rules/userblacklist > /tmp/adss/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist #支持通配符
 echo 
 echo -e "\e[1;36m 合并处理规则\e[0m"
-cat  /tmp/adss/dnsrules /tmp/adss/blacklist > /tmp/adss/dnsAd
-rm -f /tmp/adss/dnsrules
-sed -i '/localhost/d' /tmp/adss/dnsAd # 删除本地规则
-sed -i 's/#.*//g' /tmp/adss/dnsAd # 删除注释内容
-sed -i '/^$/d' /tmp/adss/dnsAd # 删除空行
-sort -uo /tmp/adss/dnsAd #排序并去除重复规则
+cat /tmp/adss/blacklist >> /tmp/adss/dnsrules
+sed -i '/localhost/d' /tmp/adss/dnsrules # 删除本地规则
+sed -i 's/#.*//g' /tmp/adss/dnsrules # 删除注释内容
+sed -i '/^$/d' /tmp/adss/dnsrules # 删除空行
+sort -uo /tmp/adss/dnsrules #排序并去除重复规则
 echo 
 echo -e "\e[1;36m 添加用户定义白名单\e[0m"
 cat /etc/dnsmasq.d/adss/rules/userwhitelist | uniq > /tmp/adss/whitelist 
 sed -i "/#/d" /tmp/adss/whitelist
 while read -r line
 do
-	if [ -s "/tmp/adss/dnsAd" ]; then 
-		sed -i "/$line/d" /tmp/adss/dnsAd
+	if [ -s "/tmp/adss/dnsrules" ]; then 
+		sed -i "/$line/d" /tmp/adss/dnsrules
 	fi
 	if [ -s "/tmp/adss/hostsrules.conf" ]; then 
 		sed -i "/$line/d" /tmp/adss/hostsrules.conf
@@ -40,7 +39,7 @@ do
 done < /tmp/adss/whitelist
 echo 
 echo -e "\e[1;36m 生成最终DNS规则\e[0m"
-cat /tmp/adss/userlist /tmp/adss/dnsAd >> /tmp/adss/dnsrules.conf
+cat /tmp/adss/userlist /tmp/adss/dnsrules >> /tmp/adss/dnsrules.conf
 echo "# Modified DNS end" >> /tmp/adss/dnsrules.conf 
 echo 
 if [ -s "/tmp/adss/dnsrules.conf" ]; then
