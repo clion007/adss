@@ -46,13 +46,13 @@ jobs:
           echo 
           sh ./rules/builder/deletWhiteListRules.sh
           echo 
-          echo -e "\e[1;36m 删除dnsmasq及hosts重复规则\e[0m"
+          echo -e "\e[1;36m 删除重复规则\e[0m"
           echo  
           sort -u /tmp/adss/dnsAd >> /tmp/adss/dnsrules.conf
           sed -i "/address=\/$/d" /tmp/adss/dnsrules.conf # 删除空规则
           sort -u /tmp/adss/hostsAd >> /tmp/adss/hostsrules.conf
           echo "# Modified DNS end" >> /tmp/adss/dnsrules.conf
-          echo "# 修饰hosts结束" >> /tmp/adss/hostsrules.conf
+          echo "# 修饰 hosts 结束" >> /tmp/adss/hostsrules.conf
           mv -f /tmp/adss/dnsrules.conf ./rules/file/dnsrules.conf
           mv -f /tmp/adss/hostsrules.conf ./rules/file/hostsrules.conf
           echo -e "\e[1;36m 规则创建完成！\e[0m"
