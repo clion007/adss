@@ -15,8 +15,7 @@ sed -i "/#/d" /tmp/adss/userlist
 sed -i '/^$/d' /tmp/adss/userlist # 删除空行
 echo 
 echo -e "\e[1;36m 生成用户定义黑名单规则\e[0m"
-cat /etc/dnsmasq.d/adss/rules/userblacklist > /tmp/adss/blacklist 
-sed -i '/^$/d' /tmp/adss/blacklist # 删除空行
+cat /etc/dnsmasq.d/adss/rules/userblacklist > /tmp/adss/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist # 生成黑名单规则，支持通配符
 echo 
 echo -e "\e[1;36m 合并处理规则\e[0m"
