@@ -5,7 +5,7 @@ echo
 curl https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh -sLSo /tmp/adss/initRulesFile.sh
 . /tmp/adss/initRulesFile.sh
 echo 
-echo -e "\e[1;36m 获取规则文件\e[0m"
+echo -e "\e[1;36m 获取线上规则文件\e[0m"
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /tmp/adss/dnsrules
 curl https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf
 echo 
@@ -14,18 +14,19 @@ cat /etc/dnsmasq.d/adss/rules/userlist > /tmp/adss/userlist
 sed -i "/#/d" /tmp/adss/userlist
 sed -i '/^$/d' /tmp/adss/userlist # 删除空行
 echo 
-echo -e "\e[1;36m 添加用户定义黑名单\e[0m"
+echo -e "\e[1;36m 生成用户定义黑名单规则\e[0m"
 cat /etc/dnsmasq.d/adss/rules/userblacklist > /tmp/adss/blacklist 
-sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist #支持通配符
+sed -i '/^$/d' /tmp/adss/blacklist # 删除空行
+sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist # 生成黑名单规则，支持通配符
 echo 
 echo -e "\e[1;36m 合并处理规则\e[0m"
 cat /tmp/adss/blacklist >> /tmp/adss/dnsrules
 sed -i '/localhost/d' /tmp/adss/dnsrules # 删除本地规则
 sed -i 's/#.*//g' /tmp/adss/dnsrules # 删除注释内容
 sed -i '/^$/d' /tmp/adss/dnsrules # 删除空行
-sort -uo /tmp/adss/dnsrules #排序并去除重复规则
+sort -uo /tmp/adss/dnsrules # 排序并去除重复规则
 echo 
-echo -e "\e[1;36m 添加用户定义白名单\e[0m"
+echo -e "\e[1;36m 删除用户定义白名单中包含规则\e[0m"
 cat /etc/dnsmasq.d/adss/rules/userwhitelist | uniq > /tmp/adss/whitelist 
 sed -i "/#/d" /tmp/adss/whitelist
 while read -r line
@@ -38,13 +39,13 @@ do
 	fi
 done < /tmp/adss/whitelist
 echo 
-echo -e "\e[1;36m 生成最终DNS规则\e[0m"
+echo -e "\e[1;36m 生成最终 DNS 规则\e[0m"
 cat /tmp/adss/userlist /tmp/adss/dnsrules >> /tmp/adss/dnsrules.conf
 echo "# Modified DNS end" >> /tmp/adss/dnsrules.conf 
 echo 
 if [ -s "/tmp/adss/dnsrules.conf" ]; then
     if ( ! cmp -s /tmp/adss/dnsrules.conf /etc/dnsmasq.d/adss/rules/dnsrules.conf ); then
-        echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`:检测到dnsmasq规则有更新......生成新dnsmasq规则！\e[0m"
+        echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`：检测到dnsmasq规则有更新......生成新dnsmasq规则！\e[0m"
         echo 
         mv -f /tmp/adss/dnsrules.conf /etc/dnsmasq.d/adss/rules/dnsrules.conf
         /etc/init.d/dnsmasq restart > /dev/null 2>&1
