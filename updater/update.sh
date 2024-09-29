@@ -29,9 +29,9 @@ if [ -s "/tmp/adss/update.sh" -a -s "/tmp/adss/rules_update.sh" ]; then
 			mv -f /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh
 			chmod 755 /usr/share/adss/rules_update.sh
 			echo 
-			/usr/share/adss/rules_update.sh
 			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。\e[0m"
 			echo 
+			/usr/share/adss/rules_update.sh
 		fi
 	elif ( ! cmp -s /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh ); then
 		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......开始更新。\e[0m"
