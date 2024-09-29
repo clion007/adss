@@ -10,7 +10,7 @@ env:
 
 on:
   workflow_dispatch:
-  # push:
+  push:
 
 jobs:
   synchronization:
