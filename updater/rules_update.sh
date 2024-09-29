@@ -19,13 +19,13 @@ cat /etc/dnsmasq.d/adss/rules/userblacklist > /tmp/adss/blacklist
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist #支持通配符
 echo 
 echo -e "\e[1;36m 合并处理规则\e[0m"
-cat  /tmp/adss/dnsrules /tmp/adss/blacklist > /tmp/adss/dnsAd 
+cat  /tmp/adss/dnsrules /tmp/adss/blacklist > /tmp/adss/dnsAd
 rm -f /tmp/adss/dnsrules
 sed -i '/localhost/d' /tmp/adss/dnsAd # 删除本地规则
 sed -i 's/#.*//g' /tmp/adss/dnsAd # 删除注释内容
 sed -i '/^$/d' /tmp/adss/dnsAd # 删除空行
-# awk '!a[$0]++{print}' /tmp/adss/dnsAd > /tmp/adss/dnsAd.conf #去除重复规则
-sort /tmp/adss/dnsAd | uniq > /tmp/adss/dnsAd.conf #排序并去除重复规则
+sort -u /tmp/adss/dnsAd > /tmp/adss/dnsAd.conf #排序并去除重复规则
+rm -f /tmp/adss/dnsAd
 echo 
 echo -e "\e[1;36m 添加用户定义白名单\e[0m"
 cat /etc/dnsmasq.d/adss/rules/userwhitelist | uniq > /tmp/adss/whitelist 
