@@ -49,7 +49,7 @@ jobs:
           echo -e "\e[1;36m 删除重复规则\e[0m"
           echo  
           sort -u /tmp/adss/dnsAd >> /tmp/adss/dnsrules.conf
-          sed -i "/address=\/$/d" /tmp/adss/dnsrules.conf # 删除空规则
+          # sed -i "/address=\/$/d" /tmp/adss/dnsrules.conf # 删除空规则
           sort -u /tmp/adss/hostsAd >> /tmp/adss/hostsrules.conf
           echo "# Modified DNS end" >> /tmp/adss/dnsrules.conf
           echo "# 修饰 hosts 结束" >> /tmp/adss/hostsrules.conf
