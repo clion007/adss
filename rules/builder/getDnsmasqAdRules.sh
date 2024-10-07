@@ -21,6 +21,8 @@ echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
 curl https://raw.githubusercontent.com/clion007/adss/master/rules/adss/adblacklist -sLSo /tmp/adss/adblacklist
 awk '!a[$0]++{print}' /tmp/adss/adblacklist > /tmp/adss/blacklist 
 rm -rf /tmp/adss/adblacklist
+sed -i "/#/d" /tmp/adss/blacklist # 删除注释
+sed -i '/^\s*$/d' /tmp/adss/blacklist # 删除空行
 sed -i '/./{s|^|address=/|;s|$|/127.0.0.1|}' /tmp/adss/blacklist # 生成黑名单规则，支持通配符
 echo 
 echo -e "\e[1;36m 合并规则缓存\e[0m"
