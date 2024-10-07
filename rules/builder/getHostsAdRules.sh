@@ -21,7 +21,7 @@ sed -i '/#<localhost/,/#<\/localhost>/d' /tmp/adss/hostsAd
 sed -i '/local/d' /tmp/adss/hostsAd
 sed -i 's/#.*//g' /tmp/adss/hostsAd
 sed -i 's/@.*//g' /tmp/adss/hostsAd
-sed -i '/^$/d' /tmp/adss/hostsAd
+sed -i '/^\s*$/d' /tmp/adss/hostsAd
 echo 
 echo -e "\e[1;36m 统一广告规则格式\e[0m"
 sed -i "s/[ ][ ]*/ /g" /tmp/adss/hostsAd
