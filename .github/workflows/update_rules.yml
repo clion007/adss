@@ -50,6 +50,7 @@ jobs:
           echo  
           sort -u /tmp/adss/dnsAd >> /tmp/adss/dnsrules.conf
           echo "# Modified DNS end" >> /tmp/adss/dnsrules.conf
+          sed -i '/\/$/d' /tmp/adss/dnsrules.conf # 删除dns空规则
           sort -u /tmp/adss/hostsAd >> /tmp/adss/hostsrules.conf
           echo "# 修饰 hosts 结束" >> /tmp/adss/hostsrules.conf
           mv -f /tmp/adss/dnsrules.conf ./rules/file/dnsrules.conf
