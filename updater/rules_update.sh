@@ -25,7 +25,7 @@ cat /tmp/adss/blacklist >> /tmp/adss/dnsrules
 sed -i '/localhost/d' /tmp/adss/dnsrules # 删除本地规则
 sed -i 's/#.*//g' /tmp/adss/dnsrules # 删除注释内容
 sed -i '/^\s*$/d' /tmp/adss/dnsrules # 删除空行
-sed -i '/\/$/d' /tmp/adss/dnsrules.conf # 删除dns空规则
+sed -i '/\/$/d' /tmp/adss/dnsrules # 删除dns空规则
 echo 
 echo -e "\e[1;36m 删除用户白名单中包含规则\e[0m"
 cat /etc/dnsmasq.d/adss/rules/userwhitelist | uniq > /tmp/adss/whitelist 
