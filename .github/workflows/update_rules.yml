@@ -70,6 +70,7 @@ jobs:
           name: Clion
           message: Automated Update Rules
           files: rules/file/*.conf
+          repository: https://github.com/clion007/adss
           token: ${{ secrets.TOKEN }}
       
       - name: Delete Workflow Runs
