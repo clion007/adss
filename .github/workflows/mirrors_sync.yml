@@ -9,17 +9,12 @@ env:
   TZ: Asia/Shanghai
 
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: [rules_updated]
-  workflow_dispatch:
   push:
   delete:
   create:
-  # workflow_run:
-  #   workflows:
-  #     - Update Rules
-  #   types:
-  #     - completed
 
 jobs:
   sync:
