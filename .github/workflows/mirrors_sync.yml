@@ -13,11 +13,11 @@ on:
   push:
   delete:
   create:
-  workflow_run:
-    workflows:
-      - Update Rules
-    types:
-      - completed
+  # workflow_run:
+  #   workflows:
+  #     - Update Rules
+  #   types:
+  #     - completed
 
 jobs:
   sync:

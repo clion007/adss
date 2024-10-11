@@ -57,11 +57,20 @@ jobs:
           echo -e "\e[1;36m 规则创建完成！\e[0m"
           rm -rf /tmp/adss
 
-      - name: Git Auto Update Rules
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Commit and Push Rules
+        id: commit
+        # uses: stefanzweifel/git-auto-commit-action@v5
+        # with:
+        #   commit_author: Clion <clion007@126.com>
+        #   commit_message: Automated Update Rules
+        #   file_pattern: rules/file/*.conf
+        uses: actions-x/commit@v6
         with:
-          commit_author: Clion <clion007@126.com>
-          file_pattern: rules/file/*.conf
+          email: clion007@126.com
+          name: Clion
+          message: Automated Update Rules
+          files: rules/file/*.conf
+          token: ${{ secrets.TOKEN }}
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
