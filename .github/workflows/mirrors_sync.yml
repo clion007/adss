@@ -11,6 +11,13 @@ env:
 on:
   workflow_dispatch:
   push:
+  delete:
+  create:
+  workflow_run:
+    workflows:
+      - update_rules
+    types:
+      - completed
 
 jobs:
   sync:
