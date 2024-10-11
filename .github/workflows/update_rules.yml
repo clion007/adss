@@ -68,4 +68,4 @@ jobs:
         continue-on-error: true
         with:
           retain_days: 0
-          keep_minimum_runs: 5
+          keep_minimum_runs: 2
