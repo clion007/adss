@@ -32,7 +32,7 @@ jobs:
         run: |
           sudo timedatectl set-timezone "$TZ"
 
-      - name: Update Mirrors To Other Repos
+      - name: Mirrors Synchronized
         env:
           SOURCE_REPO: 'https://github.com/clion007/adss.git'
           DESTINATION_REPO: 'https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git'
