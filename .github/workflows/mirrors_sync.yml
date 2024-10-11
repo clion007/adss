@@ -9,6 +9,8 @@ env:
   TZ: Asia/Shanghai
 
 on:
+  repository_dispatch:
+    types: [rules_updated]
   workflow_dispatch:
   push:
   delete:

@@ -36,7 +36,6 @@ jobs:
       - name: Build Rules
         shell: sh
         run: |
-          cd ${GITHUB_WORKSPACE}
           sh ./installer/copyright.sh
           sh ./rules/builder/initRulesFile.sh
           echo 
@@ -58,29 +57,18 @@ jobs:
           rm -rf /tmp/adss
 
       - name: Commit and Push Rules
-        # uses: stefanzweifel/git-auto-commit-action@v5
-        # with:
-        #   commit_author: Clion <clion007@126.com>
-        #   commit_message: Automated Update Rules
-        #   file_pattern: rules/file/*.conf
-        # uses: actions-x/commit@v6
-        # with:
-        #   email: clion007@126.com
-        #   name: Clion
-        #   message: Automated Update Rules
-        #   files: rules/file/*.conf
-        #   repository: https://clion007:${{ secrets.TOKEN }}@github.com/clion007/adss.git
-        env:
-          REPO: 'https://clion007:${{ secrets.ACTION_TOKEN }}@github.com/clion007/adss.git'
-        run: |
-          git config --global user.email "clion007@126.com"
-          git config --global user.name "Clion"
-          git remote set-url --push origin "$REPO"
-          git fetch -p origin
-          git add rules/file/*.conf
-          git commit -m "Automated Update Rules"
-          git push
+        id: commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_author: Clion <clion007@126.com>
+          commit_message: Automated Update Rules
+          file_pattern: rules/file/*.conf
         
+      - name: Repository Dispatch
+        if: steps.commit.outputs.changes_detected == 'true'
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: rules_updated
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
