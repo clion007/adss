@@ -1,4 +1,4 @@
-# Description: Update ADSS Rules using GitHub Actions
+# Description: ADSS mirrors synchronized using GitHub Actions
 #
 # This is free software, licensed under the GPL v3 License.
 # See /LICENSE for more information.
@@ -13,7 +13,7 @@ on:
   push:
 
 jobs:
-  synchronization:
+  sync:
     name: 镜像同步
     runs-on: ubuntu-latest
 
@@ -33,15 +33,15 @@ jobs:
           sudo timedatectl set-timezone "$TZ"
 
       - name: Update Mirrors To Other Repos
+        env:
+          SOURCE_REPO: 'https://github.com/clion007/adss.git'
+          DESTINATION_REPO: 'https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git'
         run: |
-          rm -rf .git/
-          git init         
-          git config --global  user.name "clion007"
-          git config --global  user.email "clion007@126.com"
-          git remote add origin https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git
-          git add .
-          git commit
-          git push --mirror origin master
+          git clone --mirror "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"`
+          git remote set-url --push origin "$DESTINATION_REPO"
+          git fetch -p origin
+          git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+          git push --mirror
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
