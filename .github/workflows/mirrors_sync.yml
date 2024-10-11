@@ -15,7 +15,7 @@ on:
   create:
   workflow_run:
     workflows:
-      - update_rules
+      - Update Rules
     types:
       - completed
 
