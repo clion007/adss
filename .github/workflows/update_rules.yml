@@ -73,6 +73,8 @@ jobs:
         env:
           REPO: 'https://clion007:${{ secrets.TOKEN }}@github.com/clion007/adss.git'
         run: |
+          git config --global user.email "clion007@126.com"
+          git config --global user.name "Clion"
           git remote set-url --push origin "$REPO"
           git fetch -p origin
           git add rules/file/*.conf
