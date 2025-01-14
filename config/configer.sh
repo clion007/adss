@@ -24,7 +24,7 @@ nameserver 2001:de4::102     # TWNIC DNS IPv6
 nameserver 168.126.63.1      # 韩国 DNS IPv4
 nameserver 205.252.144.228   # 香港 DNS IPv4" > /etc/dnsmasq.d/adss/resolv-adss.conf 
 
-if [ ! -f /etc/dnsmasq.d/adss/rules/rules/userlist ]; then
+if [ ! -f /etc/dnsmasq.d/adss/rules/userlist ]; then
   echo -e "\e[1;36m 创建自定义dnsmasq规则\e[0m"
   echo 
   echo "# 格式示例如下，删除address前 # 有效，添加自定义规则
@@ -32,7 +32,7 @@ if [ ! -f /etc/dnsmasq.d/adss/rules/rules/userlist ]; then
 # address=/telegram.org/149.154.167.99" > /etc/dnsmasq.d/adss/rules/userlist 
 fi
 
-if [ ! -f /etc/dnsmasq.d/adss/rules/rules/userblacklist ]; then
+if [ ! -f /etc/dnsmasq.d/adss/rules/userblacklist ]; then
   echo -e "\e[1;36m 创建自定义广告黑名单\e[0m"
   echo 
   echo "# 请在下面添加广告黑名单
