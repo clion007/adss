@@ -26,8 +26,7 @@ echo -e "\e[1;36m 开始安装配置 ADSS\e[0m"
 echo 
 echo -e "\e[1;36m 开始备份路由器相关配置\e[0m"
 echo 
-mkdir -p /tmp/adss
-curl https://gitee.com/clion007/adss/raw/master/config/prepare.sh -sLSo /tmp/adss/prepare.sh
+curl --create-dirs https://gitee.com/clion007/adss/raw/master/config/prepare.sh -sLSo /tmp/adss/prepare.sh
 . /tmp/adss/prepare.sh
 echo 
 curl https://gitee.com/clion007/adss/raw/master/config/configer.sh -sLSo /tmp/adss/configer.sh
