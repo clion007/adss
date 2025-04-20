@@ -1,0 +1,56 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+msgid "ADSS广告过滤"
+msgstr "ADSS广告过滤"
+
+msgid "基于dnsmasq的广告过滤系统"
+msgstr "基于dnsmasq的广告过滤系统"
+
+msgid "基本设置"
+msgstr "基本设置"
+
+msgid "规则管理"
+msgstr "规则管理"
+
+msgid "启用"
+msgstr "启用"
+
+msgid "更新时间(小时)"
+msgstr "更新时间(小时)"
+
+msgid "更新时间(分钟)"
+msgstr "更新时间(分钟)"
+
+msgid "网络检查间隔(分钟)"
+msgstr "网络检查间隔(分钟)"
+
+msgid "立即更新规则"
+msgstr "立即更新规则"
+
+msgid "更新"
+msgstr "更新"
+
+msgid "自定义规则源"
+msgstr "自定义规则源"
+
+msgid "名称"
+msgstr "名称"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "白名单"
+msgstr "白名单"
+
+msgid "黑名单"
+msgstr "黑名单"
+
+msgid "运行中"
+msgstr "运行中"
+
+msgid "已停止"
+msgstr "已停止"
+
+msgid "获取中..."
+msgstr "获取中..."

@@ -1,0 +1,56 @@
+#!/bin/sh /etc/rc.common
+
+START=90
+USE_PROCD=1
+PROG=/usr/share/adss/adss.sh
+
+. /lib/functions.sh
+
+uci_get_by_type() {
+    local ret=$(uci get adss.@$1[0].$2 2>/dev/null)
+    echo ${ret:=$3}
+}
+
+update_cron() {
+    sed -i '/adss/d' /etc/crontabs/root
+    
+    # Passwall 兼容性检查
+    if [ -f "/etc/init.d/passwall" ] || [ -d "/usr/share/passwall" ]; then
+        mkdir -p /etc/dnsmasq.d/adss
+        cp /usr/share/adss/passwall-compat.conf /etc/dnsmasq.d/adss/
+    fi
+    
+    # 添加规则更新定时任务
+    local update_time=$(uci_get_by_type basic update_time 4)
+    local update_minute=$(uci_get_by_type basic update_minute 0)
+    echo "${update_minute} ${update_time} * * * /usr/share/adss/rules_update.sh >/dev/null 2>&1" >> /etc/crontabs/root
+    
+    # 添加日志清理定时任务
+    local keep_log_days=$(uci_get_by_type basic keep_log_days 7)
+    echo "0 0 * * * /usr/share/adss/log_clean.sh >/dev/null 2>&1" >> /etc/crontabs/root
+    
+    /etc/init.d/cron reload
+}
+
+start_service() {
+    config_load adss
+    local enabled=$(uci_get_by_type basic enabled 0)
+    [ "$enabled" = "0" ] && return 1
+    
+    update_cron
+    
+    procd_open_instance
+    procd_set_param command $PROG
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_close_instance
+}
+
+service_triggers() {
+    procd_add_reload_trigger "adss"
+}
+
+reload_service() {
+    stop
+    start
+}

@@ -1,0 +1,71 @@
+name: Build OpenWrt Packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [x86_64, arm_cortex-a9, mipsel_24kc]
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Get latest OpenWrt SDK
+        run: |
+          # 获取最新的 OpenWrt 版本
+          OPENWRT_VERSION=$(curl -s https://downloads.openwrt.org/releases/ | grep -oP '\d+\.\d+\.\d+' | sort -V | tail -n1)
+          echo "Using OpenWrt version: $OPENWRT_VERSION"
+          
+          # 根据目标架构下载对应的 SDK
+          case "${{ matrix.target }}" in
+            x86_64)
+              SDK_URL="https://downloads.openwrt.org/releases/${OPENWRT_VERSION}/targets/x86/64/openwrt-sdk-${OPENWRT_VERSION}-x86-64_gcc-*_musl.Linux-x86_64.tar.xz"
+              ;;
+            arm_cortex-a9)
+              SDK_URL="https://downloads.openwrt.org/releases/${OPENWRT_VERSION}/targets/bcm53xx/generic/openwrt-sdk-${OPENWRT_VERSION}-bcm53xx_gcc-*_musl_eabi.Linux-x86_64.tar.xz"
+              ;;
+            mipsel_24kc)
+              SDK_URL="https://downloads.openwrt.org/releases/${OPENWRT_VERSION}/targets/ramips/mt7621/openwrt-sdk-${OPENWRT_VERSION}-ramips-mt7621_gcc-*_musl.Linux-x86_64.tar.xz"
+              ;;
+          esac
+          
+          wget -q $(curl -s $(dirname $SDK_URL) | grep -oP "$SDK_URL" | head -1)
+          tar xf openwrt-sdk-*.tar.xz
+          mv openwrt-sdk-* sdk
+          
+      - name: Setup SDK
+        run: |
+          cd sdk
+          echo "src-git base https://git.openwrt.org/openwrt/openwrt.git" > feeds.conf
+          echo "src-git packages https://git.openwrt.org/feed/packages.git" >> feeds.conf
+          echo "src-git luci https://git.openwrt.org/project/luci.git" >> feeds.conf
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          
+      - name: Build packages
+        run: |
+          cd sdk
+          mkdir -p package/adss
+          cp -r $GITHUB_WORKSPACE/app-adss/* package/adss/
+          mkdir -p package/luci-app-adss
+          cp -r $GITHUB_WORKSPACE/luci-app-adss/* package/luci-app-adss/
+          
+          make defconfig
+          make package/adss/compile V=s
+          make package/luci-app-adss/compile V=s
+          
+          # 收集编译好的包
+          mkdir -p $GITHUB_WORKSPACE/packages/${{ matrix.target }}
+          find bin/packages/ -name "adss*.ipk" -o -name "luci-app-adss*.ipk" | xargs -I {} cp {} $GITHUB_WORKSPACE/packages/${{ matrix.target }}/
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: adss-packages-${{ matrix.target }}

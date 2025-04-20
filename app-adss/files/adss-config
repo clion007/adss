@@ -1,0 +1,71 @@
+#!/bin/sh
+
+. /lib/functions.sh
+
+print_usage() {
+    cat <<EOF
+用法: adss-config <命令> [参数]
+
+命令:
+    enable              启用 ADSS
+    disable             禁用 ADSS
+    set-update-time     设置更新时间 (小时 分钟)
+    set-check-interval  设置网络检查间隔 (分钟)
+    add-source          添加规则源 (名称 URL)
+    remove-source       删除规则源 (名称)
+    list-sources        列出所有规则源
+    update-rules        立即更新规则
+EOF
+    exit 1
+}
+
+case "$1" in
+    enable)
+        uci set adss.basic.enabled='1'
+        uci commit adss
+        /etc/init.d/adss restart
+        ;;
+    disable)
+        uci set adss.basic.enabled='0'
+        uci commit adss
+        /etc/init.d/adss stop
+        ;;
+    set-update-time)
+        [ -z "$2" -o -z "$3" ] && print_usage
+        uci set adss.basic.update_time="$2"
+        uci set adss.basic.update_minute="$3"
+        uci commit adss
+        /etc/init.d/adss reload
+        ;;
+    set-check-interval)
+        [ -z "$2" ] && print_usage
+        uci set adss.basic.check_interval="$2"
+        uci commit adss
+        /etc/init.d/adss reload
+        ;;
+    add-source)
+        [ -z "$2" -o -z "$3" ] && print_usage
+        uci add adss source
+        uci set adss.@source[-1].name="$2"
+        uci set adss.@source[-1].url="$3"
+        uci set adss.@source[-1].enabled='1'
+        uci commit adss
+        ;;
+    remove-source)
+        [ -z "$2" ] && print_usage
+        config_load adss
+        config_foreach remove_source source "$2"
+        ;;
+    list-sources)
+        config_load adss
+        config_foreach list_source source
+        ;;
+    update-rules)
+        /usr/share/adss/rules_update.sh
+        ;;
+    *)
+        print_usage
+        ;;
+esac
+
+exit 0

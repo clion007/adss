@@ -1,0 +1,22 @@
+{
+    "luci-app-adss": {
+        "description": "Grant access to ADSS configuration",
+        "read": {
+            "ubus": {
+                "service": [ "list" ]
+            },
+            "uci": [ "adss" ],
+            "file": {
+                "/etc/dnsmasq.d/adss/rules/userwhitelist": [ "read" ],
+                "/etc/dnsmasq.d/adss/rules/userblacklist": [ "read" ]
+            }
+        },
+        "write": {
+            "uci": [ "adss" ],
+            "file": {
+                "/etc/dnsmasq.d/adss/rules/userwhitelist": [ "write" ],
+                "/etc/dnsmasq.d/adss/rules/userblacklist": [ "write" ]
+            }
+        }
+    }
+}
