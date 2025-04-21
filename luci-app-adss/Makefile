@@ -1,6 +1,7 @@
 LUCI_TITLE:=LuCI support for ADSS
 LUCI_DEPENDS:=+adss
 LUCI_PKGARCH:=all
+PKG_AUTOREMOVE:=1  # 使依赖包被卸载时自动卸载此包
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
@@ -21,6 +22,19 @@ endef
 
 define Package/luci-app-adss/description
   LuCI Support for ADSS (Auto DNS Smart Script)
+endef
+
+define Package/luci-app-adss/prerm
+#!/bin/sh
+# 清理 LuCI 缓存
+rm -rf /tmp/luci-*
+
+# 检查是否存在卸载标记
+if [ -f /tmp/luci-app-adss-remove ]; then
+    rm -f /tmp/luci-app-adss-remove
+fi
+
+exit 0
 endef
 
 define Package/luci-app-adss/install

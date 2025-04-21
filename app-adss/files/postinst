@@ -1,0 +1,25 @@
+#!/bin/sh
+# IPK 安装后执行的脚本
+
+# 检查是否存在卸载标记
+if [ -f /tmp/luci-app-adss-remove ]; then
+    echo "检测到 luci-app-adss 卸载标记，正在卸载 LuCI 界面..."
+    # 使用异步方式卸载，避免锁定问题
+    (sleep 5 && opkg remove luci-app-adss) &
+    rm -f /tmp/luci-app-adss-remove
+fi
+
+# 创建必要的目录
+mkdir -p /etc/dnsmasq.d/adss/rules
+mkdir -p /usr/share/adss/rules
+mkdir -p /var/log
+
+# 设置权限
+chmod 755 /usr/share/adss/*.sh
+chmod 755 /usr/bin/adss-config
+
+# 重启服务
+/etc/init.d/adss enable
+/etc/init.d/adss restart
+
+exit 0

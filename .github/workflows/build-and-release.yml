@@ -184,3 +184,19 @@ jobs:
           publish_dir: ./release
           destination_dir: releases/v${{ env.VERSION }}
           keep_files: true
+          
+      # 添加创建最新版本链接
+      - name: 创建最新版本链接
+        run: |
+          mkdir -p latest
+          cp release/*.ipk latest/
+          # 创建版本信息文件
+          echo "{\"version\":\"${{ env.VERSION }}\",\"release_date\":\"$(date '+%Y-%m-%d')\"}" > latest/version.json
+          
+      - name: 部署最新版本到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./latest
+          destination_dir: releases/latest
+          keep_files: true

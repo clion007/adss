@@ -1,0 +1,52 @@
+define Package/adss/prerm
+#!/bin/sh
+# IPK 卸载前执行的脚本
+
+# 标记 luci-app-adss 需要卸载
+if opkg list-installed | grep -q "luci-app-adss"; then
+    touch /tmp/luci-app-adss-remove
+fi
+
+# 停止服务
+/etc/init.d/adss stop
+
+# 清理计划任务
+sed -i '/adss/d' /etc/crontabs/root
+/etc/init.d/cron reload
+
+# 清理规则文件
+rm -rf /etc/dnsmasq.d/adss
+
+# 清理配置文件目录（保留主配置文件，由opkg管理）
+rm -rf /etc/adss
+
+# 清理用户自定义规则
+rm -rf /usr/share/adss/rules
+
+# 清理脚本文件
+rm -rf /usr/share/adss
+
+# 清理二进制文件
+rm -f /usr/bin/adss-config
+
+# 清理LuCI缓存
+rm -rf /tmp/luci-*
+
+# 清理日志文件
+rm -f /var/log/adss*.log
+rm -f /tmp/adss_*.log
+
+# 清理自定义软件源
+rm -f /etc/opkg/customfeeds.d/adss.conf
+
+# 重启 dnsmasq 服务
+/etc/init.d/dnsmasq restart
+
+# 如果标记存在，提示用户手动卸载 luci-app-adss
+if [ -f /tmp/luci-app-adss-remove ]; then
+    echo "请手动执行以下命令卸载 LuCI 界面："
+    echo "opkg remove luci-app-adss"
+fi
+
+exit 0
+endef

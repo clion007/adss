@@ -1,7 +1,7 @@
 #!/bin/sh
 echo -e "\e[1;36m 检测与处理倚赖关系\e[0m"
 echo 
-if [ ! type opkg > /dev/null 2>&1 ]; then
+if ! type opkg > /dev/null 2>&1; then
   echo "ADSS 仅支持 Openwrt 系列固件使用，暂时不支持当前固件"
   exit 1
 fi
@@ -62,4 +62,4 @@ echo "+                      Time:`date +'%Y-%m-%d'`                      +"
 echo "+                                                           +"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo 
-echo 
+echo

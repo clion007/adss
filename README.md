@@ -148,6 +148,35 @@ make package/adss/compile V=s
 
 编译完成后，IPK 文件将位于 `bin/packages/架构/base/` 目录下。
 
+## 卸载方法
+
+如果您需要卸载 ADSS 软件包，可以按照以下步骤操作：
+
+### 方法一：通过包管理器卸载
+
+如果您是通过 IPK 包安装的 ADSS，可以使用以下命令卸载：
+
+```bash
+opkg remove luci-app-adss adss
+```
+注意 ：建议先卸载 luci-app-adss ，再卸载 adss ，这样可以避免可能的依赖问题。
+
+卸载后，系统会自动清理 ADSS 的相关文件和配置。如果发现有残留文件，可以手动执行以下命令清理：
+
+```bash
+rm -rf /etc/dnsmasq.d/adss /usr/share/adss /var/log/adss*.log /tmp/adss_*.log /etc/opkg/customfeeds.d/adss.conf
+rm -f /usr/bin/adss-config
+```
+
+### 方法二：通过卸载脚本卸载
+
+如果您是通过纯shell脚本安装脚本安装的 ADSS，可以使用以下命令卸载：
+
+```bash
+curl https://gitee.com/clion007/adss/raw/master/installer/uninstall.sh -sSLo /tmp/uninstall.sh && sh /tmp/uninstall.sh
+```
+
+
 ## ⚠️ 注意事项
 
 - 如果发现配置后 DNS 解析出现问题，可以 IP 登录路由器，用 `dnsmasq --test` 命令行检测配置的问题
