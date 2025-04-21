@@ -15,7 +15,7 @@
 
 ## 📖 项目介绍
 
-**ADSS**（Auto DNS Smart Script）由原来的 clion007/dnsmasq 脚本发展而来，是一个小巧、方便且全自动配置 dnsmasq 的工具，适用于家庭网络智能路由器。它具有以下特点：
+**ADSS**（Auto DNS Smart Script）由原来的 clion007/dnsmasq 脚本发展而来，是一个小巧、方便且全自动配置 dnsmasq 的工具，适用于家庭网络智能路由器。支持openwrt的IPK软件包是新写的，并没有经过充分测试，，可能问题较多，如有需要建议先用纯shell版本，IPK版本我充分测试后再使用。它具有以下特点：
 
 - 🚀 **配置简单**：快速部署，免维护
 - 🛡️ **广告过滤**：基于 dnsmasq 的广告拦截功能

@@ -1,12 +1,6 @@
 name: 构建并发布 ADSS
 
 on:
-  push:
-    tags:
-      - 'v*'
-    branches:
-      - master
-  pull_request:
   workflow_dispatch:
     inputs:
       release:
