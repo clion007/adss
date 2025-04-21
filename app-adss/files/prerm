@@ -1,4 +1,3 @@
-define Package/adss/prerm
 #!/bin/sh
 # IPK 卸载前执行的脚本
 

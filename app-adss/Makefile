@@ -43,4 +43,8 @@ define Package/adss/install
 	touch $(1)/var/log/adss_update.log
 endef
 
+define Package/adss/prerm
+	$(INSTALL_BIN) ./files/prerm $(1)/CONTROL/prerm
+endef
+
 $(eval $(call BuildPackage,adss))
