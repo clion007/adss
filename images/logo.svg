@@ -1,0 +1,20 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆 -->
+  <circle cx="100" cy="100" r="90" fill="#3498db" />
+  <circle cx="100" cy="100" r="80" fill="#2980b9" />
+  
+  <!-- DNS 图形表示 - 连接线 -->
+  <path d="M50,70 C70,40 130,40 150,70" stroke="#ecf0f1" stroke-width="6" fill="none" />
+  <path d="M50,130 C70,160 130,160 150,130" stroke="#ecf0f1" stroke-width="6" fill="none" />
+  
+  <!-- 中心盾牌 - 表示保护/过滤 -->
+  <path d="M100,55 L130,70 L130,110 L100,140 L70,110 L70,70 Z" fill="#e74c3c" />
+  <path d="M100,65 L120,75 L120,105 L100,125 L80,105 L80,75 Z" fill="#c0392b" />
+  
+  <!-- 禁止符号 - 表示广告拦截 -->
+  <line x1="85" y1="85" x2="115" y2="115" stroke="#ecf0f1" stroke-width="6" />
+  <line x1="115" y1="85" x2="85" y2="115" stroke="#ecf0f1" stroke-width="6" />
+  
+  <!-- 文字 -->
+  <text x="100" y="180" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#ecf0f1">ADSS</text>
+</svg>
