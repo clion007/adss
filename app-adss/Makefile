@@ -4,6 +4,8 @@ PKG_NAME:=adss
 PKG_VERSION:=4.2
 PKG_RELEASE:=1
 
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+
 include $(INCLUDE_DIR)/package.mk
 
 define Package/adss
@@ -20,6 +22,19 @@ endef
 
 define Package/adss/conffiles
 /etc/config/adss
+endef
+
+define Build/Prepare
+	mkdir -p $(PKG_BUILD_DIR)
+	$(CP) ./files/* $(PKG_BUILD_DIR)/
+	$(CP) ./src/* $(PKG_BUILD_DIR)/
+endef
+
+define Build/Configure
+endef
+
+define Build/Compile
+	# 这里不需要编译，因为是脚本文件
 endef
 
 define Package/adss/install
