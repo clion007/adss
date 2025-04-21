@@ -27,7 +27,10 @@ endef
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)
 	$(CP) ./files/* $(PKG_BUILD_DIR)/
-	$(CP) ./src/* $(PKG_BUILD_DIR)/
+	# 检查 src 目录是否存在，如果存在则复制
+	if [ -d "./src" ]; then \
+		$(CP) ./src/* $(PKG_BUILD_DIR)/; \
+	fi
 endef
 
 define Build/Configure
@@ -45,8 +48,13 @@ define Package/adss/install
 	$(INSTALL_BIN) ./files/adss.init $(1)/etc/init.d/adss
 	
 	$(INSTALL_DIR) $(1)/usr/share/adss
-	$(INSTALL_BIN) ./src/rules_update.sh $(1)/usr/share/adss/rules_update.sh
-	$(INSTALL_BIN) ./src/netcheck.sh $(1)/usr/share/adss/netcheck.sh
+	# 检查文件是否存在，如果存在则安装
+	if [ -f "./src/rules_update.sh" ]; then \
+		$(INSTALL_BIN) ./src/rules_update.sh $(1)/usr/share/adss/rules_update.sh; \
+	fi
+	if [ -f "./src/netcheck.sh" ]; then \
+		$(INSTALL_BIN) ./src/netcheck.sh $(1)/usr/share/adss/netcheck.sh; \
+	fi
 	$(INSTALL_BIN) ./files/check_config.sh $(1)/usr/share/adss/check_config.sh
 	$(INSTALL_BIN) ./files/test_rules.sh $(1)/usr/share/adss/test_rules.sh
 	
