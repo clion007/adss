@@ -112,33 +112,37 @@ jobs:
           find bin/packages -name "adss_*.ipk" -o -name "luci-app-adss_*.ipk" | xargs -I {} cp {} $GITHUB_WORKSPACE/bin/${{ matrix.arch }}/
 
       - name: 上传构建产物
-        uses: actions/upload-artifact@master  # 改用 master 分支
+        uses: actions/upload-artifact@v4  # 更新到 v4
         with:
-          name: ADSS-packages
-          path: |
-            bin/packages/*/adss*.ipk
-            bin/packages/*/luci-app-adss*.ipk
+          name: ADSS-packages-${{ matrix.arch }} # 为每个架构使用不同的名称，避免冲突
+          path: ${{ github.workspace }}/bin/${{ matrix.arch }}/*.ipk # 确保路径正确
 
       - name: 下载所有构建产物
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4 # 更新到 v4
         with:
-          path: artifacts
-          
+          path: artifacts # 所有产物会下载到 artifacts 目录下，每个产物一个子目录
+
       - name: 准备发布文件
+        if: matrix.arch == 'x86_64' # 只在一个 job 实例中执行发布准备和发布步骤
         run: |
           mkdir -p release
-          find artifacts -name "*.ipk" -exec cp {} release/ \;
-          
-          # 重命名文件以包含架构信息
-          cd release
-          for file in adss_*.ipk; do
-            arch=$(echo $file | sed -E 's/.*_([^_]+)\.ipk/\1/')
-            new_name=$(echo $file | sed -E "s/(.*)_([^_]+)\.ipk/\1_${{ env.VERSION }}_\2.ipk/")
-            mv "$file" "$new_name"
-          done
-          
+          # 从 artifacts 目录收集所有 ipk 文件
+          find artifacts/ -name "*.ipk" -exec cp {} release/ \;
+
+          # 重命名文件以包含架构信息 (此逻辑可能需要调整，因为文件名已包含架构)
+          # cd release
+          # for file in *.ipk; do
+          #   # 检查文件名是否已包含版本和架构
+          #   if [[ ! "$file" =~ _${{ env.VERSION }}_ ]]; then
+          #      arch=$(echo $file | sed -E 's/.*_([^_]+)\.ipk/\1/') # 提取架构
+          #      new_name=$(echo $file | sed -E "s/(.*)_([^_]+)\.ipk/\1_${{ env.VERSION }}_\2.ipk/")
+          #      mv "$file" "$new_name"
+          #   fi
+          # done
+          # cd .. # 返回上一级目录
+
           # 创建版本说明
-          echo "# ADSS v${{ env.VERSION }} 发布说明" > release_notes.md
+          echo "# ADSS v${{ env.VERSION }} 发布说明" > release/release_notes.md
           echo "发布日期: $(date '+%Y-%m-%d')" >> release_notes.md
           echo "" >> release_notes.md
           echo "## 支持的架构" >> release_notes.md
@@ -160,6 +164,7 @@ jobs:
           cat release_notes.md
       
       - name: 创建发布
+        if: matrix.arch == 'x86_64' && github.event_name != 'pull_request' # 只在一个 job 实例中执行，并且不是 PR 事件
         uses: ncipollo/release-action@v1
         with:
           name: ADSS v${{ env.VERSION }}
@@ -168,8 +173,10 @@ jobs:
           bodyFile: "release/release_notes.md"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          
+          prerelease: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.release == 'false' }} # 如果是手动触发且未指定发布，则标记为预发布
+
       - name: 部署到 GitHub Pages
+        if: matrix.arch == 'x86_64' && github.event_name != 'pull_request' # 只在一个 job 实例中执行
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -179,13 +186,15 @@ jobs:
           
       # 添加创建最新版本链接
       - name: 创建最新版本链接
+        if: matrix.arch == 'x86_64' && github.event_name != 'pull_request' # 只在一个 job 实例中执行
         run: |
           mkdir -p latest
           cp release/*.ipk latest/
           # 创建版本信息文件
           echo "{\"version\":\"${{ env.VERSION }}\",\"release_date\":\"$(date '+%Y-%m-%d')\"}" > latest/version.json
-          
+
       - name: 部署最新版本到 GitHub Pages
+        if: matrix.arch == 'x86_64' && github.event_name != 'pull_request' # 只在一个 job 实例中执行
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
