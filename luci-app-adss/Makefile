@@ -1,52 +1,52 @@
+include $(TOPDIR)/rules.mk
+
+PKG_NAME:=luci-app-adss
+PKG_VERSION:=4.2
+PKG_RELEASE:=1
+
 LUCI_TITLE:=LuCI support for ADSS
 LUCI_DEPENDS:=+adss
 LUCI_PKGARCH:=all
-PKG_AUTOREMOVE:=1  # 使依赖包被卸载时自动卸载此包
-
-include $(TOPDIR)/feeds/luci/luci.mk
-
-PKG_NAME:=luci-app-adss
-PKG_VERSION:=1.0.0
-PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/luci-app-adss
+# 如果是 LuCI 应用，应该包含 luci.mk
+include $(TOPDIR)/feeds/luci/luci.mk
+
+# 如果都不存在，则需要手动定义 LuCI 应用的构建规则
+ifndef LUCI_MAKEFILE
+define Package/$(PKG_NAME)
   SECTION:=luci
   CATEGORY:=LuCI
   SUBMENU:=3. Applications
-  TITLE:=LuCI Support for ADSS
-  DEPENDS:=+luci-base +adss
-  PKGARCH:=all
+  TITLE:=$(LUCI_TITLE)
+  DEPENDS:=$(LUCI_DEPENDS)
+  PKGARCH:=$(LUCI_PKGARCH)
 endef
 
-define Package/luci-app-adss/description
-  LuCI Support for ADSS (Auto DNS Smart Script)
+define Package/$(PKG_NAME)/description
+  LuCI Web Interface for ADSS (Advanced DNS Security System)
 endef
 
-define Package/luci-app-adss/prerm
-#!/bin/sh
-# 清理 LuCI 缓存
-rm -rf /tmp/luci-*
-
-# 检查是否存在卸载标记
-if [ -f /tmp/luci-app-adss-remove ]; then
-    rm -f /tmp/luci-app-adss-remove
-fi
-
-exit 0
+define Build/Prepare
+	mkdir -p $(PKG_BUILD_DIR)
+	$(CP) ./luasrc $(PKG_BUILD_DIR)/
+	$(CP) ./root $(PKG_BUILD_DIR)/
 endef
 
-define Package/luci-app-adss/install
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi/adss
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/adss
-	$(INSTALL_DIR) $(1)/etc/uci-defaults
+define Build/Configure
+endef
+
+define Build/Compile
+endef
+
+define Package/$(PKG_NAME)/install
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci
+	$(CP) $(PKG_BUILD_DIR)/luasrc/* $(1)/usr/lib/lua/luci/
 	
-	$(INSTALL_DATA) ./luasrc/controller/adss.lua $(1)/usr/lib/lua/luci/controller/
-	$(INSTALL_DATA) ./luasrc/model/cbi/adss/* $(1)/usr/lib/lua/luci/model/cbi/adss/
-	$(INSTALL_DATA) ./luasrc/view/adss/* $(1)/usr/lib/lua/luci/view/adss/
-	$(INSTALL_BIN) ./root/etc/uci-defaults/* $(1)/etc/uci-defaults/
+	$(INSTALL_DIR) $(1)/
+	$(CP) $(PKG_BUILD_DIR)/root/* $(1)/
 endef
+endif
 
-$(eval $(call BuildPackage,luci-app-adss))
+$(eval $(call BuildPackage,$(PKG_NAME)))
