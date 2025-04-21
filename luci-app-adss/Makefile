@@ -1,4 +1,8 @@
-include $(TOPDIR)/rules.mk
+LUCI_TITLE:=LuCI support for ADSS
+LUCI_DEPENDS:=+adss
+LUCI_PKGARCH:=all
+
+include $(TOPDIR)/feeds/luci/luci.mk
 
 PKG_NAME:=luci-app-adss
 PKG_VERSION:=1.0.0

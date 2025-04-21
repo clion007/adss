@@ -1,5 +1,8 @@
 #!/bin/sh
-CRON_FILE=/etc/crontabs/$USER
+# 修正可能未定义的USER变量
+CURRENT_USER=$(whoami 2>/dev/null || echo "root")
+CRON_FILE=/etc/crontabs/${CURRENT_USER}
+
 grep "adss" $CRON_FILE > /dev/null
 if [ $? -ne 0 ]; then
   echo -e "\e[1;31m 添加规则自动更新任务\e[0m"

@@ -4,22 +4,24 @@ PKG_NAME:=adss
 PKG_VERSION:=4.2
 PKG_RELEASE:=1
 
+PKG_MAINTAINER:=clion007
+PKG_LICENSE:=GPL-3.0-or-later
+
 include $(INCLUDE_DIR)/package.mk
 
 define Package/adss
   SECTION:=net
   CATEGORY:=Network
-  TITLE:=Auto DNS Smart Script
-  DEPENDS:=+dnsmasq-full
+  TITLE:=ADSS - Auto DNS Smart Script
+  DEPENDS:=+curl +dnsmasq-full
   PKGARCH:=all
 endef
 
 define Package/adss/description
-  ADSS is an automatic DNS filtering system based on dnsmasq
+  ADSS is an automatic DNS filtering system based on dnsmasq.
 endef
 
-define Package/adss/conffiles
-/etc/config/adss
+define Build/Compile
 endef
 
 define Package/adss/install
@@ -30,17 +32,34 @@ define Package/adss/install
 	$(INSTALL_BIN) ./files/adss.init $(1)/etc/init.d/adss
 	
 	$(INSTALL_DIR) $(1)/usr/share/adss
-	$(INSTALL_BIN) ./src/rules_update.sh $(1)/usr/share/adss/rules_update.sh
-	$(INSTALL_BIN) ./src/netcheck.sh $(1)/usr/share/adss/netcheck.sh
-	$(INSTALL_BIN) ./files/check_config.sh $(1)/usr/share/adss/check_config.sh
-	$(INSTALL_BIN) ./files/test_rules.sh $(1)/usr/share/adss/test_rules.sh
+	$(INSTALL_BIN) ./files/adss.sh $(1)/usr/share/adss/
+	$(INSTALL_BIN) ./files/log_clean.sh $(1)/usr/share/adss/
+	$(INSTALL_BIN) ./files/check_update.sh $(1)/usr/share/adss/
+	$(INSTALL_BIN) ./files/online_upgrade.sh $(1)/usr/share/adss/
+	$(INSTALL_DATA) ./files/passwall-compat.conf $(1)/usr/share/adss/
 	
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) ./files/adss-config $(1)/usr/bin/adss-config
-	
-	$(INSTALL_DIR) $(1)/var/log
-	touch $(1)/var/log/adss.log
-	touch $(1)/var/log/adss_update.log
+	$(INSTALL_DIR) $(1)/etc/dnsmasq.d/adss/rules
+	touch $(1)/etc/dnsmasq.d/adss/rules/userblacklist
+	touch $(1)/etc/dnsmasq.d/adss/rules/userwhitelist
+	touch $(1)/etc/dnsmasq.d/adss/rules/userlist
+endef
+
+define Package/adss/postinst
+#!/bin/sh
+if [ -z "$${IPKG_INSTROOT}" ]; then
+	/etc/init.d/adss enable
+	/etc/init.d/adss start
+fi
+exit 0
+endef
+
+define Package/adss/prerm
+#!/bin/sh
+if [ -z "$${IPKG_INSTROOT}" ]; then
+	/etc/init.d/adss stop
+	/etc/init.d/adss disable
+fi
+exit 0
 endef
 
 $(eval $(call BuildPackage,adss))

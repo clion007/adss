@@ -20,14 +20,34 @@ update_cron() {
         cp /usr/share/adss/passwall-compat.conf /etc/dnsmasq.d/adss/
     fi
     
+    # 规则优先级设置
+    local rules_priority=$(uci_get_by_type basic rules_priority 1)
+    if [ "$rules_priority" = "1" ]; then
+        # 确保ADSS规则优先级最高
+        if [ -f "/etc/dnsmasq.d/adss/passwall-compat.conf" ]; then
+            sed -i 's/^#*conf-file/conf-file/g' /etc/dnsmasq.d/adss/passwall-compat.conf
+        fi
+    else
+        # 普通优先级
+        if [ -f "/etc/dnsmasq.d/adss/passwall-compat.conf" ]; then
+            sed -i 's/^conf-file/#conf-file/g' /etc/dnsmasq.d/adss/passwall-compat.conf
+        fi
+    fi
+    
     # 添加规则更新定时任务
     local update_time=$(uci_get_by_type basic update_time 4)
     local update_minute=$(uci_get_by_type basic update_minute 0)
-    echo "${update_minute} ${update_time} * * * /usr/share/adss/rules_update.sh >/dev/null 2>&1" >> /etc/crontabs/root
+    echo "${update_minute} ${update_time} * * * /usr/share/adss/rules_update.sh >/var/log/adss_update.log 2>&1" >> /etc/crontabs/root
     
     # 添加日志清理定时任务
-    local keep_log_days=$(uci_get_by_type basic keep_log_days 7)
     echo "0 0 * * * /usr/share/adss/log_clean.sh >/dev/null 2>&1" >> /etc/crontabs/root
+    
+    # 添加检查更新定时任务
+    echo "0 */12 * * * /usr/share/adss/check_update.sh >/dev/null 2>&1" >> /etc/crontabs/root
+    
+    # 添加网络检测任务
+    local net_check_interval=$(uci_get_by_type basic net_check_interval 5)
+    echo "*/${net_check_interval} * * * * /usr/share/adss/netcheck.sh >/dev/null 2>&1" >> /etc/crontabs/root
     
     /etc/init.d/cron reload
 }
@@ -37,13 +57,47 @@ start_service() {
     local enabled=$(uci_get_by_type basic enabled 0)
     [ "$enabled" = "0" ] && return 1
     
+    # 确保目录存在
+    mkdir -p /etc/dnsmasq.d/adss/rules
+    mkdir -p /usr/share/adss
+    mkdir -p /var/log
+    
+    # 更新定时任务
     update_cron
     
+    # 启动服务
     procd_open_instance
     procd_set_param command $PROG
     procd_set_param stdout 1
     procd_set_param stderr 1
+    procd_set_param respawn
     procd_close_instance
+    
+    # 应用规则到dnsmasq
+    if [ -f "/etc/dnsmasq.d/adss/rules/dnsrules.conf" ]; then
+        /etc/init.d/dnsmasq restart >/dev/null 2>&1
+    else
+        # 首次启动，更新规则
+        /usr/share/adss/rules_update.sh >/var/log/adss_update.log 2>&1 &
+    fi
+}
+
+stop_service() {
+    # 停止服务时移除dnsmasq配置
+    config_load adss
+    local enabled=$(uci_get_by_type basic enabled 0)
+    
+    if [ "$enabled" = "0" ]; then
+        # 如果服务被禁用，移除dnsmasq配置
+        if [ -f "/etc/dnsmasq.d/adss/dnsmasq-adss.conf" ]; then
+            rm -f /etc/dnsmasq.d/adss/dnsmasq-adss.conf
+            /etc/init.d/dnsmasq restart >/dev/null 2>&1
+        fi
+    fi
+    
+    # 清理定时任务
+    sed -i '/adss/d' /etc/crontabs/root
+    /etc/init.d/cron reload
 }
 
 service_triggers() {
@@ -53,4 +107,5 @@ service_triggers() {
 reload_service() {
     stop
     start
+    update_cron
 }
