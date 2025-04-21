@@ -104,9 +104,19 @@ jobs:
           echo 'CONFIG_PACKAGE_luci-app-adss=y' >> .config
           make defconfig
           
-          # 编译
-          make package/adss/app-adss/compile V=s
-          make package/adss/luci-app-adss/compile V=s
+          # 显示编译环境信息
+          echo "=== 显示编译环境信息 ==="
+          pwd
+          ls -la package/adss/
+          ls -la package/adss/app-adss/
+          cat package/adss/app-adss/Makefile
+          
+          # 编译（增加详细输出）
+          echo "=== 开始编译 app-adss ==="
+          make package/adss/app-adss/compile V=sc
+          
+          echo "=== 开始编译 luci-app-adss ==="
+          make package/adss/luci-app-adss/compile V=sc
           
           # 复制编译结果
           mkdir -p $GITHUB_WORKSPACE/bin/${{ matrix.arch }}
