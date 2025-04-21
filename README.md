@@ -1,7 +1,7 @@
 # 全自动 DNS 智能脚本（ADSS）
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/clion007/adss/master/images/logo.svg" alt="ADSS Logo" width="200">
+  <img src="https://gitee.com/clion007/adss/raw/master/images/logo.svg" alt="ADSS Logo" width="200">
   <p><strong>Auto DNS Smart Script - 小巧、方便、全自动的 DNS 智能管理工具</strong></p>
   <p>
     <a href="https://github.com/clion007/adss/actions"><img src="https://img.shields.io/github/workflow/status/clion007/adss/构建并发布%20ADSS" alt="构建状态"></a>
