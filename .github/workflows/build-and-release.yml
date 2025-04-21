@@ -1,0 +1,186 @@
+name: 构建并发布 ADSS
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: '是否发布版本'
+        required: true
+        default: 'false'
+      version:
+        description: '版本号 (例如: 4.2.1)'
+        required: false
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [x86_64, aarch64_generic, arm_cortex-a7, mips_24kc]
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+
+      - name: 安装依赖
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential ccache ecj fastjar file g++ gawk \
+          gettext git java-propose-classpath libelf-dev libncurses5-dev \
+          libncursesw5-dev libssl-dev python python3 python3-pip python3-ply \
+          python3-distutils python3-setuptools rsync unzip zlib1g-dev wget
+
+      - name: 设置版本号
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ startsWith(github.ref, 'refs/tags/v') }}" == "true" ]]; then
+            VERSION=$(echo ${{ github.ref }} | sed 's/refs\/tags\/v//')
+          elif [[ "${{ github.event.inputs.release }}" == "true" && -n "${{ github.event.inputs.version }}" ]]; then
+            VERSION=${{ github.event.inputs.version }}
+          else
+            VERSION=$(grep -o 'ADSS_VERSION="[0-9.]*"' app-adss/files/version.sh | grep -o '[0-9.]*')
+          fi
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "构建版本: ${VERSION}"
+
+      - name: 准备 OpenWrt SDK
+        run: |
+          mkdir -p openwrt-sdk
+          cd openwrt-sdk
+          
+          case "${{ matrix.arch }}" in
+            x86_64)
+              wget https://downloads.openwrt.org/releases/22.03.5/targets/x86/64/openwrt-sdk-22.03.5-x86-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+              tar xf openwrt-sdk-*.tar.xz --strip=1
+              ;;
+            aarch64_generic)
+              wget https://downloads.openwrt.org/releases/22.03.5/targets/armsr/armv8/openwrt-sdk-22.03.5-armsr-armv8_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+              tar xf openwrt-sdk-*.tar.xz --strip=1
+              ;;
+            arm_cortex-a7)
+              wget https://downloads.openwrt.org/releases/22.03.5/targets/armvirt/32/openwrt-sdk-22.03.5-armvirt-32_gcc-11.2.0_musl_eabi.Linux-x86_64.tar.xz
+              tar xf openwrt-sdk-*.tar.xz --strip=1
+              ;;
+            mips_24kc)
+              wget https://downloads.openwrt.org/releases/22.03.5/targets/ath79/generic/openwrt-sdk-22.03.5-ath79-generic_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+              tar xf openwrt-sdk-*.tar.xz --strip=1
+              ;;
+          esac
+
+      - name: 准备 ADSS 源码
+        run: |
+          cd openwrt-sdk
+          mkdir -p package/adss
+          cp -r $GITHUB_WORKSPACE/app-adss package/adss/
+          cp -r $GITHUB_WORKSPACE/luci-app-adss package/adss/
+          
+          # 更新版本号
+          sed -i "s/ADSS_VERSION=\".*\"/ADSS_VERSION=\"${VERSION}\"/" package/adss/app-adss/files/version.sh
+          sed -i "s/ADSS_RELEASE_DATE=\".*\"/ADSS_RELEASE_DATE=\"$(date +%Y-%m-%d)\"/" package/adss/app-adss/files/version.sh
+          
+          # 更新 Makefile 版本
+          sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" package/adss/app-adss/Makefile
+          sed -i "s/PKG_RELEASE:=.*/PKG_RELEASE:=1/" package/adss/app-adss/Makefile
+          sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" package/adss/luci-app-adss/Makefile
+          sed -i "s/PKG_RELEASE:=.*/PKG_RELEASE:=1/" package/adss/luci-app-adss/Makefile
+
+      - name: 编译 ADSS
+        run: |
+          cd openwrt-sdk
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          
+          # 配置编译选项
+          echo 'CONFIG_PACKAGE_adss=y' > .config
+          echo 'CONFIG_PACKAGE_luci-app-adss=y' >> .config
+          make defconfig
+          
+          # 编译
+          make package/adss/app-adss/compile V=s
+          make package/adss/luci-app-adss/compile V=s
+          
+          # 复制编译结果
+          mkdir -p $GITHUB_WORKSPACE/bin/${{ matrix.arch }}
+          find bin/packages -name "adss_*.ipk" -o -name "luci-app-adss_*.ipk" | xargs -I {} cp {} $GITHUB_WORKSPACE/bin/${{ matrix.arch }}/
+
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v3
+        with:
+          name: adss-${{ matrix.arch }}-${{ env.VERSION }}
+          path: bin/${{ matrix.arch }}/*.ipk
+          retention-days: 7
+
+  release:
+    needs: build
+    if: (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.release == 'true')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+        
+      - name: 下载所有构建产物
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+          
+      - name: 准备发布文件
+        run: |
+          mkdir -p release
+          find artifacts -name "*.ipk" -exec cp {} release/ \;
+          
+          # 重命名文件以包含架构信息
+          cd release
+          for file in adss_*.ipk; do
+            arch=$(echo $file | sed -E 's/.*_([^_]+)\.ipk/\1/')
+            new_name=$(echo $file | sed -E "s/(.*)_([^_]+)\.ipk/\1_${{ env.VERSION }}_\2.ipk/")
+            mv "$file" "$new_name"
+          done
+          
+          # 创建版本说明
+          echo "# ADSS v${{ env.VERSION }} 发布说明" > release_notes.md
+          echo "发布日期: $(date '+%Y-%m-%d')" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "## 支持的架构" >> release_notes.md
+          echo "- x86_64" >> release_notes.md
+          echo "- aarch64_generic (ARM 64位)" >> release_notes.md
+          echo "- arm_cortex-a7 (ARM 32位)" >> release_notes.md
+          echo "- mips_24kc (MIPS)" >> release_notes.md
+          echo "" >> release_notes.md
+          
+          if [[ "${{ github.event_name }}" == "push" && "${{ startsWith(github.ref, 'refs/tags/v') }}" == "true" ]]; then
+            # 从 tag 消息中提取更新日志
+            echo "## 更新内容" >> release_notes.md
+            git tag -l --format='%(contents)' ${{ github.ref_name }} >> release_notes.md
+          elif [[ -n "${{ github.event.inputs.version }}" ]]; then
+            echo "## 更新内容" >> release_notes.md
+            echo "手动构建版本" >> release_notes.md
+          fi
+          
+          cat release_notes.md
+      
+      - name: 创建发布
+        uses: ncipollo/release-action@v1
+        with:
+          name: ADSS v${{ env.VERSION }}
+          tag: v${{ env.VERSION }}
+          artifacts: "release/*.ipk"
+          bodyFile: "release/release_notes.md"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: 部署到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./release
+          destination_dir: releases/v${{ env.VERSION }}
+          keep_files: true

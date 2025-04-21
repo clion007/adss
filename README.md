@@ -34,7 +34,23 @@ PS：
 
 关于固件：7620的芯片，测试了各种固件，目前就潘多拉的的wifi驱动比较给力，其它的都很渣，不同芯片请自行测试，目前潘多拉的软件源已经恢复正常。此外，发现有一些固件（比如新版的pandorabox），在编译时自带了两个dnsmasq软件包，即dnsmasq和dnsmasq-full。同时两个都存在时，会导致DNS无法正常解析的问题，移除dnsmasq，保留dnsmasq-full，重启dnsmasq进程后解析恢复正常。
 
-**安装配置方法：**
+## 安装方法
+
+### 方法一：通过自定义软件源安装（推荐）
+
+1. 添加 ADSS 自定义软件源：
+```
+curl -fsSL https://raw.githubusercontent.com/clion007/adss/master/installer/add_custom_repo.sh | sh
+
+```
+2. 更新软件源并安装 ADSS：
+```
+opkg update && opkg install adss luci-app-adss
+
+```
+3. 运行 ADSS 脚本：
+
+### 方法二：通过安装脚本安装
 
 基于curl的安装，使用putty软件登录路由器或者web端登录路由器，进入tty终端，输入以下命令行回车：
 ```
@@ -42,6 +58,18 @@ mkdir -p /tmp/adss && curl https://gitee.com/clion007/adss/raw/master/adss.sh -s
 ```
 即可运行脚本根据需要选择配置路由器dnsmasq及hosts，完成后立即既可生效，一般无需重启路由器。putty运行脚本显示乱码的问题请设置putty软件的编码为UTF-8。
 
+
+### 方法三：手动下载 IPK 包安装
+
+1. 访问 [ADSS 发布页面](https://github.com/clion007/adss/releases/latest)
+2. 下载适合您路由器架构的 IPK 包
+3. 上传到路由器并使用以下命令安装：
+
+```
+opkg install /path/to/adss_x.x.x_arch.ipk
+opkg install /path/to/luci-app-adss_x.x.x_all.ipk
+
+```
 如果发现配置后dns解析出现问题，可以ip登录路由器，用dnsmasq --test命令行检测配置的问题在哪里，一般如果同时使用别的软件涉及dns设置可能会出现类似冲突的问题。
 
 **注意：**
