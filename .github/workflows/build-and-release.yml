@@ -112,21 +112,13 @@ jobs:
           find bin/packages -name "adss_*.ipk" -o -name "luci-app-adss_*.ipk" | xargs -I {} cp {} $GITHUB_WORKSPACE/bin/${{ matrix.arch }}/
 
       - name: 上传构建产物
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@master  # 改用 master 分支
         with:
-          name: adss-${{ matrix.arch }}-${{ env.VERSION }}
-          path: bin/${{ matrix.arch }}/*.ipk
-          retention-days: 7
+          name: ADSS-packages
+          path: |
+            bin/packages/*/adss*.ipk
+            bin/packages/*/luci-app-adss*.ipk
 
-  release:
-    needs: build
-    if: (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.release == 'true')
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: 检出代码
-        uses: actions/checkout@v3
-        
       - name: 下载所有构建产物
         uses: actions/download-artifact@v3
         with:
