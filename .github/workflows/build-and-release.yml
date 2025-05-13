@@ -182,7 +182,7 @@ jobs:
 
       - name: 部署到 GitHub Pages
         if: matrix.arch == 'x86_64' && github.event_name != 'pull_request' # 只在一个 job 实例中执行
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./release
@@ -200,7 +200,7 @@ jobs:
 
       - name: 部署最新版本到 GitHub Pages
         if: matrix.arch == 'x86_64' && github.event_name != 'pull_request' # 只在一个 job 实例中执行
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./latest
