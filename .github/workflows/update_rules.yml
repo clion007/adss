@@ -58,7 +58,7 @@ jobs:
 
       - name: Commit and Push Rules
         id: commit
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_author: Clion <clion007@126.com>
           commit_message: Automated Update Rules
