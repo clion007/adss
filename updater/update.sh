@@ -32,7 +32,7 @@ if [ -s "/tmp/adss/update.sh" -a -s "/tmp/adss/rules_update.sh" ]; then
 			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。\e[0m"
 			echo 
 			/usr/share/adss/rules_update.sh
-			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。\e[0m"
+			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。\e[0m"
 			echo 
 		fi
 	elif ( ! cmp -s /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh ); then
@@ -45,13 +45,13 @@ if [ -s "/tmp/adss/update.sh" -a -s "/tmp/adss/rules_update.sh" ]; then
 		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。\e[0m"
 		echo 
 		/usr/share/adss/rules_update.sh
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。\e[0m"
+		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。\e[0m"
 		echo 
 	else
 		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，开始检测规则更新。\e[0m"
 		echo 
 		/usr/share/adss/rules_update.sh
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则已经更新完成。\e[0m"
+		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。\e[0m"
 		echo 
 	fi
 else
