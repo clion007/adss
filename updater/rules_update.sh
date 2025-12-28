@@ -117,32 +117,38 @@ HOSTS_RULES_FILE="/etc/dnsmasq.d/adss/rules/hostsrules.conf"
 if [ -s "/tmp/adss/dnsrules.conf" ] && [ "$TEST_PASSED" = "1" ]; then
   if ! cmp -s /tmp/adss/dnsrules.conf "$DNS_RULES_FILE"; then
     echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`：检测到新 DNS 规则......生成新 DNS 规则！\e[0m"
+	echo
     # --- 原子性替换: 将经过测试的文件移动到最终位置 ---
     mv -f /tmp/adss/dnsrules.conf "$DNS_RULES_FILE"
     DNS_CHANGED=1
   else
     echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`：DNS 规则无需更新。\e[0m"
-    rm -f /tmp/adss/dnsrules.conf # 测试通过但内容无变化，丢弃临时文件
+	echo
+    rm -f /tmp/adss/dnsrules.conf # 内容无变化，丢弃临时文件
   fi
 fi
 
 if [ -s "/tmp/adss/hostsrules.conf" ] && [ "$TEST_PASSED" = "1" ]; then
   if ! cmp -s /tmp/adss/hostsrules.conf "$HOSTS_RULES_FILE"; then
     echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`：检测到新 hosts 规则......生成新 hosts 规则！\e[0m"
+	echo
     # --- 原子性替换: 将经过测试的文件移动到最终位置 ---
     mv -f /tmp/adss/hostsrules.conf "$HOSTS_RULES_FILE"
     HOSTS_CHANGED=1
   else
     echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`：hosts 规则无需更新。\e[0m"
-    rm -f /tmp/adss/hostsrules.conf # 测试通过但内容无变化，丢弃临时文件
+	echo
+    rm -f /tmp/adss/hostsrules.conf # 内容无变化，丢弃临时文件
   fi
 fi
 
 # 只有在配置文件真正发生变化时才重启服务
 if [ "$DNS_CHANGED" = "1" ] || [ "$HOSTS_CHANGED" = "1" ]; then
   echo -e "\e[1;36m 正在重启 dnsmasq 服务... \e[0m"
+  echo
   if /etc/init.d/dnsmasq restart > /dev/null 2>&1; then
-    echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`：DNS/hosts 规则更新完成，应用新规则。\e[0m"
+    echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`：DNS/hosts 应用新规则。\e[0m"
+	echo
   else
     echo -e "\e[1;31m `date +'%Y-%m-%d %H:%M:%S'`：错误: dnsmasq 重启失败! 请手动检查。 \e[0m"
     rm -rf /tmp/adss
