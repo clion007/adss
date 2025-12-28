@@ -157,4 +157,3 @@ if [ "$DNS_CHANGED" = "1" ] || [ "$HOSTS_CHANGED" = "1" ]; then
 fi
 
 rm -rf /tmp/adss
-echo -e "\e[1;36m 规则更新流程完成。 \e[0m"
