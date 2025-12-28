@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e # 遇到错误立即退出
+set -e
 
 mkdir -p /tmp/adss
 echo -e "\e[1;36m 初始化规则文件 \e[0m"
