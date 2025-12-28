@@ -15,7 +15,7 @@ if ! curl --http1.1 https://gh.llkk.cc/https://raw.githubusercontent.com/clion00
   exit 1
 fi
 
-if ! curl --http1.1 https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf --retry 3 --retry-delay 2; then
+if ! curl --http1.1 https://gh.llkk.cc/https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf --retry 3 --retry-delay 2; then
   echo -e "\e[1;31m 错误: 下载 hostsrules.conf 失败! \e[0m"
   rm -rf /tmp/adss
   exit 1
