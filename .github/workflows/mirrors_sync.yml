@@ -39,7 +39,7 @@ jobs:
       - name: Mirrors Synchronized
         env:
           SOURCE_REPO: 'https://github.com/clion007/adss.git'
-          DESTINATION_REPO: 'https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git'
+          DESTINATION_REPO: 'https://clion:${{ secrets.GITCODE_TOKEN }}@gitcode.com/clion/adss.git'
         run: |
           git clone --mirror "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"`
           git remote set-url --push origin "$DESTINATION_REPO"
@@ -53,3 +53,4 @@ jobs:
         with:
           retain_days: 0
           keep_minimum_runs: 2
+
