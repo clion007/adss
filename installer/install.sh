@@ -26,14 +26,14 @@ echo -e "\e[1;36m 开始安装配置 ADSS\e[0m"
 echo 
 echo -e "\e[1;36m 开始备份路由器相关配置\e[0m"
 echo 
-curl --create-dirs https://gitee.com/clion007/adss/raw/master/config/prepare.sh -sLSo /tmp/adss/prepare.sh
+curl --create-dirs https://raw.gitcode.com/clion/adss/raw/master/config/prepare.sh -sLSo /tmp/adss/prepare.sh
 . /tmp/adss/prepare.sh
 echo 
-curl https://gitee.com/clion007/adss/raw/master/config/configer.sh -sLSo /tmp/adss/configer.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/config/configer.sh -sLSo /tmp/adss/configer.sh
 . /tmp/adss/configer.sh
 echo -e "\e[1;36m 部署相关文件\e[0m"
 echo 
-curl https://gitee.com/clion007/adss/raw/master/installer/adss -sLSo /etc/init.d/adss
+curl https://raw.gitcode.com/clion/adss/raw/master/installer/adss -sLSo /etc/init.d/adss
 chmod 755 /etc/init.d/adss
 if [ -f /etc/rc.d/S90adss ]; then
   ln -s /etc/init.d/adss /etc/rc.d/S90adss
@@ -41,12 +41,12 @@ fi
 curl --http1.1 https://gh.llkk.cc/https://raw.githubusercontent.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf --retry 3 --retry-delay 2
 # curl --http1.1 https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf
 curl --http1.1 https://gh.llkk.cc/https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf --retry 3 --retry-delay 2
-curl https://gitee.com/clion007/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
-curl https://gitee.com/clion007/adss/raw/master/installer/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
-curl https://gitee.com/clion007/adss/raw/master/updater/update.sh -sLSo /usr/share/adss/update.sh
-curl https://gitee.com/clion007/adss/raw/master/updater/rules_update.sh -sLSo /usr/share/adss/rules_update.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/installer/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/updater/update.sh -sLSo /usr/share/adss/update.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/updater/rules_update.sh -sLSo /usr/share/adss/rules_update.sh
 chmod -R 755 /usr/share/adss
-curl https://gitee.com/clion007/adss/raw/master/config/cron.sh -sLSo /tmp/adss/cron.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/config/cron.sh -sLSo /tmp/adss/cron.sh
 . /tmp/adss/cron.sh
 echo -e "\e[1;36m 删除安装临时文件\e[0m"
 rm -rf /tmp/adss
