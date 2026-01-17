@@ -1,6 +1,6 @@
  #!/bin/sh
 echo -e "\e[1;36m 删除白名单及误杀规则，时间较长，请耐心等待。。。\e[0m"
-curl https://raw.gitcode.com/clion/adss/raw/master/rules/adss/adwhitelist -sLSo /tmp/adss/adwhitelist
+curl https://raw.githubusercontent.com/clion007/adss/master/rules/adss/adwhitelist -sLSo /tmp/adss/adwhitelist
 cat /tmp/adss/adwhitelist | uniq > /tmp/adss/whitelist 
 sed -i "/#/d" /tmp/adss/whitelist
 rm -rf /tmp/adss/adwhitelist
