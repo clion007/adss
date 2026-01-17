@@ -199,7 +199,7 @@ ADSS 提供了自动更新机制，默认每天凌晨 4:25 自动更新规则。
 
 1. [GitHub ADSS 项目](https://github.com/clion007/adss)
 2. [Gitee ADSS 项目](https://gitee.com/clion007/adss)
-3. [Gitcode ADSS 项目](https://gitcode.net/clion007/adss)
+3. [Gitcode ADSS 项目](https://gitcode.com/clion/adss)
 
 ## 🙏 致谢
 
