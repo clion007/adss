@@ -39,10 +39,11 @@ jobs:
       - name: Mirrors Synchronized
         env:
           SOURCE_REPO: 'https://github.com/clion007/adss.git'
-          DESTINATION_REPO: 'https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git'
+          # DESTINATION_REPO: 'https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git'
+          DESTINATION_REPO2: 'https://clion@gitcode.net/clion007/adss.git:${{ secrets.GITCODE_TOKEN2 }}'
         run: |
           git clone --mirror "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"`
-          git remote set-url --push origin "$DESTINATION_REPO"
+          git remote set-url --push origin "$DESTINATION_REPO2"
           git fetch -p origin
           git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
           git push --mirror
@@ -53,6 +54,7 @@ jobs:
         with:
           retain_days: 0
           keep_minimum_runs: 2
+
 
 
 
