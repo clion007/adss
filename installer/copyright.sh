@@ -1,6 +1,6 @@
 #!/bin/sh
 mkdir -p /tmp/adss
-curl -fsSL https://gitee.com/clion007/adss/raw/master/config/logo
+curl -fsSL https://raw.gitcode.com/clion/adss/raw/master/config/logo
 echo 
 echo "Auto DNS Smart Script V4.2"
 echo "Project URL https://github.com/clion007/adss"
