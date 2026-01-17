@@ -24,7 +24,7 @@ init() {
     
     # 初始化规则文件
     log "初始化规则文件"
-    curl -s --connect-timeout 10 --retry 3 https://gitee.com/clion007/adss/raw/master/rules/builder/initRulesFile.sh -o $TEMP_DIR/initRulesFile.sh
+    curl -s --connect-timeout 10 --retry 3 https://raw.gitcode.com/clion/adss/raw/master/rules/builder/initRulesFile.sh -o $TEMP_DIR/initRulesFile.sh
     if [ $? -ne 0 ]; then
         log "初始化规则文件下载失败，尝试备用源"
         curl -s --connect-timeout 10 --retry 3 https://raw.githubusercontent.com/clion007/adss/master/rules/builder/initRulesFile.sh -o $TEMP_DIR/initRulesFile.sh
@@ -47,17 +47,17 @@ download_base_rules() {
     log "下载基础规则文件"
     
     # 下载DNS规则
-    curl -s --connect-timeout 10 --retry 3 https://raw.gitmirror.com/clion007/adss/master/rules/file/dnsrules.conf -o $TEMP_DIR/base_dnsrules.conf
+    curl -s --connect-timeout 10 --retry 3 https://gh.llkk.cc/https://raw.githubusercontent.com/clion007/adss/master/rules/file/dnsrules.conf -o $TEMP_DIR/base_dnsrules.conf
     if [ $? -ne 0 ]; then
         log "基础DNS规则下载失败，尝试备用源"
-        curl -s --connect-timeout 10 --retry 3 https://gitee.com/clion007/adss/raw/master/rules/file/dnsrules.conf -o $TEMP_DIR/base_dnsrules.conf
+        curl -s --connect-timeout 10 --retry 3 https://raw.gitcode.com/clion/adss/raw/master/rules/file/dnsrules.conf -o $TEMP_DIR/base_dnsrules.conf
     fi
     
     # 下载Hosts规则
-    curl -s --connect-timeout 10 --retry 3 https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -o $TEMP_DIR/base_hostsrules.conf
+    curl -s --connect-timeout 10 --retry 3 https://gh.llkk.cc/https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf -o $TEMP_DIR/base_hostsrules.conf
     if [ $? -ne 0 ]; then
         log "基础Hosts规则下载失败，尝试备用源"
-        curl -s --connect-timeout 10 --retry 3 https://gitee.com/clion007/adss/raw/master/rules/file/hostsrules.conf -o $TEMP_DIR/base_hostsrules.conf
+        curl -s --connect-timeout 10 --retry 3 https://raw.gitcode.com/clion/adss/raw/master/rules/file/hostsrules.conf -o $TEMP_DIR/base_hostsrules.conf
     fi
     
     if [ -f "$TEMP_DIR/base_dnsrules.conf" ] && [ -f "$TEMP_DIR/base_hostsrules.conf" ]; then
