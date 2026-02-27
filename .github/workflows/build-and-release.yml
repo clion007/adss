@@ -117,7 +117,7 @@ jobs:
           find bin/packages -name "adss_*.ipk" -o -name "luci-app-adss_*.ipk" | xargs -I {} cp {} $GITHUB_WORKSPACE/bin/${{ matrix.arch }}/
 
       - name: 上传构建产物
-        uses: actions/upload-artifact@v6  # 更新到 v4
+        uses: actions/upload-artifact@v7  # 更新到 v4
         with:
           name: ADSS-packages-${{ matrix.arch }} # 为每个架构使用不同的名称，避免冲突
           path: ${{ github.workspace }}/bin/${{ matrix.arch }}/*.ipk # 确保路径正确
