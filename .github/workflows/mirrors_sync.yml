@@ -11,7 +11,7 @@ env:
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [rules_updated]
+    types: []
   push:
   delete:
   create:
@@ -26,9 +26,6 @@ jobs:
       contents: write
 
     steps:
-    
-      - name: CheckOut
-        uses: actions/checkout@v7
 
       - name: Set TimeZone
         env:
@@ -36,17 +33,41 @@ jobs:
         run: |
           sudo timedatectl set-timezone "$TZ"
 
-      - name: Mirrors Synchronized
+      # ---------- 安装 Git LFS ----------
+      - name: Install Git LFS
+        run: |
+          sudo apt-get update
+          sudo apt-get install git-lfs -y
+          git lfs --version
+
+      # ---------- 镜像同步（使用 LFS） ----------
+      - name: Mirrors Synchronized with LFS
         env:
           SOURCE_REPO: 'https://github.com/clion007/adss.git'
-          # DESTINATION_REPO: 'https://clion007:${{ secrets.GITCODE_TOKEN }}@gitcode.net/clion007/adss.git'
           DESTINATION_REPO2: 'https://clion:${{ secrets.GITCODE_TOKEN2 }}@gitcode.com/clion/adss.git'
         run: |
-          git clone --mirror "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"`
+          # 1. 克隆源仓库的镜像（裸仓库）
+          git clone --mirror "$SOURCE_REPO" adss-mirror
+          cd adss-mirror
+          
+          # 2. 初始化 LFS（在裸仓库中也需要启用）
+          git lfs install --local
+          
+          # 3. 获取所有 LFS 对象（从源仓库）
+          git lfs fetch --all origin
+          
+          # 4. 设置目标仓库的推送地址
           git remote set-url --push origin "$DESTINATION_REPO2"
-          git fetch -p origin
-          git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+          
+          # 5. 先推送 LFS 对象（确保大文件已上传）
+          git lfs push --all origin
+          
+          # 6. 再推送所有引用（分支、标签等）
           git push --mirror
+          
+          # 清理
+          cd ..
+          rm -rf adss-mirror
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
@@ -54,11 +75,3 @@ jobs:
         with:
           retain_days: 0
           keep_minimum_runs: 2
-
-
-
-
-
-
-
-
