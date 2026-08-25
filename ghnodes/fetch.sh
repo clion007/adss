@@ -1,13 +1,13 @@
 #!/bin/sh
 # 从上游的 nodes.ts 提取节点域名列表
-# 保存到 files/etc/adss/ghnodes.ini
+# 保存到 ghnodes/ghnodes.ini
 
 set -e
 
 # 上游原始文件地址（优先直接访问 GitHub raw，若失败则使用镜像）
 NODES_URL="https://raw.githubusercontent.com/hubporg/ghproxy-next/refs/heads/main/components/nodes.ts"
 
-OUTPUT_FILE="files/etc/adss/ghnodes.ini"
+OUTPUT_FILE="ghnodes/ghnodes.ini"
 
 echo "🔄 正在获取 nodes.ts ..."
 
