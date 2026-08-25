@@ -4,7 +4,7 @@
   <img src="https://raw.gitcode.com/clion/adss/raw/master/images/logo.svg" alt="ADSS Logo" width="200">
   <p><strong>Auto DNS Smart Script - 小巧、方便、全自动的 DNS 智能管理工具</strong></p>
   <p>
-    <a href="https://github.com/clion007/adss/actions"><img src="https://img.shields.io/github/workflow/status/clion007/adss/构建并发布%20ADSS" alt="构建状态"></a>
+    <a href="https://github.com/clion007/adss/actions"><img src="https://img.shields.io/github/actions/workflow/status/clion007/adss/update-rules.yml?label=构建状态" alt="构建状态"></a>
     <a href="https://github.com/clion007/adss/releases/latest"><img src="https://img.shields.io/github/v/release/clion007/adss" alt="最新版本"></a>
     <a href="https://github.com/clion007/adss/blob/master/LICENSE"><img src="https://img.shields.io/github/license/clion007/adss" alt="许可证"></a>
     <a href="https://github.com/clion007/adss/stargazers"><img src="https://img.shields.io/github/stars/clion007/adss" alt="Stars"></a>
