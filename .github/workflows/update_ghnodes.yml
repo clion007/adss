@@ -1,0 +1,38 @@
+name: 定时更新 GitHub 加速节点列表
+
+on:
+  schedule:
+    # 每天 UTC 3:00 运行（北京时间 11:00）
+    - cron: '0 3 * * *'
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  update-nodes:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write   # 允许推送代码
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v7
+
+      - name: 获取最新节点列表
+        run: |
+          chmod +x ghnodes/fetch.sh
+          ./ghnodes/fetch.sh
+
+      - name: Commit and Push Rules
+        id: commit
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_author: Clion <clion007@126.com>
+          commit_message: Automated Update GitHub Nodes
+          file_pattern: ghnodes/ghnodes.ini
+      
+      - name: Delete Workflow Runs
+        uses: Mattraks/delete-workflow-runs@main
+        continue-on-error: true
+        with:
+          retain_days: 0
+          keep_minimum_runs: 2

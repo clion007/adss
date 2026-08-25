@@ -2,6 +2,11 @@
 set -e
 
 mkdir -p /tmp/adss
+echo -e "\e[1;36m 获取最佳 Github 加速镜像\e[0m"
+curl https://raw.gitcode.com/clion/adss/raw/master/ghnodes/ghnodes.ini -sLSo /tmp/adss/ghnodes.ini
+curl https://raw.gitcode.com/clion/adss/raw/master/ghnodes/check.sh -sLSo /tmp/adss/ghcheck.sh
+. /tmp/adss/ghcheck.sh
+echo 
 echo -e "\e[1;36m 初始化规则文件 \e[0m"
 echo
 curl https://raw.gitcode.com/clion/adss/raw/master/rules/builder/initRulesFile.sh -sLSo /tmp/adss/initRulesFile.sh
@@ -9,13 +14,13 @@ curl https://raw.gitcode.com/clion/adss/raw/master/rules/builder/initRulesFile.s
 echo
 
 echo -e "\e[1;36m 获取线上规则文件 \e[0m"
-if ! curl --http1.1 https://gh.llkk.cc/https://raw.githubusercontent.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /tmp/adss/dnsrules --retry 3 --retry-delay 2; then
+if ! curl --http1.1 ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /tmp/adss/dnsrules --retry 3 --retry-delay 2; then
   echo -e "\e[1;31m 错误: 下载 dnsrules.conf 失败! \e[0m"
   rm -rf /tmp/adss
   exit 1
 fi
 
-if ! curl --http1.1 https://gh.llkk.cc/https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf --retry 3 --retry-delay 2; then
+if ! curl --http1.1 ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /tmp/adss/hostsrules.conf --retry 3 --retry-delay 2; then
   echo -e "\e[1;31m 错误: 下载 hostsrules.conf 失败! \e[0m"
   rm -rf /tmp/adss
   exit 1

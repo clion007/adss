@@ -20,6 +20,11 @@ if [ ! $? -eq 0 ]; then
 fi
 echo -e "\e[1;36m 倚赖关系处理完成\e[0m"
 echo 
+echo -e "\e[1;36m 获取最佳 Github 加速镜像\e[0m"
+curl https://raw.gitcode.com/clion/adss/raw/master/ghnodes/ghnodes.ini -sLSo /tmp/adss/ghnodes.ini
+curl https://raw.gitcode.com/clion/adss/raw/master/ghnodes/check.sh -sLSo /tmp/adss/ghcheck.sh
+. /tmp/adss/ghcheck.sh
+echo 
 echo -e "\e[1;36m ADSS 每天04:25自动更新规则，自动检测网络不通重启路由器，如需修改更新时间，可自行在计划任务中修改\e[0m"
 echo 
 echo -e "\e[1;36m 开始安装配置 ADSS\e[0m"
@@ -33,21 +38,21 @@ curl https://raw.gitcode.com/clion/adss/raw/master/config/configer.sh -sLSo /tmp
 . /tmp/adss/configer.sh
 echo -e "\e[1;36m 部署相关文件\e[0m"
 echo 
-curl https://raw.gitcode.com/clion/adss/raw/master/installer/adss -sLSo /etc/init.d/adss
-chmod 755 /etc/init.d/adss
-if [ -f /etc/rc.d/S90adss ]; then
-  ln -s /etc/init.d/adss /etc/rc.d/S90adss
-fi
-curl --http1.1 https://gh.llkk.cc/https://raw.githubusercontent.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf --retry 3 --retry-delay 2
-# curl --http1.1 https://raw.gitmirror.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf
-curl --http1.1 https://gh.llkk.cc/https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf --retry 3 --retry-delay 2
-curl https://raw.gitcode.com/clion/adss/raw/master/adss.sh -sLSo /usr/share/adss/adss.sh
-curl https://raw.gitcode.com/clion/adss/raw/master/installer/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
-curl https://raw.gitcode.com/clion/adss/raw/master/updater/update.sh -sLSo /usr/share/adss/update.sh
-curl https://raw.gitcode.com/clion/adss/raw/master/updater/rules_update.sh -sLSo /usr/share/adss/rules_update.sh
+curl --http1.1 ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/rules/file/dnsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/dnsrules.conf --retry 3 --retry-delay 2
+curl --http1.1 ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf -sLSo /etc/dnsmasq.d/adss/rules/hostsrules.conf --retry 3 --retry-delay 2
+curl https://raw.gitcode.com/clion/adss/raw/master/files/adss.sh -sLSo /usr/share/adss/adss.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/files/usr/share/adss/netcheck.sh -sLSo /usr/share/adss/netcheck.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/files/usr/share/adss/update.sh -sLSo /usr/share/adss/update.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/files/usr/share/adss/rules_update.sh -sLSo /usr/share/adss/rules_update.sh
 chmod -R 755 /usr/share/adss
 curl https://raw.gitcode.com/clion/adss/raw/master/config/cron.sh -sLSo /tmp/adss/cron.sh
 . /tmp/adss/cron.sh
+curl https://raw.gitcode.com/clion/adss/raw/master/files/etc/init.d/adss -sLSo /etc/init.d/adss
+chmod 755 /etc/init.d/adss
+if [ -f /etc/rc.d/S18adss ]; then
+  ln -s /etc/init.d/adss /etc/rc.d/S18adss
+fi
+curl https://raw.gitcode.com/clion/adss/raw/master/files/lib/upgrade/keep.d/adss -sLSo /lib/upgrade/keep.d/adss
 echo -e "\e[1;36m 删除安装临时文件\e[0m"
 rm -rf /tmp/adss
 echo 

@@ -14,7 +14,7 @@ log() {
 get_version() {
     # 尝试从version.sh获取版本
     if [ -f "/usr/share/adss/version.sh" ]; then
-        local version_info=$(sh /usr/share/adss/version.sh)
+        local version_info=$(. /usr/share/adss/version.sh)
         local version=$(echo "$version_info" | grep -o "版本: [0-9.]*" | grep -o "[0-9.]*")
         if [ -n "$version" ]; then
             echo "$version"
