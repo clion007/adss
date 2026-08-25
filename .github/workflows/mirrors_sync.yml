@@ -44,13 +44,14 @@ jobs:
           SOURCE_REPO: 'https://github.com/clion007/adss.git'
           DESTINATION_REPO: 'https://clion:${{ secrets.GITCODE_TOKEN2 }}@gitcode.com/clion/adss.git'
         run: |
-          git clone --mirror "$SOURCE_REPO" adss-mirror
+          git clone --depth 1 "$SOURCE_REPO" adss-mirror
           cd adss-mirror
-          git lfs install --local
-          git lfs migrate import --include="rules/file/dnsrules.conf" --everything
-          git lfs push --all origin --force
+          # 删除工作区中的大文件（如果有）
+          rm -f rules/file/dnsrules.conf rules/file/hostsrules.conf
+          git add -A
+          git commit -m "Remove dnsrules.conf" --allow-empty
           git remote set-url --push origin "$DESTINATION_REPO"
-          git push --mirror --force
+          git push --force origin master
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
