@@ -43,18 +43,20 @@ jobs:
           SOURCE_REPO: 'https://github.com/clion007/adss.git'
           DESTINATION_REPO: 'https://clion:${{ secrets.GITCODE_TOKEN2 }}@gitcode.com/clion/adss.git'
         run: |
-          git clone --mirror "$SOURCE_REPO" adss-mirror
+          # 1. 浅克隆源仓库（只拉取最新一次提交）
+          git clone --depth=1 "$SOURCE_REPO" adss-mirror
           cd adss-mirror
 
-          # 删除所有历史中的 dnsrules.conf 和 hostsrules.conf（无论路径）
-          git filter-repo --path dnsrules.conf --invert-paths --force
-          git filter-repo --path hostsrules.conf --invert-paths --force
+          # 2. 删除大文件（工作区）
+          rm -f rules/file/dnsrules.conf rules/file/hostsrules.conf
 
-          # 设置目标远程
+          # 3. 将删除操作合并到最新提交（修改最近一次提交）
+          git add -A
+          git commit --amend --no-edit
+
+          # 4. 强制推送到目标仓库（覆盖 master 分支）
           git remote set-url --push origin "$DESTINATION_REPO"
-
-          # 强制推送（覆盖目标仓库的所有引用）
-          git push --mirror --force
+          git push --force origin master
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
