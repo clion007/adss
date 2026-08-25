@@ -38,22 +38,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install git-lfs -y
           git lfs install
-
-      - name: Mirrors Synchronized (auto migrate to LFS)
-        env:
-          SOURCE_REPO: 'https://github.com/clion007/adss.git'
-          DESTINATION_REPO: 'https://clion:${{ secrets.GITCODE_TOKEN2 }}@gitcode.com/clion/adss.git'
+      - name: Mirrors Synchronized (migrate to LFS)
         run: |
           git clone --mirror "$SOURCE_REPO" adss-mirror
           cd adss-mirror
           git lfs install --local
-
-          # 将整个历史中的 dnsrules.conf 迁移为 LFS 指针
-          git lfs migrate import --include="rules/file/dnsrules.conf" --everything --force
-
-          # 推送 LFS 对象
+          git lfs migrate import --include="rules/file/dnsrules.conf" --everything
           git lfs push --all origin --force
-
           git remote set-url --push origin "$DESTINATION_REPO"
           git push --mirror --force
       
