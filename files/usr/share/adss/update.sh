@@ -10,7 +10,10 @@ else
 fi
 echo -e "\e[1;36m 开始检测更新脚本及规则\e[0m"
 echo 
-if [ !-s "/lib/upgrade/keep.d/adss" ]; then
+if [ -s "/etc/rc.d/S90adss" ]; then
+	rm -f /etc/rc.d/S90adss && ln -s /etc/init.d/adss /etc/rc.d/S18adss
+fi
+if [ ! -s "/lib/upgrade/keep.d/adss" ]; then
 	curl https://raw.gitcode.com/clion/adss/raw/master/files/lib/upgrade/keep.d/adss -sLSo /lib/upgrade/keep.d/adss
 fi
 curl https://raw.gitcode.com/clion/adss/raw/master/files/usr/share/adss/update.sh -sLSo /tmp/adss/update.sh
