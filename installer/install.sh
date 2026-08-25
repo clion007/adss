@@ -35,7 +35,7 @@ echo -e "\e[1;36m 部署相关文件\e[0m"
 echo 
 curl --http1.1 ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/rules/file/dnsrules.conf -sSo /etc/dnsmasq.d/adss/rules/dnsrules.conf --retry 3 --retry-delay 2
 curl --http1.1 ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf -sSo /etc/dnsmasq.d/adss/rules/hostsrules.conf --retry 3 --retry-delay 2
-curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/adss.sh -sSo /usr/share/adss/adss.sh
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/adss.sh -sSo /usr/share/adss/adss.sh
 curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/usr/share/adss/netcheck.sh -sSo /usr/share/adss/netcheck.sh
 curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/usr/share/adss/update.sh -sSo /usr/share/adss/update.sh
 curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/usr/share/adss/rules_update.sh -sSo /usr/share/adss/rules_update.sh
@@ -44,7 +44,7 @@ curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/co
 . /tmp/adss/cron.sh
 curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/etc/init.d/adss -sSo /etc/init.d/adss
 chmod 755 /etc/init.d/adss
-if [ -f /etc/rc.d/S18adss ]; then
+if [ ! -f /etc/rc.d/S18adss ]; then
   ln -s /etc/init.d/adss /etc/rc.d/S18adss
 fi
 curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/lib/upgrade/keep.d/adss -sSo /lib/upgrade/keep.d/adss

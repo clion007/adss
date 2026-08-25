@@ -4,7 +4,7 @@ echo
 curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/etc/dnsmasq.d/dnsmasq-adss.conf -sSo /etc/dnsmasq.d/dnsmasq-adss.conf
 echo -e "\e[1;36m 获取上游 DNS 解析配置\e[0m"
 echo 
-curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/etc/dnsmasq.d/resolv-adss.conf -sSo /etc/dnsmasq.d/adss/resolv-adss.conf
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/etc/dnsmasq.d/adss/resolv-adss.conf -sSo /etc/dnsmasq.d/adss/resolv-adss.conf
 
 if [ ! -f /etc/dnsmasq.d/adss/rules/userlist ]; then
   echo -e "\e[1;36m 创建自定义规则文件\e[0m"
