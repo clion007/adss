@@ -38,7 +38,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install git-lfs -y
           git lfs install
+
       - name: Mirrors Synchronized (migrate to LFS)
+        env:
+          SOURCE_REPO: 'https://github.com/clion007/adss.git'
+          DESTINATION_REPO: 'https://clion:${{ secrets.GITCODE_TOKEN2 }}@gitcode.com/clion/adss.git'
         run: |
           git clone --mirror "$SOURCE_REPO" adss-mirror
           cd adss-mirror
