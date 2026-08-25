@@ -4,23 +4,22 @@
 set -e
 
 NODES_FILE="/tmp/adss/ghnodes.ini"
-TEST_URL="https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf"
+TEST_URL="${GH_RAW_BASE}/rules/file/hostsrules.conf"
 TIMEOUT=3
 
 if [ ! -f "$NODES_FILE" ]; then
-    echo "❌ 节点列表文件 $NODES_FILE 不存在，请检查！"
+    print r "❌ 节点列表文件 $NODES_FILE 不存在，请检查！"
     exit 1
 fi
 
 # 读取节点数量用于显示
 node_count=$(grep -v '^[[:space:]]*$' "$NODES_FILE" | wc -l | tr -d ' ')
 if [ "$node_count" -eq 0 ]; then
-    echo "❌ 节点列表为空"
+    print r "❌ 节点列表为空"
     exit 1
 fi
 
-echo "⏱️  正在测试 $node_count 个节点..."
-echo
+print w "⏱️  正在测试 $node_count 个节点..."
 
 tmp_file=$(mktemp)
 
@@ -54,11 +53,10 @@ rm -f "$tmp_file"
 
 # ---------- 输出 ---------
 if [ -n "$best" ]; then
-    export GH_PROXY_PREFIX="https://${best}/"    # 导出为环境变量，方便其他脚本使用
-    echo "最优节点: $best"
-    echo
-    echo "完整前缀: https://${best}/"
+    GH_PROXY_PREFIX="https://${best}"    # 导出为环境变量，方便其他脚本使用
+    print w "最优节点: $best"
+    print w "完整前缀: https://${best}"
 else
-    echo "❌ 所有节点均不可用"
+    print r "❌ 所有节点均不可用"
     exit 1
 fi

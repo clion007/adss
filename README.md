@@ -1,7 +1,7 @@
 # 全自动 DNS 智能脚本（ADSS）
 
 <div align="center">
-  <img src="${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/images/logo.svg" alt="ADSS Logo" width="200">
+  <img src="https://raw.giteeusercontent.com/clion007/adss/raw/master/images/logo.svg" alt="ADSS Logo" width="200">
   <p><strong>Auto DNS Smart Script - 小巧、方便、全自动的 DNS 智能管理工具</strong></p>
   <p>
     <a href="https://github.com/clion007/adss/actions"><img src="https://img.shields.io/github/actions/workflow/status/clion007/adss/mirrors_sync.yml?label=mirrors" alt="mirrors"></a>
@@ -42,7 +42,7 @@ Dnsmasq 是一个小巧且方便的 DNS 和 DHCP 配置工具，适用于小型�
 1. 添加 ADSS 自定义软件源：
 
 ```bash
-curl -fsS https://raw.giteeusercontent.com/clion007/adss/raw/master/installer/add.sh | sh
+curl -fsS https://raw.giteeusercontent.com/clion007/adss/raw/master/installer/add_custom_repo.sh | sh
 ```
 
 1. 更新软件源并安装 ADSS：
@@ -56,7 +56,7 @@ opkg update && opkg install adss luci-app-adss
 使用 putty 软件登录路由器或者 web 端登录路由器，进入 tty 终端，输入以下命令行回车：
 
 ```bash
-mkdir -p /tmp/adss && curl https://raw.giteeusercontent.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && sh /tmp/adss/adss.sh
+mkdir -p /tmp/adss && curl https://raw.giteeusercontent.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && sh /tmp/adss/adss.sh install
 ```
 
 > **注意**：putty 运行脚本显示乱码的问题请设置 putty 软件的编码为 UTF-8。
@@ -191,7 +191,7 @@ rm -f /usr/bin/adss-config
 如果您是通过纯shell脚本安装脚本安装的 ADSS，可以使用以下命令卸载：
 
 ```bash
-curl https://raw.giteeusercontent.com/clion007/adss/raw/master/installer/uninstall.sh -sSo /tmp/uninstall.sh && sh /tmp/uninstall.sh
+adss uninstall
 ```
 
 ## ⚠️ 注意事项
@@ -207,7 +207,7 @@ curl https://raw.giteeusercontent.com/clion007/adss/raw/master/installer/uninsta
 ADSS 提供了自动更新机制，默认每天凌晨 4:25 自动更新规则。您也可以手动运行更新脚本：
 
 ```bash
-/usr/share/adss/update.sh
+adss upgrade
 ```
 
 ## 🌐 仓库镜像

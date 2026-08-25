@@ -4,14 +4,13 @@
 
 set -e
 
-# 上游原始文件地址（优先直接访问 GitHub raw，若失败则使用镜像）
+# 上游节点原始文件地址
 NODES_URL="https://raw.githubusercontent.com/hubporg/ghproxy-next/refs/heads/main/components/nodes.ts"
 
 OUTPUT_FILE="ghnodes/ghnodes.ini"
 
 echo "🔄 正在获取 nodes.ts ..."
 
-# 尝试直接下载，若失败则使用镜像
 content=$(curl -sL --connect-timeout 10 "$NODES_URL" 2>/dev/null)
 
 if [ -z "$content" ]; then

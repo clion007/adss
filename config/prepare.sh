@@ -3,11 +3,10 @@
 CURRENT_USER=$(whoami 2>/dev/null || echo "root")
 CRON_FILE=/etc/crontabs/${CURRENT_USER}
 
-echo -e "\e[1;36m 创建 ADSS 规则文件文件夹\e[0m"
-echo 
-echo -e "\e[1;36m 检测和备份当前 dnsmasq 配置信息\e[0m"
-mkdir -p /etc/dnsmasq.d/adss/rules
+print l "创建 ADSS 规则文件文件夹"
+print l "检测和备份当前 dnsmasq 配置信息"
 mkdir -p /usr/share/adss
+mkdir -p /etc/dnsmasq.d/adss/rules
 touch $CRON_FILE
 if [ ! -f $CRON_FILE-adss.bak ]; then
   cp -p $CRON_FILE $CRON_FILE-adss.bak

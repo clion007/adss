@@ -1,3 +1,4 @@
+/usr/bin/adss
 /usr/share/adss/
 /etc/init.d/adss
 /etc/rc.d/S18adss

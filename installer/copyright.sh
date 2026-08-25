@@ -1,8 +1,8 @@
 #!/bin/sh
 mkdir -p /tmp/adss
-curl -fsSL ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/config/logo
+curl -fsSL ${GH_PROXY_PREFIX}/${GH_RAW_BASE}/config/logo
 echo 
-echo "Auto DNS Smart Script V4.3"
+echo "Auto DNS Smart Script V4.4"
 echo "Project URL https://github.com/clion007/adss"
 echo "Copyright © 2014-`date +'%Y'`,by Clion Nieh Email: clion007@126.com"
 echo "Licenses in GPL V3.0"

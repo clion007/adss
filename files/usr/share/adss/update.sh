@@ -2,78 +2,51 @@
 
 set -e
 mkdir -p /tmp/adss
-echo -e "\e[1;36m 获取最佳 Github 加速镜像\e[0m"
-echo 
-curl https://raw.giteeusercontent.com/clion007/adss/raw/master/ghnodes/ghnodes.ini -sSo /tmp/adss/ghnodes.ini
-curl https://raw.giteeusercontent.com/clion007/adss/raw/master/ghnodes/check.sh -sSo /tmp/adss/ghcheck.sh
-. /tmp/adss/ghcheck.sh
-clear
-curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
-if [ -s "/tmp/adss/copyright.sh" ]; then
-  . /tmp/adss/copyright.sh
-else
-  echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 网络异常，退出更新。\e[0m"
-  echo 
-  exit 1
-fi
-echo -e "\e[1;36m 开始检测更新脚本及规则\e[0m"
-echo 
-if [ -s "/etc/rc.d/S90adss" ]; then
+print w "开始检测更新脚本及规则"
+if [ -s "/etc/rc.d/S90adss" ] && [ ! -s "/etc/rc.d/S18adss" ]; then
 	rm -f /etc/rc.d/S90adss && ln -s /etc/init.d/adss /etc/rc.d/S18adss
 fi
 if [ ! -s "/lib/upgrade/keep.d/adss" ]; then
-	curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/lib/upgrade/keep.d/adss -sSo /lib/upgrade/keep.d/adss
+	download "files/lib/upgrade/keep.d/adss" "/lib/upgrade/keep.d/adss"
 fi
-curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/usr/share/adss/update.sh -sSo /tmp/adss/update.sh
-curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/usr/share/adss/rules_update.sh -sSo /tmp/adss/rules_update.sh
-if [ -s "/tmp/adss/update.sh" -a -s "/tmp/adss/rules_update.sh" ]; then
+download "files/usr/share/adss/update.sh" "/tmp/adss/update.sh"
+download "files/usr/share/adss/rules_update.sh" "/tmp/adss/rules_update.sh"
+if [ -s "/tmp/adss/update.sh" ] && [ -s "/tmp/adss/rules_update.sh" ]; then
 	if ( ! cmp -s /tmp/adss/update.sh /usr/share/adss/update.sh ); then
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......开始更新。\e[0m"
-		echo 
-		echo -e "\e[1;36m 开始更新升级脚本\e[0m"
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......开始更新。"
+		print w "开始更新升级脚本"
 		mv -f /tmp/adss/update.sh /usr/share/adss/update.sh
 		chmod 755 /usr/share/adss/update.sh
-		echo 
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 升级脚本完成。\e[0m"
-		echo 
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 检测规则升级脚本是否需要更新。\e[0m"
-		echo 
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: 升级脚本完成。"
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: 检测规则升级脚本是否需要更新。"
 		if ( ! cmp -s /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh ); then
-			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......开始更新。\e[0m"
-			echo 
+			print w "`date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......开始更新。"
 			mv -f /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh
 			chmod 755 /usr/share/adss/rules_update.sh
-			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。\e[0m"
-			echo 
-			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。\e[0m"
-			echo 
+			print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
+			print w "`date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。"
 			/usr/share/adss/rules_update.sh
-			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。\e[0m"
+			print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 		else
-			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本无需更新，开始检测规则更新。\e[0m"
-			echo 
+			print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本无需更新，开始检测规则更新。"
 			/usr/share/adss/rules_update.sh
-			echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。\e[0m"
+			print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 		fi
 	elif ( ! cmp -s /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh ); then
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......开始更新。\e[0m"
-		echo 
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......开始更新。"
 		mv -f /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh
 		chmod 755 /usr/share/adss/rules_update.sh
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。\e[0m"
-		echo 
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。\e[0m"
-		echo 
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。"
 		/usr/share/adss/rules_update.sh
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。\e[0m"
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 	else
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，开始检测规则更新。\e[0m"
-		echo 
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，开始检测规则更新。"
 		/usr/share/adss/rules_update.sh
-		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。\e[0m"
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 	fi
 else
-	echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 脚本文件下载异常，放弃更新。\e[0m"
+	print w "`date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃更新。"
 	rm -rf /tmp/adss
 	exit 1;
 fi
