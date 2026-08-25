@@ -79,21 +79,21 @@ show_copyright() {
 
 # 安装
 install() {
-    print w "即将开始安装配置去广告全自动脚本"
+    print w "即将开始安装配置 ADSS"
     show_copyright
     run_remote "installer/install.sh"
 }
 
 # 卸载
 uninstall() {
-    print w "开始卸载已安装脚本"
+    print w "开始卸载 ADSS"
     show_copyright
     run_remote "installer/uninstall.sh"
 }
 
 # 升级（重新拉取并部署最新脚本与配置）
 upgrade() {
-    print w "开始升级 ADSS 脚本"
+    print w "开始升级 ADSS"
     show_copyright
     . /usr/share/adss/update.sh
 }

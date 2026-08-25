@@ -25,11 +25,11 @@ if [ -s "/tmp/adss/update.sh" ] && [ -s "/tmp/adss/rules_update.sh" ]; then
 			chmod 755 /usr/share/adss/rules_update.sh
 			print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 			print w "`date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。"
-			/usr/share/adss/rules_update.sh
+			. /usr/share/adss/rules_update.sh
 			print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 		else
-			print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本无需更新，开始检测规则更新。"
-			/usr/share/adss/rules_update.sh
+			print w "`date +'%Y-%m-%d %H:%M:%S'`: ADSS 无需更新，开始检测规则更新。"
+			. /usr/share/adss/rules_update.sh
 			print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 		fi
 	elif ( ! cmp -s /tmp/adss/rules_update.sh /usr/share/adss/rules_update.sh ); then
@@ -38,11 +38,11 @@ if [ -s "/tmp/adss/update.sh" ] && [ -s "/tmp/adss/rules_update.sh" ]; then
 		chmod 755 /usr/share/adss/rules_update.sh
 		print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 		print w "`date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。"
-		/usr/share/adss/rules_update.sh
+		. /usr/share/adss/rules_update.sh
 		print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 	else
-		print w "`date +'%Y-%m-%d %H:%M:%S'`: 脚本已为最新，开始检测规则更新。"
-		/usr/share/adss/rules_update.sh
+		print w "`date +'%Y-%m-%d %H:%M:%S'`: ADSS 已为最新，开始检测规则更新。"
+		. /usr/share/adss/rules_update.sh
 		print w "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 	fi
 else
