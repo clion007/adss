@@ -9,8 +9,14 @@ fi
 if [ ! -s "/lib/upgrade/keep.d/adss" ]; then
 	download "files/lib/upgrade/keep.d/adss" "/lib/upgrade/keep.d/adss"
 fi
-download "files/usr/share/adss/update.sh" "/tmp/adss/update.sh"
-download "files/usr/share/adss/rules_update.sh" "/tmp/adss/rules_update.sh"
+batch_download \
+	"adss.sh" "/tmp/adss/adss.sh" \
+    "files/usr/share/adss/update.sh" "/tmp/adss/update.sh" \
+    "files/usr/share/adss/rules_update.sh" "/tmp/adss/rules_update.sh"
+if [ ! cmp -s /usr/share/adss/adss.sh /tmp/adss/adss.sh ]; then
+	print l "检测到新版 ADSS 脚本......开始更新。"
+	mv /tmp/adss/adss.sh /usr/share/adss/adss.sh
+fi
 if [ -s "/tmp/adss/update.sh" ] && [ -s "/tmp/adss/rules_update.sh" ]; then
 	if ( ! cmp -s /tmp/adss/update.sh /usr/share/adss/update.sh ); then
 		print w "`date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......开始更新。"
