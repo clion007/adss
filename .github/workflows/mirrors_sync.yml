@@ -11,7 +11,7 @@ env:
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: []
+    types: [rules_updated]
   push:
   delete:
   create:
@@ -33,25 +33,19 @@ jobs:
         run: |
           sudo timedatectl set-timezone "$TZ"
 
-      - name: Install Git LFS
-        run: |
-          sudo apt-get update
-          sudo apt-get install git-lfs -y
-          git lfs install
-
-      - name: Mirrors Synchronized (migrate to LFS)
+      - name: Mirrors Synchronized
         env:
           SOURCE_REPO: 'https://github.com/clion007/adss.git'
           DESTINATION_REPO: 'https://clion:${{ secrets.GITCODE_TOKEN2 }}@gitcode.com/clion/adss.git'
         run: |
-          git clone --depth 1 "$SOURCE_REPO" adss-mirror
-          cd adss-mirror
-          # 删除工作区中的大文件（如果有）
+          git clone --mirror "$SOURCE_REPO"
+          cd `basename "$SOURCE_REPO"`
+          # 删除工作区中的大文件
           rm -f rules/file/dnsrules.conf rules/file/hostsrules.conf
-          git add -A
-          git commit -m "Remove dnsrules.conf" --allow-empty
           git remote set-url --push origin "$DESTINATION_REPO"
-          git push --force origin master
+          git fetch -p origin
+          git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+          git push --mirror
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
