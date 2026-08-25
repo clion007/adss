@@ -33,19 +33,28 @@ jobs:
         run: |
           sudo timedatectl set-timezone "$TZ"
 
+      - name: Install git-filter-repo
+        run: |
+          sudo apt-get update
+          sudo apt-get install git-filter-repo -y
+
       - name: Mirrors Synchronized
         env:
           SOURCE_REPO: 'https://github.com/clion007/adss.git'
           DESTINATION_REPO: 'https://clion:${{ secrets.GITCODE_TOKEN2 }}@gitcode.com/clion/adss.git'
         run: |
-          git clone --mirror "$SOURCE_REPO"
-          cd `basename "$SOURCE_REPO"`
-          # 删除工作区中的大文件
-          rm -f rules/file/dnsrules.conf rules/file/hostsrules.conf
+          git clone --mirror "$SOURCE_REPO" adss-mirror
+          cd adss-mirror
+
+          # 删除所有历史中的 dnsrules.conf 和 hostsrules.conf（无论路径）
+          git filter-repo --path dnsrules.conf --invert-paths --force
+          git filter-repo --path hostsrules.conf --invert-paths --force
+
+          # 设置目标远程
           git remote set-url --push origin "$DESTINATION_REPO"
-          git fetch -p origin
-          git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
-          git push --mirror
+
+          # 强制推送（覆盖目标仓库的所有引用）
+          git push --mirror --force
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
