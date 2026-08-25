@@ -29,5 +29,5 @@ echo
 if [ `grep -c "\/etc\/dnsmasq.d\/" /etc/init.d/dnsmasq` -ne '1' ];then
   sed -i 's/$resolvdir $user_dhcpscript/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//g' /etc/init.d/dnsmasq
 fi
-echo
 echo -e "\e[1;31m ADSS 配置完成！ \e[0m"
+echo
