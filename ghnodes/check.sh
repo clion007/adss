@@ -1,15 +1,14 @@
 #!/bin/sh
-# 测试本地 ghnodes.ini 中的节点，输出最优节点
-# 用法：. check.sh
+# 测试 ghnodes.ini 中的节点，输出最优节点
 
 set -e
 
-NODES_FILE="ghnodes.ini"
+NODES_FILE="/tmp/adss/ghnodes.ini"
 TEST_URL="https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf"
 TIMEOUT=3
 
 if [ ! -f "$NODES_FILE" ]; then
-    echo "❌ 节点列表文件 $NODES_FILE 不存在，请先检查！"
+    echo "❌ 节点列表文件 $NODES_FILE 不存在，请检查！"
     exit 1
 fi
 
