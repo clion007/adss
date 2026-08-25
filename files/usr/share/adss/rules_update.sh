@@ -23,8 +23,6 @@ if ! grep -q "# Modified DNS end" /tmp/adss/dnsrules; then
   exit 1
 fi
 
-echo
-
 print w "添加用户定义规则"
 cat /etc/dnsmasq.d/adss/rules/userlist > /tmp/adss/userlist
 sed -i "/#/d" /tmp/adss/userlist

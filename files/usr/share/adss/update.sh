@@ -4,7 +4,8 @@ set -e
 mkdir -p /tmp/adss
 print w "开始检测更新脚本及规则"
 if [ -s "/etc/rc.d/S90adss" ] && [ ! -s "/etc/rc.d/S18adss" ]; then
-	rm -f /etc/rc.d/S90adss && ln -s /etc/init.d/adss /etc/rc.d/S18adss
+	rm -f /etc/rc.d/S90adss
+	ln -s /etc/init.d/adss /etc/rc.d/S18adss
 fi
 if [ ! -s "/lib/upgrade/keep.d/adss" ]; then
 	download "files/lib/upgrade/keep.d/adss" "/lib/upgrade/keep.d/adss"
