@@ -120,11 +120,11 @@ EOF
 
 main() {
     case "${1:-help}" in
-        version)   version ;;
         install)   install ;;
         upgrade)   upgrade ;;
         uninstall) uninstall ;;
         help|-h|--help) help ;;
+        version|-v|--version)   version ;;
         *) echo "未知命令: $1"; echo; help; exit 1 ;;
     esac
 }
