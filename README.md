@@ -40,11 +40,13 @@ Dnsmasq 是一个小巧且方便的 DNS 和 DHCP 配置工具，适用于小型�
 ### 方法一：通过自定义软件源安装（推荐）
 
 1. 添加 ADSS 自定义软件源：
+
 ```bash
 curl -fsS https://raw.githubusercontent.com/clion007/adss/master/installer/add.sh | sh
 ```
 
-2. 更新软件源并安装 ADSS：
+1. 更新软件源并安装 ADSS：
+
 ```bash
 opkg update && opkg install adss luci-app-adss
 ```
@@ -52,8 +54,9 @@ opkg update && opkg install adss luci-app-adss
 ### 方法二：通过安装脚本安装
 
 使用 putty 软件登录路由器或者 web 端登录路由器，进入 tty 终端，输入以下命令行回车：
+
 ```bash
-mkdir -p /tmp/adss && curl https://raw.gitcode.com/clion/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && . /tmp/adss/adss.sh
+mkdir -p /tmp/adss && curl https://raw.gitcode.com/clion/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && source /tmp/adss/adss.sh
 ```
 
 > **注意**：putty 运行脚本显示乱码的问题请设置 putty 软件的编码为 UTF-8。
@@ -63,6 +66,7 @@ mkdir -p /tmp/adss && curl https://raw.gitcode.com/clion/adss/raw/master/adss.sh
 1. 访问 [ADSS 发布页面](https://github.com/clion007/adss/releases/latest)
 2. 下载适合您路由器架构的 IPK 包
 3. 上传到路由器并使用以下命令安装：
+
 ```bash
 opkg install /path/to/adss_x.x.x_arch.ipk
 opkg install /path/to/luci-app-adss_x.x.x_all.ipk
@@ -75,30 +79,35 @@ opkg install /path/to/luci-app-adss_x.x.x_all.ipk
 ### 方法一：使用 feeds 方式添加
 
 1. 在 OpenWrt 源码目录下创建自定义 feeds 配置文件：
+
 ```bash
 cat >> feeds.conf.default << EOF
 src-git adss https://github.com/clion007/adss.git
 EOF
 ```
 
-2. 更新并安装 feeds：
+1. 更新并安装 feeds：
+
 ```bash
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 ```
 
-3. 在 menuconfig 中选择 ADSS 软件包：
+1. 在 menuconfig 中选择 ADSS 软件包：
+
 ```bash
 make menuconfig
 ```
 
 在 menuconfig 界面中，导航到：
+
 - `LuCI` -> `Applications` -> `luci-app-adss`
 - `Network` -> `adss`
 
 选中这两个软件包后保存配置并退出。
 
-4. 编译固件：
+1. 编译固件：
+
 ```bash
 make -j$(nproc)
 ```
@@ -106,22 +115,26 @@ make -j$(nproc)
 ### 方法二：直接添加软件包源码
 
 1. 克隆 ADSS 仓库到 OpenWrt 的 package 目录：
+
 ```bash
 git clone https://github.com/clion007/adss.git package/adss
 ```
 
-2. 在 menuconfig 中选择 ADSS 软件包：
+1. 在 menuconfig 中选择 ADSS 软件包：
+
 ```bash
 make menuconfig
 ```
 
 在 menuconfig 界面中，导航到：
+
 - `LuCI` -> `Applications` -> `luci-app-adss`
 - `Network` -> `adss`
 
 选中这两个软件包后保存配置并退出。
 
-3. 编译固件：
+1. 编译固件：
+
 ```bash
 make -j$(nproc)
 ```
@@ -131,19 +144,21 @@ make -j$(nproc)
 如果您只想编译 ADSS 的 IPK 包而不是整个固件：
 
 1. 下载适合您目标设备的 OpenWrt SDK
-
 2. 解压 SDK 并进入目录：
+
 ```bash
 tar -xJf openwrt-sdk-*.tar.xz
 cd openwrt-sdk-*
 ```
 
-3. 添加 ADSS 源码：
+1. 添加 ADSS 源码：
+
 ```bash
 git clone https://github.com/clion007/adss.git package/adss
 ```
 
-4. 编译 ADSS 软件包：
+1. 编译 ADSS 软件包：
+
 ```bash
 make package/adss/compile V=s
 ```
@@ -161,6 +176,7 @@ make package/adss/compile V=s
 ```bash
 opkg remove luci-app-adss adss
 ```
+
 注意 ：建议先卸载 luci-app-adss ，再卸载 adss ，这样可以避免可能的依赖问题。
 
 卸载后，系统会自动清理 ADSS 的相关文件和配置。如果发现有残留文件，可以手动执行以下命令清理：
@@ -177,7 +193,6 @@ rm -f /usr/bin/adss-config
 ```bash
 curl https://raw.gitcode.com/clion/adss/raw/master/installer/uninstall.sh -sSo /tmp/uninstall.sh && . /tmp/uninstall.sh
 ```
-
 
 ## ⚠️ 注意事项
 
@@ -198,7 +213,7 @@ ADSS 提供了自动更新机制，默认每天凌晨 4:25 自动更新规则。
 ## 🌐 仓库镜像
 
 1. [GitHub ADSS 项目](https://github.com/clion007/adss)
-3. [Gitcode ADSS 项目](https://gitcode.com/clion/adss)
+2. [Gitcode ADSS 项目](https://gitcode.com/clion/adss)
 
 ## 🙏 致谢
 
