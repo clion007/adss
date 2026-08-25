@@ -7,6 +7,7 @@
 # Licenses in GPL-3.0
 #
 
+clear
 mkdir -p /tmp/adss
 curl https://raw.gitcode.com/clion/adss/raw/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
 if [ -s "/tmp/adss/copyright.sh" ]; then
