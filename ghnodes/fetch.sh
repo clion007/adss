@@ -14,7 +14,7 @@ echo "🔄 正在获取 nodes.ts ..."
 # 尝试直接下载，若失败则使用镜像
 content=$(curl -sL --connect-timeout 10 "$NODES_URL" 2>/dev/null)
 
-if [[ -z "$content" ]]; then
+if [ -z "$content" ]; then
     echo "❌ 无法获取 nodes.ts，请检查网络或上游地址"
     exit 1
 fi

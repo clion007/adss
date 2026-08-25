@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # 测试本地 ghnodes.ini 中的节点，输出最优节点
 # 用法：. check.sh
 
@@ -8,14 +8,14 @@ NODES_FILE="ghnodes.ini"
 TEST_URL="https://raw.githubusercontent.com/clion007/adss/master/rules/file/hostsrules.conf"
 TIMEOUT=3
 
-if [[ ! -f "$NODES_FILE" ]]; then
-    echo "❌ 节点列表文件 $NODES_FILE 不存在，请先运行 fetch_nodes.sh"
+if [ ! -f "$NODES_FILE" ]; then
+    echo "❌ 节点列表文件 $NODES_FILE 不存在，请先检查！"
     exit 1
 fi
 
 # 读取节点数量用于显示
 node_count=$(grep -v '^[[:space:]]*$' "$NODES_FILE" | wc -l | tr -d ' ')
-if [[ "$node_count" -eq 0 ]]; then
+if [ "$node_count" -eq 0 ]; then
     echo "❌ 节点列表为空"
     exit 1
 fi
@@ -40,9 +40,9 @@ test_node() {
 }
 
 # 逐行读取节点，并行测速（不使用数组）
-while IFS= read -r node || [[ -n "$node" ]]; do
+while IFS= read -r node || [ -n "$node" ]; do
     # 跳过空行
-    [[ -z "$node" ]] && continue
+    [ -z "$node" ] && continue
     test_node "$node" >> "$tmp_file" &
 done < "$NODES_FILE"
 
@@ -54,7 +54,7 @@ best=$(sort -n "$tmp_file" | head -1 | awk '{print $2}')
 rm -f "$tmp_file"
 
 # ---------- 输出 ---------
-if [[ -n "$best" ]]; then
+if [ -n "$best" ]; then
     export GH_PROXY_PREFIX="https://${best}/"    # 导出为环境变量，方便其他脚本使用
     echo "最优节点: $best"
     echo
@@ -62,4 +62,4 @@ if [[ -n "$best" ]]; then
 else
     echo "❌ 所有节点均不可用"
     exit 1
-fi-
+fi
