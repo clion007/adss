@@ -2,23 +2,23 @@
 echo -e "\e[1;36m 开始下载 Adblock 广告规则\e[0m"
 echo 
 echo -e "\e[1;36m 下载 anti-AD 广告规则\e[0m"
-curl "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/adblock-for-dnsmasq.conf" -sLSo /tmp/adss/antiAD.conf
+curl "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/adblock-for-dnsmasq.conf" -sSo /tmp/adss/antiAD.conf
 sed -i 's/$/&127.0.0.1/g' /tmp/adss/antiAD.conf
 echo 
 echo -e "\e[1;36m 下载 Cats-Team 广告规则\e[0m"
-curl "https://raw.githubusercontent.com/Cats-Team/AdRules/main/smart-dns.conf" -sLSo /tmp/adss/cats.conf
+curl "https://raw.githubusercontent.com/Cats-Team/AdRules/main/smart-dns.conf" -sSo /tmp/adss/cats.conf
 sed -i "s/\/#/\/127.0.0.1/g" /tmp/adss/cats.conf
 sed -i "s/address \//address=\//g" /tmp/adss/cats.conf
 echo 
 echo -e "\e[1;36m 下载 notrackAd 广告规则,文件较大请耐心等待\e[0m"
-curl "https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt" -sLSo /tmp/adss/notrackAdDomain.conf
+curl "https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt" -sSo /tmp/adss/notrackAdDomain.conf
 echo 
 echo -e "\e[1;36m 下载 neodevhost 广告规则\e[0m"
-curl https://neodev.team/dnsmasq.conf -sLSo /tmp/adss/neodevhost.conf
+curl https://neodev.team/dnsmasq.conf -sSo /tmp/adss/neodevhost.conf
 echo 
 sleep 3
 echo -e "\e[1;36m 创建广告黑名单缓存\e[0m"
-curl https://raw.githubusercontent.com/clion007/adss/master/rules/adss/adblacklist -sLSo /tmp/adss/adblacklist
+curl https://raw.githubusercontent.com/clion007/adss/master/rules/adss/adblacklist -sSo /tmp/adss/adblacklist
 awk '!a[$0]++{print}' /tmp/adss/adblacklist > /tmp/adss/blacklist 
 rm -rf /tmp/adss/adblacklist
 sed -i "/#/d" /tmp/adss/blacklist # 删除注释

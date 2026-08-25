@@ -2,13 +2,13 @@
 echo -e "\e[1;36m 开始下载 Hosts 规则\e[0m"
 echo 
 echo -e "\e[1;36m 下载 someonewhocares 缓存\e[0m"
-curl https://someonewhocares.org/hosts/zero/hosts -sLSo /tmp/adss/someonewhocares.conf
+curl https://someonewhocares.org/hosts/zero/hosts -sSo /tmp/adss/someonewhocares.conf
 echo 
 echo -e "\e[1;36m 下载大圣净化缓存\e[0m"
-curl https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts -sLSo /tmp/adss/adwars.conf
+curl https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts -sSo /tmp/adss/adwars.conf
 echo
 echo -e "\e[1;36m 下载 adaway 规则缓存\e[0m"
-curl https://adaway.org/hosts.txt -sLSo /tmp/adss/adaway.conf
+curl https://adaway.org/hosts.txt -sSo /tmp/adss/adaway.conf
 echo 
 echo -e "\e[1;36m 合并 hosts 缓存\e[0m"
 cat /tmp/adss/someonewhocares.conf /tmp/adss/adwars.conf /tmp/adss/adaway.conf > /tmp/adss/hostsAd 
