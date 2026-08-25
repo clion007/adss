@@ -47,6 +47,10 @@ jobs:
           git clone --depth=1 "$SOURCE_REPO" adss-mirror
           cd adss-mirror
 
+          # 2. 配置 Git 用户信息
+          git config user.name "clion007"
+          git config user.email "clion007@126.com"
+
           # 2. 删除大文件（工作区）
           rm -f rules/file/dnsrules.conf rules/file/hostsrules.conf
 
