@@ -42,7 +42,7 @@ Dnsmasq 是一个小巧且方便的 DNS 和 DHCP 配置工具，适用于小型�
 1. 添加 ADSS 自定义软件源：
 
 ```bash
-curl -fsS https://github.akams.cn/https://raw.githubusercontent.com/clion007/adss/master/installer/add.sh | sh
+curl -fsS https://raw.giteeusercontent.com/clion007/adss/raw/master/installer/add.sh | sh
 ```
 
 1. 更新软件源并安装 ADSS：
@@ -56,7 +56,7 @@ opkg update && opkg install adss luci-app-adss
 使用 putty 软件登录路由器或者 web 端登录路由器，进入 tty 终端，输入以下命令行回车：
 
 ```bash
-mkdir -p /tmp/adss && curl https://github.akams.cn/https://raw.githubusercontent.com/clion007/adss/master/adss.sh -sSo /tmp/adss/adss.sh && source /tmp/adss/adss.sh
+mkdir -p /tmp/adss && curl https://raw.giteeusercontent.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && source /tmp/adss/adss.sh
 ```
 
 > **注意**：putty 运行脚本显示乱码的问题请设置 putty 软件的编码为 UTF-8。
@@ -191,7 +191,7 @@ rm -f /usr/bin/adss-config
 如果您是通过纯shell脚本安装脚本安装的 ADSS，可以使用以下命令卸载：
 
 ```bash
-curl https://github.akams.cn/https://raw.githubusercontent.com/clion007/adss/master/installer/uninstall.sh -sSo /tmp/uninstall.sh && . /tmp/uninstall.sh
+curl https://raw.giteeusercontent.com/clion007/adss/raw/master/installer/uninstall.sh -sSo /tmp/uninstall.sh && . /tmp/uninstall.sh
 ```
 
 ## ⚠️ 注意事项
@@ -213,7 +213,8 @@ ADSS 提供了自动更新机制，默认每天凌晨 4:25 自动更新规则。
 ## 🌐 仓库镜像
 
 1. [GitHub ADSS 项目](https://github.com/clion007/adss)
-2. [Gitcode ADSS 项目](https://gitcode.com/clion/adss)
+2. [Gitcode ADSS 镜像](https://gitcode.com/clion/adss)
+3. [Gitee ADSS 镜像](https://gitee.com/clion/adss)
 
 ## 🙏 致谢
 

@@ -3,9 +3,8 @@ clear
 mkdir -p /tmp/adss
 echo -e "\e[1;36m 获取最佳 Github 加速镜像\e[0m"
 echo 
-GH_PROXY_PREFIX="https://github.akams.cn/"
-curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/ghnodes/ghnodes.ini -sSo /tmp/adss/ghnodes.ini
-curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/ghnodes/check.sh -sSo /tmp/adss/ghcheck.sh
+curl https://raw.giteeusercontent.com/clion007/adss/raw/master/ghnodes/ghnodes.ini -sSo /tmp/adss/ghnodes.ini
+curl https://raw.giteeusercontent.com/clion007/adss/raw/master/ghnodes/check.sh -sSo /tmp/adss/ghcheck.sh
 . /tmp/adss/ghcheck.sh
 curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
 if [ -s "/tmp/adss/copyright.sh" ]; then
