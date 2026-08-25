@@ -56,7 +56,7 @@ opkg update && opkg install adss luci-app-adss
 使用 putty 软件登录路由器或者 web 端登录路由器，进入 tty 终端，输入以下命令行回车：
 
 ```bash
-mkdir -p /tmp/adss && curl https://raw.giteeusercontent.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && source /tmp/adss/adss.sh
+mkdir -p /tmp/adss && curl https://raw.giteeusercontent.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && sh /tmp/adss/adss.sh
 ```
 
 > **注意**：putty 运行脚本显示乱码的问题请设置 putty 软件的编码为 UTF-8。
@@ -191,7 +191,7 @@ rm -f /usr/bin/adss-config
 如果您是通过纯shell脚本安装脚本安装的 ADSS，可以使用以下命令卸载：
 
 ```bash
-curl https://raw.giteeusercontent.com/clion007/adss/raw/master/installer/uninstall.sh -sSo /tmp/uninstall.sh && . /tmp/uninstall.sh
+curl https://raw.giteeusercontent.com/clion007/adss/raw/master/installer/uninstall.sh -sSo /tmp/uninstall.sh && sh /tmp/uninstall.sh
 ```
 
 ## ⚠️ 注意事项
