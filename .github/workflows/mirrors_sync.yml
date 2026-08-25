@@ -11,7 +11,7 @@ env:
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [rules_updated]
+    types: []
   push:
   delete:
   create:

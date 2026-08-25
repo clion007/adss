@@ -24,7 +24,7 @@ init() {
     
     # 初始化规则文件
     log "初始化规则文件"
-    curl -s --connect-timeout 10 --retry 3 https://raw.gitcode.com/clion/adss/raw/master/rules/builder/initRulesFile.sh -o $TEMP_DIR/initRulesFile.sh
+    curl -s --connect-timeout 10 --retry 3 ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/rules/builder/initRulesFile.sh -o $TEMP_DIR/initRulesFile.sh
     if [ $? -ne 0 ]; then
         log "初始化规则文件下载失败，尝试备用源"
         curl -s --connect-timeout 10 --retry 3 https://raw.githubusercontent.com/clion007/adss/master/rules/builder/initRulesFile.sh -o $TEMP_DIR/initRulesFile.sh

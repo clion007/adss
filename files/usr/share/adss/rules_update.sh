@@ -2,14 +2,9 @@
 set -e
 
 mkdir -p /tmp/adss
-echo -e "\e[1;36m 获取最佳 Github 加速镜像\e[0m"
-curl https://raw.gitcode.com/clion/adss/raw/master/ghnodes/ghnodes.ini -sSo /tmp/adss/ghnodes.ini
-curl https://raw.gitcode.com/clion/adss/raw/master/ghnodes/check.sh -sSo /tmp/adss/ghcheck.sh
-. /tmp/adss/ghcheck.sh
-echo 
 echo -e "\e[1;36m 初始化规则文件 \e[0m"
 echo
-curl https://raw.gitcode.com/clion/adss/raw/master/rules/builder/initRulesFile.sh -sSo /tmp/adss/initRulesFile.sh
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/rules/builder/initRulesFile.sh -sSo /tmp/adss/initRulesFile.sh
 . /tmp/adss/initRulesFile.sh
 echo
 

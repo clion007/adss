@@ -21,6 +21,7 @@ if [[ "$node_count" -eq 0 ]]; then
 fi
 
 echo "⏱️  正在测试 $node_count 个节点..."
+echo
 
 tmp_file=$(mktemp)
 
@@ -56,6 +57,7 @@ rm -f "$tmp_file"
 if [[ -n "$best" ]]; then
     export GH_PROXY_PREFIX="https://${best}/"    # 导出为环境变量，方便其他脚本使用
     echo "最优节点: $best"
+    echo
     echo "完整前缀: https://${best}/"
 else
     echo "❌ 所有节点均不可用"

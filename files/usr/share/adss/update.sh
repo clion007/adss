@@ -1,7 +1,13 @@
 #!/bin/sh
 clear
 mkdir -p /tmp/adss
-curl https://raw.gitcode.com/clion/adss/raw/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
+echo -e "\e[1;36m 获取最佳 Github 加速镜像\e[0m"
+echo 
+GH_PROXY_PREFIX="https://github.akams.cn/"
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/ghnodes/ghnodes.ini -sSo /tmp/adss/ghnodes.ini
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/ghnodes/check.sh -sSo /tmp/adss/ghcheck.sh
+. /tmp/adss/ghcheck.sh
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
 if [ -s "/tmp/adss/copyright.sh" ]; then
   . /tmp/adss/copyright.sh
 else
@@ -15,10 +21,10 @@ if [ -s "/etc/rc.d/S90adss" ]; then
 	rm -f /etc/rc.d/S90adss && ln -s /etc/init.d/adss /etc/rc.d/S18adss
 fi
 if [ ! -s "/lib/upgrade/keep.d/adss" ]; then
-	curl https://raw.gitcode.com/clion/adss/raw/master/files/lib/upgrade/keep.d/adss -sSo /lib/upgrade/keep.d/adss
+	curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/lib/upgrade/keep.d/adss -sSo /lib/upgrade/keep.d/adss
 fi
-curl https://raw.gitcode.com/clion/adss/raw/master/files/usr/share/adss/update.sh -sSo /tmp/adss/update.sh
-curl https://raw.gitcode.com/clion/adss/raw/master/files/usr/share/adss/rules_update.sh -sSo /tmp/adss/rules_update.sh
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/usr/share/adss/update.sh -sSo /tmp/adss/update.sh
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/files/usr/share/adss/rules_update.sh -sSo /tmp/adss/rules_update.sh
 if [ -s "/tmp/adss/update.sh" -a -s "/tmp/adss/rules_update.sh" ]; then
 	if ( ! cmp -s /tmp/adss/update.sh /usr/share/adss/update.sh ); then
 		echo -e "\e[1;36m `date +'%Y-%m-%d %H:%M:%S'`: 检测到新版升级脚本......开始更新。\e[0m"

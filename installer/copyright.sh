@@ -1,6 +1,6 @@
 #!/bin/sh
 mkdir -p /tmp/adss
-curl -fsSL https://raw.gitcode.com/clion/adss/raw/master/config/logo
+curl -fsSL ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/config/logo
 echo 
 echo "Auto DNS Smart Script V4.3"
 echo "Project URL https://github.com/clion007/adss"

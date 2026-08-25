@@ -9,7 +9,13 @@
 
 clear
 mkdir -p /tmp/adss
-curl https://raw.gitcode.com/clion/adss/raw/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
+echo -e "\e[1;36m 获取最佳 Github 加速镜像\e[0m"
+echo 
+GH_PROXY_PREFIX="https://github.akams.cn/"
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/ghnodes/ghnodes.ini -sSo /tmp/adss/ghnodes.ini
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/ghnodes/check.sh -sSo /tmp/adss/ghcheck.sh
+. /tmp/adss/ghcheck.sh
+curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
 if [ -s "/tmp/adss/copyright.sh" ]; then
   . /tmp/adss/copyright.sh
 else
@@ -29,12 +35,12 @@ echo
 if [ "$Run_Num" == "1" ]; then
 	echo -e "\e[1;36m 即将开始安装配置去广告全自动脚本\e[0m"
 	echo 
-	curl https://raw.gitcode.com/clion/adss/raw/master/installer/install.sh -sSo /tmp/adss/install.sh
+	curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/installer/install.sh -sSo /tmp/adss/install.sh
     . /tmp/adss/install.sh
 elif [ "$Run_Num" == "2" ]; then
 	echo -e "\e[1;36m 开始卸载已安装脚本\e[0m"
 	echo 
-	curl https://raw.gitcode.com/clion/adss/raw/master/installer/uninstall.sh -sSo /tmp/adss/uninstall.sh
+	curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/installer/uninstall.sh -sSo /tmp/adss/uninstall.sh
 	. /tmp/adss/uninstall.sh
 else
     rm -rf /tmp/adss
