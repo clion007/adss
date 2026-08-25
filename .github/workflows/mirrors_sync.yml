@@ -33,41 +33,29 @@ jobs:
         run: |
           sudo timedatectl set-timezone "$TZ"
 
-      # ---------- 安装 Git LFS ----------
       - name: Install Git LFS
         run: |
           sudo apt-get update
           sudo apt-get install git-lfs -y
-          git lfs --version
+          git lfs install
 
-      # ---------- 镜像同步（使用 LFS） ----------
-      - name: Mirrors Synchronized with LFS
+      - name: Mirrors Synchronized (auto migrate to LFS)
         env:
           SOURCE_REPO: 'https://github.com/clion007/adss.git'
-          DESTINATION_REPO2: 'https://clion:${{ secrets.GITCODE_TOKEN2 }}@gitcode.com/clion/adss.git'
+          DESTINATION_REPO: 'https://clion:${{ secrets.GITCODE_TOKEN2 }}@gitcode.com/clion/adss.git'
         run: |
-          # 1. 克隆源仓库的镜像（裸仓库）
           git clone --mirror "$SOURCE_REPO" adss-mirror
           cd adss-mirror
-          
-          # 2. 初始化 LFS（在裸仓库中也需要启用）
           git lfs install --local
-          
-          # 3. 获取所有 LFS 对象（从源仓库）
-          git lfs fetch --all origin
-          
-          # 4. 设置目标仓库的推送地址
-          git remote set-url --push origin "$DESTINATION_REPO2"
-          
-          # 5. 先推送 LFS 对象（确保大文件已上传）
-          git lfs push --all origin
-          
-          # 6. 再推送所有引用（分支、标签等）
-          git push --mirror
-          
-          # 清理
-          cd ..
-          rm -rf adss-mirror
+
+          # 将整个历史中的 dnsrules.conf 迁移为 LFS 指针
+          git lfs migrate import --include="rules/file/dnsrules.conf" --everything --force
+
+          # 推送 LFS 对象
+          git lfs push --all origin --force
+
+          git remote set-url --push origin "$DESTINATION_REPO"
+          git push --mirror --force
       
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
