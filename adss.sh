@@ -7,13 +7,14 @@
 # Licenses in GPL-3.0
 #
 
-clear
+set -e
 mkdir -p /tmp/adss
 echo -e "\e[1;36m 获取最佳 Github 加速镜像\e[0m"
 echo 
 curl https://raw.giteeusercontent.com/clion007/adss/raw/master/ghnodes/ghnodes.ini -sSo /tmp/adss/ghnodes.ini
 curl https://raw.giteeusercontent.com/clion007/adss/raw/master/ghnodes/check.sh -sSo /tmp/adss/ghcheck.sh
 . /tmp/adss/ghcheck.sh
+clear
 curl ${GH_PROXY_PREFIX}https://raw.githubusercontent.com/clion007/adss/master/installer/copyright.sh -sSo /tmp/adss/copyright.sh
 if [ -s "/tmp/adss/copyright.sh" ]; then
   . /tmp/adss/copyright.sh
