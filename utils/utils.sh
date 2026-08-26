@@ -21,7 +21,7 @@ message() {
 }
 
 # 选取最快的下载源（GitHub 直连 + 各加速镜像），结果存入 GH_PROXY_PREFIX
-# 仅测速一次并由 MIRROR_READY 缓存；直连时 GH_PROXY_PREFIX 为空字符串
+# 结果缓存：MIRROR_PREFIX 文件跨进程/子 shell 共享，只测速一次
 get_mirror() {
     MIRROR_READY="${MIRROR_READY:-}"
     [ -n "$MIRROR_READY" ] && return 0
@@ -37,7 +37,7 @@ get_mirror() {
 get_file_url() {
     local path="$1"
     get_mirror
-    echo "${GH_PROXY_PREFIX}${GH_RAW_BASE}/${REPO_PATH}/${path}"
+    SRC_URL="${GH_PROXY_PREFIX}${GH_RAW_BASE}/${REPO_PATH}/${path}"
 }
 
 # 获取版本
@@ -50,7 +50,8 @@ get_version() {
 download() {
     local path="$1"
     local dest="$2"
-    curl -sSo "${dest}" "$(get_file_url "${path}")"
+    get_file_url "${path}"
+    curl -sSo "${dest}" "${SRC_URL}"
     if [ ! -s "${dest}" ]; then
         message r "`date +'%Y-%m-%d %H:%M:%S'`: 下载 ${path} 失败，网络异常。"
         return 1

@@ -2,7 +2,8 @@
 if [ -f "config/logo" ]; then
     cat config/logo
 else
-   curl -fsSL "$(get_file_url "config/logo")"
+    get_file_url "config/logo"
+    curl -fsSL "${SRC_URL}"
 fi
 echo 
 echo "Auto DNS Smart Script V4.4"
