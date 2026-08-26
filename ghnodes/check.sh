@@ -22,7 +22,7 @@ tmp_file=$(mktemp)
 # 测速单个候选；GitHub 直连作为第一个测试
 test_node() {
     local node="$1"
-    if [ "${node}" -eq "${GIT_RAW}" ]; then
+    if [ "${node}" = "${GIT_RAW}" ]; then
         local full_url="${TEST_URL}"
     else
         # 加速镜像为 GitHub 反代，代理前缀拼在完整 raw URL 前面
@@ -57,7 +57,7 @@ best=$(sort -n "$tmp_file" | head -1 | awk '{print $2}')
 rm -f "$tmp_file"
 
 # 输出 GH_PROXY_PREFIX
-if [ "$best" -eq "${GIT_RAW}" ]; then
+if [ "$best" = "${GIT_RAW}" ]; then
     GH_PROXY_PREFIX=""
     message l "✅ 当前最佳下载源: GitHub 直连"
 else
