@@ -1,6 +1,7 @@
 #!/bin/sh
 # 测试 ghnodes.ini 中的节点与 GitHub 直连，输出最优的下载前缀
 # 输出：GH_PROXY_PREFIX  （直连=""，镜像="https://<node>/"）
+# 注意：本脚本被 source 调用，临时变量一律使用 speed_ 前缀，避免污染外层作用域同名变量
 
 GIT_RAW="raw.githubusercontent.com"
 NODES_FILE="${TMP_DIR}/ghnodes.ini"
@@ -17,7 +18,7 @@ node_count=$(grep -v '^[[:space:]]*$' "$NODES_FILE" | wc -l | tr -d ' ')
 total_candidates=$((node_count + 1))
 message w "⏱️  正在测试 $total_candidates 个候选（含 GitHub 直连）..."
 
-tmp_file=$(mktemp)
+speed_tmp=$(mktemp)
 
 # 测速单个候选；GitHub 直连作为第一个测试
 test_node() {
@@ -40,27 +41,27 @@ test_node() {
 }
 
 # 直连作为第一个候选
-test_node "${GIT_RAW}" >> "$tmp_file" &
+test_node "${GIT_RAW}" >> "$speed_tmp" &
 
 # 逐行读取节点，并行测速
 while IFS= read -r node || [ -n "$node" ]; do
     # 跳过空行
     [ -z "$node" ] && continue
-    test_node "$node" >> "$tmp_file" &
+    test_node "$node" >> "$speed_tmp" &
 done < "$NODES_FILE"
 
 # 等待所有后台任务完成
 wait
 
 # 排序取最快
-best=$(sort -n "$tmp_file" | head -1 | awk '{print $2}')
-rm -f "$tmp_file"
+speed_best=$(sort -n "$speed_tmp" | head -1 | awk '{print $2}')
+rm -f "$speed_tmp"
 
 # 输出 GH_PROXY_PREFIX
-if [ "${best}" = "${GIT_RAW}" ]; then
+if [ "${speed_best}" = "${GIT_RAW}" ]; then
     GH_PROXY_PREFIX=""
     message l "✅ 当前最佳下载源: GitHub 直连"
 else
-    GH_PROXY_PREFIX="https://${best}/"
+    GH_PROXY_PREFIX="https://${speed_best}/"
     message l "✅ 当前最佳下载源: ${GH_PROXY_PREFIX}"
 fi
