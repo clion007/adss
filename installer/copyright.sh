@@ -2,7 +2,7 @@
 if [ -f "config/logo" ]; then
     cat config/logo
 else
-   curl -fsSL ${GITEE_RAW_BASE}/config/logo
+   curl -fsSL "$(get_file_url "config/logo")"
 fi
 echo 
 echo "Auto DNS Smart Script V4.4"

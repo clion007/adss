@@ -1,8 +1,10 @@
 #!/bin/sh
-# 测试 ghnodes.ini 中的节点，输出最优节点
+# 测试 ghnodes.ini 中的节点与 GitHub 直连，输出最优的下载前缀
+# 输出：GH_PROXY_PREFIX  （直连=""，镜像="https://<node>/"）
 
+GIT_RAW="raw.githubusercontent.com"
 NODES_FILE="${TMP_DIR}/ghnodes.ini"
-TEST_URL="${GH_RAW_BASE}/rules/file/hostsrules.conf"
+TEST_URL="${GH_RAW_BASE}/${REPO_PATH}/rules/file/hostsrules.conf"
 TIMEOUT=3
 
 if [ ! -f "$NODES_FILE" ]; then
@@ -10,20 +12,22 @@ if [ ! -f "$NODES_FILE" ]; then
     exit 1
 fi
 
-# 读取节点数量用于显示
+# 读取节点数量（不含直连）用于显示
 node_count=$(grep -v '^[[:space:]]*$' "$NODES_FILE" | wc -l | tr -d ' ')
-if [ "$node_count" -eq 0 ]; then
-    message r "❌ 节点列表为空"
-    exit 1
-fi
-
-message w "⏱️  正在测试 $node_count 个节点..."
+total_candidates=$((node_count + 1))
+message w "⏱️  正在测试 $total_candidates 个候选（含 GitHub 直连）..."
 
 tmp_file=$(mktemp)
 
+# 测速单个候选；GitHub 直连作为第一个测试
 test_node() {
     local node="$1"
-    local full_url="https://${node}${TEST_URL}"
+    if [ "${node}" -eq "${GIT_RAW}" ]; then
+        local full_url="${TEST_URL}"
+    else
+        # 加速镜像为 GitHub 反代，代理前缀拼在完整 raw URL 前面
+        local full_url="https://${node}/${TEST_URL}"
+    fi
     local start=$(date +%s%N)
     local status=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout "$TIMEOUT" --max-time "$TIMEOUT" "$full_url" 2>/dev/null)
     local end=$(date +%s%N)
@@ -35,7 +39,10 @@ test_node() {
     fi
 }
 
-# 逐行读取节点，并行测速（不使用数组）
+# 直连作为第一个候选
+test_node "${GIT_RAW}" >> "$tmp_file" &
+
+# 逐行读取节点，并行测速
 while IFS= read -r node || [ -n "$node" ]; do
     # 跳过空行
     [ -z "$node" ] && continue
@@ -49,12 +56,11 @@ wait
 best=$(sort -n "$tmp_file" | head -1 | awk '{print $2}')
 rm -f "$tmp_file"
 
-# ---------- 输出 ---------
-if [ -n "$best" ]; then
-    message w "最优节点: $best"
-    message w "完整前缀: https://${best}"
-    GH_PROXY_PREFIX="https://${best}/"
+# 输出 GH_PROXY_PREFIX
+if [ "$best" -eq "${GIT_RAW}" ]; then
+    GH_PROXY_PREFIX=""
+    message l "✅ 当前最佳下载源: GitHub 直连"
 else
-    message r "❌ 所有节点均不可用"
-    exit 1
+    GH_PROXY_PREFIX="https://${best}/"
+    message l "✅ 当前最佳下载源: ${GH_PROXY_PREFIX}"
 fi

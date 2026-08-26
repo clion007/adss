@@ -20,39 +20,23 @@ message() {
   echo
 }
 
-# 检测 URL 是否可访问（HTTP 状态码 2xx/3xx）
-# 用法：check_url URL [超时秒数]
-# 返回：0=可达（2xx/3xx），1=不可达
-check_url() {
-    url="$1"
-    timeout="${2:-5}"   # 默认 5 秒
-
-    # 发送 HEAD 请求，跟随重定向，只获取状态码
-    code=$(curl -sL -o /dev/null -w "%{http_code}" \
-        --connect-timeout "$timeout" --max-time "$timeout" "$url")
-
-    # 状态码 200~399 表示可用
-    if [ "$code" -ge 200 ] && [ "$code" -lt 400 ]; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-# 获取最佳 Github 加速镜像，并存入 GH_PROXY_PREFIX
+# 选取最快的下载源（GitHub 直连 + 各加速镜像），结果存入 GH_PROXY_PREFIX
+# 仅测速一次并由 MIRROR_READY 缓存；直连时 GH_PROXY_PREFIX 为空字符串
 get_mirror() {
-    message w "获取最佳 Github 加速镜像"
+    MIRROR_READY="${MIRROR_READY:-}"
+    [ -n "$MIRROR_READY" ] && return 0
+    MIRROR_READY=1
+    message w "获取最佳下载源（GitHub 直连 + 加速镜像）"
     curl "${GITEE_RAW_BASE}/ghnodes/ghnodes.ini" -sSo ${TMP_DIR}/ghnodes.ini
     curl "${GITEE_RAW_BASE}/ghnodes/check.sh" -sSo ${TMP_DIR}/ghcheck.sh
     . ${TMP_DIR}/ghcheck.sh
 }
 
-# 获取镜像源文件 URL（参数: 源路径）
-get_mirror_url() {
+# 获取最佳文件下载 URL（参数: 源路径）
+# 直连时 GH_PROXY_PREFIX 为空字符串
+get_file_url() {
     local path="$1"
-    if [ -z "$GH_PROXY_PREFIX" ]; then
-        get_mirror
-    fi
+    get_mirror
     echo "${GH_PROXY_PREFIX}${GH_RAW_BASE}/${REPO_PATH}/${path}"
 }
 
@@ -62,16 +46,11 @@ get_version() {
 }
 
 # 下载文件（参数: 源路径 目标路径）
-# 优先直连 Github，不可达时切换到镜像源
+# 统一走最快下载源（直连 或 加速镜像）
 download() {
     local path="$1"
     local dest="$2"
-    if check_url "${GH_RAW_BASE}"; then
-        curl -sSo "${dest}" "${GH_RAW_BASE}/${REPO_PATH}/${path}"
-    else
-        source=$(get_mirror_url "${path}")
-        curl -sSo "${dest}" "${source}"
-    fi
+    curl -sSo "${dest}" "$(get_file_url "${path}")"
     if [ ! -s "${dest}" ]; then
         message r "`date +'%Y-%m-%d %H:%M:%S'`: 下载 ${path} 失败，网络异常。"
         return 1
