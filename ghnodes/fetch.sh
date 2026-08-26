@@ -14,7 +14,7 @@ echo "🔄 正在获取 nodes.ts ..."
 content=$(curl -sL --connect-timeout 10 "$NODES_URL" 2>/dev/null)
 
 if [ -z "$content" ]; then
-    echo "❌ 无法获取 nodes.ts，请检查网络或上游地址"
+    message r "❌ 无法获取 nodes.ts，请检查网络或上游地址"
     exit 1
 fi
 
@@ -22,4 +22,4 @@ fi
 echo "$content" | grep -oE 'value:\s*"[^"]+"' | sed 's/value:\s*"\([^"]*\)"/\1/' | sort -u > "$OUTPUT_FILE"
 
 count=$(wc -l < "$OUTPUT_FILE" | tr -d ' ')
-echo "✅ 成功提取 $count 个节点，已保存到 $OUTPUT_FILE"
+message g "✅ 成功提取 $count 个节点，已保存到 $OUTPUT_FILE"

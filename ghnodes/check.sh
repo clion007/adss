@@ -60,8 +60,8 @@ rm -f "$speed_tmp"
 # 输出 GH_PROXY_PREFIX
 if [ "${speed_best}" = "${GIT_RAW}" ]; then
     GH_PROXY_PREFIX=""
-    message l "✅ 当前最佳下载源: GitHub 直连"
+    message g "✅ 当前最佳下载源: GitHub 直连"
 else
     GH_PROXY_PREFIX="https://${speed_best}/"
-    message l "✅ 当前最佳下载源: ${GH_PROXY_PREFIX}"
+    message g "✅ 当前最佳下载源: ${GH_PROXY_PREFIX}"
 fi

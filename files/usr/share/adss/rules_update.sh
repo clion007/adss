@@ -10,13 +10,13 @@ batch_download \
 
 # 校验下载的文件是否非空
 if [ ! -s "${TMP_DIR}/dnsrules" ] || [ ! -s "${TMP_DIR}/hostsrules.conf" ]; then
-  message w "下载的规则文件为空或损坏!"
+  message r "下载的规则文件为空或损坏!"
   rm -rf ${TMP_DIR}
   exit 1
 fi
 
 if ! grep -q "# Modified DNS end" ${TMP_DIR}/dnsrules; then
-  message w "下载的 dnsrules 文件不正确!"
+  message r "下载的 dnsrules 文件不正确!"
   rm -rf ${TMP_DIR}
   exit 1
 fi
@@ -76,10 +76,10 @@ echo "addn-hosts=${TMP_DIR}/hostsrules.conf" >> "${TEMP_TEST_CONF}"
 
 # 运行 dnsmasq 测试命令，使用临时配置文件
 if dnsmasq --conf-file="${TEMP_TEST_CONF}" --test 2>${TMP_DIR}/test_output.log; then
-    message w "配置文件测试通过!"
+    message g "配置文件测试通过!"
     TEST_PASSED=1
 else
-    message w "配置文件测试失败!"
+    message r "配置文件测试失败!"
     cat ${TMP_DIR}/test_output.log
     rm -rf ${TMP_DIR}
     exit 1
@@ -94,7 +94,7 @@ HOSTS_RULES_FILE="/etc/dnsmasq.d/adss/rules/hostsrules.conf"
 
 if [ -s "${TMP_DIR}/dnsrules.conf" ] && [ "${TEST_PASSED}" = "1" ]; then
   if ! cmp -s "${TMP_DIR}/dnsrules.conf" "${DNS_RULES_FILE}"; then
-    message w "检测到新 DNS 规则......生成新 DNS 规则！"
+    message l "检测到新 DNS 规则......生成新 DNS 规则！"
     # --- 原子性替换: 将经过测试的文件移动到最终位置 ---
     mv -f "${TMP_DIR}/dnsrules.conf" "${DNS_RULES_FILE}"
     DNS_CHANGED=1
@@ -106,7 +106,7 @@ fi
 
 if [ -s "${TMP_DIR}/hostsrules.conf" ] && [ "$TEST_PASSED" = "1" ]; then
   if ! cmp -s "${TMP_DIR}/hostsrules.conf" "${HOSTS_RULES_FILE}"; then
-    message w "检测到新 hosts 规则......生成新 hosts 规则！"
+    message l "检测到新 hosts 规则......生成新 hosts 规则！"
     # --- 原子性替换: 将经过测试的文件移动到最终位置 ---
     mv -f "${TMP_DIR}/hostsrules.conf" "${HOSTS_RULES_FILE}"
     HOSTS_CHANGED=1
@@ -122,7 +122,7 @@ if [ "${DNS_CHANGED}" = "1" ] || [ "${HOSTS_CHANGED}" = "1" ]; then
   if /etc/init.d/dnsmasq restart > /dev/null 2>&1; then
     message w "DNS/hosts 应用新规则。"
   else
-    message w "错误: dnsmasq 重启失败! 请手动检查。"
+    message r "错误: dnsmasq 重启失败! 请手动检查。"
     rm -rf ${TMP_DIR}
     exit 1
   fi

@@ -25,36 +25,36 @@ if [ -s "${TMP_DIR}/update.sh" ] && [ -s "${TMP_DIR}/rules_update.sh" ]; then
 		message l "开始更新升级脚本"
 		mv -f ${TMP_DIR}/update.sh /usr/share/adss/update.sh
 		chmod 755 /usr/share/adss/update.sh
-		message l "`date +'%Y-%m-%d %H:%M:%S'`: 升级脚本完成。"
+		message g "`date +'%Y-%m-%d %H:%M:%S'`: 升级脚本完成。"
 		message l "`date +'%Y-%m-%d %H:%M:%S'`: 检测规则升级脚本是否需要更新。"
 		if ! cmp -s "${TMP_DIR}/rules_update.sh" "/usr/share/adss/rules_update.sh" ; then
 			message l "`date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......开始更新。"
 			mv -f ${TMP_DIR}/rules_update.sh /usr/share/adss/rules_update.sh
 			chmod 755 /usr/share/adss/rules_update.sh
-			message l "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
+			message g "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 			message l "`date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。"
 			. /usr/share/adss/rules_update.sh
-			message l "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
+			message g "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 		else
 			message l "`date +'%Y-%m-%d %H:%M:%S'`: ADSS 无需更新，开始检测规则更新。"
 			. /usr/share/adss/rules_update.sh
-			message l "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
+			message g "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 		fi
 	elif ! cmp -s "${TMP_DIR}/rules_update.sh" "/usr/share/adss/rules_update.sh" ; then
 		message l "`date +'%Y-%m-%d %H:%M:%S'`: 检测到新版规则升级脚本......开始更新。"
 		mv -f ${TMP_DIR}/rules_update.sh /usr/share/adss/rules_update.sh
 		chmod 755 /usr/share/adss/rules_update.sh
-		message l "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
+		message g "`date +'%Y-%m-%d %H:%M:%S'`: 规则升级脚本更新完成。"
 		message l "`date +'%Y-%m-%d %H:%M:%S'`: 开始检测规则更新。"
 		. /usr/share/adss/rules_update.sh
-		message l "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
+		message g "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 	else
 		message l "`date +'%Y-%m-%d %H:%M:%S'`: ADSS 已为最新，开始检测规则更新。"
 		. /usr/share/adss/rules_update.sh
-		message l "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
+		message g "`date +'%Y-%m-%d %H:%M:%S'`: 规则更新已完成。"
 	fi
 else
-	message l "`date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃更新。"
+	message r "`date +'%Y-%m-%d %H:%M:%S'`: 文件下载异常，放弃更新。"
 	rm -rf ${TMP_DIR}
 	exit 1;
 fi

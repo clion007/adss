@@ -17,7 +17,7 @@ if [ ! $? -eq 0 ]; then
     exit 1
   fi
 fi
-message l "倚赖关系处理完成"
+message g "倚赖关系处理完成"
 message l "ADSS 每天04:25自动更新规则，自动检测网络不通重启路由器，如需修改更新时间，可自行在计划任务中修改"
 message l "开始安装配置 ADSS"
 message l "开始备份路由器相关配置"

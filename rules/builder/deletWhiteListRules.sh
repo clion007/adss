@@ -14,4 +14,4 @@ do
 	fi
 done < ${TMP_DIR}/whitelist
 rm -rf ${TMP_DIR}/whitelist
-message l "删除白名单及误杀规则完成！"
+message g "删除白名单及误杀规则完成！"

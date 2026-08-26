@@ -21,5 +21,5 @@ sort -u ${TMP_DIR}/hostsAd >> ${TMP_DIR}/hostsrules.conf
 echo "# 修饰 hosts 结束" >> ${TMP_DIR}/hostsrules.conf
 mv -f ${TMP_DIR}/dnsrules.conf ./rules/file/dnsrules.conf
 mv -f ${TMP_DIR}/hostsrules.conf ./rules/file/hostsrules.conf
-message l "规则创建完成！"
+message g "规则创建完成！"
 rm -rf ${TMP_DIR}

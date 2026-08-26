@@ -28,4 +28,4 @@ message r "添加配置目录权限"
 if [ `grep -c "\/etc\/dnsmasq.d\/" /etc/init.d/dnsmasq` -ne '1' ]; then
   sed -i 's/$resolvdir $user_dhcpscript/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//g' /etc/init.d/dnsmasq
 fi
-message l "ADSS 配置完成！"
+message g "ADSS 配置完成！"
