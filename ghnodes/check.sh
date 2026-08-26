@@ -57,7 +57,7 @@ best=$(sort -n "$tmp_file" | head -1 | awk '{print $2}')
 rm -f "$tmp_file"
 
 # 输出 GH_PROXY_PREFIX
-if [ "$best" = "${GIT_RAW}" ]; then
+if [ "${best}" = "${GIT_RAW}" ]; then
     GH_PROXY_PREFIX=""
     message l "✅ 当前最佳下载源: GitHub 直连"
 else

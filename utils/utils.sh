@@ -5,7 +5,7 @@
 GH_RAW_BASE="https://raw.githubusercontent.com"
 REPO_PATH="clion007/adss/master"
 
-# 打印消息（参数: 颜色 格式化字符串）
+# 打印消息（参数: 颜色 格式化字符串）——输出到 stderr，避免污染 stdout 返回值
 message() {
   case $1 in
     r) Color="\e[31m";;
@@ -16,8 +16,8 @@ message() {
     l) Color="\e[36m";;
     w) Color="\e[37m";;
   esac
-  echo -e "${Color}${2}\e[0m"
-  echo
+  echo -e "${Color}${2}\e[0m" >&2
+  echo >&2
 }
 
 # 选取最快的下载源（GitHub 直连 + 各加速镜像），结果存入 GH_PROXY_PREFIX
