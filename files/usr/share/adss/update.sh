@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -e
-message w "开始检测更新脚本及规则"
+message l "开始检测更新脚本及规则"
 if [ -s "/etc/rc.d/S90adss" ] && [ ! -s "/etc/rc.d/S18adss" ]; then
 	rm -f /etc/rc.d/S90adss
 	ln -s /etc/init.d/adss /etc/rc.d/S18adss
