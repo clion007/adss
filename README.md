@@ -56,7 +56,7 @@ opkg update && opkg install adss luci-app-adss
 使用 putty 软件登录路由器或者 web 端登录路由器，进入 tty 终端，输入以下命令行回车：
 
 ```bash
-mkdir -p /tmp/adss && curl https://raw.giteeusercontent.com/clion007/adss/raw/master/adss.sh -sSo /tmp/adss/adss.sh && sh /tmp/adss/adss.sh install
+mkdir -p /tmp/adss && curl -sSo /tmp/adss/adss.sh https://raw.giteeusercontent.com/clion007/adss/raw/master/adss.sh && sh /tmp/adss/adss.sh install
 ```
 
 > **注意**：putty 运行脚本显示乱码的问题请设置 putty 软件的编码为 UTF-8。
