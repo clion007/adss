@@ -1,6 +1,9 @@
 #!/bin/sh
-mkdir -p /tmp/adss
-curl -fsSL ${GH_PROXY_PREFIX}/${GH_RAW_BASE}/config/logo
+if [ -f "config/logo" ]; then
+    cat config/logo
+else
+   curl -fsSL ${GH_PROXY_PREFIX}/${GH_RAW_BASE}/${REPO_PATH}/config/logo
+fi
 echo 
 echo "Auto DNS Smart Script V4.4"
 echo "Project URL https://github.com/clion007/adss"

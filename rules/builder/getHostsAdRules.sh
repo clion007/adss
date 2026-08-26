@@ -1,28 +1,22 @@
  #!/bin/sh
-echo -e "\e[1;36m 开始下载 Hosts 规则\e[0m"
-echo 
-echo -e "\e[1;36m 下载 someonewhocares 缓存\e[0m"
-curl https://someonewhocares.org/hosts/zero/hosts -sSo /tmp/adss/someonewhocares.conf
-echo 
-echo -e "\e[1;36m 下载大圣净化缓存\e[0m"
-curl https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts -sSo /tmp/adss/adwars.conf
-echo
-echo -e "\e[1;36m 下载 adaway 规则缓存\e[0m"
-curl https://adaway.org/hosts.txt -sSo /tmp/adss/adaway.conf
-echo 
-echo -e "\e[1;36m 合并 hosts 缓存\e[0m"
-cat /tmp/adss/someonewhocares.conf /tmp/adss/adwars.conf /tmp/adss/adaway.conf > /tmp/adss/hostsAd 
-echo 
-echo -e "\e[1;36m 删除 hosts 临时文件\e[0m"
-rm -rf /tmp/adss/someonewhocares.conf /tmp/adss/adaway.conf
-echo 
-echo -e "\e[1;36m 删除注释和本地规则\e[0m"
-sed -i '/#<localhost/,/#<\/localhost>/d' /tmp/adss/hostsAd
-sed -i '/local/d' /tmp/adss/hostsAd
-sed -i 's/#.*//g' /tmp/adss/hostsAd
-sed -i 's/@.*//g' /tmp/adss/hostsAd
-sed -i '/^\s*$/d' /tmp/adss/hostsAd
-echo 
-echo -e "\e[1;36m 统一广告规则格式\e[0m"
-sed -i "s/[ ][ ]*/ /g" /tmp/adss/hostsAd
-sed -i "s/0.0.0.0/127.0.0.1/g" /tmp/adss/hostsAd
+message l "开始下载 Hosts 规则"
+curl https://someonewhocares.org/hosts/zero/hosts -sSo ${TMP_DIR}/someonewhocares.conf
+download "${GH_RAW_BASE}/jdlingyu/ad-wars/master/hosts" "${TMP_DIR}/adwars.conf"
+curl https://adaway.org/hosts.txt -sSo ${TMP_DIR}/adaway.conf
+
+message l "合并 hosts 规则缓存"
+cat ${TMP_DIR}/someonewhocares.conf ${TMP_DIR}/adwars.conf ${TMP_DIR}/adaway.conf > ${TMP_DIR}/hostsAd 
+
+message l "删除 hosts 临时文件"
+rm -rf ${TMP_DIR}/someonewhocares.conf ${TMP_DIR}/adaway.conf
+
+message l "删除注释和本地规则"
+sed -i '/#<localhost/,/#<\/localhost>/d' ${TMP_DIR}/hostsAd
+sed -i '/local/d' ${TMP_DIR}/hostsAd
+sed -i 's/#.*//g' ${TMP_DIR}/hostsAd
+sed -i 's/@.*//g' ${TMP_DIR}/hostsAd
+sed -i '/^\s*$/d' ${TMP_DIR}/hostsAd
+
+message l "统一广告规则格式"
+sed -i "s/[ ][ ]*/ /g" ${TMP_DIR}/hostsAd
+sed -i "s/0.0.0.0/127.0.0.1/g" ${TMP_DIR}/hostsAd

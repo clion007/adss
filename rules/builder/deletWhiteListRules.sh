@@ -1,16 +1,17 @@
  #!/bin/sh
-echo -e "\e[1;36m 删除白名单及误杀规则，时间较长，请耐心等待。。。\e[0m"
-curl https://raw.githubusercontent.com/clion007/adss/master/rules/adss/adwhitelist -sSo /tmp/adss/adwhitelist
-cat /tmp/adss/adwhitelist | uniq > /tmp/adss/whitelist 
-sed -i "/#/d" /tmp/adss/whitelist
-rm -rf /tmp/adss/adwhitelist
+message l "删除白名单及误杀规则，时间较长，请耐心等待。。。"
+download "rules/adss/adwhitelist" "${TMP_DIR}/adwhitelist"
+cat ${TMP_DIR}/adwhitelist | uniq > ${TMP_DIR}/whitelist 
+sed -i "/#/d" ${TMP_DIR}/whitelist
+rm -rf ${TMP_DIR}/adwhitelist
 while read -r line
 do
-	if [ -s "/tmp/adss/dnsAd" ]; then 
-		sed -i "/$line/d" /tmp/adss/dnsAd
+	if [ -s "${TMP_DIR}/dnsAd" ]; then 
+		sed -i "/$line/d" ${TMP_DIR}/dnsAd
 	fi
-	if [ -s "/tmp/adss/hostsAd" ]; then 
-		sed -i "/$line/d" /tmp/adss/hostsAd
+	if [ -s "${TMP_DIR}/hostsAd" ]; then 
+		sed -i "/$line/d" ${TMP_DIR}/hostsAd
 	fi
-done < /tmp/adss/whitelist
-rm -rf /tmp/adss/whitelist
+done < ${TMP_DIR}/whitelist
+rm -rf ${TMP_DIR}/whitelist
+message l "删除白名单及误杀规则完成！"

@@ -19,7 +19,7 @@ jobs:
 
       - name: 获取最新节点列表
         run: |
-          chmod +x ghnodes/fetch.sh
+          chmod +x ./ghnodes/fetch.sh
           ./ghnodes/fetch.sh
 
       - name: Commit and Push Rules

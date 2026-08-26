@@ -11,102 +11,48 @@
 
 set -e
 
-mkdir -p /tmp/adss
+TMP_DIR="/tmp/adss"
+GITEE_RAW_BASE="https://raw.giteeusercontent.com/clion007/adss/raw/master"
+mkdir -p "${TMP_DIR}"
 
-GH_RAW_BASE="https://raw.githubusercontent.com/clion007/adss/master"
+# 加载通用工具函数包
+if [ -f "utils/utils.sh" ]; then
+    . utils/utils.sh
+else
+    curl -sSo ${TMP_DIR}/utils.sh "${GITEE_RAW_BASE}/utils/utils.sh"
+    . ${TMP_DIR}/utils.sh
+fi
 
-print() {
-  case $1 in
-    r) Color="\e[31m";;
-    g) Color="\e[32m";;
-    b) Color="\e[34m";;
-    y) Color="\e[33m";;
-    z) Color="\e[35m";;
-    l) Color="\e[36m";;
-    w) Color="\e[37m";;
-  esac
-  echo -e "${Color}${2}\e[0m"
-  echo
-}
-
-# 获取最佳 Github 加速镜像，并存入 GH_PROXY_PREFIX
-get_mirror() {
-    print w "获取最佳 Github 加速镜像"
-    curl https://raw.giteeusercontent.com/clion007/adss/raw/master/ghnodes/ghnodes.ini -sSo /tmp/adss/ghnodes.ini
-    curl https://raw.giteeusercontent.com/clion007/adss/raw/master/ghnodes/check.sh -sSo /tmp/adss/ghcheck.sh
-    . /tmp/adss/ghcheck.sh
-    clear
-}
-
-# 获取版本
-get_version() {
-    echo "v4.4"
-}
-
-# 下载文件
-download() {
-	local path="$1"
-	local destination="$2"	
-    curl ${GH_PROXY_PREFIX}/${GH_RAW_BASE}/${path} -sSo "${destination}"
-}
-
-# 批量下载多个文件（参数为成对的 源路径 目标路径）
-batch_download() {
-    while [ $# -ge 2 ]; do
-        download "$1" "$2"
-        shift 2
-    done
-}
-
-# 下载并执行仓库内指定脚本（路径相对于仓库根目录）
-run_remote() {
-    local path="$1"
-    local tmp_file="/tmp/adss/$(basename "$path")"
-    download "${path}" "${tmp_file}"
-    if [ -s "${tmp_file}" ]; then
-        . "${tmp_file}"
-    else
-        print w "`date +'%Y-%m-%d %H:%M:%S'`: 网络异常，退出。"
-        exit 1
-    fi
-}
-
-# 显示版权声明（安装/卸载/升级前展示）
-show_copyright() {
-    get_mirror
-    run_remote "installer/copyright.sh"
-}
-
-# 安装
+# 安装 ADSS
 install() {
-    print w "即将开始安装配置 ADSS"
+    clear
     show_copyright
     run_remote "installer/install.sh"
 }
 
-# 卸载
+# 卸载 ADSS
 uninstall() {
-    print w "开始卸载 ADSS"
+    clear
     show_copyright
     run_remote "installer/uninstall.sh"
 }
 
-# 升级（重新拉取并部署最新脚本与配置）
+# 升级 ADSS
 upgrade() {
-    print w "开始升级 ADSS"
+    clear
     show_copyright
     . /usr/share/adss/update.sh
 }
 
-# 显示版本
+# 显示 ADSS 当前版本
 version() {
-	print w "ADSS 当前版本: $(get_version)"
+	message w "ADSS 当前版本: $(get_version)"
 }
 
-# 显示帮助
+# 显示 ADSS 帮助
 help() {
     cat <<EOF
-ADSS (Auto DNS Smart Script) $(get_version)
+ADSS (Auto DNS Smart Script) "$(get_version)"
 Project URL https://github.com/clion007/adss
 
 用法:

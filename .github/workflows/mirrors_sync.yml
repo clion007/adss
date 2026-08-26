@@ -10,8 +10,6 @@ env:
 
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: []
   push:
   delete:
   create:
