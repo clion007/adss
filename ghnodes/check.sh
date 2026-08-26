@@ -55,7 +55,7 @@ rm -f "$tmp_file"
 if [ -n "$best" ]; then
     message w "最优节点: $best"
     message w "完整前缀: https://${best}"
-    GH_PROXY_PREFIX="https://${best}"
+    GH_PROXY_PREFIX="https://${best}/"
 else
     message r "❌ 所有节点均不可用"
     exit 1

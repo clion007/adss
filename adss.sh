@@ -25,21 +25,18 @@ fi
 
 # 安装 ADSS
 install() {
-    clear
     show_copyright
     run_remote "installer/install.sh"
 }
 
 # 卸载 ADSS
 uninstall() {
-    clear
     show_copyright
     run_remote "installer/uninstall.sh"
 }
 
 # 升级 ADSS
 upgrade() {
-    clear
     show_copyright
     . /usr/share/adss/update.sh
 }

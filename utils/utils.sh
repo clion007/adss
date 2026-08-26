@@ -52,7 +52,7 @@ get_mirror_url() {
     if [ -z "$GH_PROXY_PREFIX" ]; then
         get_mirror
     fi
-    echo "${GH_PROXY_PREFIX}/${GH_RAW_BASE}/${REPO_PATH}/${path}"
+    echo "${GH_PROXY_PREFIX}${GH_RAW_BASE}/${REPO_PATH}/${path}"
 }
 
 # 获取版本
@@ -87,12 +87,13 @@ run_remote() {
     if [ -s "${tmp_file}" ]; then
         . "${tmp_file}"
     else
-        message w "`date +'%Y-%m-%d %H:%M:%S'`: 网络异常，退出。"
+        message r "`date +'%Y-%m-%d %H:%M:%S'`: 网络异常，退出。"
         exit 1
     fi
 }
 
 # 显示版权声明（安装/卸载/升级前展示）
 show_copyright() {
+    clear
     run_remote "installer/copyright.sh"
 }
