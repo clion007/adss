@@ -1,6 +1,5 @@
 #!/bin/sh
 
-set -e
 message w "初始化规则文件"
 run_remote "rules/builder/initRulesFile.sh"
 

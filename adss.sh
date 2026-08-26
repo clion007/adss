@@ -15,12 +15,12 @@ TMP_DIR="/tmp/adss"
 GITEE_RAW_BASE="https://raw.giteeusercontent.com/clion007/adss/raw/master"
 mkdir -p "${TMP_DIR}"
 
-# 加载通用工具函数包
+# 加载通用工具函数
 if [ -f "utils/utils.sh" ]; then
-    . utils/utils.sh
+    . ./utils/utils.sh
 else
-    curl -sSo ${TMP_DIR}/utils.sh "${GITEE_RAW_BASE}/utils/utils.sh"
-    . ${TMP_DIR}/utils.sh
+    curl -sSo "${TMP_DIR}/utils.sh" "${GITEE_RAW_BASE}/utils/utils.sh"
+    . "${TMP_DIR}/utils.sh"
 fi
 
 # 安装 ADSS

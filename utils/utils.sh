@@ -22,6 +22,7 @@ message() {
 
 # 检测 URL 是否可访问（HTTP 状态码 2xx/3xx）
 # 用法：check_url URL [超时秒数]
+# 返回：0=可达（2xx/3xx），1=不可达
 check_url() {
     url="$1"
     timeout="${2:-5}"   # 默认 5 秒
@@ -32,9 +33,9 @@ check_url() {
 
     # 状态码 200~399 表示可用
     if [ "$code" -ge 200 ] && [ "$code" -lt 400 ]; then
-        return 1
-    else
         return 0
+    else
+        return 1
     fi
 }
 
@@ -61,14 +62,20 @@ get_version() {
 }
 
 # 下载文件（参数: 源路径 目标路径）
+# 优先直连 Github，不可达时切换到镜像源
 download() {
     local path="$1"
+    local dest="$2"
     if check_url "${GH_RAW_BASE}"; then
-        source="${GH_RAW_BASE}/${REPO_PATH}/${path}"
+        curl -sSo "${dest}" "${GH_RAW_BASE}/${REPO_PATH}/${path}"
     else
         source=$(get_mirror_url "${path}")
+        curl -sSo "${dest}" "${source}"
     fi
-    curl -sSo $2 ${source}
+    if [ ! -s "${dest}" ]; then
+        message r "`date +'%Y-%m-%d %H:%M:%S'`: 下载 ${path} 失败，网络异常。"
+        return 1
+    fi
 }
 
 # 批量下载多个文件（参数为成对的 源路径/URL 目标路径）

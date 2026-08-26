@@ -1,8 +1,6 @@
 #!/bin/sh
 # 测试 ghnodes.ini 中的节点，输出最优节点
 
-set -e
-
 NODES_FILE="${TMP_DIR}/ghnodes.ini"
 TEST_URL="${GH_RAW_BASE}/rules/file/hostsrules.conf"
 TIMEOUT=3
@@ -30,7 +28,7 @@ test_node() {
     local status=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout "$TIMEOUT" --max-time "$TIMEOUT" "$full_url" 2>/dev/null)
     local end=$(date +%s%N)
     local duration=$(( (end - start) / 1000000 ))
-    if [[ "$status" -ge 200 && "$status" -lt 400 ]]; then
+    if [ "$status" -ge 200 ] && [ "$status" -lt 400 ]; then
         echo "$duration $node"
     else
         echo "999999 $node"
@@ -48,7 +46,7 @@ done < "$NODES_FILE"
 wait
 
 # 排序取最快
-best=$(sort -n "$tmp_file" | head -1 | awk '{message $2}')
+best=$(sort -n "$tmp_file" | head -1 | awk '{print $2}')
 rm -f "$tmp_file"
 
 # ---------- 输出 ---------
