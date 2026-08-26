@@ -51,17 +51,17 @@ download() {
     local path="$1"
     local dest="$2"
     get_file_url "${path}"
-    curl -sSo "${dest}" "${SRC_URL}"
-    if [ ! -s "${dest}" ]; then
+    curl -sSf -o "${dest}" "${SRC_URL}" || {
         message r "`date +'%Y-%m-%d %H:%M:%S'`: 下载 ${path} 失败，网络异常。"
+        rm -f "${dest}"   # 清除下载失败残留的 0 字节文件
         return 1
-    fi
+    }
 }
 
 # 批量下载多个文件（参数为成对的 源路径/URL 目标路径）
 batch_download() {
     while [ $# -ge 2 ]; do
-        download "$1" "$2"
+        download "$1" "$2" || return 1
         shift 2
     done
 }
@@ -70,17 +70,11 @@ batch_download() {
 run_remote() {
     local path="$1"
     local tmp_file="${TMP_DIR}/$(basename "$path")"
-    download "${path}" "${tmp_file}"
-    if [ -s "${tmp_file}" ]; then
-        . "${tmp_file}"
-    else
-        message r "`date +'%Y-%m-%d %H:%M:%S'`: 网络异常，退出。"
-        exit 1
-    fi
+    download "${path}" "${tmp_file}" || return 1
+    . "${tmp_file}"
 }
 
 # 显示版权声明（安装/卸载/升级前展示）
 show_copyright() {
-    clear
     run_remote "installer/copyright.sh"
 }

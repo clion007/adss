@@ -1,4 +1,5 @@
 #!/bin/sh
+clear
 if [ -f "config/logo" ]; then
     cat config/logo
 else
