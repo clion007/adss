@@ -9,6 +9,8 @@ NODES_URL="https://raw.githubusercontent.com/hubporg/ghproxy-next/refs/heads/mai
 
 OUTPUT_FILE="ghnodes/ghnodes.ini"
 
+. ./utils/utils.sh
+
 echo "🔄 正在获取 nodes.ts ..."
 
 content=$(curl -sL --connect-timeout 10 "$NODES_URL" 2>/dev/null)
