@@ -9,7 +9,6 @@ mkdir -p "${TMP_DIR}"
 
 # 加载通用工具函数包
 . ./utils/utils.sh
-. ./installer/copyright.sh
 . ./rules/builder/initRulesFile.sh
 . ./rules/builder/getDnsmasqAdRules.sh
 . ./rules/builder/getHostsAdRules.sh
