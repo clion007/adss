@@ -4,7 +4,8 @@
 
 set -e
 
-TMP_DIR="/tmp/adss"
+TMP_DIR="./tmp/adss"
+GITEE_RAW_BASE="https://raw.giteeusercontent.com/clion007/adss/raw/master"
 mkdir -p "${TMP_DIR}"
 
 # 加载通用工具函数包
