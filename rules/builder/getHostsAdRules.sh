@@ -1,8 +1,9 @@
  #!/bin/sh
 message l "开始下载 Hosts 规则"
-curl https://someonewhocares.org/hosts/zero/hosts -sSo ${TMP_DIR}/someonewhocares.conf
-download "${GH_RAW_BASE}/jdlingyu/ad-wars/master/hosts" "${TMP_DIR}/adwars.conf"
-curl https://adaway.org/hosts.txt -sSo ${TMP_DIR}/adaway.conf
+batch_download \
+    "https://someonewhocares.org/hosts/zero/hosts" "${TMP_DIR}/someonewhocares.conf" \
+    "${GH_RAW_BASE}/jdlingyu/ad-wars/master/hosts" "${TMP_DIR}/adwars.conf" \
+    "https://adaway.org/hosts.txt" "${TMP_DIR}/adaway.conf"
 
 message l "合并 hosts 规则缓存"
 cat ${TMP_DIR}/someonewhocares.conf ${TMP_DIR}/adwars.conf ${TMP_DIR}/adaway.conf > ${TMP_DIR}/hostsAd 

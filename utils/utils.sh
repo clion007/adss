@@ -32,12 +32,16 @@ get_mirror() {
     . ${TMP_DIR}/ghcheck.sh
 }
 
-# 获取最佳文件下载 URL（参数: 源路径）
-# 直连时 GH_PROXY_PREFIX 为空字符串
+# Get best file download URL (args: repo-relative path or full URL)
+# Repo-relative path: built against this repo; GitHub raw URL: via mirror prefix; other URLs: direct
 get_file_url() {
-    local path="$1"
+    local src="$1"
     get_mirror
-    SRC_URL="${GH_PROXY_PREFIX}${GH_RAW_BASE}/${REPO_PATH}/${path}"
+    case "$src" in
+        "${GH_RAW_BASE}"/*) SRC_URL="${GH_PROXY_PREFIX}${src}" ;;
+        http://*|https://*) SRC_URL="${src}" ;;
+        *) SRC_URL="${GH_PROXY_PREFIX}${GH_RAW_BASE}/${REPO_PATH}/${src}" ;;
+    esac
 }
 
 # 获取版本

@@ -3,8 +3,8 @@ message l "开始下载 DNS 广告规则,可能时间较长请耐心等待"
 batch_download \
     "${GH_RAW_BASE}/privacy-protection-tools/anti-AD/master/adblock-for-dnsmasq.conf" "${TMP_DIR}/antiAD.conf" \
     "${GH_RAW_BASE}/Cats-Team/AdRules/main/smart-dns.conf" "${TMP_DIR}/cats.conf" \
-    "${GH_RAW_BASE}/notracking/hosts-blocklists/master/domains.txt" "${TMP_DIR}/notrackAdDomain.conf"
-curl https://neodev.team/dnsmasq.conf -sSo ${TMP_DIR}/neodevhost.conf
+    "${GH_RAW_BASE}/notracking/hosts-blocklists/master/domains.txt" "${TMP_DIR}/notrackAdDomain.conf" \
+    "https://neodev.team/dnsmasq.conf" "${TMP_DIR}/neodevhost.conf"
 
 sed -i 's/$/&127.0.0.1/g' ${TMP_DIR}/antiAD.conf
 sed -i "s/\/#/\/127.0.0.1/g" ${TMP_DIR}/cats.conf
