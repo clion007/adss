@@ -1,5 +1,8 @@
 #!/bin/sh
 
+CURRENT_USER=$(id -un 2>/dev/null || echo "root")
+CRON_FILE=/etc/crontabs/${CURRENT_USER}
+
 message l "开始检测更新脚本及规则"
 if [ -s "/etc/rc.d/S90adss" ] && [ ! -s "/etc/rc.d/S18adss" ]; then
 	rm -f /etc/rc.d/S90adss
@@ -17,6 +20,15 @@ batch_download \
 if ! cmp -s "/usr/share/adss/adss.sh" "${TMP_DIR}/adss.sh" ; then
 	message l "检测到新版 ADSS 脚本......开始更新。"
 	mv ${TMP_DIR}/adss.sh /usr/share/adss/adss.sh
+fi
+
+grep "/usr/share/adss/update.sh" $CRON_FILE > /dev/null
+if [ $? -ne 0 ]; then
+	message r "修正自动更新定时任务"
+	sed -i "/update/d" $CRON_FILE
+	sed -i "/更新ADSS规则/d" $CRON_FILE
+	echo "# 每天 04:25 更新ADSS升级脚本
+25 4 * * * adss upgrade > /dev/null 2>&1" >> $CRON_FILE
 fi
 
 if [ -s "${TMP_DIR}/update.sh" ] && [ -s "${TMP_DIR}/rules_update.sh" ]; then

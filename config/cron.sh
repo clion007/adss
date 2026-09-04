@@ -1,6 +1,6 @@
 #!/bin/sh
 # 修正可能未定义的USER变量
-CURRENT_USER=$(whoami 2>/dev/null || echo "root")
+CURRENT_USER=$(id -un 2>/dev/null || echo "root")
 CRON_FILE=/etc/crontabs/${CURRENT_USER}
 
 grep "adss" $CRON_FILE > /dev/null
