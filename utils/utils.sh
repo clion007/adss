@@ -55,7 +55,7 @@ download() {
     local path="$1"
     local dest="$2"
     get_file_url "${path}"
-    curl -sSf -o "${dest}" "${SRC_URL}" || {
+    curl -sSfL -o "${dest}" "${SRC_URL}" || {
         message r "`date +'%Y-%m-%d %H:%M:%S'`: 下载 ${path} 失败，网络异常。"
         rm -f "${dest}"   # 清除下载失败残留的 0 字节文件
         return 1

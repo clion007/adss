@@ -33,7 +33,8 @@ test_node() {
     local status=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout "$TIMEOUT" --max-time "$TIMEOUT" "$full_url" 2>/dev/null)
     local end=$(date +%s%N)
     local duration=$(( (end - start) / 1000000 ))
-    if [ "$status" -ge 200 ] && [ "$status" -lt 400 ]; then
+    # only 2xx counts as healthy; 3xx means the node redirects instead of proxying content
+    if [ "$status" -ge 200 ] && [ "$status" -lt 300 ]; then
         echo "$duration $node"
     else
         echo "999999 $node"
