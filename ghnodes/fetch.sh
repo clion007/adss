@@ -4,12 +4,12 @@
 
 set -e
 
+. ./utils/utils.sh
+
 # 上游节点原始文件地址
-NODES_URL="https://raw.githubusercontent.com/hubporg/ghproxy-next/refs/heads/main/components/nodes.ts"
+NODES_URL="${GH_RAW_BASE}/hubporg/ghproxy-next/refs/heads/main/components/nodes.ts"
 
 OUTPUT_FILE="ghnodes/ghnodes.ini"
-
-. ./utils/utils.sh
 
 echo "🔄 正在获取 nodes.ts ..."
 

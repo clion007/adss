@@ -2,7 +2,7 @@
 # ADSS 规则构建脚本
 # 用于根据配置文件生成 dnsmasq 和 hosts 规则文件
 
-set -ex
+set -e
 
 TMP_DIR="./tmp/adss"
 GITEE_RAW_BASE="https://raw.giteeusercontent.com/clion007/adss/raw/master"
