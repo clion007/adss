@@ -15,7 +15,11 @@ fi
 batch_download \
 	"adss.sh" "${TMP_DIR}/adss.sh" \
     "files/usr/share/adss/update.sh" "${TMP_DIR}/update.sh" \
-    "files/usr/share/adss/rules_update.sh" "${TMP_DIR}/rules_update.sh"
+    "files/usr/share/adss/rules_update.sh" "${TMP_DIR}/rules_update.sh" || {
+	message r "`date +'%Y-%m-%d %H:%M:%S'`: 脚本下载失败，放弃更新。"
+	rm -rf ${TMP_DIR}
+	exit 1
+}
 
 if ! cmp -s "/usr/share/adss/adss.sh" "${TMP_DIR}/adss.sh" ; then
 	message l "检测到新版 ADSS 脚本......开始更新。"

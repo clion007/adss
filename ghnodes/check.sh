@@ -9,8 +9,10 @@ TEST_URL="${GH_RAW_BASE}/${REPO_PATH}/rules/file/hostsrules.conf"
 TIMEOUT=3
 
 if [ ! -f "$NODES_FILE" ]; then
-    message r "❌ 节点列表文件 $NODES_FILE 不存在，请检查！"
-    exit 1
+    # 本脚本被 source 调用，禁止 exit 终止调用方，降级为直连
+    message y "⚠️ 节点列表文件 $NODES_FILE 不存在，回退 GitHub 直连"
+    GH_PROXY_PREFIX=""
+    return 0 2>/dev/null || exit 0
 fi
 
 # 读取节点数量（不含直连）用于显示
@@ -29,9 +31,12 @@ test_node() {
         # 加速镜像为 GitHub 反代，代理前缀拼在完整 raw URL 前面
         local full_url="https://${node}/${TEST_URL}"
     fi
-    local start=$(date +%s%N)
+    local start=$(date +%s%N 2>/dev/null)
     local status=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout "$TIMEOUT" --max-time "$TIMEOUT" "$full_url" 2>/dev/null)
-    local end=$(date +%s%N)
+    local end=$(date +%s%N 2>/dev/null)
+    # 老版 busybox date 不支持 %N，输出含非数字会导致算术错误并终止 shell
+    case "$start" in *[!0-9]*) start=0;; esac
+    case "$end" in *[!0-9]*) end=0;; esac
     local duration=$(( (end - start) / 1000000 ))
     # only 2xx counts as healthy; 3xx means the node redirects instead of proxying content
     if [ "$status" -ge 200 ] && [ "$status" -lt 300 ]; then
@@ -55,11 +60,17 @@ done < "$NODES_FILE"
 wait
 
 # 排序取最快
-speed_best=$(sort -n "$speed_tmp" | head -1 | awk '{print $2}')
+speed_line=$(sort -n "$speed_tmp" | head -1)
+speed_best=$(echo "$speed_line" | awk '{print $2}')
+speed_time=$(echo "$speed_line" | awk '{print $1}')
 rm -f "$speed_tmp"
 
 # 输出 GH_PROXY_PREFIX
-if [ "${speed_best}" = "${GIT_RAW}" ]; then
+if [ -z "${speed_best}" ] || [ "${speed_time}" = "999999" ]; then
+    # 无任何健康候选时禁止选中死节点，回退直连
+    GH_PROXY_PREFIX=""
+    message y "⚠️ 所有下载源测速失败，回退 GitHub 直连"
+elif [ "${speed_best}" = "${GIT_RAW}" ]; then
     GH_PROXY_PREFIX=""
     message g "✅ 当前最佳下载源: GitHub 直连"
 else

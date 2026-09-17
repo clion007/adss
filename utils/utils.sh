@@ -21,15 +21,20 @@ message() {
 }
 
 # 选取最快的下载源（GitHub 直连 + 各加速镜像），结果存入 GH_PROXY_PREFIX
-# 结果缓存：MIRROR_PREFIX 文件跨进程/子 shell 共享，只测速一次
+# 测速失败时回退直连；MIRROR_READY 仅进程内缓存，只测速一次
 get_mirror() {
     MIRROR_READY="${MIRROR_READY:-}"
     [ -n "$MIRROR_READY" ] && return 0
     MIRROR_READY=1
     message w "获取最佳下载源（GitHub 直连 + 加速镜像）"
-    curl "${GITEE_RAW_BASE}/ghnodes/ghnodes.ini" -sSo ${TMP_DIR}/ghnodes.ini
-    curl "${GITEE_RAW_BASE}/ghnodes/check.sh" -sSo ${TMP_DIR}/ghcheck.sh
-    . ${TMP_DIR}/ghcheck.sh
+    if curl -sSfL --connect-timeout 10 --max-time 30 "${GITEE_RAW_BASE}/ghnodes/ghnodes.ini" -o ${TMP_DIR}/ghnodes.ini \
+        && curl -sSfL --connect-timeout 10 --max-time 30 "${GITEE_RAW_BASE}/ghnodes/check.sh" -o ${TMP_DIR}/ghcheck.sh \
+        && . ${TMP_DIR}/ghcheck.sh; then
+        return 0
+    fi
+    # 引导失败（网络抖动/测速脚本异常）不应终止脚本，降级为直连
+    message y "下载源测速失败，回退 GitHub 直连"
+    GH_PROXY_PREFIX=""
 }
 
 # Get best file download URL (args: repo-relative path or full URL)
@@ -50,16 +55,30 @@ get_version() {
 }
 
 # 下载文件（参数: 源路径 目标路径）
-# 统一走最快下载源（直连 或 加速镜像）
+# 统一走最快下载源（直连 或 加速镜像），失败重试，镜像持续失败时回退直连
 download() {
     local path="$1"
     local dest="$2"
+    local attempt=0
     get_file_url "${path}"
-    curl -sSfL -o "${dest}" "${SRC_URL}" || {
-        message r "`date +'%Y-%m-%d %H:%M:%S'`: 下载 ${path} 失败，网络异常。"
-        rm -f "${dest}"   # 清除下载失败残留的 0 字节文件
-        return 1
-    }
+    while [ ${attempt} -lt 3 ]; do
+        if curl -sSfL --connect-timeout 10 --max-time 300 -o "${dest}" "${SRC_URL}"; then
+            return 0
+        fi
+        attempt=$((attempt + 1))
+        rm -f "${dest}"   # 清除下载失败残留的部分文件
+        # 最后一次尝试：镜像不可用时剥掉前缀回退 GitHub 直连
+        if [ ${attempt} -eq 2 ] && [ -n "${GH_PROXY_PREFIX}" ]; then
+            case "${SRC_URL}" in
+                "${GH_PROXY_PREFIX}"*)
+                    message y "镜像下载失败，回退 GitHub 直连"
+                    SRC_URL="${SRC_URL#${GH_PROXY_PREFIX}}"
+                    ;;
+            esac
+        fi
+    done
+    message r "`date +'%Y-%m-%d %H:%M:%S'`: 下载 ${path} 失败，网络异常。"
+    return 1
 }
 
 # 批量下载多个文件（参数为成对的 源路径/URL 目标路径）

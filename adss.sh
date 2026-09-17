@@ -38,7 +38,11 @@ uninstall() {
 # 升级 ADSS
 upgrade() {
     show_copyright
+    # update.sh 自带完整错误处理；set -e 会在其降级分支执行前
+    # 因下载失败直接终止脚本，需临时关闭
+    set +e
     . /usr/share/adss/update.sh
+    set -e
 }
 
 # 显示 ADSS 当前版本
