@@ -25,6 +25,11 @@ message() {
 get_mirror() {
     MIRROR_READY="${MIRROR_READY:-}"
     [ -n "$MIRROR_READY" ] && return 0
+    # CI runners (GitHub Actions) have fast direct GitHub access; skip mirror testing
+    if [ -n "${CI:-}" ]; then
+        GH_PROXY_PREFIX=""
+        return 0
+    fi
     MIRROR_READY=1
     message w "获取最佳下载源（GitHub 直连 + 加速镜像）"
     if curl -sSfL --connect-timeout 10 --max-time 30 "${GITEE_RAW_BASE}/ghnodes/ghnodes.ini" -o ${TMP_DIR}/ghnodes.ini \
@@ -62,7 +67,10 @@ download() {
     local attempt=0
     get_file_url "${path}"
     while [ ${attempt} -lt 3 ]; do
-        if curl -sSfL --connect-timeout 10 --max-time 300 -o "${dest}" "${SRC_URL}"; then
+        # mirrors may serve an HTML error/challenge page with HTTP 200, which
+        # bypasses -f; sniff the file head to catch it and fall into retry
+        if curl -sSfL --connect-timeout 10 --max-time 300 -o "${dest}" "${SRC_URL}" \
+            && ! head -c 4096 "${dest}" 2>/dev/null | grep -qiE '<html|<!doctype html|<style>'; then
             return 0
         fi
         attempt=$((attempt + 1))
