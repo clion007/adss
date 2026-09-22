@@ -5,11 +5,14 @@ START=18
 CONFIG_FILE=/etc/dnsmasq.d/dnsmasq-adss.conf
 RUN_CONF_FILE=/tmp/dnsmasq.d/dnsmasq-adss.conf
 
-start() 
+start()
 {
   if [ `grep -c "\/etc\/dnsmasq.d\/" /etc/init.d/dnsmasq` -ne '1' ];then
     sed -i 's/$resolvdir $user_dhcpscript/$resolvdir $user_dhcpscript \/etc\/dnsmasq.d\//g' /etc/init.d/dnsmasq
   fi
+  # /tmp is tmpfs wiped on boot and the dnsmasq init creates this dir only
+  # at its own start (S19), so it must exist here before the symlink
+  mkdir -p /tmp/dnsmasq.d
   ln -s $CONFIG_FILE $RUN_CONF_FILE
 }
 
