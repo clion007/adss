@@ -15,11 +15,22 @@ fi
 batch_download \
 	"adss.sh" "${TMP_DIR}/adss.sh" \
     "files/usr/share/adss/update.sh" "${TMP_DIR}/update.sh" \
-    "files/usr/share/adss/rules_update.sh" "${TMP_DIR}/rules_update.sh" || {
+    "files/usr/share/adss/rules_update.sh" "${TMP_DIR}/rules_update.sh" \
+    "files/etc/init.d/adss" "${TMP_DIR}/adss.init" || {
 	message r "`date +'%Y-%m-%d %H:%M:%S'`: 脚本下载失败，放弃更新。"
 	rm -rf ${TMP_DIR}
 	exit 1
 }
+
+# 检测并升级服务初始化脚本（如 /tmp/dnsmasq.d 符号链接修复），此前仅安装时部署
+if ! cmp -s "/etc/init.d/adss" "${TMP_DIR}/adss.init"; then
+	message l "检测到新版服务脚本......开始更新。"
+	mv -f ${TMP_DIR}/adss.init /etc/init.d/adss
+	chmod 755 /etc/init.d/adss
+	# 执行一次 start 使新版脚本立即生效（补建可能缺失的 /tmp/dnsmasq.d 链接）
+	/etc/init.d/adss start > /dev/null 2>&1
+	message g "服务脚本更新完成。"
+fi
 
 if ! cmp -s "/usr/share/adss/adss.sh" "${TMP_DIR}/adss.sh" ; then
 	message l "检测到新版 ADSS 脚本......开始更新。"

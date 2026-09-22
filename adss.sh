@@ -45,6 +45,15 @@ upgrade() {
     set -e
 }
 
+# 仅更新规则
+rules() {
+    show_copyright
+    # rules_update.sh 自带完整错误处理；set -e 会在其失败分支前中止，需临时关闭
+    set +e
+    . /usr/share/adss/rules_update.sh
+    set -e
+}
+
 # 显示 ADSS 当前版本
 version() {
 	message w "ADSS 当前版本: $(get_version)"
@@ -60,6 +69,7 @@ Project URL https://github.com/clion007/adss
   adss install         安装 ADSS
   adss uninstall       卸载 ADSS
   adss upgrade         升级 ADSS
+  adss rules update    仅更新规则
   adss version         显示当前版本
   adss help            显示本帮助
 EOF
@@ -70,6 +80,13 @@ main() {
         install)   install ;;
         upgrade)   upgrade ;;
         uninstall) uninstall ;;
+        rules)
+            if [ "${2:-}" = "update" ]; then
+                rules
+            else
+                echo "未知命令: adss $1 ${2:-}"; echo; help; exit 1
+            fi
+            ;;
         help|-h|--help) help ;;
         version|-v|--version)   version ;;
         *) echo "未知命令: $1"; echo; help; exit 1 ;;

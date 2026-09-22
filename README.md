@@ -207,7 +207,8 @@ adss uninstall
 ADSS 提供了自动更新机制，默认每天凌晨 4:25 自动更新规则。您也可以手动运行更新脚本：
 
 ```bash
-adss upgrade
+adss upgrade        # 升级 ADSS 及规则
+adss rules update   # 仅更新规则
 ```
 
 ## 🌐 仓库镜像
